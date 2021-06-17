@@ -21,7 +21,6 @@ if (!firebase.apps.length) {
   firebase.analytics();
 }
 const firestore = firebase.firestore();
-const functions = firebase.functions();
 const auth = firebase.auth();
 
 const servers = {
