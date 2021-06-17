@@ -220,31 +220,31 @@ function App() {
 
   }
 
-  // hangupButton.onclick = async () => {
-  //   const tracks = webcamVideo.srcObject.getTracks()
-  //   tracks.forEach((track) => {
-  //     track.stop()
-  //   })
+  const hangupButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+    // const tracks = webcamVideo.srcObject.getTracks()
+    // tracks.forEach((track) => {
+    //   track.stop()
+    // })
 
-  //   if (remoteStream)
-  //     remoteStream.getTracks().forEach((track) => track.stop())
+    // if (remoteStream)
+    //   remoteStream.getTracks().forEach((track) => track.stop())
 
-  //   // This stops my stream to the senders, but doesn't not stop me from seeing them
-  //   const senders = peerConnection.getSenders()
-  //   senders.forEach((sender) => {
-  //     peerConnection.removeTrack(sender)
-  //   })
+    // // This stops my stream to the senders, but doesn't not stop me from seeing them
+    // const senders = peerConnection.getSenders()
+    // senders.forEach((sender) => {
+    //   peerConnection.removeTrack(sender)
+    // })
 
-  //   // Close the entire connection
-  //   peerConnection.close()
+    // // Close the entire connection
+    // peerConnection.close()
 
-  //   // Clean-up the database
-  //   const result = await functions.httpsCallable('hangupCall')({
-  //     id: callInput.value,
-  //   })
+    // // Clean-up the database
+    // const result = await functions.httpsCallable('hangupCall')({
+    //   id: callInput.value,
+    // })
 
-  //   resetState()
-  // }
+    // resetState()
+  }
 
 
   return (
@@ -291,7 +291,12 @@ function App() {
 
       <h2>Hangup</h2>
 
-      <button ref={hangupButton} disabled>Hangup</button>
+      <button
+        onClick={hangupButtonClick}
+        ref={hangupButton}
+        disabled>
+        Hangup
+      </button>
     </div>
   );
 }
