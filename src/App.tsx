@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState, MouseEvent } from 'react';
+import React, { useEffect, useRef, useState, MouseEvent, CSSProperties, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { ThemeProvider } from './components/ThemeContext'
+import { themes } from './Themes'
 import './App.css';
 import firebase from 'firebase'
 import WebRTC from './pages/WebRTC'
 import Home from './pages/Home'
-import NavBar from './components/NavBar'
+import { NavBar, Container } from './components'
 
 const firebaseConfig = {
   apiKey: "AIzaSyA0QwzJ1I_i4w-jO-9Vk1W5YKHFAyVSal4",
@@ -22,23 +24,24 @@ if (!firebase.apps.length) {
 }
 
 function App() {
-
   return (
-    <Router>
-      <div className='App'>
-        <NavBar />
-        <div className='content'>
-          <Switch>
-            <Route exact path='/'>
-              <Home />
-            </Route>
-            <Route exact path='/webRTC'>
-              <WebRTC />
-            </Route>
-          </Switch>
-        </div>
-      </div>
-    </Router>
+    <ThemeProvider themes={themes}>
+      <Router>
+        <Container className={`App`}>
+          <NavBar />
+          <Container className={`content`}>
+            <Switch>
+              <Route exact path='/'>
+                <Home />
+              </Route>
+              <Route exact path='/webRTC'>
+                <WebRTC />
+              </Route>
+            </Switch>
+          </Container>
+        </Container>
+      </Router>
+    </ThemeProvider>
   );
 }
 

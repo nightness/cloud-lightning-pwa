@@ -1,11 +1,19 @@
-import React, { useEffect, useRef, useState, MouseEvent } from 'react';
-import './Home.css'
+import { Text } from '../components';
+import { Button } from '../components'
+import { Container } from 'react-bootstrap'
 
 export function Home() {
   return (
-    <div className="Home">
-      <h1>Hello World</h1>
-    </div>
+    <Container>
+      <Text headerSize={1}>Hello World</Text>
+      <Button
+        onClick={() => {
+
+        }}
+      >
+        <Text>Hello World</Text>
+      </Button>
+    </Container>
   );
 }
 
