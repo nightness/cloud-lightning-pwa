@@ -7,7 +7,7 @@
     border-bottom: 1px solid #f2f2f2;
 }
 .navbar h1 {
-    color: #f1356d;
+    color: #0352fc;
 }
 .navbar .links {
     margin-left: auto;
@@ -18,5 +18,5 @@
     padding: 6px;
 }
 .navbar a:hover {
-    color: #f1356d;
+    color: #0352fc;
 }
