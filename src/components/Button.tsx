@@ -1,6 +1,7 @@
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
-import StyledButton from './primitives/Button'
+import { Button as StyledButton } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 interface Props {
     style?: CSSProperties
@@ -11,7 +12,7 @@ interface Props {
 
 export const Button = ({ disabled, onClick, style: styleOverride, children }: Props) => {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
-    const currentThemeType = getThemedComponentStyle('Button', disabled)
+    //const currentThemeType = getThemedComponentStyle('Button', disabled)
     const style: CSSProperties = {
         alignSelf: 'center',
         alignContent: 'center',
@@ -33,7 +34,7 @@ export const Button = ({ disabled, onClick, style: styleOverride, children }: Pr
         // paddingRight: 10,
         // paddingTop: 5,
         // paddingBottom: 5,
-        ...currentThemeType[activeTheme],
+        //...currentThemeType[activeTheme],
         ...styleOverride
     }
 

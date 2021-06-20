@@ -11,6 +11,23 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+div#root {
+    position: 'absolute';
+    width: '100%' !important;
+    height: '100%' !important;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+    right: 0 !important ;
+    left: 0 !important;    
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+/* @media (prefers-color-scheme: dark) {
+    h1 {
+        margin: 5rem;
+        padding: 2
+    }
+} */

@@ -5,9 +5,10 @@ interface Props {
     style?: CSSProperties
     className?: string
     children: any
+    scroll?: 'x' | 'y' | 'none' | 'both'
 }
 
-export function Container({ children, style: styleOverride, className }: Props) {
+export function Container({ children, style: styleOverride, className, scroll }: Props) {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const currentThemeType = getThemedComponentStyle('Button')
     const style: CSSProperties = {
@@ -28,6 +29,20 @@ export function Container({ children, style: styleOverride, className }: Props) 
         // paddingBottom: 5,
         ...currentThemeType[activeTheme],
         ...styleOverride
+    }
+
+    if (!scroll || scroll === 'none') {
+        style.overflowY = 'hidden'
+        style.overflowX = 'hidden'
+    } else if (scroll === 'x') {
+        style.overflowY = 'hidden'
+        style.overflowX = 'scroll'
+    } else if (scroll === 'y') {
+        style.overflowX = 'hidden'
+        style.overflowY = 'visible'
+    } else {
+        style.overflowY = 'scroll'
+        style.overflowX = 'scroll'
     }
 
     return (

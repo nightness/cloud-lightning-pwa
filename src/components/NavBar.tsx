@@ -1,26 +1,13 @@
-import { Link, useLocation } from "react-router-dom";
-import Text from './Text'
+import { Text, Link } from '.'
 import './NavBar.css'
 
 const Navbar = () => {
-    const location = useLocation()
-
-    const currentLocationStyle = {
-        color: 'white',
-        backgroundColor: '#0352fc',
-        borderRadius: '5px',
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingLeft: 10,
-        paddingRight: 10
-    }
-
     return (
-        <nav className="navbar">
+        <nav className="navbar navbar-expand-sm navbar-light bg-light">
             <Text headerSize={1}>Welcome to Cloud-Lightning PWA</Text>
             <div className="links">
-                <Link to="/" style={location.pathname === '/' ? currentLocationStyle : undefined}>Home</Link>
-                <Link to="/webRTC" style={location.pathname === '/webRTC' ? currentLocationStyle : undefined}>WebRTC</Link>
+                <Link to="/">Home</Link>
+                <Link to="/webRTC">WebRTC</Link>
             </div>
         </nav>
     );

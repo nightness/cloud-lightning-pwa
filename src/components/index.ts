@@ -5,5 +5,6 @@ import Container from './Container'
 import Badge from './Badge'
 import DisplayError from './DisplayError'
 import ActivityIndicator from './ActivityIndicator'
+import Link from './Link'
 
-export { Text, Button, NavBar, Container, Badge, DisplayError, ActivityIndicator }
+export { Text, Button, NavBar, Container, Badge, DisplayError, ActivityIndicator, Link }
