@@ -3,7 +3,7 @@ import './NavBar.css'
 
 const Navbar = () => {
     return (
-        <nav className="navbar navbar-expand-sm navbar-light bg-light">
+        <nav className="navbar">
             <Text headerSize={1}>Welcome to Cloud-Lightning PWA</Text>
             <div className="links">
                 <Link to="/">Home</Link>
