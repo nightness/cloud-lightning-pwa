@@ -1,4 +1,4 @@
-import { Text } from '../components'
+import { Text, ActivityIndicator } from '../components'
 import { Button } from "@blueprintjs/core"; 
 import { Container } from 'react-bootstrap'
 
@@ -6,6 +6,7 @@ export function Home() {
   return (
     <Container>
       <Text headerSize={1}>Hello World</Text>
+      <ActivityIndicator size={10} />
       <Button
         intent='success'
         text='Hello World'

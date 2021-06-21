@@ -5,10 +5,12 @@ import './App.css';
 import { Home, WebRTC } from './pages'
 import { NavBar } from './components'
 import { Container } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './FirebaseInit'
+import * as Firebase from './database/Firebase'
+
 
 function App() {
+  Firebase.Init()
+
   return (
     <ThemeProvider themes={themes}>
       <Router>
