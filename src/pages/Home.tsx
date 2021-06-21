@@ -6,7 +6,7 @@ export function Home() {
   return (
     <Container>
       <Text headerSize={1}>Hello World</Text>
-      <ActivityIndicator size={10} />
+      <ActivityIndicator size='huge' />
       <Button
         intent='success'
         text='Hello World'
