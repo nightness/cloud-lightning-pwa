@@ -1,16 +1,17 @@
+import './components.css'
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
-import { Button as StyledButton } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button as StyledButton } from '@blueprintjs/core'
 
 interface Props {
+    title?: string
     style?: CSSProperties
     disabled?: boolean
-    onClick?: () => any
-    children: any
+    onPress?: () => any
+    children?: any
 }
 
-export const Button = ({ disabled, onClick, style: styleOverride, children }: Props) => {
+export const Button = ({ disabled, onPress, style: styleOverride, children, title }: Props) => {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     //const currentThemeType = getThemedComponentStyle('Button', disabled)
     const style: CSSProperties = {
@@ -39,8 +40,8 @@ export const Button = ({ disabled, onClick, style: styleOverride, children }: Pr
     }
 
     return (
-        <StyledButton style={style} onClick={onClick}>
-            {children}
+        <StyledButton active={disabled !== true} style={style} onClick={onPress}>
+            {title ? title : children}
         </StyledButton>
     )
 }

@@ -1,3 +1,4 @@
+import './components.css'
 import React, { CSSProperties, useContext } from 'react'
 
 interface Props extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

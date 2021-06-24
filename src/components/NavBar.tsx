@@ -1,13 +1,16 @@
-import { Text, Link } from '.'
-import './NavBar.css'
+import { Link } from '.'
+import { H1 } from '@blueprintjs/core'
+import './components.css'
+
 
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <Text headerSize={1}>Welcome to Cloud-Lightning PWA</Text>
+            <H1>REACTJS BLUEPRINTJS PWA</H1>
             <div className="links">
                 <Link to="/">Home</Link>
-                <Link to="/webRTC">WebRTC</Link>
+                <Link to="/WebRTC">WebRTC</Link>
+                <Link to="/about">About</Link>
             </div>
         </nav>
     );

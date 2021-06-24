@@ -8,9 +8,10 @@ import {
     getFirestore,
     FirebaseUser,
 } from './Firebase'
-import { Styles } from '../app/Styles'
-import { GlobalContext } from '../app/GlobalContext'
-import FirebaseNotifications from './FirebaseNotifications'
+
+// import { Styles } from '../app/Styles'
+// import { GlobalContext } from '../app/GlobalContext'
+// import FirebaseNotifications from './FirebaseNotifications'
 
 export interface SettableProfile {
     displayName?: string,
@@ -49,7 +50,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [loadingTheme, setLoadingTheme] = useState(true)
     const [authToken, setAuthToken] = useState()
-    const { showToast } = useContext(GlobalContext)
+
     // Setter here is being used to prevent an async race condition with component state
     const [savingTheme, setSavingTheme] = useState(false)
 
@@ -139,6 +140,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     useEffect(() => {
         updateUserToken()
         if (currentUser) {
+            console.log(currentUser)
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
                 if (usersTheme && usersTheme != activeTheme)
                     setActiveTheme(usersTheme)
@@ -165,12 +167,12 @@ export const FirebaseProvider = ({ children }: Props) => {
     const error = errorUser
 
     if (loadingUser)
-        return <ActivityIndicator fullscreen={true} viewStyle={Styles.views.activityIndicator} />
+        return <ActivityIndicator fullscreen={true} />
     else if (errorUser)
         return <DisplayError permissionDenied={errorUser.code === 'permission-denied'} />
     return (
         <>
-            <FirebaseNotifications currentUser={currentUser} />
+            {/* <FirebaseNotifications currentUser={currentUser} /> */}
             <FirebaseContext.Provider
                 value={{
                     currentUser,

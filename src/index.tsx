@@ -14,7 +14,7 @@ import "@blueprintjs/core/lib/css/blueprint.css"
 ReactDOM.render(
   <React.StrictMode>
     <MetaTags>
-      <title>Hello People</title>
+      <title>Cloud Lightning Messenger</title>
       <meta name="color-scheme" content="light dark" />
       <meta name="supported-color-scheme" content="light dark" />
     </MetaTags>

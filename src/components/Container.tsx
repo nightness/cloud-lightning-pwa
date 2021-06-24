@@ -1,3 +1,4 @@
+import './components.css'
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
 
@@ -10,7 +11,7 @@ interface Props {
 
 export function Container({ children, style: styleOverride, className, scroll }: Props) {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
-    const currentThemeType = getThemedComponentStyle('Button')
+    const currentThemeType = getThemedComponentStyle('Container')
     const style: CSSProperties = {
         // display: 'inline - block',
         // padding: '0.5rem 0',

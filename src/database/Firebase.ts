@@ -21,10 +21,14 @@ interface LoginSuccess {
     refreshToken?: string
 }
 
-export const Init = () => {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig)
-    }
+export const firebaseConfig = {
+    apiKey: 'AIzaSyA0QwzJ1I_i4w-jO-9Vk1W5YKHFAyVSal4',
+    authDomain: 'cloud-lightning-lite.firebaseapp.com',
+    projectId: 'cloud-lightning-lite',
+    storageBucket: 'cloud-lightning-lite.appspot.com',
+    messagingSenderId: '607208296062',
+    appId: '1:607208296062:web:17cfe68400f2a65ddcd22f',
+    measurementId: 'G-R55E0ZP42N',
 }
 
 export const getFirestore = () => {
@@ -35,16 +39,6 @@ export const getFirestore = () => {
     //     })
     // }
     return firestore
-}
-
-const firebaseConfig = {
-    apiKey: 'AIzaSyA0QwzJ1I_i4w-jO-9Vk1W5YKHFAyVSal4',
-    authDomain: 'cloud-lightning-lite.firebaseapp.com',
-    projectId: 'cloud-lightning-lite',
-    storageBucket: 'cloud-lightning-lite.appspot.com',
-    messagingSenderId: '607208296062',
-    appId: '1:607208296062:web:17cfe68400f2a65ddcd22f',
-    measurementId: 'G-R55E0ZP42N',
 }
 
 export const getAuth = () => firebase.auth()
@@ -174,3 +168,5 @@ export const collectionContains = async (collection: string, docId: string) => {
 export const callFirebaseFunction = (funcName: string, data: any) => {
     return firebase.functions().httpsCallable(funcName)(data)
 }
+
+export default firebase

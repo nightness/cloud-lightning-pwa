@@ -1,17 +1,14 @@
-import React, { CSSProperties } from 'react'
-import { EditableText } from '@blueprintjs/core'
+import './components.css'
+import { CSSProperties } from 'react'
+import { EditableText, EditableTextProps } from '@blueprintjs/core'
 
-interface Props {
+interface Props extends EditableTextProps {
     style?: CSSProperties
-    onClick?: () => any
-    children: any
 }
 
-export const TextInput = ({children, ...restProps}: Props) => {
+export const TextInput = ({ style, ...restProps }: Props) => {
     return (
-        <EditableText {...restProps}>
-            {children}
-        </EditableText>
+        <EditableText className='editable-text' {...restProps} />
     )
 }
 

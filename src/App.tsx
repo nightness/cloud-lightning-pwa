@@ -1,34 +1,28 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { ThemeProvider } from './components/ThemeContext'
-import { themes } from './Themes'
 import './App.css';
-import { Home, WebRTC } from './pages'
+import { Home, WebRTC, About } from './pages'
 import { NavBar } from './components'
-import { Container } from 'react-bootstrap'
-import * as Firebase from './database/Firebase'
-
 
 function App() {
-  Firebase.Init()
-
   return (
-    <ThemeProvider themes={themes}>
       <Router>
-        <Container className={`App`}>
+        <div className={`App`}>
           <NavBar />
-          <Container className={`content`}>
+          <div className={`content`}>
             <Switch>
               <Route exact path='/'>
                 <Home />
               </Route>
-              <Route exact path='/webRTC'>
+              <Route exact path='/WebRTC'>
                 <WebRTC />
               </Route>
+              <Route exact path='/about'>
+                <About />
+              </Route>
             </Switch>
-          </Container>
-        </Container>
+          </div>
+        </div>
       </Router>
-    </ThemeProvider>
   );
 }
 
