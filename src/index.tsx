@@ -11,10 +11,12 @@ import "normalize.css/normalize.css"
 import "@blueprintjs/icons/lib/css/blueprint-icons.css"
 import "@blueprintjs/core/lib/css/blueprint.css"
 
+const title = 'Cloud Lightning Messenger'
+
 ReactDOM.render(
   <React.StrictMode>
     <MetaTags>
-      <title>Cloud Lightning Messenger</title>
+      <title>{title}</title>
       <meta name="color-scheme" content="light dark" />
       <meta name="supported-color-scheme" content="light dark" />
     </MetaTags>

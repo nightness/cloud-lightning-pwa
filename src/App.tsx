@@ -2,8 +2,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css';
 import { Home, WebRTC, About } from './pages'
 import { NavBar } from './components'
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    document.title = 'ABC'
+  }, []);
+  
   return (
       <Router>
         <div className={`App`}>

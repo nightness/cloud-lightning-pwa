@@ -9,7 +9,6 @@ import {
     FormField,
     ScrollView
 } from '../components'
-import { Icon } from '@blueprintjs/core'
 import {
     firebaseAuth,
     FirebaseError,

@@ -1,5 +1,4 @@
 import NavBar from './NavBar'
-import Button from './Button'
 import Container from './Container'
 import Badge from './Badge'
 import DisplayError from './DisplayError'
@@ -10,12 +9,13 @@ import TextInput from './TextInput'
 import Text from './Text'
 import Image from './Image'
 import ScrollView from './ScrollView'
+import Button from './Button'
 import { ThemeContext, ThemeProvider } from './ThemeContext'
 import { Theme, NamedTheme, ThemeType, Themes } from './ThemeTypes'
 
 export {
-    Text,
     Button,
+    Text,
     NavBar,
     Container,
     Badge,

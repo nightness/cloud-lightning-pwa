@@ -6,7 +6,7 @@ import './components.css'
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <H1>REACTJS BLUEPRINTJS PWA</H1>
+            <H1>Cloud Lightning</H1>
             <div className="links">
                 <Link to="/">Home</Link>
                 <Link to="/WebRTC">WebRTC</Link>

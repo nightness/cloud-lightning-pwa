@@ -1,7 +1,6 @@
 import './components.css'
 import React, { CSSProperties } from 'react'
 import { Dots, Bounce, Digital, Levels, Sentry, Spinner, Squares, Windmill } from "react-activity";
-import { Card } from '@blueprintjs/core'
 
 interface Props {
     type?: 'dots' | 'bounce' | 'digital' | 'levels' | 'sentry' | 'spinner' | 'squares' | 'windmill'
@@ -32,15 +31,21 @@ export const ActivityIndicator = ({ type = 'spinner', size, fullscreen, ...restP
             numberSize = size
             break
     }
+
+    const style:CSSProperties = {
+        display: 'flex',
+        justifyContent: 'center'
+    }
+
     switch (type) {
-        case 'dots': return <Dots size={numberSize} {...restProps} />
-        case 'bounce': return <Bounce size={numberSize} {...restProps} />
-        case 'digital': return <Digital size={numberSize} {...restProps} />
-        case 'levels': return <Levels size={numberSize} {...restProps} />
-        case 'sentry': return <Sentry size={numberSize} {...restProps} />
-        case 'spinner': return <Card><Spinner size={numberSize} {...restProps} /></Card>
-        case 'squares': return <Squares size={numberSize} {...restProps} />
-        case 'windmill': return <Windmill size={numberSize} {...restProps} />
+        case 'dots': return <div style={style}><Dots size={numberSize} {...restProps} /></div>
+        case 'digital': return <div style={style}><Digital size={numberSize} {...restProps} /></div>
+        case 'levels': return <div style={style}><Levels size={numberSize} {...restProps} /></div>
+        case 'sentry': return <div style={style}><Sentry size={numberSize} {...restProps} /></div>
+        case 'spinner': return <div style={style}><Spinner size={numberSize} {...restProps} /></div>
+        case 'squares': return <div style={style}><Squares size={numberSize} {...restProps} /></div>
+        case 'windmill': return <div style={style}><Windmill size={numberSize} {...restProps} /></div>
+        default: return <></>
     }
 }
 
