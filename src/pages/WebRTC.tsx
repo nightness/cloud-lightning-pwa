@@ -29,21 +29,19 @@ export function WebRTC() {
   useEffect(() => {
     if (!webcamVideo.current || localStream === undefined) return
     webcamVideo.current.srcObject = localStream
-  }, [localStream, webcamVideo])
-
-  const webcamButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    actions?.init(localStream)
-
     // Mute the webcamVideo
     if (webcamVideo.current !== null)
       webcamVideo.current.muted = true
-
     if (callButton.current !== null)
       callButton.current.disabled = false
     if (answerButton.current !== null)
       answerButton.current.disabled = false
     if (webcamButton.current !== null)
       webcamButton.current.disabled = true
+  }, [localStream, webcamVideo])
+
+  const webcamButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
+    actions?.init(localStream)
   }
 
   const callButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
