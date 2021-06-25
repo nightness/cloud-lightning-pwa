@@ -29,9 +29,7 @@ export function WebRTC() {
   useEffect(() => {
     if (!webcamVideo.current || localStream === undefined) return
     webcamVideo.current.srcObject = localStream
-    // Mute the webcamVideo
-    if (webcamVideo.current !== null)
-      webcamVideo.current.muted = true
+    webcamVideo.current.muted = true
     if (callButton.current !== null)
       callButton.current.disabled = false
     if (answerButton.current !== null)

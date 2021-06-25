@@ -143,7 +143,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         if (currentUser) {
             console.log(currentUser)
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
-                if (usersTheme && usersTheme != activeTheme)
+                if (usersTheme && usersTheme !== activeTheme)
                     setActiveTheme(usersTheme)
                 setLoadingTheme(false)
             }).catch((error) => {
@@ -156,7 +156,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     useEffect(() => {
         if (currentUser && !savingTheme) {
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
-                if (usersTheme && usersTheme != activeTheme)
+                if (usersTheme && usersTheme !== activeTheme)
                     setProfile({ theme: usersTheme })
             }).catch(() => {
                 setSavingTheme(false)
