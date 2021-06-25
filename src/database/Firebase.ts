@@ -31,6 +31,12 @@ export const firebaseConfig = {
     measurementId: 'G-R55E0ZP42N',
 }
 
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    //firebase.analytics();
+  }
+  
+
 export const getFirestore = () => {
     var firestore = firebase.firestore()
     // if (false && location.hostname === 'localhost') {
@@ -168,5 +174,3 @@ export const collectionContains = async (collection: string, docId: string) => {
 export const callFirebaseFunction = (funcName: string, data: any) => {
     return firebase.functions().httpsCallable(funcName)(data)
 }
-
-export default firebase

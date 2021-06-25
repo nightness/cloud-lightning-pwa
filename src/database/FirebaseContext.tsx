@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useEffect, useContext, useMemo, useRef } from 'react'
 import { ActivityIndicator, DisplayError, ThemeContext, Theme } from '../components'
 import { UserClaims } from './DataTypes'
 import {
@@ -7,6 +7,7 @@ import {
     getAuth,
     getFirestore,
     FirebaseUser,
+
 } from './Firebase'
 
 // import { Styles } from '../app/Styles'

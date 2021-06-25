@@ -1,28 +1,6 @@
-import React, { useEffect, useRef, useState, MouseEvent } from 'react';
+import React, { useEffect, useRef, useState, MouseEvent, useContext } from 'react';
+import { WebRtcContext } from '../matrix/WebRtcContext';
 import './WebRTC.css'
-
-import firebase from 'firebase'
-//import firebase from '@firebase/app'
-//import '@firebase/auth'
-//import '@firebase/firestore'
-//import '@firebase/functions'
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA0QwzJ1I_i4w-jO-9Vk1W5YKHFAyVSal4",
-  authDomain: "cloud-lightning-lite.firebaseapp.com",
-  projectId: "cloud-lightning-lite",
-  storageBucket: "cloud-lightning-lite.appspot.com",
-  messagingSenderId: "607208296062",
-  appId: "1:607208296062:web:17cfe68400f2a65ddcd22f",
-  measurementId: "G-R55E0ZP42N"
-}
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  //firebase.analytics();
-}
-const firestore = firebase.firestore();
-const auth = firebase.auth();
 
 const servers = {
   iceServers: [
@@ -37,9 +15,8 @@ const servers = {
 }
 
 export function WebRTC() {
-  const [peerConnection, setPeerConnection] = useState(new RTCPeerConnection(servers))
-  const [localStream, setLocalStream] = useState<MediaStream>()
-  const [remoteStream, setRemoteStream] = useState<MediaStream>(new MediaStream())
+  const [isLoading, setIsLoading] = useState(true)
+  const { localStream, remoteStream, actions } = useContext(WebRtcContext)
   const webcamButton = useRef<HTMLButtonElement>(null)
   const webcamVideo = useRef<HTMLVideoElement>(null)
   const callButton = useRef<HTMLButtonElement>(null)
@@ -49,53 +26,23 @@ export function WebRTC() {
   const hangupButton = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-
-  }, [])
+    if (!webcamVideo.current || localStream === undefined) return
+    webcamVideo.current.srcObject = localStream
+  }, [localStream, webcamVideo])
 
   const webcamButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: true,
-      })
-      .then((stream) => {
-        setLocalStream(stream)
+    actions?.init(localStream)
 
-        console.log(stream)
+    // Mute the webcamVideo
+    if (webcamVideo.current !== null)
+      webcamVideo.current.muted = true
 
-        // Mute the webcamVideo
-        if (webcamVideo.current !== null)
-          webcamVideo.current.muted = true
-
-        // Mute localStream
-        const tracks = stream.getTracks()
-
-        // Push tracks from local stream to peer connection
-        tracks.forEach((track) => {
-          peerConnection.addTrack(track, stream)
-        })
-
-        // Pull tracks from remote stream, add to video stream
-        peerConnection.ontrack = (event) => {
-          event.streams?.[0].getTracks().forEach((track) => {
-            remoteStream?.addTrack(track)
-          })
-        }
-
-        console.log(webcamVideo.current)
-        if (webcamVideo.current !== null)
-          webcamVideo.current.srcObject = stream
-
-        if (callButton.current !== null)
-          callButton.current.disabled = false
-        if (answerButton.current !== null)
-          answerButton.current.disabled = false
-        if (webcamButton.current !== null)
-          webcamButton.current.disabled = true
-      })
-      .catch((exception) => {
-        console.error(exception)
-      })
+    if (callButton.current !== null)
+      callButton.current.disabled = false
+    if (answerButton.current !== null)
+      answerButton.current.disabled = false
+    if (webcamButton.current !== null)
+      webcamButton.current.disabled = true
   }
 
   const callButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
