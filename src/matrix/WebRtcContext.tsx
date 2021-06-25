@@ -19,11 +19,13 @@ interface WebRtcActions {
 type ContextType = {
     localStream?: MediaStream
     remoteStream?: MediaStream
-    actions?: WebRtcActions
+    actions: WebRtcActions
 }
 
 export const WebRtcContext = createContext<ContextType>({
-
+    actions: {
+        init: (src?: MediaStream) => undefined
+    }
 })
 
 
