@@ -39,69 +39,33 @@ export function WebRTC() {
   }
 
   const callButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    // // Create a new call
-    // functions.httpsCallable('createCall')({
-    //   target: auth.currentUser.uid,
-    // }).then(({ data: call }) => {
-
-    // })
-
-    // if (call === undefined || call.id === undefined) {
-    //   alert('Unable to create call')
-    //   return
-    // }
-
-    // // Reference Firestore collections for signaling
-    // const callDoc = firestore.collection('calls').doc(call.id)
-    // const offerCandidates = callDoc.collection('offerCandidates')
-    // const answerCandidates = callDoc.collection('answerCandidates')
-
-    // // Get candidates for caller, save to db
-    // peerConnection.onicecandidate = ({ candidate }) => {
-    //   candidate && offerCandidates.add(candidate.toJSON())
-    // }
-
-    // // Create offer
-    // const offerDescription = await peerConnection.createOffer()
-    // await peerConnection.setLocalDescription(offerDescription)
-
-    // // TODO: Add the target of the call to the offer
-    // const offer = {
-    //   sdp: offerDescription.sdp,
-    //   type: offerDescription.type,
-    // }
-
-    // const { data: resultData } = await functions.httpsCallable(
-    //   'setCallOffer'
-    // )({ id: call.id, offer })
-    // if (resultData.error) {
-    //   console.error(resultData.error)
-    //   return
-    // }
-
-    // // Update textbox
-    // callInput.value = call.id
-
-    // // Listen for remote answer
-    // callDoc.onSnapshot((snapshot) => {
-    //   const data = snapshot.data()
-    //   if (!peerConnection.currentRemoteDescription && data?.answer) {
-    //     const answerDescription = new RTCSessionDescription(data.answer)
-    //     peerConnection.setRemoteDescription(answerDescription)
-    //   }
-    // })
-
-    // // When answered, add candidate to peer connection
-    // answerCandidates.onSnapshot((snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === 'added') {
-    //       const candidate = new RTCIceCandidate(change.doc.data())
-    //       peerConnection.addIceCandidate(candidate)
-    //       hangupButton.disabled = false
-    //     }
-    //   })
-    // })
+    actions.offer().then((callId) => {
+      if (!callId) {
+        alert('Unable to create call')
+        return
+      }
+      const state = callInput.current?.state
+      if (state !== undefined && callInput.current)
+        callInput.current.setState({
+          ...state,
+          value: callId
+        })
+    })
   }
+
+  // // 3. Answer the call with the unique ID
+  const answerButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
+    const callId = callInput.current?.state.value
+    if (!callId) {
+      console.error(`WebRTC Error: No call ID entered`)
+      return
+    }
+    actions.answer(callId).then((result) => {
+      if (hangupButton.current)
+        hangupButton.current.disabled = false
+    })
+  }
+
 
   // const resetState = () => {
   //   peerConnection.close()
@@ -114,51 +78,6 @@ export function WebRTC() {
   //   hangupButton?.disabled = true
   //   webcamButton?.disabled = false
   // }
-
-  // // 3. Answer the call with the unique ID
-  const answerButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    // const callId = callInput.value
-    // const callDoc = firestore.collection('calls').doc(callId)
-    // const answerCandidates = callDoc.collection('answerCandidates')
-    // const offerCandidates = callDoc.collection('offerCandidates')
-
-    // peerConnection.onicecandidate = (event) => {
-    //   event.candidate && answerCandidates.add(event.candidate.toJSON())
-    // }
-
-    // const { offer } = (await callDoc.get()).data()
-    // console.log(offer)
-    // await peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
-
-    // const answerDescription = await peerConnection.createAnswer()
-    // await peerConnection.setLocalDescription(answerDescription)
-
-    // const answer = {
-    //   type: answerDescription.type,
-    //   sdp: answerDescription.sdp,
-    // }
-
-    // const { data: resultData } = await functions.httpsCallable('answerCall')({
-    //   id: callId,
-    //   answer,
-    // })
-    // if (resultData.error) {
-    //   console.error(resultData.error)
-    //   return
-    // }
-
-    // hangupButton.disabled = false
-
-    // offerCandidates.onSnapshot((snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === 'added') {
-    //       let data = change.doc.data()
-    //       peerConnection.addIceCandidate(new RTCIceCandidate(data))
-    //     }
-    //   })
-    // })
-
-  }
 
   const hangupButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     // const tracks = webcamVideo.srcObject.getTracks()

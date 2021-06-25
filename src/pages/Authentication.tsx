@@ -26,6 +26,7 @@ import { CSSProperties } from 'styled-components'
 
 interface AuthenticationProps {
     customToken?: string
+    logout?: boolean
 }
 
 interface AuthenticationFields {
@@ -83,8 +84,7 @@ const RegistrationScheme = Yup.object({
         .required('Please retype your password')
 })
 
-export const Authentication = ({ customToken }: AuthenticationProps) => {
-    const { setProfile: firestoreSetProfile } = useContext(FirebaseContext)
+export const Authentication = ({ customToken, logout }: AuthenticationProps) => {
     const [mode, setMode] = useState<'login' | 'register' | 'password-reset'>('login')
     const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
@@ -133,9 +133,6 @@ export const Authentication = ({ customToken }: AuthenticationProps) => {
     const onRegisterPress = async (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         const setProfile = async () => {
             console.log(values)
-            await firestoreSetProfile({
-                displayName: values.displayName
-            })
             //navigation.navigate('LoginActivity')
         }
 
@@ -192,6 +189,14 @@ export const Authentication = ({ customToken }: AuthenticationProps) => {
     })
 
     useEffect(() => {
+        console.log('logout')
+        if (logout) {
+            console.log('sign-out')
+            auth.signOut()
+            setIsLoading(false)
+            return
+        }
+
         if (customToken) {
             auth.signInWithCustomToken(customToken)
                 .then(() => {
@@ -369,15 +374,17 @@ export const Authentication = ({ customToken }: AuthenticationProps) => {
     }
 }
 
-interface Props {
+export default Authentication
 
-}
+// interface Props {
 
-export default (props: Props) => (
-    <Authentication
-    //  customToken={'abc.123.45657'} {/* This is not a valid custom token */}
-    />
-)
+// }
+
+//  (props: Props) => (
+//     <Authentication
+//     //  customToken={'abc.123.45657'} {/* This is not a valid custom token */}
+//     />
+// )
 
 const footerView: CSSProperties = {
     flex: 1,

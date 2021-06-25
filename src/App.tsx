@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css';
-import { Home, WebRTC, About } from './pages'
+import { Home, WebRTC, About, Authentication } from './pages'
 import { NavBar } from './components'
 import { FirebaseProvider } from './database/FirebaseContext'
 import { WebRtcProvider } from './matrix/WebRtcContext';
@@ -14,6 +14,12 @@ const MainDocument = () => {
           <Switch>
             <Route exact path='/'>
               <Home />
+            </Route>
+            <Route exact path='/logout'>
+              <Authentication logout={true} />
+            </Route>
+            <Route exact path='/auth'>
+              <Authentication />
             </Route>
             <Route exact path='/WebRTC'>
               <WebRTC />
