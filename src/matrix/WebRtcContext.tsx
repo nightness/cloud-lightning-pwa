@@ -1,5 +1,4 @@
 import React, { createContext, useState, useRef, useEffect, LegacyRef, MutableRefObject } from 'react';
-import Video from '../components/Video'
 
 const servers = {
     iceServers: [
