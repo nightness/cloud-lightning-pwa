@@ -42,7 +42,7 @@ export function WebRTC() {
     actions?.init(localStream)
   }
 
-  const callButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const callButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     // // Create a new call
     // functions.httpsCallable('createCall')({
     //   target: auth.currentUser.uid,
@@ -214,12 +214,12 @@ export function WebRTC() {
 
       <h2>Create a new Call</h2>
       <h5>Requires a Google or Email authenticated account to use</h5>
-      <button
+      <Button
         onClick={callButtonClick}
-        ref={callButton}
-        disabled>
+        elementRef={callButton}
+        disabled={!localStream}>
         Create Call (offer)
-      </button>
+      </Button>
 
       <h2>Join a Call</h2>
       <h5>Requires a Google or Email authenticated account to use</h5>

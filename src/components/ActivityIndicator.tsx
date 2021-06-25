@@ -32,9 +32,22 @@ export const ActivityIndicator = ({ type = 'spinner', size, fullscreen, ...restP
             break
     }
 
-    const style:CSSProperties = {
+    let style:CSSProperties = {
         display: 'flex',
         justifyContent: 'center'
+    }
+
+    if (fullscreen) {
+        style = {
+            ...style,
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            alignContent: 'center',
+            alignSelf: 'center',
+            alignItems: 'center'
+        }
+        numberSize = 46
     }
 
     switch (type) {
