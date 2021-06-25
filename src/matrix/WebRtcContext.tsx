@@ -21,7 +21,7 @@ interface WebRtcActions {
 
 type ContextType = {
     localStream?: MediaStream
-    remoteStream?: MediaStream
+    remoteStream: MediaStream
     actions: WebRtcActions
 }
 
@@ -30,7 +30,8 @@ export const WebRtcContext = createContext<ContextType>({
         init: (src?: MediaStream) => undefined,
         offer: async () => '',
         answer: async (callId: string) => undefined
-    }
+    },
+    remoteStream: new MediaStream()
 })
 
 
@@ -50,6 +51,7 @@ export const WebRtcProvider = ({ children }: Props) => {
     const connectionRef = useRef<HTMLVideoElement>(null);
 
     const init = (stream?: MediaStream) => {
+        // Already set, don't do it again
         if (stream) {
             setLocalStream(stream)
             return

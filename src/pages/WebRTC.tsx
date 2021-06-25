@@ -34,6 +34,11 @@ export function WebRTC() {
     setStage(2)
   }, [localStream, webcamVideo])
 
+  useEffect(() => {
+    if (remoteVideo.current)
+      remoteVideo.current.srcObject = remoteStream
+  }, [remoteStream, remoteVideo])
+
   const webcamButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     actions.init(localStream)
   }
