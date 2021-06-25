@@ -1,4 +1,4 @@
-import React, { createContext, useState, useRef, useEffect, LegacyRef, MutableRefObject } from 'react';
+import React, { createContext, useState, useRef } from 'react';
 
 const servers = {
     iceServers: [
@@ -32,8 +32,7 @@ interface Props {
 }
 
 export const WebRtcProvider = ({ children }: Props) => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [peerConnection, setPeerConnection] = useState(new RTCPeerConnection(servers))
+    const peerConnection = useRef(new RTCPeerConnection(servers))
     const [callAccepted, setCallAccepted] = useState(false);
     const [callEnded, setCallEnded] = useState(false);
     const [localStream, setLocalStream] = useState<MediaStream>();
@@ -51,30 +50,24 @@ export const WebRtcProvider = ({ children }: Props) => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then((currentStream) => {
                 setLocalStream(currentStream);
-                //if (!localVideo.current) return
-
-                console.log(currentStream);
-
-                // Mute the webcamVideo
-                //localVideo.current.muted = true
 
                 // Mute localStream
                 const tracks = currentStream.getTracks()
 
                 // Push tracks from local stream to peer connection
                 tracks?.forEach((track) => {
-                    peerConnection.addTrack(track, currentStream)
+                    peerConnection.current.addTrack(track, currentStream)
                 })
 
                 // Pull tracks from remote stream, add to video stream
-                peerConnection.ontrack = (event) => {
+                peerConnection.current.ontrack = (event) => {
                     event.streams?.[0].getTracks().forEach((track) => {
                         remoteStream.addTrack(track)
                     })
                 }
-
-                //localVideo.current.srcObject = localStream
-            });
+            }).catch((error) => {
+                throw error
+            })
     }
 
     return (

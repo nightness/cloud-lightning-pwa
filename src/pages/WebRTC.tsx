@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, MouseEvent, useContext } from 'react';
+import { Button, Text } from '@blueprintjs/core'
 import { WebRtcContext } from '../matrix/WebRtcContext';
 import './WebRTC.css'
 
@@ -30,7 +31,7 @@ export function WebRTC() {
     webcamVideo.current.srcObject = localStream
   }, [localStream, webcamVideo])
 
-  const webcamButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const webcamButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
     actions?.init(localStream)
 
     // Mute the webcamVideo
@@ -209,11 +210,11 @@ export function WebRTC() {
           />
         </span>
       </div>
-      <button
+      <Button
         onClick={webcamButtonClick}
-        ref={webcamButton}>
+        elementRef={webcamButton}>
         Start webcam
-      </button>
+      </Button>
 
       <h2>Create a new Call</h2>
       <h5>Requires a Google or Email authenticated account to use</h5>
