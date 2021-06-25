@@ -96,7 +96,8 @@ export const WebRtcProvider = ({ children }: Props) => {
             type: offerDescription.type,
         };
 
-        await callDoc.set({ offer, creator: getCurrentUser()?.uid });
+        const creator = getCurrentUser()?.uid
+        await callDoc.set({ offer, creator, target: creator  });
 
         // Listen for remote answer
         callDoc.onSnapshot((snapshot) => {
@@ -142,7 +143,9 @@ export const WebRtcProvider = ({ children }: Props) => {
             sdp: answerDescription.sdp,
         };
 
+        //console.log('pre callData')
         await callDoc.update({ answer });
+        console.log('post callData')
 
         offerCandidates.onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {

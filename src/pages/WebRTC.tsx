@@ -61,8 +61,7 @@ export function WebRTC() {
       return
     }
     actions.answer(callId).then((result) => {
-      if (hangupButton.current)
-        hangupButton.current.disabled = false
+
     })
   }
 
@@ -75,8 +74,6 @@ export function WebRTC() {
   //   if (remoteStream) remoteStream.close()
   //   remoteStream = null
   //   callInput.value = ''
-  //   hangupButton?.disabled = true
-  //   webcamButton?.disabled = false
   // }
 
   const hangupButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
@@ -120,7 +117,6 @@ export function WebRTC() {
     case 2: options =
       (
         <div style={{ justifyContent: 'center' }}>
-          <H5>Requires a Google or Email authenticated account to use</H5>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <span style={{ flex: 1 }}>
               <H2>Create a new Call</H2>
@@ -137,7 +133,7 @@ export function WebRTC() {
               <Button
                 onClick={answerButtonClick}
                 ref={answerButton}
-                disabled>
+              >
                 Answer
               </Button>
             </span>
@@ -152,7 +148,7 @@ export function WebRTC() {
           <Button
             onClick={hangupButtonClick}
             elementRef={hangupButton}
-            disabled>
+          >
             Hangup
           </Button>
         </div>
