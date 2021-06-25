@@ -253,15 +253,12 @@ export function WebRTC() {
     <div className="WebRTC">
       <div className="videos">
         <span>
-          <h3>Local Stream</h3>
+          <H3>Local Stream</H3>
           <video ref={webcamVideo} id="webcamVideo" autoPlay playsInline></video>
         </span>
         <span>
-          <h3>Remote Stream</h3>
-          <video
-            ref={remoteVideo}
-            autoPlay playsInline
-          />
+          <H3>Remote Stream</H3>
+          <video ref={remoteVideo} autoPlay playsInline />
         </span>
       </div>
       {options}
