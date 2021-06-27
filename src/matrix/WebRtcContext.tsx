@@ -14,6 +14,7 @@ export interface WebRtcActions {
     offer: () => Promise<string>
     answer: (callId: string) => Promise<any>
     hangup: () => Promise<any>
+    reset: () => Promise<any>
 }
 
 type ContextType = {
@@ -28,7 +29,8 @@ export const WebRtcContext = createContext<ContextType>({
         init: (src?: MediaStream) => undefined,
         offer: async () => '',
         answer: async (callId: string) => undefined,
-        hangup: async () => undefined
+        hangup: async () => undefined,
+        reset: async () => undefined
     },
     callStage: CallStage.New,
     remoteStream: new MediaStream()
@@ -52,7 +54,7 @@ interface Props {
 
 export const WebRtcProvider = ({ children }: Props) => {
     const [callId, setCallId] = useState<string>('')
-    const peerConnection = useRef(new RTCPeerConnection(servers))
+    const [peerConnection, setPeerConnection] = useState<RTCPeerConnection>(new RTCPeerConnection(servers))
     const [stage, setStage] = useState<CallStage>(CallStage.New)
     const [localStream, setLocalStream] = useState<MediaStream>();
     const [remoteStream, setRemoteStream] = useState(new MediaStream());
@@ -72,11 +74,11 @@ export const WebRtcProvider = ({ children }: Props) => {
 
                 // Push tracks from local stream to peer connection
                 tracks?.forEach((track) => {
-                    peerConnection.current.addTrack(track, currentStream)
+                    peerConnection.addTrack(track, currentStream)
                 })
 
                 // Pull tracks from remote stream, add to video stream
-                peerConnection.current.ontrack = (event) => {
+                peerConnection.ontrack = (event) => {
                     event.streams?.[0].getTracks().forEach((track) => {
                         remoteStream.addTrack(track)
                     })
@@ -93,13 +95,13 @@ export const WebRtcProvider = ({ children }: Props) => {
         const answerCandidates = callDoc.collection('answerCandidates');
 
         // Get candidates for caller, save to db
-        peerConnection.current.onicecandidate = (event) => {
+        peerConnection.onicecandidate = (event) => {
             event.candidate && offerCandidates.add(event.candidate.toJSON());
         };
 
         // Create offer
-        const offerDescription = await peerConnection.current.createOffer();
-        await peerConnection.current.setLocalDescription(offerDescription);
+        const offerDescription = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offerDescription);
 
         const offer = {
             sdp: offerDescription.sdp,
@@ -112,9 +114,9 @@ export const WebRtcProvider = ({ children }: Props) => {
         // Listen for remote answer
         callDoc.onSnapshot((snapshot) => {
             const data = snapshot.data()
-            if (!peerConnection.current.currentRemoteDescription && data?.answer) {
+            if (!peerConnection.currentRemoteDescription && data?.answer) {
                 const answerDescription = new RTCSessionDescription(data.answer)
-                peerConnection.current.setRemoteDescription(answerDescription)
+                peerConnection.setRemoteDescription(answerDescription)
             }
         })
 
@@ -123,7 +125,7 @@ export const WebRtcProvider = ({ children }: Props) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === 'added') {
                     const candidate = new RTCIceCandidate(change.doc.data())
-                    peerConnection.current.addIceCandidate(candidate)
+                    peerConnection.addIceCandidate(candidate)
                     setStage(CallStage.Accepted)
                 }
             })
@@ -138,17 +140,17 @@ export const WebRtcProvider = ({ children }: Props) => {
         const answerCandidates = callDoc.collection('answerCandidates');
         const offerCandidates = callDoc.collection('offerCandidates');
 
-        peerConnection.current.onicecandidate = (event) => {
+        peerConnection.onicecandidate = (event) => {
             event.candidate && answerCandidates.add(event.candidate.toJSON());
         };
 
         const callData = (await callDoc.get()).data();
 
         const offerDescription = callData?.offer;
-        await peerConnection.current.setRemoteDescription(new RTCSessionDescription(offerDescription));
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(offerDescription));
 
-        const answerDescription = await peerConnection.current.createAnswer();
-        await peerConnection.current.setLocalDescription(answerDescription);
+        const answerDescription = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answerDescription);
 
         const answer = {
             type: answerDescription.type,
@@ -163,7 +165,7 @@ export const WebRtcProvider = ({ children }: Props) => {
                 console.log(change);
                 if (change.type === 'added') {
                     let data = change.doc.data();
-                    peerConnection.current.addIceCandidate(new RTCIceCandidate(data));
+                    peerConnection.addIceCandidate(new RTCIceCandidate(data));
                     setCallId(callId)
                     setStage(CallStage.Accepted)
                 }
@@ -181,13 +183,13 @@ export const WebRtcProvider = ({ children }: Props) => {
           remoteStream.getTracks().forEach((track) => track.stop())
     
         // This stops my stream to the senders, but doesn't not stop me from seeing them
-        const senders = peerConnection.current.getSenders()
+        const senders = peerConnection.getSenders()
         senders.forEach((sender) => {
-          peerConnection.current.removeTrack(sender)
+          peerConnection.removeTrack(sender)
         })
     
         // Close the entire connection
-        peerConnection.current.close()
+        peerConnection.close()
     
         const callDoc = getFirestore().collection('calls').doc(callId)
     
@@ -200,14 +202,13 @@ export const WebRtcProvider = ({ children }: Props) => {
         }    
     }
 
-    useEffect(() => {
-        console.log('stage: ', CallStage)
-    }, [stage])
-
-    useEffect(() => {
-        console.log('callId: ', callId)
-    }, [callId])
-
+    const reset = async () => {
+        setCallId('')
+        setPeerConnection(new RTCPeerConnection(servers))
+        setStage(CallStage.Initialized)
+        setLocalStream(undefined)
+        setRemoteStream(new MediaStream())
+    }
 
     return (
         <WebRtcContext.Provider value={{
@@ -215,7 +216,8 @@ export const WebRtcProvider = ({ children }: Props) => {
                 init,
                 offer,
                 answer,
-                hangup
+                hangup,
+                reset
             },
             localStream,
             remoteStream,

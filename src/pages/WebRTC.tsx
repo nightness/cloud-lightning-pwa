@@ -78,27 +78,22 @@ export function WebRTC() {
       .catch((error) => console.error(error));
   };
 
-  // const resetState = () => {
-  //   peerConnection.close()
-  //   setPeerConnection(new RTCPeerConnection(servers))
-  //   if (localStream) localStream.close()
-  //   localStream = undefined
-  //   if (remoteStream) remoteStream.close()
-  //   remoteStream = null
-  //   callInput.value = ''
-  // }
-
   const hangupButtonClick = (
     event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => {
     actions
       .hangup()
       .then((result) => {
-        // UI doesn't need anything changed
+        if (callInput.current) {
+          const state = callInput.current.state
+          callInput.current.setState({
+            ...state,
+            value: '',
+          });
+        }
+        actions.reset();
       })
       .catch((error) => console.error(error));
-
-    // //resetState()
   };
 
   let options;
