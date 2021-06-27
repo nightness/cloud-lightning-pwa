@@ -194,7 +194,7 @@ export const WebRtcProvider = ({ children }: Props) => {
         const callDoc = getFirestore().collection('calls').doc(callId)
     
         try {
-            // TODO Needs to deletect the collections in this document too
+            // TODO Needs to delete the collections in this document too
             const result = await callDoc.delete()
             setStage(CallStage.Ended)
             return { success: result }
