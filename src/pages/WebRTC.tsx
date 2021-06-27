@@ -1,75 +1,82 @@
-import React, { useEffect, useRef, useState, MouseEvent, useContext } from 'react';
-import { Button, EditableText, Text, H1, H2, H3, H4, H5 } from '@blueprintjs/core'
-import { WebRtcContext } from '../matrix/WebRtcContext';
-import './WebRTC.css'
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  MouseEvent,
+  useContext,
+} from "react";
+import {
+  Button,
+  EditableText,
+  Text,
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+} from "@blueprintjs/core";
+import { CallStage, WebRtcContext } from "../matrix/WebRtcContext";
+import "./WebRTC.css";
 
 const servers = {
   iceServers: [
     {
-      urls: [
-        'stun:stun1.l.google.com:19302',
-        'stun:stun2.l.google.com:19302',
-      ],
+      urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
     },
   ],
   iceCandidatePoolSize: 10,
-}
+};
 
 export function WebRTC() {
-  const [stage, setStage] = useState<1 | 2 | 3>(1)
-  const [isLoading, setIsLoading] = useState(true)
-  const { localStream, remoteStream, actions } = useContext(WebRtcContext)
-  const webcamButton = useRef<HTMLButtonElement>(null)
-  const webcamVideo = useRef<HTMLVideoElement>(null)
-  const callButton = useRef<HTMLButtonElement>(null)
-  const callInput = useRef<EditableText>(null)
-  const answerButton = useRef<Button>(null)
-  const remoteVideo = useRef<HTMLVideoElement>(null)
-  const hangupButton = useRef<HTMLButtonElement>(null)
+  const [isLoading, setIsLoading] = useState(true);
+  const { localStream, remoteStream, actions, callStage } =
+    useContext(WebRtcContext);
+  const webcamButton = useRef<HTMLButtonElement>(null);
+  const webcamVideo = useRef<HTMLVideoElement>(null);
+  const callButton = useRef<HTMLButtonElement>(null);
+  const callInput = useRef<EditableText>(null);
+  const answerButton = useRef<Button>(null);
+  const remoteVideo = useRef<HTMLVideoElement>(null);
+  const hangupButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!webcamVideo.current || localStream === undefined) return
-    webcamVideo.current.srcObject = localStream
-    webcamVideo.current.muted = true
-    setStage(2)
-  }, [localStream, webcamVideo])
+    if (webcamVideo.current && localStream !== undefined) {
+      webcamVideo.current.srcObject = localStream;
+      webcamVideo.current.muted = true;
+    }
+    if (remoteVideo.current && remoteStream !== undefined)
+      remoteVideo.current.srcObject = remoteStream;
+  }, [callStage, webcamVideo, localStream, remoteStream, remoteVideo]);
 
-  useEffect(() => {
-    if (remoteVideo.current)
-      remoteVideo.current.srcObject = remoteStream
-  }, [remoteStream, remoteVideo, stage])
-
-  const webcamButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    actions.init(localStream)
-  }
-
-  const callButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
+  const callButtonClick = (
+    event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
+  ) => {
     actions.offer().then((callId) => {
-      if (!callId) {
-        alert('Unable to create call')
-        return
-      }
-      const state = callInput.current?.state
+      const state = callInput.current?.state;
       if (state !== undefined && callInput.current)
         callInput.current.setState({
           ...state,
-          value: callId
-        })
-    })
-  }
+          value: callId,
+        });
+    });
+  };
 
   // // 3. Answer the call with the unique ID
-  const answerButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    const callId = callInput.current?.state.value
+  const answerButtonClick = (
+    event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
+  ) => {
+    const callId = callInput.current?.state.value;
     if (!callId) {
-      console.error(`WebRTC Error: No call ID entered`)
-      return
+      console.error(`WebRTC Error: No call ID entered`);
+      return;
     }
-    actions.answer(callId).then((result) => {
-
-    })
-  }
-
+    actions
+      .answer(callId)
+      .then((result) => {
+        // UI doesn't need anything changed
+      })
+      .catch((error) => console.error(error));
+  };
 
   // const resetState = () => {
   //   peerConnection.close()
@@ -81,83 +88,76 @@ export function WebRTC() {
   //   callInput.value = ''
   // }
 
-  const hangupButtonClick = (event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
-    // const tracks = webcamVideo.srcObject.getTracks()
-    // tracks.forEach((track) => {
-    //   track.stop()
-    // })
+  const hangupButtonClick = (
+    event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
+  ) => {
+    actions
+      .hangup()
+      .then((result) => {
+        // UI doesn't need anything changed
+      })
+      .catch((error) => console.error(error));
 
-    // if (remoteStream)
-    //   remoteStream.getTracks().forEach((track) => track.stop())
+    // //resetState()
+  };
 
-    // // This stops my stream to the senders, but doesn't not stop me from seeing them
-    // const senders = peerConnection.getSenders()
-    // senders.forEach((sender) => {
-    //   peerConnection.removeTrack(sender)
-    // })
-
-    // // Close the entire connection
-    // peerConnection.close()
-
-    // // Clean-up the database
-    // const result = await functions.httpsCallable('hangupCall')({
-    //   id: callInput.value,
-    // })
-
-    // resetState()
-  }
-
-  let options
-  switch (stage) {
-    case 1: options =
-      (<div>
-        <H3>Enable Webcam</H3>
-        <Button
-          onClick={webcamButtonClick}
-          elementRef={webcamButton}>
-          Start webcam
-        </Button>
-      </div>)
+  let options;
+  switch (callStage) {
+    case 0:
+      options = (
+        <div>
+          <H3>Enable Webcam</H3>
+          <Button
+            onClick={() => actions.init(localStream)}
+            elementRef={webcamButton}
+          >
+            Start webcam
+          </Button>
+        </div>
+      );
       break;
-    case 2: options =
-      (
-        <div style={{ justifyContent: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+    case 1:
+    case 2:
+      options = (
+        <div style={{ justifyContent: "center" }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <span style={{ flex: 1 }}>
               <H2>Create a new Call</H2>
               <Button
                 onClick={callButtonClick}
                 elementRef={callButton}
-                disabled={!localStream}>
+                disabled={!localStream}
+              >
                 Create Call (offer)
               </Button>
             </span>
-            <span style={{ flex: 1, alignContent: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+            <span
+              style={{
+                flex: 1,
+                alignContent: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
               <H2>Answer a Call</H2>
               <EditableText ref={callInput} />
-              <Button
-                onClick={answerButtonClick}
-                ref={answerButton}
-              >
+              <Button onClick={answerButtonClick} ref={answerButton}>
                 Answer
               </Button>
             </span>
           </div>
         </div>
-      )
+      );
       break;
-    case 3: options =
-      (
+    case 3:
+      options = (
         <div>
           <H2>Hangup</H2>
-          <Button
-            onClick={hangupButtonClick}
-            elementRef={hangupButton}
-          >
+          <Button onClick={hangupButtonClick} elementRef={hangupButton}>
             Hangup
           </Button>
         </div>
-      )
+      );
   }
 
   return (
@@ -165,19 +165,25 @@ export function WebRTC() {
       <div className="videos">
         <span>
           <H3>Local Stream</H3>
-          <video ref={webcamVideo} id="webcamVideo" autoPlay playsInline></video>
+          <video
+            ref={webcamVideo}
+            id="webcamVideo"
+            autoPlay
+            playsInline
+          ></video>
         </span>
-        {stage >= 2 ?
+        {callStage >= 1 ? (
           <span>
             <H3>Remote Stream</H3>
             <video ref={remoteVideo} autoPlay playsInline />
           </span>
-          : <></>
-        }
+        ) : (
+          <></>
+        )}
       </div>
       {options}
     </div>
   );
 }
 
-export default WebRTC
+export default WebRTC;

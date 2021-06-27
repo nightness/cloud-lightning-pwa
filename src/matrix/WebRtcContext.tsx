@@ -1,5 +1,38 @@
-import React, { createContext, useState, useRef } from 'react';
+import React, { createContext, useState, useRef, useEffect } from 'react';
 import { getCurrentUser, getFirestore } from '../database/Firebase'
+
+export enum CallStage {
+    New,
+    Initialized,
+    Offered,
+    Accepted,
+    Ended
+}
+
+export interface WebRtcActions {
+    init: (src?: MediaStream) => any
+    offer: () => Promise<string>
+    answer: (callId: string) => Promise<any>
+    hangup: () => Promise<any>
+}
+
+type ContextType = {
+    localStream?: MediaStream
+    remoteStream: MediaStream
+    callStage: CallStage
+    actions: WebRtcActions
+}
+
+export const WebRtcContext = createContext<ContextType>({
+    actions: {
+        init: (src?: MediaStream) => undefined,
+        offer: async () => '',
+        answer: async (callId: string) => undefined,
+        hangup: async () => undefined
+    },
+    callStage: CallStage.New,
+    remoteStream: new MediaStream()
+})
 
 const servers = {
     iceServers: [
@@ -13,42 +46,16 @@ const servers = {
     iceCandidatePoolSize: 10,
 }
 
-interface WebRtcActions {
-    init: (src?: MediaStream) => any
-    offer: () => Promise<string>
-    answer: (callId: string) => Promise<any>
-}
-
-type ContextType = {
-    localStream?: MediaStream
-    remoteStream: MediaStream
-    actions: WebRtcActions
-}
-
-export const WebRtcContext = createContext<ContextType>({
-    actions: {
-        init: (src?: MediaStream) => undefined,
-        offer: async () => '',
-        answer: async (callId: string) => undefined
-    },
-    remoteStream: new MediaStream()
-})
-
-
 interface Props {
     children: JSX.Element | JSX.Element[]
 }
 
 export const WebRtcProvider = ({ children }: Props) => {
+    const [callId, setCallId] = useState<string>('')
     const peerConnection = useRef(new RTCPeerConnection(servers))
-    const [callAccepted, setCallAccepted] = useState(false);
-    const [callEnded, setCallEnded] = useState(false);
+    const [stage, setStage] = useState<CallStage>(CallStage.New)
     const [localStream, setLocalStream] = useState<MediaStream>();
     const [remoteStream, setRemoteStream] = useState(new MediaStream());
-    const [name, setName] = useState('');
-    const [call, setCall] = useState({});
-    const [me, setMe] = useState('');
-    const connectionRef = useRef<HTMLVideoElement>(null);
 
     const init = (stream?: MediaStream) => {
         // Already set, don't do it again
@@ -74,6 +81,7 @@ export const WebRtcProvider = ({ children }: Props) => {
                         remoteStream.addTrack(track)
                     })
                 }
+                setStage(CallStage.Initialized)
             }).catch((error) => {
                 throw error
             })
@@ -116,10 +124,12 @@ export const WebRtcProvider = ({ children }: Props) => {
                 if (change.type === 'added') {
                     const candidate = new RTCIceCandidate(change.doc.data())
                     peerConnection.current.addIceCandidate(candidate)
+                    setStage(CallStage.Accepted)
                 }
             })
         })
-
+        setCallId(callDoc.id)
+        setStage(CallStage.Offered)
         return callDoc.id
     }
 
@@ -147,7 +157,6 @@ export const WebRtcProvider = ({ children }: Props) => {
 
         //console.log('pre callData')
         await callDoc.update({ answer });
-        console.log('post callData')
 
         offerCandidates.onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
@@ -155,30 +164,62 @@ export const WebRtcProvider = ({ children }: Props) => {
                 if (change.type === 'added') {
                     let data = change.doc.data();
                     peerConnection.current.addIceCandidate(new RTCIceCandidate(data));
+                    setCallId(callId)
+                    setStage(CallStage.Accepted)
                 }
             })
         })
     }
 
+    const hangup = async () => {
+        const tracks = remoteStream.getTracks()
+        tracks.forEach((track) => {
+          track.stop()
+        })
+    
+        if (remoteStream)
+          remoteStream.getTracks().forEach((track) => track.stop())
+    
+        // This stops my stream to the senders, but doesn't not stop me from seeing them
+        const senders = peerConnection.current.getSenders()
+        senders.forEach((sender) => {
+          peerConnection.current.removeTrack(sender)
+        })
+    
+        // Close the entire connection
+        peerConnection.current.close()
+    
+        const callDoc = getFirestore().collection('calls').doc(callId)
+    
+        try {
+            const result = await callDoc.delete()
+            setStage(CallStage.Ended)
+            return { success: result }
+        } catch (error) {
+            return { error }
+        }    
+    }
+
+    useEffect(() => {
+        console.log('stage: ', CallStage)
+    }, [stage])
+
+    useEffect(() => {
+        console.log('callId: ', callId)
+    }, [callId])
+
+
     return (
         <WebRtcContext.Provider value={{
-            // call,
-            // callAccepted,
             actions: {
                 init,
                 offer,
-                answer
+                answer,
+                hangup
             },
             localStream,
-            remoteStream
-            // localStream,
-            // name,
-            // setName,
-            // callEnded,
-            // me,
-            // callUser,
-            // leaveCall,
-            // answerCall,
+            remoteStream,
+            callStage: stage
         }}
         >
             {children}
