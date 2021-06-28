@@ -40,13 +40,14 @@ export function WebRTC() {
   const hangupButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (webcamVideo.current && localStream !== undefined) {
-      webcamVideo.current.srcObject = localStream;
-      webcamVideo.current.muted = true;
+    if (webcamVideo.current) {
+      webcamVideo.current.muted = true
+    if (localStream !== undefined)
+      webcamVideo.current.srcObject = localStream
     }
     if (remoteVideo.current && remoteStream !== undefined)
       remoteVideo.current.srcObject = remoteStream;
-  }, [callStage, webcamVideo, localStream, remoteStream, remoteVideo]);
+  }, [callStage, webcamVideo, localStream, remoteStream, remoteVideo])
 
   const callButtonClick = (
     event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
@@ -57,9 +58,9 @@ export function WebRTC() {
         callInput.current.setState({
           ...state,
           value: callId,
-        });
-    });
-  };
+        })
+    })
+  }
 
   // // 3. Answer the call with the unique ID
   const answerButtonClick = (
@@ -67,7 +68,7 @@ export function WebRTC() {
   ) => {
     const callId = callInput.current?.state.value;
     if (!callId) {
-      console.error(`WebRTC Error: No call ID entered`);
+      console.error(`WebRTC Error: No call ID entered`)
       return;
     }
     actions
@@ -75,7 +76,7 @@ export function WebRTC() {
       .then((result) => {
         // UI doesn't need anything changed
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
   };
 
   const hangupButtonClick = (
@@ -103,7 +104,10 @@ export function WebRTC() {
         <div>
           <H3>Enable Webcam</H3>
           <Button
-            onClick={() => actions.init(localStream)}
+            onClick={() => {
+              actions.init(localStream)
+                .catch((error: Error) => alert(error.message))
+            }}
             elementRef={webcamButton}
           >
             Start webcam

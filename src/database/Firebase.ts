@@ -167,10 +167,43 @@ export const getDocumentsDataWithId = (querySnapshot: QuerySnapshot<DocumentData
 
 export const collectionContains = async (collection: string, docId: string) => {
     const firestore = firebaseFirestore()
-    return await firestore.collection(collection).doc('ABC').get()
+    return await firestore.collection(collection).doc(docId).get()
 }
 
 // Returns a promise
 export const callFirebaseFunction = (funcName: string, data: any) => {
     return firebase.functions().httpsCallable(funcName)(data)
+}
+
+export async function deleteCollection(collectionPath: string, batchSize: number) {
+  const collectionRef = getFirestore().collection(collectionPath);
+  const query = collectionRef.orderBy('__name__').limit(batchSize);
+
+  return new Promise((resolve, reject) => {
+    deleteQueryBatch(query, resolve).catch(reject);
+  });
+}
+
+async function deleteQueryBatch(query: firebase.firestore.Query<firebase.firestore.DocumentData>, resolve: any) {
+  const snapshot = await query.get();
+
+  const batchSize = snapshot.size;
+  if (batchSize === 0) {
+    // When there are no documents left, we are done
+    resolve();
+    return;
+  }
+
+  // Delete documents in a batch
+  const batch = getFirestore().batch();
+  snapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  await batch.commit();
+
+  // Recurse on the next process tick, to avoid
+  // exploding the stack.
+  process.nextTick(() => {
+    deleteQueryBatch(query, resolve);
+  });
 }
