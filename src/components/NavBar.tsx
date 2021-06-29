@@ -16,6 +16,7 @@ const Navbar = () => {
                 <Link to="/">Home</Link>
                 {currentUser ? <Link to="/WebRTC">WebRTC</Link> : <></>}
                 <Link to="/about">About</Link>
+                <Link to="/example">Playground</Link>
                 <Link to="/auth">{!!currentUser ? 'Logout' : 'Login'}</Link>
             </div>
         </nav>
