@@ -1,4 +1,4 @@
-import NavBar from './NavBar'
+import NavBar from '../navigation/NavBar'
 import Container from './Container'
 import Badge from './Badge'
 import DisplayError from './DisplayError'
