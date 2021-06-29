@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 import { CSSProperties } from 'react'
 import { EditableText, EditableTextProps } from '@blueprintjs/core'
 

@@ -17,6 +17,7 @@ import {
 } from "@blueprintjs/core";
 import { CallStage, WebRtcContext } from "../matrix/WebRtcContext";
 import "./WebRTC.css";
+import { Container } from "../components";
 
 const servers = {
   iceServers: [
@@ -160,7 +161,7 @@ export function WebRTC() {
   }
 
   return (
-    <div className="WebRTC">
+    <Container className="WebRTC">
       <div className="videos">
         <span>
           <H3>Local Stream</H3>
@@ -181,7 +182,7 @@ export function WebRTC() {
         )}
       </div>
       {options}
-    </div>
+    </Container>
   );
 }
 

@@ -1,7 +1,7 @@
+import './index.css'
 import { useContext } from 'react'
 import { Link } from '.'
 import { H1 } from '@blueprintjs/core'
-import './components.css'
 import { FirebaseContext } from '../database/FirebaseContext'
 
 
@@ -11,12 +11,12 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <H1>Cloud Lightning</H1>
+            <img className="navbar-img" src='../storm-cloud.svg' width={60} height={100} />
             <div className="links">
                 <Link to="/">Home</Link>
                 {currentUser ? <Link to="/WebRTC">WebRTC</Link> : <></>}
                 <Link to="/about">About</Link>
-                {!currentUser ? <Link to="/auth">Login</Link> : <></>}
-                {currentUser ? <Link to="/logout">Logout</Link> : <></>}
+                <Link to="/auth">{!!currentUser ? 'Logout' : 'Login'}</Link>
             </div>
         </nav>
     );

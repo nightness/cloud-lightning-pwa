@@ -1,21 +1,44 @@
-import { Text, ActivityIndicator } from '../components'
-import { H1, Button } from "@blueprintjs/core";
+import { Text, Container, ActivityIndicator } from '../components'
+import { H1, Button, Card, Dialog } from "@blueprintjs/core";
+import { useState } from 'react';
 
 export function Home() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
   return (
-    <div>
-      <div style={{ display: 'flex' }}>
-        <H1>Hello World</H1>
-          <ActivityIndicator size='huge' />
+    <>
+      <Dialog
+        isOpen={isDialogOpen} 
+        title='Hello World'
+        onClose={() => {
+          setIsDialogOpen(false)
+        }}
+
+      >
+        <Card>
+          <H1>Hello World</H1>
           <Button
             intent='success'
-            text='Hello World'
+            text='Ok'
             onClick={() => {
-
+              setIsDialogOpen(false)
             }}
-          />        
-      </div>
-    </div>
+          />
+        </Card>
+      </Dialog>
+      <Container>
+        <Card>
+          <H1>Hello World</H1>
+          <Button
+            intent='success'
+            text='Open Dialog'
+            onClick={() => {
+              setIsDialogOpen(true)
+            }}
+          />
+        </Card>
+      </Container>
+    </>
   );
 }
 

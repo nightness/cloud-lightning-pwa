@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
 

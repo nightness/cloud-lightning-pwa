@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 
 interface Props {
     text: string

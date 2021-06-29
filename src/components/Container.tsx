@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 import React, { CSSProperties, useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
 
@@ -13,25 +13,9 @@ export function Container({ children, style: styleOverride, className, scroll }:
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const currentThemeType = getThemedComponentStyle('Container')
     const style: CSSProperties = {
-        // display: 'inline - block',
-        // padding: '0.5rem 0',
-        // margin: '0.5rem 1rem',
 
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        // background: 'transparent',
-        // color: 'white',
-        border: '2px solid black',
-        borderRadius: 5,
-        // paddingLeft: 10,
-        // paddingRight: 10,
-        // paddingTop: 5,
-        // paddingBottom: 5,
-        ...currentThemeType[activeTheme],
-        ...styleOverride
     }
-
+    
     if (!scroll || scroll === 'none') {
         style.overflowY = 'hidden'
         style.overflowX = 'hidden'
@@ -48,7 +32,7 @@ export function Container({ children, style: styleOverride, className, scroll }:
 
     return (
         <div style={style} className={className}>
-            <div>{children}</div>
+            {children}
         </div>
     )
 }

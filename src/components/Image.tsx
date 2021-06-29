@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react'
 
 interface Props extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {

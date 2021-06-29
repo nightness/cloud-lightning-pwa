@@ -1,11 +1,13 @@
+import { useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css';
 import { Home, WebRTC, About, Authentication } from './pages'
 import { NavBar } from './components'
-import { FirebaseProvider } from './database/FirebaseContext'
+import { FirebaseContext, FirebaseProvider } from './database/FirebaseContext'
 import { WebRtcProvider } from './matrix/WebRtcContext';
 
 const MainDocument = () => {
+  const { currentUser } = useContext(FirebaseContext);
   return (
     <Router>
       <div className={`App`}>
@@ -15,11 +17,8 @@ const MainDocument = () => {
             <Route exact path='/'>
               <Home />
             </Route>
-            <Route exact path='/logout'>
-              <Authentication logout={true} />
-            </Route>
             <Route exact path='/auth'>
-              <Authentication />
+              <Authentication logout={!!currentUser} />
             </Route>
             <Route exact path='/WebRTC'>
               <WebRTC />

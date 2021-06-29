@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 import React, { CSSProperties } from 'react'
 import { Dots, Bounce, Digital, Levels, Sentry, Spinner, Squares, Windmill } from "react-activity";
 

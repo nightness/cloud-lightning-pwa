@@ -1,4 +1,4 @@
-import './components.css'
+import './index.css'
 import React, { CSSProperties } from 'react'
 import TextInput from './TextInput'
 import Text from './Text'
