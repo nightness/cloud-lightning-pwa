@@ -171,6 +171,7 @@ export function WebRTC() {
         canEscapeKeyCancel
         canOutsideClickCancel
         intent='primary'
+        icon='error'
         confirmButtonText="Okay"
         isOpen={isAlertOpen}
         onClose={() => setIsAlertOpen(false)}
