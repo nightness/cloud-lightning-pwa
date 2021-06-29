@@ -5,6 +5,7 @@ import { Home, WebRTC, About, Authentication } from './pages'
 import { NavBar } from './components'
 import { FirebaseContext, FirebaseProvider } from './database/FirebaseContext'
 import { WebRtcProvider } from './matrix/WebRtcContext';
+import { DrawerExample } from './pages/DrawerExample'
 
 const MainDocument = () => {
   const { currentUser } = useContext(FirebaseContext);
@@ -14,18 +15,15 @@ const MainDocument = () => {
         <NavBar />
         <div className={`content`}>
           <Switch>
-            <Route exact path='/'>
-              <Home />
-            </Route>
+            <Route exact path='/' component={Home} />
             <Route exact path='/auth'>
-              <Authentication logout={!!currentUser} />
+              {
+                (props) => <Authentication logout={!!currentUser} {...props} />
+              }              
             </Route>
-            <Route exact path='/WebRTC'>
-              <WebRTC />
-            </Route>
-            <Route exact path='/about'>
-              <About />
-            </Route>
+            <Route exact path='/WebRTC' component={WebRTC} />
+            <Route exact path='/about' component={About} />
+            <Route exact path='/example' component={DrawerExample} />
           </Switch>
         </div>
       </div>
