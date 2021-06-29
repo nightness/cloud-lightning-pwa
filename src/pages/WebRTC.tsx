@@ -14,6 +14,7 @@ import {
   H3,
   H4,
   H5,
+  Alert,
 } from "@blueprintjs/core";
 import { CallStage, WebRtcContext } from "../matrix/WebRtcContext";
 import "./WebRTC.css";
@@ -29,7 +30,8 @@ const servers = {
 };
 
 export function WebRTC() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const { localStream, remoteStream, actions, callStage } =
     useContext(WebRtcContext);
   const webcamButton = useRef<HTMLButtonElement>(null);
@@ -43,8 +45,8 @@ export function WebRTC() {
   useEffect(() => {
     if (webcamVideo.current) {
       webcamVideo.current.muted = true
-    if (localStream !== undefined)
-      webcamVideo.current.srcObject = localStream
+      if (localStream !== undefined)
+        webcamVideo.current.srcObject = localStream
     }
     if (remoteVideo.current && remoteStream !== undefined)
       remoteVideo.current.srcObject = remoteStream;
@@ -107,7 +109,10 @@ export function WebRTC() {
           <Button
             onClick={() => {
               actions.init(localStream)
-                .catch((error: Error) => alert(error.message))
+                .catch((error: Error) => {
+                  setAlertMessage(error.message) 
+                  setIsAlertOpen(true);
+                })
             }}
             elementRef={webcamButton}
           >
@@ -162,6 +167,16 @@ export function WebRTC() {
 
   return (
     <Container className="WebRTC">
+      <Alert
+        canEscapeKeyCancel
+        canOutsideClickCancel
+        intent='primary'
+        confirmButtonText="Okay"
+        isOpen={isAlertOpen}
+        onClose={() => setIsAlertOpen(false)}
+      >
+        <p>{alertMessage}</p>
+      </Alert>
       <div className="videos">
         <span>
           <H3>Local Stream</H3>
