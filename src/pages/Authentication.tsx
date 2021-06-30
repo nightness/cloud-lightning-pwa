@@ -192,7 +192,7 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
         if (customToken) {
             auth.signInWithCustomToken(customToken)
                 .then(() => {
-                    //navigation.navigate('LoginActivity')
+                    window.location.assign('/')
                 })
                 .catch((error) => {
                     alert('Invalid custom token specified')
