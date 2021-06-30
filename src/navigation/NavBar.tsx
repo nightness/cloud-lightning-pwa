@@ -4,6 +4,7 @@ import { Link } from '../components'
 import { H1, Icon, Button } from '@blueprintjs/core'
 import { FirebaseContext } from '../database/FirebaseContext'
 import SideBar from './SideBar'
+import { Classes, Popover2, Tooltip2 } from "@blueprintjs/popover2";
 
 export const Navbar = () => {
     const { currentUser } = useContext(FirebaseContext)
@@ -29,9 +30,17 @@ export const Navbar = () => {
                 <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} />
             </div>
             <div className="links">
-                <Link className='link-static' to="/auth" noActiveFormatting>
-                    <Icon iconSize={34} icon='user'/>
-                </Link>                
+                <Tooltip2
+                    popoverClassName='tooltip'
+                    content="Logout"
+                    intent="warning"
+                    placement='bottom'
+                    usePortal={false}                    
+                >
+                    <Link className='link-static' to="/auth" noActiveFormatting>
+                        <Icon iconSize={34} icon='user' />
+                    </Link>
+                </Tooltip2>
             </div>
         </nav>
     );

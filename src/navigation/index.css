@@ -88,3 +88,11 @@
 .drawer {
     background-image: linear-gradient(to bottom, #8ff, #aff, #fff);
 }
+
+.tooltip {
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    font-weight: 200;
+    background-color: gray;
+    border-radius: 15px;
+}
