@@ -92,12 +92,6 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
     const { activeTheme, setActiveTheme } = useContext(ThemeContext)
     const auth = firebaseAuth()
 
-    const { currentUser } = getAuth()
-    useEffect(() => {
-        // if (currentUser)
-        //     navigation.replace('Main')
-    }, [currentUser])
-
     const softReset = (formikProps: FormikProps<any>) => {
         formikProps.setValues({
             displayName: '',
@@ -130,16 +124,13 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
     }
 
     const onRegisterPress = async (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
-        const setProfile = async () => {
-            console.log(values)
-            //navigation.navigate('LoginActivity')
-        }
-
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
             .then(() => {
                 setIsLoading(true)
             })
-            .then(setProfile)
+            .then(() => {
+                window.location.assign('/')
+            })
             .catch((error: FirebaseError) => {
                 setSubmitted(false)
                 setIsLoading(false)
@@ -150,11 +141,13 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
     const signInWithGoogle = async (formikProps: FormikProps<any>) => {
         const provider = new GoogleAuthProvider()
         auth.signInWithPopup(provider)
+            .then(() => {
+                window.location.assign('/')
+            })
             .catch((error) => {
                 setSubmitted(false)
                 alert(error)
             })
-        // navigation.navigate('LoginActivity')
         formikProps.resetForm()
     }
 
@@ -162,7 +155,7 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
         setSubmitted(true)
         try {
             await auth.signInWithEmailAndPassword(values.eMail, values.password)
-            //navigation.navigate('LoginActivity')
+            window.location.assign('/')
         }
         catch (error) {
             setSubmitted(false)
