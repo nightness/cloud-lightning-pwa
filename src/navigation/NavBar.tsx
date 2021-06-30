@@ -72,8 +72,9 @@ const Navbar = () => {
             >
                 <Icon iconSize={16} icon='menu' />
             </Button>
+            <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} />
             <H1>Cloud Lightning</H1>
-            <img className="navbar-img" src='../storm-cloud.svg' width={60} height={100} />
+            <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} />
             <div className="links">
                 <Link to="/">Home</Link>
                 {currentUser ? <Link to="/WebRTC">WebRTC</Link> : <></>}
