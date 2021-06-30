@@ -6,6 +6,7 @@
     margin: 0 auto;
     border-bottom: 1px solid #f2f2f2;
     background: rgba(0, 0, 0, 0.15);
+    user-select: none;    
 }
 .navbar h1 {
     color: #125;
@@ -39,12 +40,22 @@
     margin: 0px 5px 0px 0px;
     padding: 5px 5px 10px 5px;
     background-color: rgb(134, 177, 134);
+    user-select: none;
+}
+
+.link-active a:hover {
+    color: #f2f2f2;
 }
 
 .link-inactive {
     margin: 0px 5px 0px 0px;
     padding: 5px 5px 10px 5px;
-    background-color: seagreen;
+    background-image: linear-gradient(to bottom right, rgb(76, 159, 107), rgb(86, 179, 127), rgb(106, 199, 147));
+    user-select: none;
+}
+
+.link-inactive a:hover {
+    color: #f2f2f2;
 }
 
 .sidebar-link {
