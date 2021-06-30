@@ -12,6 +12,8 @@ interface SideBarProps {
 export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
     const { currentUser } = useContext(FirebaseContext)
 
+    // Note: The 'drawer' className on Drawer work properly for production
+
     return (
         <Drawer
             className='drawer'
@@ -23,6 +25,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             size='30%'
             canOutsideClickClose
             canEscapeKeyClose
+            usePortal
         >
             <div className={`${Classes.DRAWER_BODY} drawer`}>
                 <div className={Classes.DIALOG_BODY} style={{ flexDirection: 'column' }}>

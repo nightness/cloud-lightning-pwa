@@ -8,6 +8,14 @@
     background: rgba(0, 0, 0, 0.15);
     user-select: none;    
 }
+
+.header-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
 .navbar h1 {
     color: #125;
     padding-left: 10px;
@@ -36,31 +44,39 @@
     line-height: 2.2rem;
 }
 
+.link-static {
+    background-color: transparent;
+    user-select: none;
+}
+
 .link-active {
-    margin: 0px 5px 0px 0px;
-    padding: 5px 5px 10px 5px;
+    padding: 5px 5px 5px 5px;
     background-color: rgb(134, 177, 134);
     user-select: none;
+    cursor: pointer;
 }
 
 .link-active a:hover {
     color: #f2f2f2;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .link-inactive {
-    margin: 0px 5px 0px 0px;
-    padding: 5px 5px 10px 5px;
-    background-image: linear-gradient(to bottom right, rgb(76, 159, 107), rgb(86, 179, 127), rgb(106, 199, 147));
+    padding: 5px 5px 5px 5px;
+    background-color: rgb(76, 159, 107);
     user-select: none;
+    cursor: pointer;
 }
 
 .link-inactive a:hover {
     color: #f2f2f2;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .sidebar-link {
     color: #f2f2f2;
-    padding: 5;
     font-size: 2rem;
     font-weight: bolder;
     margin: 0 2rem 0 2rem;

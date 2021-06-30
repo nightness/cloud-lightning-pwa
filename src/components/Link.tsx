@@ -1,8 +1,12 @@
 import { useRef } from "react";
-import { Link, LinkProps, useLocation } from "react-router-dom";
+import { Link as BpLink, LinkProps, useLocation } from "react-router-dom";
 import './index.css'
 
-const Navbar = ({ children, className, ...restProps }: LinkProps) => {
+interface Props extends LinkProps {
+    noActiveFormatting?: boolean
+}
+
+export const Link = ({ children, className, noActiveFormatting, ...restProps }: Props) => {
     const link = useRef<HTMLAnchorElement>()
     const location = useLocation()
     
@@ -10,13 +14,16 @@ const Navbar = ({ children, className, ...restProps }: LinkProps) => {
         link.current?.click()
     }
 
+    const classNames = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active' : 'link-inactive' : ''}${typeof className === 'string' ? ' ' + className : '' }`
+
+    console.log(classNames)
     return (
-        <div className={`${location.pathname === restProps.to ? 'link-active' : 'link-inactive'}`} onClick={onClick}>
-            <Link ref={link as React.Ref<HTMLAnchorElement>} className={className} {...restProps}>
+        <div className={`${classNames}`} onClick={onClick}>
+            <BpLink ref={link as React.Ref<HTMLAnchorElement>} className={classNames} {...restProps}>
                 {children}
-            </Link>
+            </BpLink>
         </div>
     );
 }
 
-export default Navbar;
+export default Link;
