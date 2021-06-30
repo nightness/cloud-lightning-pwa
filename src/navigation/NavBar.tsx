@@ -29,7 +29,9 @@ export const Navbar = () => {
                 <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} />
             </div>
             <div className="links">
-                <Link className='link-static' to="/auth" noActiveFormatting><Icon iconSize={34} icon='user'/></Link>                
+                <Link className='link-static' to="/auth" noActiveFormatting>
+                    <Icon iconSize={34} icon='user'/>
+                </Link>                
             </div>
         </nav>
     );

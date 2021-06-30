@@ -10,7 +10,7 @@ interface Props {
     placeholder?: string
     secureTextEntry?: boolean
     style?: CSSProperties
-    testInputStyle?: CSSProperties
+    textInputStyle?: CSSProperties
 }
 
 export default ({
@@ -19,14 +19,14 @@ export default ({
     label,
     secureTextEntry = false,
     style,
-    testInputStyle,
+    textInputStyle,
     ...restProps
 }: Props) => {
 
     return (
         <div style={style}>
             <TextInput
-                style={testInputStyle}
+                style={textInputStyle}
                 placeholder={label}
                 // returnKeyType={returnKeyType}
                 onChange={formikProps.handleChange(fieldName)}

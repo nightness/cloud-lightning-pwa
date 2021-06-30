@@ -14,10 +14,11 @@ export const Link = ({ children, className, noActiveFormatting, ...restProps }: 
         link.current?.click()
     }
 
-    const classNames = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active' : 'link-inactive' : ''}${typeof className === 'string' ? ' ' + className : '' }`
+    const classNames = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active ' : 'link-inactive ' : ''}${typeof className === 'string' ? className : '' }`
 
-    console.log(classNames)
     return (
+        // TODO: Don't like passing the same className to both the div and Link. It works for solid
+        // color backgrounds, but not linear gradients (for example)
         <div className={`${classNames}`} onClick={onClick}>
             <BpLink ref={link as React.Ref<HTMLAnchorElement>} className={classNames} {...restProps}>
                 {children}

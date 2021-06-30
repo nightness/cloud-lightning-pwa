@@ -276,6 +276,9 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
                                         label='Full Name'
                                         formikProps={formikProps}
                                         fieldName='displayName'
+                                        textInputStyle={{
+                                            padding: 5
+                                        }}
                                     />
                                 ) : <></>}
                                 <FormField
