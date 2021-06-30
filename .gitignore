@@ -9,7 +9,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 .firebase
-firebase.json
 build/
 web-build/
 private/
