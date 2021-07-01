@@ -1,5 +1,5 @@
 import './index.css'
-import { useContext, useState } from 'react'
+import { LegacyRef, useContext, useRef, useState } from 'react'
 import { Link } from '../components'
 import { H1, Icon, Button } from '@blueprintjs/core'
 import { FirebaseContext } from '../database/FirebaseContext'
@@ -10,8 +10,9 @@ import { NavigationContext } from './NavigationContext'
 
 export const Navbar = () => {
     const location = useLocation()
-    const { currentUser } = useContext(FirebaseContext)    
+    const { currentUser } = useContext(FirebaseContext)
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
+    const [isTooltipOpen, setIsTooltipOpen] = useState(false)
     const { getTitle } = useContext(NavigationContext)
 
     return (
@@ -20,14 +21,30 @@ export const Navbar = () => {
                 isOpen={isSideBarOpen}
                 onClose={() => setIsSideBarOpen(false)}
             />
-            <Button
-                style={{ marginLeft: 10 }}
-                onClick={() => {
-                    setIsSideBarOpen(true)
-                }}
+            <Tooltip2
+                popoverClassName='tooltip'
+                content='Menu'
+                intent="warning"
+                placement='bottom'
+                usePortal={false}
+                isOpen={isTooltipOpen}           
             >
-                <Icon iconSize={20} icon='menu' />
-            </Button>
+                <Button
+                    style={{ marginLeft: 10 }}
+                    onMouseLeave={() => {
+                        setIsTooltipOpen(false)
+                    }}
+                    onMouseEnter={() => {
+                        setIsTooltipOpen(true)
+                    }}
+                    onClick={() => {                        
+                        setIsSideBarOpen(true)                        
+                        setIsTooltipOpen(false)
+                    }}
+                >
+                    <Icon iconSize={20} icon='menu' />
+                </Button>
+            </Tooltip2>
             <div className='header-title'>
                 <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} />
                 <H1>{getTitle(location.pathname)}</H1>
@@ -39,7 +56,7 @@ export const Navbar = () => {
                     content={`${currentUser ? 'Logout' : 'Login'}`}
                     intent="warning"
                     placement='bottom'
-                    usePortal={false}                    
+                    usePortal={false}
                 >
                     <Link className='link-static' to="/auth" noActiveFormatting>
                         <Icon iconSize={34} icon='user' />
