@@ -18,7 +18,7 @@
 }
 
 .navbar h1 {
-    color: #125;
+    color: black;
     padding-left: 10px;
     padding-right: 10px;
     font-weight: 600;
@@ -40,7 +40,6 @@
     display: flex;
     flex-direction: row;
     color: black;
-    font-weight: bold;
     font-size: 1.6rem;
     line-height: 2.2rem;
 }
@@ -92,7 +91,7 @@
 .sidebar-link {
     color: black;
     font-size: 2rem;
-    font-weight: bolder;
+    font-weight: 600;
     margin: 0 2rem 0 2rem;
     font-size: 2rem;
     line-height: 2.8rem;
