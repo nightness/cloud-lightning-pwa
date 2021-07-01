@@ -5,10 +5,14 @@ import { H1, Icon, Button } from '@blueprintjs/core'
 import { FirebaseContext } from '../database/FirebaseContext'
 import SideBar from './SideBar'
 import { Classes, Popover2, Tooltip2 } from "@blueprintjs/popover2";
+import { useLocation } from 'react-router-dom'
+import { NavigationContext } from './NavigationContext'
 
 export const Navbar = () => {
-    const { currentUser } = useContext(FirebaseContext)
+    const location = useLocation()
+    const { currentUser } = useContext(FirebaseContext)    
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
+    const { getTitle } = useContext(NavigationContext)
 
     return (
         <nav className="navbar">
@@ -25,9 +29,9 @@ export const Navbar = () => {
                 <Icon iconSize={20} icon='menu' />
             </Button>
             <div className='header-title'>
-                <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} />
-                <H1>Cloud Lightning</H1>
-                <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} />
+                <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} />
+                <H1>{getTitle(location.pathname)}</H1>
+                <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} />
             </div>
             <div className="links">
                 <Tooltip2

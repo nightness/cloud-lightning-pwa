@@ -87,6 +87,7 @@
 
 .drawer {
     background-image: linear-gradient(to bottom, #8ff, #aff, #fff);
+    user-select: none;
 }
 
 .tooltip {

@@ -5,7 +5,6 @@ export const About = () => {
 
   return (
     <Container>
-      <H1>About</H1>
       <Button
         intent='success'
         text='Ok'

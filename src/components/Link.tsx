@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link as BpLink, LinkProps, useLocation } from "react-router-dom";
+import { NavLink, LinkProps, useLocation } from "react-router-dom";
 import './index.css'
 
 interface Props extends LinkProps {
@@ -9,7 +9,7 @@ interface Props extends LinkProps {
 export const Link = ({ children, className, noActiveFormatting, ...restProps }: Props) => {
     const link = useRef<HTMLAnchorElement>()
     const location = useLocation()
-    
+
     const onClick = () => {
         link.current?.click()
     }
@@ -20,9 +20,9 @@ export const Link = ({ children, className, noActiveFormatting, ...restProps }: 
         // TODO: Don't like passing the same className to both the div and Link. It works for solid
         // color backgrounds, but not linear gradients (for example)
         <div className={`${classNames}`} onClick={onClick}>
-            <BpLink ref={link as React.Ref<HTMLAnchorElement>} className={classNames} {...restProps}>
+            <NavLink ref={link as React.Ref<HTMLAnchorElement>} draggable={false} className={classNames} {...restProps}>
                 {children}
-            </BpLink>
+            </NavLink>
         </div>
     );
 }

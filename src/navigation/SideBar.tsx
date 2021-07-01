@@ -25,7 +25,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             size='30%'
             canOutsideClickClose
             canEscapeKeyClose
-            usePortal
+            usePortal            
         >
             <div className={`${Classes.DRAWER_BODY} drawer`}>
                 <div className={Classes.DIALOG_BODY} style={{ flexDirection: 'column' }}>

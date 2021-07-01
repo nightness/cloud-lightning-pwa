@@ -32,8 +32,7 @@ const servers = {
 export function WebRTC() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
-  const { localStream, remoteStream, actions, callStage } =
-    useContext(WebRtcContext);
+  const { localStream, remoteStream, actions, callStage } = useContext(WebRtcContext);
   const webcamButton = useRef<HTMLButtonElement>(null);
   const webcamVideo = useRef<HTMLVideoElement>(null);
   const callButton = useRef<HTMLButtonElement>(null);
