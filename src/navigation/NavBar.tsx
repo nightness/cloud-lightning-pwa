@@ -32,7 +32,7 @@ export const Navbar = () => {
             <div className="links">
                 <Tooltip2
                     popoverClassName='tooltip'
-                    content="Logout"
+                    content={`${currentUser ? 'Logout' : 'Login'}`}
                     intent="warning"
                     placement='bottom'
                     usePortal={false}                    

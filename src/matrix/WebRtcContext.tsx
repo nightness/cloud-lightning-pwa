@@ -50,9 +50,9 @@ const servers = {
 };
 
 interface Subscriptions {
-  callDoc?: () => any
-  answerCandidates?: () => any
-  offerCandidates?: () => any
+  callDoc?: any
+  answerCandidates?: any
+  offerCandidates?: any
 }
 
 interface Props {
@@ -121,32 +121,24 @@ export const WebRtcProvider = ({ children }: Props) => {
     await callDoc.set({ offer, creator, target: creator });
 
     // Listen for remote answer
-    try {
-      subscriptions.current.callDoc = callDoc.onSnapshot((snapshot) => {
-        const data = snapshot.data();
-        if (!peerConnection.currentRemoteDescription && data?.answer) {
-          const answerDescription = new RTCSessionDescription(data.answer);
-          peerConnection.setRemoteDescription(answerDescription);
-        }
-      });
-    } catch (error) {
-      console.log(error)
-    }
+    subscriptions.current.callDoc = callDoc.onSnapshot((snapshot) => {
+      const data = snapshot.data();
+      if (!peerConnection.currentRemoteDescription && data?.answer) {
+        const answerDescription = new RTCSessionDescription(data.answer);
+        peerConnection.setRemoteDescription(answerDescription);
+      }
+    });
 
     // When answered, add candidate to peer connection
-    try {
-      subscriptions.current.answerCandidates = answerCandidates.onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
-            const candidate = new RTCIceCandidate(change.doc.data());
-            peerConnection.addIceCandidate(candidate);
-            setStage(CallStage.Accepted);
-          }
-        });
+    subscriptions.current.answerCandidates = answerCandidates.onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          const candidate = new RTCIceCandidate(change.doc.data());
+          peerConnection.addIceCandidate(candidate);
+          setStage(CallStage.Accepted);
+        }
       });
-    } catch (error) {
-      console.log(error)
-    }
+    });
     setCallId(callDoc.id);
     setStage(CallStage.Offered);
     return callDoc.id;
@@ -197,7 +189,7 @@ export const WebRtcProvider = ({ children }: Props) => {
   };
 
   const hangup = async () => {
-    const tracks = remoteStream.getTracks();
+    const tracks = remoteStream.getTracks();    
     tracks.forEach((track) => {
       track.stop();
     });
@@ -214,10 +206,10 @@ export const WebRtcProvider = ({ children }: Props) => {
     peerConnection.close();
 
     // Unsubscribe to snapshot changes
-    // subscriptions.current?.answerCandidates?.()
-    // subscriptions.current?.offerCandidates?.()
-    // subscriptions.current?.callDoc?.()
-    // subscriptions.current = {}
+    subscriptions.current?.answerCandidates()
+    subscriptions.current?.offerCandidates()
+    subscriptions.current?.callDoc()
+    subscriptions.current = {}
 
     const callDoc = getFirestore().collection("calls").doc(callId);
 
@@ -227,7 +219,7 @@ export const WebRtcProvider = ({ children }: Props) => {
       await deleteCollection(`/calls/${callId}/answerCanidates`, 20).then(() =>
         deleteCollection(`calls/${callId}/offerCanidates`, 20)
       );
-    } catch (error) { }
+    } catch (error) {}
 
     // Collections must be removed first, if persmission are setup up right, and I think they are,
     // Removing this document would remove permission to remove the sub-collections
