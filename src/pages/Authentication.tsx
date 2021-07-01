@@ -23,11 +23,6 @@ import { CSSProperties } from 'styled-components'
 // import { LinearGradient } from 'expo-linear-gradient'
 //import { GradientColors } from '../app/GradientColors'
 
-interface AuthenticationProps {
-    customToken?: string
-    logout?: boolean
-}
-
 interface AuthenticationFields {
     displayName: string
     eMail: string
@@ -83,7 +78,8 @@ const RegistrationScheme = Yup.object({
         .required('Please retype your password')
 })
 
-export const Authentication = ({ customToken, logout }: AuthenticationProps) => {
+export const Authentication = () => {
+    const { currentUser } = useContext(FirebaseContext);
     const [mode, setMode] = useState<'login' | 'register' | 'password-reset'>('login')
     const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
@@ -182,25 +178,25 @@ export const Authentication = ({ customToken, logout }: AuthenticationProps) => 
 
     useEffect(() => {
         console.log('logout')
-        if (logout) {
+        if (!!currentUser) {
             console.log('sign-out')
             auth.signOut()
             setIsLoading(false)
             return
         }
 
-        if (customToken) {
-            auth.signInWithCustomToken(customToken)
-                .then(() => {
-                    window.location.assign('/')
-                })
-                .catch((error) => {
-                    alert('Invalid custom token specified')
-                    setIsLoading(false)
-                })
-        } else {
-            setIsLoading(false)
-        }
+        // if (customToken) {
+        //     auth.signInWithCustomToken(customToken)
+        //         .then(() => {
+        //             window.location.assign('/')
+        //         })
+        //         .catch((error) => {
+        //             alert('Invalid custom token specified')
+        //             setIsLoading(false)
+        //         })
+        // } else {
+        //     setIsLoading(false)
+        // }
     }, [])
 
     useEffect(() => {
