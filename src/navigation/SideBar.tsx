@@ -12,9 +12,9 @@ interface SideBarProps {
 
 export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
     const { currentUser } = useContext(FirebaseContext)
-    const { getPaths, getTitle } = useContext(NavigationContext)
+    const { getPaths, getTitle, hasPermission } = useContext(NavigationContext)
     const paths = getPaths().filter((path) => path !== '/auth')
-    
+
     // Note: The 'drawer' className on Drawer work properly for production
     return (
         <Drawer
@@ -27,17 +27,17 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             size='30%'
             canOutsideClickClose
             canEscapeKeyClose
-            usePortal            
+            usePortal
         >
             <div className={`${Classes.DRAWER_BODY} drawer`}>
                 <div className={Classes.DIALOG_BODY} style={{ flexDirection: 'column' }}>
-                    <Link className='sidebar-link' to="/" onClick={onClose}>Home</Link>
-                    {currentUser ? <Link className='sidebar-link' to="/WebRTC" onClick={onClose}>WebRTC</Link> : <></>}
-                    <Link className='sidebar-link' to="/about" onClick={onClose}>About</Link>
+                    {paths.map((path) => !hasPermission(path) ? <></> :
+                        <Link className='sidebar-link' to={path} onClick={onClose}>{getTitle(path)}</Link>
+                    )}
                     <Link className='sidebar-link' to="/auth" onClick={onClose}>{!!currentUser ? 'Logout' : 'Login'}</Link>
                 </div>
             </div>
-            <div className={Classes.DRAWER_FOOTER}>Footer</div>
+            <div className={Classes.DRAWER_FOOTER}>ReactJS BlueprintJS PWA</div>
         </Drawer>
 
     )

@@ -11,9 +11,9 @@ const MainDocument = () => {
   const { registerPage } = useContext(NavigationContext)
 
   registerPage('/', 'Home', Home)
-  registerPage('/auth', 'Cloud Lightning', Authentication)
+  registerPage('/WebRTC', 'WebRTC', WebRTC, true)
   registerPage('/about', 'About', About)
-  registerPage('/WebRTC', 'WebRTC', WebRTC)
+  registerPage('/auth', 'Cloud Lightning', Authentication)
 
   return (
     <div className={`App`}>
@@ -28,13 +28,13 @@ const MainDocument = () => {
 function App() {
   return (
     <Router>
-      <NavigationProvider>
-        <FirebaseProvider>
+      <FirebaseProvider>
+        <NavigationProvider>
           <WebRtcProvider>
             <MainDocument />
           </WebRtcProvider>
-        </FirebaseProvider>
-      </NavigationProvider>
+        </NavigationProvider>
+      </FirebaseProvider>
     </Router>
   );
 }
