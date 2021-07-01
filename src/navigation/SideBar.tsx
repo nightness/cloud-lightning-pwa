@@ -1,7 +1,7 @@
 import './index.css'
 import { useContext, useState } from 'react'
 import { Link } from '../components'
-import { H1, Icon, Button, Drawer, Classes } from '@blueprintjs/core'
+import { H1, Icon, Button, Drawer, Classes, Text } from '@blueprintjs/core'
 import { FirebaseContext } from '../database/FirebaseContext'
 import { NavigationContext } from './NavigationContext'
 
@@ -31,10 +31,10 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
         >
             <div className={`${Classes.DRAWER_BODY} drawer`}>
                 <div className={Classes.DIALOG_BODY} style={{ flexDirection: 'column' }}>
-                    {paths.map((path) => !hasPermission(path) ? <></> :
-                        <Link className='sidebar-link' to={path} onClick={onClose} key={`${Math.random()}`}>{getTitle(path)}</Link>
+                    {paths.map((path) => !hasPermission(path) ? undefined :
+                        <Link key={`${Math.random()}-${Math.random()}`} className='sidebar-link' to={path} onClick={onClose}><Text key={`${Math.random()}-${Math.random()}`} title={getTitle(path)} /></Link>
                     )}
-                    <Link className='sidebar-link' to="/auth" onClick={onClose}>{!!currentUser ? 'Logout' : 'Login'}</Link>
+                    <Link key={`${Math.random()}-${Math.random()}`} className='sidebar-link' to="/auth" onClick={onClose}><Text key={`${Math.random()}-${Math.random()}`} title={!!currentUser ? 'Logout' : 'Login'} /></Link>
                 </div>
             </div>
             <div className={Classes.DRAWER_FOOTER}>ReactJS BlueprintJS PWA</div>
