@@ -14,13 +14,14 @@ export const Link = ({ children, className, noActiveFormatting, ...restProps }: 
         link.current?.click()
     }
 
-    const classNames = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active ' : 'link-inactive ' : ''}${typeof className === 'string' ? className : '' }`
+    const navClasses = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active-div ' : 'link-inactive-div ' : ''}${typeof className === 'string' ? className : '' }`
+    const divClasses = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active ' : 'link-inactive ' : ''}${typeof className === 'string' ? className : '' }`
 
     return (
         // TODO: Don't like passing the same className to both the div and Link. It works for solid
         // color backgrounds, but not linear gradients (for example)
-        <div className={`${classNames}`} onClick={onClick}>
-            <NavLink ref={link as React.Ref<HTMLAnchorElement>} draggable={false} className={classNames} {...restProps}>
+        <div className={`${navClasses}`} onClick={onClick}>
+            <NavLink ref={link as React.Ref<HTMLAnchorElement>} draggable={false} className={divClasses} {...restProps}>
                 {children}
             </NavLink>
         </div>

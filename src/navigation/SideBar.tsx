@@ -37,7 +37,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
                     <Link key={`${Math.random()}-${Math.random()}`} className='sidebar-link' to="/auth" onClick={onClose}>{!!currentUser ? 'Logout' : 'Login'}</Link>
                 </div>
             </div>
-            <div className={Classes.DRAWER_FOOTER}>ReactJS BlueprintJS PWA</div>
+            <div className={Classes.DRAWER_FOOTER}>Powered by React and Blueprint</div>
         </Drawer>
 
     )
