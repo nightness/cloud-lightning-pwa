@@ -32,7 +32,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             <div className={`${Classes.DRAWER_BODY} drawer`}>
                 <div className={Classes.DIALOG_BODY} style={{ flexDirection: 'column' }}>
                     {paths.map((path) => !hasPermission(path) ? <></> :
-                        <Link className='sidebar-link' to={path} onClick={onClose}>{getTitle(path)}</Link>
+                        <Link className='sidebar-link' to={path} onClick={onClose} key={`${Math.random()}`}>{getTitle(path)}</Link>
                     )}
                     <Link className='sidebar-link' to="/auth" onClick={onClose}>{!!currentUser ? 'Logout' : 'Login'}</Link>
                 </div>
