@@ -14,11 +14,10 @@ export enum CallStage {
 }
 
 export interface WebRtcActions {
-  init: (src?: MediaStream) => Promise<any>;
+  init: () => Promise<any>;
   offer: () => Promise<string>;
   answer: (callId: string) => Promise<any>;
   hangup: () => Promise<any>;
-  reset: () => Promise<any>;
 }
 
 type ContextType = {
@@ -30,11 +29,10 @@ type ContextType = {
 
 export const WebRtcContext = createContext<ContextType>({
   actions: {
-    init: async (src?: MediaStream) => undefined,
+    init: async () => undefined,
     offer: async () => "",
     answer: async (callId: string) => undefined,
     hangup: async () => undefined,
-    reset: async () => undefined,
   },
   callStage: CallStage.New,
   remoteStream: new MediaStream(),
@@ -69,30 +67,36 @@ export const WebRtcProvider = ({ children }: Props) => {
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
   const subscriptions = useRef<Subscriptions>({})
 
-  const init = async (stream?: MediaStream) => {
-    // Already set, don't do it again
-    if (stream) {
-      setLocalStream(stream);
-      return;
+  const init = async () => {    
+    let currentStream: MediaStream;
+    let pc = peerConnection;
+    let rStream = remoteStream
+    if (!localStream) {
+      currentStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      setLocalStream(currentStream);
+    } else {
+      pc = new RTCPeerConnection(servers)
+      currentStream = localStream
+      rStream = new MediaStream()
+      setCallId("");
+      setPeerConnection(pc);
+      setRemoteStream(rStream);  
     }
-    const currentStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-    setLocalStream(currentStream);
 
-    // Mute localStream
     const tracks = currentStream.getTracks();
 
     // Push tracks from local stream to peer connection
     tracks?.forEach((track) => {
-      peerConnection.addTrack(track, currentStream);
+      pc.addTrack(track, currentStream);
     });
 
     // Pull tracks from remote stream, add to video stream
-    peerConnection.ontrack = (event) => {
+    pc.ontrack = (event) => {
       event.streams?.[0].getTracks().forEach((track) => {
-        remoteStream.addTrack(track);
+        rStream.addTrack(track);
       });
     };
     setStage(CallStage.Initialized);
@@ -189,7 +193,7 @@ export const WebRtcProvider = ({ children }: Props) => {
   };
 
   const hangup = async () => {
-    const tracks = remoteStream.getTracks();    
+    const tracks = remoteStream.getTracks();
     tracks.forEach((track) => {
       track.stop();
     });
@@ -206,34 +210,28 @@ export const WebRtcProvider = ({ children }: Props) => {
     peerConnection.close();
 
     // Unsubscribe to snapshot changes
-    subscriptions.current?.answerCandidates()
-    subscriptions.current?.offerCandidates()
-    subscriptions.current?.callDoc()
-    subscriptions.current = {}
+    // subscriptions.current?.answerCandidates()
+    // subscriptions.current?.offerCandidates()
+    // subscriptions.current?.callDoc()
+    // subscriptions.current = {}
 
     const callDoc = getFirestore().collection("calls").doc(callId);
 
-    setStage(CallStage.Ended);
+    init();
 
     try {
       await deleteCollection(`/calls/${callId}/answerCanidates`, 20).then(() =>
         deleteCollection(`calls/${callId}/offerCanidates`, 20)
       );
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
 
     // Collections must be removed first, if persmission are setup up right, and I think they are,
     // Removing this document would remove permission to remove the sub-collections
     const result = await callDoc.delete();
 
     return { success: result };
-  };
-
-  const reset = async () => {
-    setCallId("");
-    setPeerConnection(new RTCPeerConnection(servers));
-    setStage(CallStage.Initialized);
-    setRemoteStream(new MediaStream());
-    init();
   };
 
   return (
@@ -244,7 +242,6 @@ export const WebRtcProvider = ({ children }: Props) => {
           offer,
           answer,
           hangup,
-          reset,
         },
         localStream,
         remoteStream,

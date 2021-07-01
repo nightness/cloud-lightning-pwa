@@ -94,7 +94,6 @@ export function WebRTC() {
             value: '',
           });
         }
-        actions.reset();
       })
       .catch((error) => console.error(error));
   };
@@ -107,7 +106,7 @@ export function WebRTC() {
           <H3>Enable Webcam</H3>
           <Button
             onClick={() => {
-              actions.init(localStream)
+              actions.init()
                 .catch((error: Error) => {
                   setAlertMessage(error.message) 
                   setIsAlertOpen(true);
