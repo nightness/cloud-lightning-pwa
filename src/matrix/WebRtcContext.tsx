@@ -67,7 +67,7 @@ export const WebRtcProvider = ({ children }: Props) => {
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
   const subscriptions = useRef<Subscriptions>({})
 
-  const init = async () => {    
+  const init = async () => {
     let currentStream: MediaStream;
     let pc = peerConnection;
     let rStream = remoteStream
@@ -83,7 +83,7 @@ export const WebRtcProvider = ({ children }: Props) => {
       rStream = new MediaStream()
       setCallId("");
       setPeerConnection(pc);
-      setRemoteStream(rStream);  
+      setRemoteStream(rStream);
     }
 
     const tracks = currentStream.getTracks();
@@ -217,30 +217,12 @@ export const WebRtcProvider = ({ children }: Props) => {
 
     init();
 
+    const result1 = await deleteCollection(callDoc, 'answerCandidates', 20)
+    const result2 = await deleteCollection(callDoc, 'offerCandidates', 20)
+    const result3 = await callDoc.delete();
 
-    try {
-      await deleteCollection(callDoc, 'answerCandidates', 20)
-    } catch (error) {
-      console.log('Error: ', error)
-    }
-
-    try {
-      await deleteCollection(callDoc, 'offerCandidates', 20)
-    } catch (error) {
-      console.log('Error: ', error)
-    }
-
-
-    // Collections must be removed first, if persmission are setup up right, and I think they are,
-    // Removing this document would remove permission to remove the sub-collections
-    const result = await callDoc.delete();
-
-    return { success: result };
+    return [result1, result2, result3];
   };
-
-  useEffect(() => () => {
-    hangup()
-  }, [])
 
   return (
     <WebRtcContext.Provider

@@ -21,30 +21,40 @@ export const Navbar = () => {
                 isOpen={isSideBarOpen}
                 onClose={() => setIsSideBarOpen(false)}
             />
-            <Tooltip2
-                popoverClassName='tooltip'
-                content='Menu'
-                intent="warning"
-                placement='bottom'
-                usePortal={false}
-                isOpen={isTooltipOpen}           
+            <div
+                style={{ marginLeft: 10, background: 'transparent', padding: 15 }}
+                onClick={(event) => {
+                    event.currentTarget.blur()
+                    setIsSideBarOpen(true)
+                    setIsTooltipOpen(false)
+                }}
+                onFocus={(event) => event.currentTarget.blur()}
+                onMouseLeave={() => {
+                    setIsTooltipOpen(false)
+                }}
+                onMouseEnter={() => {
+                    setIsTooltipOpen(true)
+                }}
             >
-                <Button
-                    style={{ marginLeft: 10 }}
-                    onMouseLeave={() => {
-                        setIsTooltipOpen(false)
-                    }}
-                    onMouseEnter={() => {
-                        setIsTooltipOpen(true)
-                    }}
-                    onClick={() => {                        
-                        setIsSideBarOpen(true)                        
-                        setIsTooltipOpen(false)
-                    }}
+
+                <Tooltip2
+                    popoverClassName='tooltip'
+                    content='Menu'
+                    intent="warning"
+                    placement='bottom'
+                    usePortal={false}
+                    isOpen={isTooltipOpen}
                 >
-                    <Icon iconSize={20} icon='menu' />
-                </Button>
-            </Tooltip2>
+                    <Icon
+                        color='black'
+                        iconSize={28}
+                        icon='menu'
+                        style={{ background: 'transparent' }}
+                        onClick={(event) => event.currentTarget.blur()}
+                        onFocus={(event) => event.currentTarget.blur()}
+                    />
+                </Tooltip2>
+            </div>
             <div className='header-title'>
                 <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} />
                 <H1>{getTitle(location.pathname)}</H1>
