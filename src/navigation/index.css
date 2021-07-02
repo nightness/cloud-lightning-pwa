@@ -51,7 +51,7 @@
 
 
 .link-active-div {
-    padding: 5px 5px 5px 5px;
+    padding: 5px 5px 5px 0px;
     background-color: rgb(1, 1, 1, 0.35);
     user-select: none;
     cursor: pointer;
@@ -70,7 +70,7 @@
 }
 
 .link-inactive-div {
-    padding: 5px 5px 5px 5px;
+    padding: 5px 5px 5px 0px;
     background-color: rgb(1, 1, 1, 0.1);
     user-select: none;
     cursor: pointer;
@@ -92,7 +92,7 @@
     color: black;
     font-size: 2rem;
     font-weight: 600;
-    margin: 0 2rem 0 2rem;
+    margin: 0 2rem 0 10px;
     font-size: 2rem;
     line-height: 2.8rem;
 }
