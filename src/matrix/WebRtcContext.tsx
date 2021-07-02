@@ -198,8 +198,6 @@ export const WebRtcProvider = ({ children }: Props) => {
       track.stop();
     });
 
-    if (remoteStream) remoteStream.getTracks().forEach((track) => track.stop());
-
     // This stops my stream to the senders, but doesn't not stop me from seeing them
     const senders = peerConnection.getSenders();
     senders.forEach((sender) => {
@@ -219,13 +217,19 @@ export const WebRtcProvider = ({ children }: Props) => {
 
     init();
 
+
     try {
-      await deleteCollection(`/calls/${callId}/answerCanidates`, 20).then(() =>
-        deleteCollection(`calls/${callId}/offerCanidates`, 20)
-      );
+      await deleteCollection(callDoc, 'answerCandidates', 20)
     } catch (error) {
-      console.error(error)
+      console.log('Error: ', error)
     }
+
+    try {
+      await deleteCollection(callDoc, 'offerCandidates', 20)
+    } catch (error) {
+      console.log('Error: ', error)
+    }
+
 
     // Collections must be removed first, if persmission are setup up right, and I think they are,
     // Removing this document would remove permission to remove the sub-collections
@@ -233,6 +237,10 @@ export const WebRtcProvider = ({ children }: Props) => {
 
     return { success: result };
   };
+
+  useEffect(() => () => {
+    hangup()
+  }, [])
 
   return (
     <WebRtcContext.Provider
