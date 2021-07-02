@@ -8,35 +8,36 @@ export function Home() {
   return (
     <>
       <Dialog
-        isOpen={isDialogOpen} 
+        isOpen={isDialogOpen}
         title='Hello World'
         onClose={() => {
           setIsDialogOpen(false)
         }}
-
       >
-        <Card>
-          <H1>Hello World</H1>
-          <Button
-            intent='success'
-            text='Ok'
-            onClick={() => {
-              setIsDialogOpen(false)
-            }}
-          />
-        </Card>
+        <div>
+          <H1 style={{ paddingLeft: 10 }}>Hello World</H1>
+          <div
+            style={{ width: '100%', textAlign: 'center' }}
+          >
+            <Button
+              intent='success'
+              text='Ok'
+              onClick={() => {
+                setIsDialogOpen(false)
+              }}
+            />
+          </div>
+        </div>
       </Dialog>
       <Container>
-        <Card>
-          <H1>Hello World</H1>
-          <Button
-            intent='success'
-            text='Open Dialog'
-            onClick={() => {
-              setIsDialogOpen(true)
-            }}
-          />
-        </Card>
+        <H1>Hello World</H1>
+        <Button
+          intent='success'
+          text='Open Dialog'
+          onClick={() => {
+            setIsDialogOpen(true)
+          }}
+        />
       </Container>
     </>
   );

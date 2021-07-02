@@ -14,7 +14,7 @@ export const Link = ({ children, className, noActiveFormatting, ...restProps }: 
         link.current?.click()
     }
 
-    // TODO: Don't passing same className to both the div and Link.
+    // TODO: Don't pass same className to both the div and Link.
     const navClasses = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active-div ' : 'link-inactive-div ' : ''}${typeof className === 'string' ? className : ''}`
     const divClasses = `${!noActiveFormatting ? location.pathname === restProps.to ? 'link-active ' : 'link-inactive ' : ''}${typeof className === 'string' ? className : ''}`
 

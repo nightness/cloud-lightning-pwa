@@ -36,7 +36,7 @@
 
 .links {
     margin-left: auto;
-    margin-right: 40px;
+    margin-right: 50px;
     display: flex;
     flex-direction: row;
     color: black;
@@ -102,8 +102,17 @@
     user-select: none;
 }
 
-.tooltip {
+.tooltip-left {
     padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: lightgray;
+    border-radius: 15px;
+}
+
+.tooltip-right {
+    margin-left: 50px;
+    padding: 5px 5px 5px 5px;
     font-size: 14px;
     font-weight: 500;
     background-color: lightgray;

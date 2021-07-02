@@ -22,7 +22,7 @@ export const Navbar = () => {
                 onClose={() => setIsSideBarOpen(false)}
             />
             <div
-                style={{ marginLeft: 10, background: 'transparent', padding: 15 }}
+                style={{ background: 'transparent', padding: 15 }}
                 onClick={(event) => {
                     event.currentTarget.blur()
                     setIsSideBarOpen(true)
@@ -37,7 +37,7 @@ export const Navbar = () => {
                 }}
             >
                 <Tooltip2
-                    popoverClassName='tooltip'
+                    popoverClassName='tooltip-left'
                     content='Menu'
                     intent="warning"
                     placement='bottom'
@@ -59,19 +59,18 @@ export const Navbar = () => {
                 <H1>{getTitle(location.pathname)}</H1>
                 {/* <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
             </div>
-            <div className="links">
-                <Tooltip2
-                    popoverClassName='tooltip'
-                    content={`${currentUser ? 'Logout' : 'Login'}`}
-                    intent="warning"
-                    placement='bottom'
-                    usePortal={false}
-                >
-                    <Link className='link-static' to="/auth" noActiveFormatting>
-                        <Icon iconSize={34} icon='user' />
-                    </Link>
-                </Tooltip2>
-            </div>
+            <Tooltip2
+                className='links'
+                popoverClassName='tooltip-right'
+                content={`${currentUser ? 'Logout' : 'Login'}`}
+                intent="warning"
+                placement='bottom'
+                usePortal={false}
+            >
+                <Link className='link-static' to="/auth" noActiveFormatting>
+                    <Icon iconSize={34} icon='user' />
+                </Link>
+            </Tooltip2>
         </nav>
     );
 }
