@@ -4,6 +4,7 @@ import { Link } from '../components'
 import { H1, Icon, Button, Drawer, Classes } from '@blueprintjs/core'
 import { FirebaseContext } from '../database/FirebaseContext'
 import { NavigationContext } from './NavigationContext'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
 interface SideBarProps {
     isOpen: boolean
@@ -11,11 +12,13 @@ interface SideBarProps {
 }
 
 export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
+    const { height, width } = useWindowDimensions();
     const { currentUser } = useContext(FirebaseContext)
     const { getPaths, getTitle, hasPermission } = useContext(NavigationContext)
     const paths = getPaths().filter((path) => path !== '/auth')
 
     // Note: The 'drawer' className on Drawer work properly for production
+    ///console.log('size: (', width, height, ')')
     return (
         <Drawer
             className='drawer'
@@ -24,7 +27,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Cloud Lightning"
-            size='40%'
+            size={height > width ? '75%' : '35%'}
             canOutsideClickClose
             canEscapeKeyClose
             usePortal

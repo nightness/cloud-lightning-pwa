@@ -25,10 +25,12 @@ export const Navbar = () => {
                 style={{ background: 'transparent', padding: 15 }}
                 onClick={(event) => {
                     event.currentTarget.blur()
+                }}
+                onFocus={(event) => {
+                    event.currentTarget.blur()
                     setIsSideBarOpen(true)
                     setIsTooltipOpen(false)
                 }}
-                onFocus={(event) => event.currentTarget.blur()}
                 onMouseLeave={() => {
                     setIsTooltipOpen(false)
                 }}
