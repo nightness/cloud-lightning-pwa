@@ -36,7 +36,6 @@ export const Navbar = () => {
                     setIsTooltipOpen(true)
                 }}
             >
-
                 <Tooltip2
                     popoverClassName='tooltip'
                     content='Menu'

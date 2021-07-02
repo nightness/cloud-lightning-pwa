@@ -24,7 +24,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Cloud Lightning"
-            size='30%'
+            size='40%'
             canOutsideClickClose
             canEscapeKeyClose
             usePortal

@@ -20,7 +20,7 @@ export const Link = ({ children, className, noActiveFormatting, ...restProps }: 
     return (
         // TODO: Don't like passing the same className to both the div and Link. It works for solid
         // color backgrounds, but not linear gradients (for example)
-        <div className={`${navClasses}`} onClick={onClick}>
+        <div className={`${navClasses}`} onClick={onClick} style={{ width: 10 }}>
             <NavLink ref={link as React.Ref<HTMLAnchorElement>} draggable={false} className={divClasses} {...restProps}>
                 {children}
             </NavLink>
