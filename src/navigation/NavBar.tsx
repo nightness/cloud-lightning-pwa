@@ -55,9 +55,9 @@ export const Navbar = () => {
                 </Tooltip2>
             </div>
             <div className='header-title'>
-                <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} />
+                {/* <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
                 <H1>{getTitle(location.pathname)}</H1>
-                <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} />
+                {/* <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
             </div>
             <div className="links">
                 <Tooltip2
