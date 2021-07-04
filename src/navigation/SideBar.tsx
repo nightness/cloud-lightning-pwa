@@ -17,7 +17,6 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
     const { getPaths, getTitle, hasPermission } = useContext(NavigationContext)
     const paths = getPaths().filter((path) => path !== '/auth')
 
-    // ToDO: Set a title background
     return (
         <Drawer
             className='drawer'

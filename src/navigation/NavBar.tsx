@@ -1,10 +1,10 @@
 import './index.css'
-import { LegacyRef, useContext, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from '../components'
-import { H1, Icon, Button } from '@blueprintjs/core'
+import { H1, Icon } from '@blueprintjs/core'
 import { FirebaseContext } from '../database/FirebaseContext'
 import SideBar from './SideBar'
-import { Classes, Popover2, Tooltip2 } from "@blueprintjs/popover2";
+import { Tooltip2 } from "@blueprintjs/popover2";
 import { useLocation } from 'react-router-dom'
 import { NavigationContext } from './NavigationContext'
 
@@ -58,9 +58,7 @@ export const Navbar = () => {
                 </Tooltip2>
             </div>
             <div className='header-title'>
-                {/* <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
                 <H1>{currentPageTitle ? currentPageTitle : 'Page Not Found'}</H1>
-                {/* <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
             </div>
             <Tooltip2
                 className='links'
