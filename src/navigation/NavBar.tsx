@@ -14,6 +14,7 @@ export const Navbar = () => {
     const [isSideBarOpen, setIsSideBarOpen] = useState(false)
     const [isTooltipOpen, setIsTooltipOpen] = useState(false)
     const { getTitle } = useContext(NavigationContext)
+    const currentPageTitle = getTitle(location.pathname) 
 
     return (
         <nav className="navbar">
@@ -58,7 +59,7 @@ export const Navbar = () => {
             </div>
             <div className='header-title'>
                 {/* <img style={{ marginLeft: 10 }} className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
-                <H1>{getTitle(location.pathname)}</H1>
+                <H1>{currentPageTitle ? currentPageTitle : 'Page Not Found'}</H1>
                 {/* <img className="navbar-img" src='../storm-cloud.svg' width={75} height={100} draggable={false} /> */}
             </div>
             <Tooltip2

@@ -17,6 +17,7 @@ import { Formik, FormikHelpers, FormikProps, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FirebaseContext } from '../database/FirebaseContext'
 import { CSSProperties } from 'styled-components'
+import { useHistory } from 'react-router-dom'
 
 interface AuthenticationFields {
     displayName: string
@@ -82,6 +83,7 @@ export const Authentication = () => {
     const [error, setError] = useState(undefined)
     const { activeTheme, setActiveTheme } = useContext(ThemeContext)
     const auth = firebaseAuth()
+    const history = useHistory()
 
     const softReset = (formikProps: FormikProps<any>) => {
         formikProps.setValues({
@@ -120,7 +122,7 @@ export const Authentication = () => {
                 setIsLoading(true)
             })
             .then(() => {
-                window.location.assign('/')
+                history.push('/')
             })
             .catch((error: FirebaseError) => {
                 setSubmitted(false)
@@ -133,7 +135,7 @@ export const Authentication = () => {
         const provider = new GoogleAuthProvider()
         auth.signInWithPopup(provider)
             .then(() => {
-                window.location.assign('/')
+                history.push('/')
             })
             .catch((error) => {
                 setSubmitted(false)
@@ -146,7 +148,7 @@ export const Authentication = () => {
         setSubmitted(true)
         try {
             await auth.signInWithEmailAndPassword(values.eMail, values.password)
-            window.location.assign('/')
+            history.push('/')
         }
         catch (error) {
             setSubmitted(false)

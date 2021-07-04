@@ -1,5 +1,5 @@
-import React, { createContext, useState, useContext, useRef } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
+import React, { createContext, useState, useContext, useRef, useEffect } from 'react'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import { FirebaseContext } from '../database/FirebaseContext'
 
 type ContextType = {
@@ -23,6 +23,27 @@ interface Props {
     children: JSX.Element | JSX.Element[]
 }
 
+const PageNotFound = () => {
+    const [redirecting, setRedirecting] = useState(false)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setRedirecting(true)
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
+
+    return (
+        <>
+            {redirecting ? 
+                <Redirect to='/' /> :
+                <h2>Redirecting...</h2>
+            }
+        </>
+
+    );
+}
+
 export const Pages = () => {
     const { getPaths, getComponent } = useContext(NavigationContext)
     const paths = getPaths()
@@ -31,6 +52,7 @@ export const Pages = () => {
             {paths.map((path) => (
                 <Route exact path={path} component={getComponent(path)} key={`${Math.random()}-${path}`} />
             ))}
+            <Route component={PageNotFound} />
         </Switch>
     )
 }
