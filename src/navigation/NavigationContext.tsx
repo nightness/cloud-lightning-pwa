@@ -34,13 +34,10 @@ const PageNotFound = () => {
     }, []);
 
     return (
-        <>
-            {redirecting ? 
-                <Redirect to='/' /> :
-                <h2>Redirecting...</h2>
-            }
-        </>
-
+        <>{redirecting ?
+            <Redirect to='/' /> :
+            <h2>Redirecting...</h2>
+        }</>
     );
 }
 
@@ -58,7 +55,7 @@ export const Pages = () => {
 }
 
 export const NavigationProvider = ({ children }: Props) => {
-    const { currentUser } = useContext(FirebaseContext)    
+    const { currentUser } = useContext(FirebaseContext)
     const [routes] = useState(new Map<string, string>())
     const [components] = useState(new Map<string, React.FC>())
     const [requiresAuthentication] = useState(new Map<string, boolean>())
