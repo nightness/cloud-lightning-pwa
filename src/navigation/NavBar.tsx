@@ -51,7 +51,7 @@ export const Navbar = () => {
                         color='black'
                         iconSize={28}
                         icon='menu'
-                        style={{ background: 'transparent' }}
+                        style={{ background: 'transparent', marginLeft: 10 }}
                         onClick={(event) => event.currentTarget.blur()}
                         onFocus={(event) => event.currentTarget.blur()}
                     />

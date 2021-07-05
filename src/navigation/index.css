@@ -35,7 +35,6 @@
 }
 
 .links {
-    margin-left: auto;
     margin-right: 50px;
     display: flex;
     flex-direction: row;

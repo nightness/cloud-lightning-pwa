@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useRef, useEffect } from 'react'
 
-export const useTimeout = (callBkFn: () => any, interval: number) => {
+export const useTimeout = (callBkFn: () => any, interval: number = 1000) => {
     const callback = useRef(callBkFn)
 
     useEffect(() => {
