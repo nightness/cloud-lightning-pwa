@@ -6,16 +6,12 @@ import {
     DocumentData,
     QuerySnapshot,
 } from './Firebase'
-import { ActivityIndicator, DisplayError, FlatList, ThemeContext } from '../components'
-import { ListRenderItem, StyleProp, View, ViewStyle } from 'react-native'
-import { FirebaseError } from '../database/Firebase'
-import { LinearGradient } from 'expo-linear-gradient'
-import { GradientColors } from '../app/GradientColors'
-import { Styles } from '../app/Styles'
+import { ActivityIndicator, DisplayError, ThemeContext } from '../components'
+import { FirebaseError } from './Firebase'
+import Message from '../messenger/Message'
 
 interface Props<T> {
     collectionPath: string
-    renderItem: ListRenderItem<T>
     orderBy?: string
     limitLength?: number
     initialNumToRender?: number
@@ -24,7 +20,6 @@ interface Props<T> {
 
 export default function _<T>({
     collectionPath,
-    renderItem,
     orderBy,
     limitLength,
     initialNumToRender,
@@ -62,7 +57,7 @@ export default function _<T>({
     }, [snapshot])
 
     if (loadingCollection || loadingData)
-        return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
+        return <ActivityIndicator fullscreen size='huge' />
     if (errorCollection || errorData) {
         const error = (errorCollection === true ? new Error('Unknown Firebase Error') :
             (errorCollection !== undefined ? errorCollection as Error : undefined) ||
@@ -77,19 +72,21 @@ export default function _<T>({
         )
     }
     return (
-        <LinearGradient
-            colors={GradientColors[activeTheme].secondary}
-            style={{ flex: 1 }}
-        >
-            <FlatList<T>
-                style={{ width: '100%' }}
-                viewStyle={{ alignItems: 'baseline' }}
-                renderItem={renderItem}
-                data={messages}
-                onStartReached={loadMoreMessages}
-                autoScrollToEnd={autoScrollToEnd}
-                {...restProps}
-            />
-        </LinearGradient>
+        <ul>
+            { messages.map((message, ind) =>
+                <li style={{ textDecoration: 'none'}}><Message item={message} /></li>
+            )}
+        </ul>
     )
+    // return (
+    //     <FlatList<T>
+    //         style={{ width: '100%' }}
+    //         viewStyle={{ alignItems: 'baseline' }}
+    //         renderItem={renderItem}
+    //         data={messages}
+    //         onStartReached={loadMoreMessages}
+    //         autoScrollToEnd={autoScrollToEnd}
+    //         {...restProps}
+    //     />
+    // )
 }

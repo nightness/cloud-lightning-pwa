@@ -49,6 +49,18 @@
     user-select: none;
 }
 
+.side-links {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    white-space: nowrap;
+}
+
 
 .link-active-div {
     padding: 5px 5px 5px 0px;
@@ -100,6 +112,7 @@
 .drawer {
     background-image: linear-gradient(to bottom, #8ff, #aff, #fff);
     user-select: none;
+    width: 100%;
 }
 
 .tooltip-left {

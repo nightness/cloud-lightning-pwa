@@ -4,11 +4,12 @@ import { EditableText, EditableTextProps } from '@blueprintjs/core'
 
 interface Props extends EditableTextProps {
     style?: CSSProperties
+    classRef?: React.LegacyRef<EditableText>
 }
 
-export const TextInput = ({ style, ...restProps }: Props) => {
+export const TextInput = ({ style, classRef, ...restProps }: Props) => {
     return (
-        <EditableText className='editable-text' {...restProps} />
+        <EditableText ref={classRef} className='editable-text' {...restProps} />
     )
 }
 

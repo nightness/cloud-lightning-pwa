@@ -23,7 +23,7 @@ export const Navbar = () => {
                 onClose={() => setIsSideBarOpen(false)}
             />
             <div
-                style={{ background: 'transparent', padding: 15 }}
+                style={{ background: 'transparent', marginRight: 15 }}
                 onClick={(event) => {
                     event.currentTarget.blur()
                 }}

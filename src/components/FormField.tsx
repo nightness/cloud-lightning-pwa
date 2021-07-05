@@ -11,6 +11,7 @@ interface Props {
     secureTextEntry?: boolean
     style?: CSSProperties
     textInputStyle?: CSSProperties
+    disabled?: boolean
 }
 
 export default ({
@@ -19,6 +20,7 @@ export default ({
     label,
     secureTextEntry = false,
     style,
+    disabled,
     textInputStyle,
     ...restProps
 }: Props) => {
@@ -26,6 +28,7 @@ export default ({
     return (
         <div style={style}>
             <TextInput
+                disabled={disabled}
                 style={textInputStyle}
                 placeholder={label}
                 // returnKeyType={returnKeyType}
@@ -43,9 +46,9 @@ export default ({
                 //onBlur={formikProps.handleBlur(fieldName)}
                 {...restProps}
             />
-            <Text>
-                {formikProps.touched[fieldName] && formikProps.errors[fieldName]}
-            </Text>
+            {
+                !disabled ? <Text>{formikProps.touched[fieldName] && formikProps.errors[fieldName]}</Text> : undefined
+            }   
         </div>
     )
 }

@@ -1,18 +1,20 @@
 import './App.css';
 import { useContext } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Home, WebRTC, About, Authentication } from './pages'
+import { Home, WebRTC, Profile, Authentication } from './pages'
 import { NavBar } from './components'
 import { FirebaseProvider } from './database/FirebaseContext'
 import { WebRtcProvider } from './matrix/WebRtcContext';
 import { NavigationContext, NavigationProvider, Pages } from './navigation/NavigationContext';
+import { WallMessenger } from './messenger';
 
 const MainDocument = () => {
   const { registerPage } = useContext(NavigationContext)
 
   registerPage('/', 'Home', Home)
+  registerPage('/wall', "Member Walls", WallMessenger, true)
   registerPage('/WebRTC', 'WebRTC', WebRTC, true)
-  registerPage('/about', 'About', About)
+  registerPage('/profile', 'Profile', Profile)
   registerPage('/auth', 'Cloud Lightning', Authentication)
 
   return (

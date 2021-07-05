@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useRef, useEffect } from 'react'
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import { FirebaseContext } from '../database/FirebaseContext'
+import useTimeout from '../hooks/useTimeout'
 
 type ContextType = {
     registerPage: (path: string, title: string, component: React.FC, requiresAuth?: boolean) => any
@@ -26,12 +27,9 @@ interface Props {
 const PageNotFound = () => {
     const [redirecting, setRedirecting] = useState(false)
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setRedirecting(true)
-        }, 1500);
-        return () => clearTimeout(timer);
-    }, []);
+    useTimeout(() => {
+        setRedirecting(true)
+    }, 1500)
 
     return (
         <>{redirecting ?

@@ -59,7 +59,7 @@ const LoginScheme = Yup.object({
 
 const RegistrationScheme = Yup.object({
     displayName: Yup.string()
-        .required('Full name is a required field')
+        .required('Display name is a required field')
         .min(3),
     eMail: Yup.string()
         .required('E-mail is a required field')

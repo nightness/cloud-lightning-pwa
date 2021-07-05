@@ -31,7 +31,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             usePortal
         >
             <div className={`${Classes.DRAWER_BODY} drawer`}>
-                <div style={{ flexDirection: 'column', marginLeft: 0, marginTop: 20 }}>
+                <div className='side-links'>
                     {paths.map((path) => !hasPermission(path) ? undefined :
                         <Link key={`${Math.random()}-${Math.random()}`} className='sidebar-link' to={path} onClick={onClose}>{getTitle(path)}</Link>
                     )}

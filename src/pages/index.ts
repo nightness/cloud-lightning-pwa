@@ -1,6 +1,6 @@
 import Home from './Home'
-import About from './About'
+import Profile from './Profile'
 import WebRTC from './WebRTC'
 import Authentication from './Authentication'
 
-export { Home, About, WebRTC, Authentication }
+export { Home, Profile, WebRTC, Authentication }
