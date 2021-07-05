@@ -80,6 +80,7 @@ export const Authentication = () => {
     const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isAfterSignIn, setAfterSignIn] = useState(false)
     const [error, setError] = useState(undefined)
     const { activeTheme, setActiveTheme } = useContext(ThemeContext)
     const auth = firebaseAuth()
@@ -116,14 +117,16 @@ export const Authentication = () => {
         softReset(formikProps)
     }
 
+    const onSuccessfulLogin = () => {
+        setAfterSignIn(true)
+    }
+
     const onRegisterPress = async (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
             .then(() => {
                 setIsLoading(true)
             })
-            .then(() => {
-                history.push('/')
-            })
+            .then(onSuccessfulLogin)
             .catch((error: FirebaseError) => {
                 setSubmitted(false)
                 setIsLoading(false)
@@ -133,11 +136,11 @@ export const Authentication = () => {
 
     const signInWithGoogle = async (formikProps: FormikProps<any>) => {
         const provider = new GoogleAuthProvider()
+        setIsLoading(true)
         auth.signInWithPopup(provider)
-            .then(() => {
-                history.push('/')
-            })
+            .then(onSuccessfulLogin)
             .catch((error) => {
+                setIsLoading(true)
                 setSubmitted(false)
                 alert(error)
             })
@@ -148,7 +151,7 @@ export const Authentication = () => {
         setSubmitted(true)
         try {
             await auth.signInWithEmailAndPassword(values.eMail, values.password)
-            history.push('/')
+            onSuccessfulLogin()
         }
         catch (error) {
             setSubmitted(false)
@@ -173,6 +176,18 @@ export const Authentication = () => {
         if (activeTheme === 'Dark') setActiveTheme('Light')
     })
 
+    useEffect(() => {
+        if (!isAfterSignIn) return
+        // ---
+
+
+
+        history.push('/')
+        // ---
+        setAfterSignIn(false)
+        setIsLoading(false)
+    }, [isAfterSignIn, setAfterSignIn, setIsLoading])
+    
     useEffect(() => {
         switch (mode) {
             case 'login':
