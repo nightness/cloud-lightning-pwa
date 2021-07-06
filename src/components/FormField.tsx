@@ -26,7 +26,7 @@ export default ({
 }: Props) => {
 
     return (
-        <div style={style}>
+        <div style={{ paddingTop: 5 }}>
             <TextInput
                 disabled={disabled}
                 style={textInputStyle}

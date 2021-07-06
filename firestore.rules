@@ -7,17 +7,17 @@ service cloud.firestore {
     	}
 
 		// Calls
-   	match /calls/{callId} {
+		match /calls/{callId} {
 			function callParticipant(resource) {
 				return resource.data.creator == request.auth.uid || resource.data.target == request.auth.uid
 			}
 			allow read, write: if isAuthorized() && callParticipant(resource)
-      allow create, list: if isAuthorized()
+			allow create, list: if isAuthorized()
 
 			function inCall(callId, uid) {
-      	let data = get(/databases/$(database)/documents/calls/$(callId)).data;
-      	return data.creator == uid || data.target == uid
-      }
+				let data = get(/databases/$(database)/documents/calls/$(callId)).data;
+				return data.creator == uid || data.target == uid
+			}
 
 			// Offer Canidates
 			match /offerCandidates/{offerCandidatesId} {
@@ -28,6 +28,11 @@ service cloud.firestore {
 			match /answerCandidates/{answerCandidatesId} {
 				allow read,write: if isAuthorized() && inCall(callId, request.auth.uid)
 			}
-   	}
+		}
+		
+		match /profile/{profileID} {
+			allow write: if isAuthorized() && (profileID == request.auth.uid)
+			allow read: if isAuthorized()
+		}
  	}
 }
