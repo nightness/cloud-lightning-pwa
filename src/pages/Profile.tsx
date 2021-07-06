@@ -146,9 +146,6 @@ export const Profile = () => {
                   label="Full Name"
                   formikProps={formikProps}
                   fieldName="displayName"
-                  textInputStyle={{
-                    padding: 5,
-                  }}
                 />
                 <FormField
                   disabled={

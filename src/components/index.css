@@ -21,7 +21,15 @@
     left: 0;
 }
 
-.editable-text {
+.form-field-container {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
+.form-field-input {
+    align-self: center;
+    justify-self: center;
     flex: 1;
     background-color: white;
     color: black;

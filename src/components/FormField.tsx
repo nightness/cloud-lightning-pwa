@@ -10,7 +10,6 @@ interface Props {
     placeholder?: string
     secureTextEntry?: boolean
     style?: CSSProperties
-    textInputStyle?: CSSProperties
     disabled?: boolean
 }
 
@@ -21,15 +20,14 @@ export default ({
     secureTextEntry = false,
     style,
     disabled,
-    textInputStyle,
     ...restProps
 }: Props) => {
 
     return (
-        <div style={{ paddingTop: 5 }}>
+        <div className='form-field-container'>
             <TextInput
+                className='form-field-input'
                 type={secureTextEntry ? 'password': 'text'}
-                style={textInputStyle}
                 placeholder={label as string}
                 // returnKeyType={returnKeyType}                
                 onChange={formikProps.handleChange(fieldName)}

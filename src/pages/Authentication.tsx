@@ -253,9 +253,6 @@ export const Authentication = () => {
                                     label='Full Name'
                                     formikProps={formikProps}
                                     fieldName='displayName'
-                                    textInputStyle={{
-                                        padding: 5
-                                    }}
                                 />
                             ) : <></>}
                             <FormField

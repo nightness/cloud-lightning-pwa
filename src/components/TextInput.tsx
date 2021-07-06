@@ -12,13 +12,11 @@ interface Props
 
 export const TextInput = ({ style, secureTextEntry, ...restProps }: Props) => {
   return (
-    <div style={style}>
-      <input
-        type={secureTextEntry ? "password" : "text"}
-        className="editable-text"
-        {...restProps}
-      />
-    </div>
+    <input
+      style={style}
+      type={secureTextEntry ? "password" : "text"}
+      {...restProps}
+    />
   );
 };
 
