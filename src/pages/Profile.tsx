@@ -23,9 +23,9 @@ Yup.addMethod(Yup.string, "equalTo", equalTo);
 const ChangePasswordScheme = Yup.object({
   oldPassword: Yup.string().required("Old password is a required field").min(8),
   newPassword: Yup.string().required("New password is a required field").min(8),
-  confirmNewPassword: Yup.string()
+  retypeNewPassword: Yup.string()
     // @ts-ignore
-    .equalTo(Yup.ref("password"), "Both passwords must match")
+    .equalTo(Yup.ref("newPassword"), "Both passwords must match")
     .required("Please retype your new password"),
 });
 
@@ -50,7 +50,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <Dialog isOpen={isOpen} title={title}>
+    <Dialog isOpen={isOpen} title={title} onClose={onClose}>
       <div style={{ marginTop: 10}}>
         <Formik
           initialValues={{
@@ -59,8 +59,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
           }}
           validationSchema={ChangePasswordScheme}
           onSubmit={(values, helpers) => {
-            console.log("onSubmit", values, helpers);
-            //setSubmitted(true);
+            setSubmitted(true);
             onClose();
           }}
         >
