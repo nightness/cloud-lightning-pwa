@@ -113,9 +113,10 @@ export default () => {
             <div>
                 <TextInput
                     value={messageText}
-                    onChange={(msg: string) => setMessageText(msg)}
+                    onChange={(event: React.ChangeEvent) => undefined
+                        //setMessageText(event.nativeEvent.returnValue)
+                    }
                     //onConfirm={onMessageKeyPress}
-                    classRef={textInput as React.LegacyRef<EditableText>}
                 />
                 <Button
                     title="Send"

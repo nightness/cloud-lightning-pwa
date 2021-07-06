@@ -1,16 +1,23 @@
 import "./index.css";
 import { CSSProperties } from "react";
-import { EditableText, EditableTextProps } from "@blueprintjs/core";
 
-interface Props extends EditableTextProps {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   style?: CSSProperties;
-  classRef?: React.LegacyRef<EditableText>;
+  secureTextEntry?: boolean;
 }
 
-export const TextInput = ({ style, classRef, ...restProps }: Props) => {
+export const TextInput = ({ style, secureTextEntry, ...restProps }: Props) => {
   return (
     <div style={style}>
-      <EditableText ref={classRef} className="editable-text" {...restProps} />
+      <input
+        type={secureTextEntry ? "password" : "text"}
+        className="editable-text"
+        {...restProps}
+      />
     </div>
   );
 };

@@ -28,10 +28,10 @@ export default ({
     return (
         <div style={{ paddingTop: 5 }}>
             <TextInput
-                disabled={disabled}
+                type={secureTextEntry ? 'password': 'text'}
                 style={textInputStyle}
-                placeholder={label}
-                // returnKeyType={returnKeyType}
+                placeholder={label as string}
+                // returnKeyType={returnKeyType}                
                 onChange={formikProps.handleChange(fieldName)}
                 // onKeyPress={(event) => {
                 //     if (event.nativeEvent.key === 'Enter') {
