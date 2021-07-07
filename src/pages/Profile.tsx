@@ -1,8 +1,10 @@
-import { Container, ScrollView, Text, FormField } from "../components";
+import { Container, ScrollView, Text, FormField, Button } from "../components";
 import { Formik, FormikHelpers, FormikProps, useFormik } from "formik";
 import * as Yup from "yup";
-import { H1, Button, Dialog } from "@blueprintjs/core";
-import { useState } from "react";
+import { H1, Dialog } from "@blueprintjs/core";
+import { useContext, useState } from "react";
+import { FirebaseContext } from "../database/FirebaseContext";
+import { getAuth } from '../database/Firebase'
 
 function equalTo(ref: any, msg: any) {
   return Yup.mixed().test({
@@ -51,7 +53,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 
   return (
     <Dialog isOpen={isOpen} title={title} onClose={onClose}>
-      <div style={{ marginTop: 10}}>
+      <div style={{ marginTop: 10 }}>
         <Formik
           initialValues={{
             password: "",
@@ -94,9 +96,8 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
               <div>
                 <Button
                   title="Save"
-                  text="Save"
                   disabled={submitted}
-                  onClick={formikProps.handleSubmit as React.EventHandler<any>}
+                  onPress={formikProps.handleSubmit}
                 />
               </div>
             </div>
@@ -108,6 +109,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 };
 
 export const Profile = () => {
+  const { currentUser } = useContext(FirebaseContext)
   const [submitted, setSubmitted] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -116,6 +118,10 @@ export const Profile = () => {
   };
 
   // Can only change a password with email/password accounts
+  const username = currentUser?.displayName ? `${currentUser?.displayName} (${currentUser?.email})` : undefined
+    || currentUser?.email || currentUser?.uid
+
+  console.log(currentUser?.providerId, currentUser?.providerData)
 
   return (
     <>
@@ -126,6 +132,9 @@ export const Profile = () => {
       />
       <Container>
         <ScrollView style={{ flex: 1 }}>
+          <div style={{ flex: 1 }}>
+            <Text>{`Logged is as ${username}`}</Text>
+          </div>
           <Formik
             initialValues={{
               displayName: "",
@@ -143,29 +152,25 @@ export const Profile = () => {
             {(formikProps) => (
               <>
                 <FormField
-                  label="Full Name"
+                  label="Display Name"
                   formikProps={formikProps}
                   fieldName="displayName"
                 />
-                <FormField
-                  disabled={
-                    formikProps.values.eMail
-                      .toLowerCase()
-                      .indexOf(".gmail.com") >= 0
-                  }
-                  formikProps={formikProps}
-                  fieldName="eMail"
-                  label="E-Mail"
-                />
                 <Button
                   title="Save"
-                  text="Save"
                   disabled={submitted}
-                  onClick={formikProps.handleSubmit as React.EventHandler<any>}
+                  onPress={formikProps.handleSubmit}
                 />
               </>
             )}
           </Formik>
+          {            
+            <Button
+              title="Change Password"
+              disabled={submitted}
+              onPress={() => setIsDialogOpen(true)}
+            />
+          }
         </ScrollView>
       </Container>
     </>
