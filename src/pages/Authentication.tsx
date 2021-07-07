@@ -79,8 +79,7 @@ enum Stage {
   Ready = 1,
   Authenticating = 2,
   LoggedIn = 3,
-  LoggingOut = 4,
-  LoggedOut = 5,
+  LoggedOut = 4,
 }
 
 export const Authentication = () => {
@@ -170,7 +169,10 @@ export const Authentication = () => {
     setStage(Stage.Authenticating);
     auth
       .signInWithEmailAndPassword(values.eMail, values.password)
-      .then(onSuccessfulLogin)
+      .then((user) => {
+        helpers.resetForm();
+        onSuccessfulLogin(user);
+      })
       .catch((err) => {
         alert(err)
         setStage(Stage.Ready)
@@ -230,7 +232,6 @@ export const Authentication = () => {
         <Button
           title="Logout"
           onPress={() => {
-
             auth
               .signOut()
               .then(() => {
