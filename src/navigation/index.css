@@ -35,7 +35,7 @@
 }
 
 .links {
-  margin-right: 50px;
+  margin-right: 30px;
   display: flex;
   flex-direction: row;
   color: black;
@@ -46,6 +46,14 @@
 .link-static {
   background-color: transparent;
   user-select: none;
+  /* padding-bottom: 5px !important;
+  padding-left: 5px !important;
+  padding-top: 5px !important;
+  padding-right: 5px !important; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
 }
 
 .side-links {
@@ -134,5 +142,4 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-top: 5px;
 }

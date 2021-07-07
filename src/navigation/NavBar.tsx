@@ -65,7 +65,7 @@ export const Navbar = () => {
         placement="bottom"
         usePortal={false}
       >
-        <Link className="link-static" to="/auth" noActiveFormatting>
+        <Link className="link-static" to="/auth" noActiveFormatting >
           {currentUser?.photoURL ? (
             <img className="img" src={currentUser?.photoURL} />
           ) : (
