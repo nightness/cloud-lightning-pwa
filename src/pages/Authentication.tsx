@@ -221,7 +221,7 @@ export const Authentication = () => {
           auth.signOut().then(() => {
             // Reload the page to clean out any state from previous login
             window.location.assign(`/auth`)
-          })
+          }).catch(console.error)
         }} />
       </div>
     );
