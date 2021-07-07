@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { H1, Dialog } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { FirebaseContext } from "../database/FirebaseContext";
-import { getAuth } from '../database/Firebase'
+import { getAuth } from "../database/Firebase";
 
 function equalTo(ref: any, msg: any) {
   return Yup.mixed().test({
@@ -109,7 +109,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 };
 
 export const Profile = () => {
-  const { currentUser } = useContext(FirebaseContext)
+  const { currentUser } = useContext(FirebaseContext);
   const [submitted, setSubmitted] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -118,10 +118,11 @@ export const Profile = () => {
   };
 
   // Can only change a password with email/password accounts
-  const username = currentUser?.displayName ? `${currentUser?.displayName} (${currentUser?.email})` : undefined
-    || currentUser?.email || currentUser?.uid
+  const username = currentUser?.displayName
+    ? `${currentUser?.displayName} (${currentUser?.email})`
+    : undefined || currentUser?.email || currentUser?.uid;
 
-  console.log(currentUser?.providerId, currentUser?.providerData)
+  console.log(currentUser?.providerId, currentUser?.providerData);
 
   return (
     <>
@@ -164,7 +165,7 @@ export const Profile = () => {
               </>
             )}
           </Formik>
-          {            
+          {
             <Button
               title="Change Password"
               disabled={submitted}

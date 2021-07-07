@@ -374,7 +374,7 @@ export const Authentication = () => {
           <Text>{`Cloud Lightning Messenger - Beta`}</Text>
         </div>
       </ScrollView>
-    </Container>    
+    </Container>
   );
 };
 

@@ -48,9 +48,9 @@ const servers = {
 };
 
 interface Subscriptions {
-  callDoc?: any
-  answerCandidates?: any
-  offerCandidates?: any
+  callDoc?: any;
+  answerCandidates?: any;
+  offerCandidates?: any;
 }
 
 interface Props {
@@ -65,12 +65,12 @@ export const WebRtcProvider = ({ children }: Props) => {
   const [stage, setStage] = useState<CallStage>(CallStage.New);
   const [localStream, setLocalStream] = useState<MediaStream>();
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
-  const subscriptions = useRef<Subscriptions>({})
+  const subscriptions = useRef<Subscriptions>({});
 
   const init = async () => {
     let currentStream: MediaStream;
     let pc = peerConnection;
-    let rStream = remoteStream
+    let rStream = remoteStream;
     if (!localStream) {
       currentStream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -78,9 +78,9 @@ export const WebRtcProvider = ({ children }: Props) => {
       });
       setLocalStream(currentStream);
     } else {
-      pc = new RTCPeerConnection(servers)
-      currentStream = localStream
-      rStream = new MediaStream()
+      pc = new RTCPeerConnection(servers);
+      currentStream = localStream;
+      rStream = new MediaStream();
       setCallId("");
       setPeerConnection(pc);
       setRemoteStream(rStream);
@@ -134,15 +134,17 @@ export const WebRtcProvider = ({ children }: Props) => {
     });
 
     // When answered, add candidate to peer connection
-    subscriptions.current.answerCandidates = answerCandidates.onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-          const candidate = new RTCIceCandidate(change.doc.data());
-          peerConnection.addIceCandidate(candidate);
-          setStage(CallStage.Accepted);
-        }
-      });
-    });
+    subscriptions.current.answerCandidates = answerCandidates.onSnapshot(
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            const candidate = new RTCIceCandidate(change.doc.data());
+            peerConnection.addIceCandidate(candidate);
+            setStage(CallStage.Accepted);
+          }
+        });
+      }
+    );
     setCallId(callDoc.id);
     setStage(CallStage.Offered);
     return callDoc.id;
@@ -176,17 +178,19 @@ export const WebRtcProvider = ({ children }: Props) => {
     await callDoc.update({ answer });
 
     try {
-      subscriptions.current.offerCandidates = offerCandidates.onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          console.log(change);
-          if (change.type === "added") {
-            let data = change.doc.data();
-            peerConnection.addIceCandidate(new RTCIceCandidate(data));
-            setCallId(callId);
-            setStage(CallStage.Accepted);
-          }
-        });
-      });
+      subscriptions.current.offerCandidates = offerCandidates.onSnapshot(
+        (snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            console.log(change);
+            if (change.type === "added") {
+              let data = change.doc.data();
+              peerConnection.addIceCandidate(new RTCIceCandidate(data));
+              setCallId(callId);
+              setStage(CallStage.Accepted);
+            }
+          });
+        }
+      );
     } catch (error) {
       console.log(error);
     }
@@ -217,8 +221,8 @@ export const WebRtcProvider = ({ children }: Props) => {
 
     init();
 
-    const result1 = await deleteCollection(callDoc, 'answerCandidates', 20)
-    const result2 = await deleteCollection(callDoc, 'offerCandidates', 20)
+    const result1 = await deleteCollection(callDoc, "answerCandidates", 20);
+    const result2 = await deleteCollection(callDoc, "offerCandidates", 20);
     const result3 = await callDoc.delete();
 
     return [result1, result2, result3];

@@ -1,29 +1,27 @@
-import { Text, Container, ActivityIndicator } from '../components'
+import { Text, Container, ActivityIndicator } from "../components";
 import { H1, Button, Card, Dialog } from "@blueprintjs/core";
-import { useState } from 'react';
+import { useState } from "react";
 
 export function Home() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <>
       <Dialog
         isOpen={isDialogOpen}
-        title='Hello World'
+        title="Hello World"
         onClose={() => {
-          setIsDialogOpen(false)
+          setIsDialogOpen(false);
         }}
       >
         <div>
           <H1 style={{ paddingLeft: 10 }}>Hello World</H1>
-          <div
-            style={{ width: '100%', textAlign: 'center' }}
-          >
+          <div style={{ width: "100%", textAlign: "center" }}>
             <Button
-              intent='success'
-              text='Ok'
+              intent="success"
+              text="Ok"
               onClick={() => {
-                setIsDialogOpen(false)
+                setIsDialogOpen(false);
               }}
             />
           </div>
@@ -32,10 +30,10 @@ export function Home() {
       <Container>
         <H1>Hello World</H1>
         <Button
-          intent='success'
-          text='Open Dialog'
+          intent="success"
+          text="Open Dialog"
           onClick={() => {
-            setIsDialogOpen(true)
+            setIsDialogOpen(true);
           }}
         />
       </Container>
@@ -43,4 +41,4 @@ export function Home() {
   );
 }
 
-export default Home
+export default Home;
