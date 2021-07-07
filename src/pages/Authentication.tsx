@@ -73,15 +73,23 @@ const RegistrationScheme = Yup.object({
     .required("Please retype your password"),
 });
 
+//type Stage = 'init' | 'user-login' | 'logged-in' | 'logging-out'
+enum Stage {
+  Init = 0,
+  Ready = 1,
+  Authenticating = 2,
+  LoggedIn = 3,
+  LoggingOut = 4,
+  LoggedOut = 5,
+}
+
 export const Authentication = () => {
   const { currentUser } = useContext(FirebaseContext);
   const [mode, setMode] = useState<"login" | "register" | "password-reset">(
     "login"
   );
   const [scheme, setScheme] = useState<object>();
-  const [submitted, setSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(undefined);
+  const [stage, setStage] = useState<Stage>(Stage.Init);
   const { activeTheme, setActiveTheme } = useContext(ThemeContext);
   const auth = firebaseAuth();
   const history = useHistory();
@@ -118,46 +126,40 @@ export const Authentication = () => {
   };
 
   const onSuccessfulLogin = ({ user }: UserCredential) => {
+    setStage(Stage.LoggedIn)
     user
       ?.updateProfile({
         //  displayName: // some displayName,
         //  photoURL: // some photo url
       })
-      .then(() => {
-        // Navigate to home
-        history.push("/");
-      })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => history.push("/"))
   };
 
   const onRegisterPress = async (
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
-    setIsLoading(true);
+    setStage(Stage.Authenticating);
     auth
       .createUserWithEmailAndPassword(values.eMail, values.password)
       .then(onSuccessfulLogin)
       .catch((error: FirebaseError) => {
+        setStage(Stage.Ready)
         alert(error.message);
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
   };
 
   const signInWithGoogle = async (formikProps: FormikProps<any>) => {
     const provider = new GoogleAuthProvider();
-    setIsLoading(true);
+    setStage(Stage.Authenticating);
     auth
       .signInWithPopup(provider)
       .then(onSuccessfulLogin)
       .catch((error) => {
+        setStage(Stage.Ready)
         alert(error);
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
     formikProps.resetForm();
   };
 
@@ -165,21 +167,20 @@ export const Authentication = () => {
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
-    setIsLoading(true);
+    setStage(Stage.Authenticating);
     auth
       .signInWithEmailAndPassword(values.eMail, values.password)
       .then(onSuccessfulLogin)
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .catch((err) => {
+        alert(err)
+        setStage(Stage.Ready)
+      })
   };
 
   const sendPasswordReset = (
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
-    setIsLoading(true);
     auth
       .sendPasswordResetEmail(values.eMail)
       .then(() => {
@@ -187,9 +188,6 @@ export const Authentication = () => {
       })
       .catch((error) => {
         alert(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 
@@ -210,14 +208,20 @@ export const Authentication = () => {
     }
   }, [mode]);
 
+  useEffect(() => {
+    if (!currentUser && stage === Stage.LoggedIn) setStage(Stage.LoggedOut);
+  }, [currentUser]);
+
+  useEffect(() => {
+    setStage(Stage.Ready)
+  }, [])
+
   const username = currentUser?.displayName
     ? `${currentUser?.displayName} (${currentUser?.email})`
     : undefined || currentUser?.email || currentUser?.uid;
 
-  if (isLoading) {
+  if (stage !== Stage.LoggedIn && stage != Stage.Ready) {
     return <ActivityIndicator fullscreen={true} />;
-  } else if (error) {
-    return <DisplayError error={error} />;
   } else if (currentUser) {
     return (
       // Logged In
@@ -226,14 +230,16 @@ export const Authentication = () => {
         <Button
           title="Logout"
           onPress={() => {
-            setIsLoading(true);
+
             auth
               .signOut()
               .then(() => {
                 // Reload the page to clean out any state from previous login
                 window.location.assign(`/auth`);
               })
-              .catch(console.error);
+              .catch((err) => {
+                window.location.assign(`/auth`);
+              });
           }}
         />
       </div>
