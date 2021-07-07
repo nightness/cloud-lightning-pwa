@@ -202,6 +202,8 @@ export async function deleteCollection(
   });
 }
 
+export default firebase
+
 // export async function deleteCollection(doc: DocumentReference<DocumentData>, collectionName: string, batchSize: number) {
 //   const collectionRef = doc.collection(collectionName);
 //   const query = collectionRef.limit(batchSize);

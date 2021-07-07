@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { FirebaseContext } from "../database/FirebaseContext";
+import useForceUpdate from "../hooks/useForceUpdate";
 import useTimeout from "../hooks/useTimeout";
 
 type ContextType = {
@@ -20,6 +21,7 @@ type ContextType = {
   getTitle: (path: string) => string | undefined;
   getComponent: (path: string) => React.FC | undefined;
   hasPermission: (path: string) => boolean;
+  forceUpdate: () => any;
   currentPath?: string;
 };
 
@@ -29,6 +31,7 @@ export const NavigationContext = createContext<ContextType>({
   getTitle: () => undefined,
   getComponent: () => undefined,
   hasPermission: () => false,
+  forceUpdate: () => undefined
 });
 
 interface Props {
@@ -64,6 +67,7 @@ export const Pages = () => {
 };
 
 export const NavigationProvider = ({ children }: Props) => {
+  const forceUpdate = useForceUpdate()
   const { currentUser } = useContext(FirebaseContext);
   const [routes] = useState(new Map<string, string>());
   const [components] = useState(new Map<string, React.FC>());
@@ -98,6 +102,7 @@ export const NavigationProvider = ({ children }: Props) => {
         getComponent,
         getPaths,
         hasPermission,
+        forceUpdate,
         currentPath: location.pathname,
       }}
     >

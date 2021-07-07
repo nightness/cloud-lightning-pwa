@@ -3,7 +3,9 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Dialog, Alert } from "@blueprintjs/core";
 import { useContext, useState } from "react";
+import firebase from "../database/Firebase";
 import { FirebaseContext } from "../database/FirebaseContext";
+import { NavigationContext } from "../navigation/NavigationContext";
 
 function equalTo(ref: any, msg: any) {
   return Yup.mixed().test({
@@ -45,19 +47,41 @@ interface Props {
 
 const ChangePassword = ({ isOpen, title, onClose }: Props) => {
   const [submitted, setSubmitted] = useState(false);
+  const { currentUser } = useContext(FirebaseContext);
 
   return (
     <Dialog isOpen={isOpen} title={title} onClose={onClose}>
       <div style={{ marginTop: 10 }}>
         <Formik
           initialValues={{
-            password: "",
-            confirmPassword: "",
+            oldPassword: "",
+            newPassword: "",
+            retypeNewPassword: "",
           }}
           validationSchema={ChangePasswordScheme}
           onSubmit={(values, helpers) => {
-            setSubmitted(true);
-            onClose();
+            const user = firebase.auth().currentUser
+            if (!user || !user.email) return;
+            var credential = firebase.auth.EmailAuthProvider.credential(
+              user.email,
+              values.oldPassword
+            );
+
+            user
+              .reauthenticateWithCredential(credential)                            
+              .then(() => {
+                user
+                  .updatePassword(values.newPassword)
+                  .then(onClose)
+                  .catch((err) => {
+                    console.error(err)
+                    alert(err)
+                  })
+              })
+              .catch((err) => {
+                console.log(err)
+                alert(err.message)
+              })
           }}
         >
           {(formikProps) => (
@@ -90,7 +114,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
               />
               <div>
                 <Button
-                  title="Save"
+                  title="Update Password"
                   disabled={submitted}
                   onPress={formikProps.handleSubmit}
                 />
@@ -104,6 +128,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 };
 
 export const Profile = () => {
+  const { forceUpdate } = useContext(NavigationContext);
   const { currentUser } = useContext(FirebaseContext);
   const [submitted, setSubmitted] = useState(false);
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
@@ -115,6 +140,7 @@ export const Profile = () => {
 
   const onAlertClose = () => {
     setIsAlertOpen(false);
+    forceUpdate();
   };
 
   // Can only change a password with email/password accounts
@@ -129,14 +155,14 @@ export const Profile = () => {
         onClose={onClose}
         isOpen={isPasswordDialogOpen}
       />
-      <Alert 
+      <Alert
         canEscapeKeyCancel
         canOutsideClickCancel
+        confirmButtonText={"Ok"}
         isOpen={isAlertOpen}
-        confirmButtonText={"Ok"}        
         onClose={onAlertClose}
-        icon='info-sign'        
-        intent='primary'
+        icon="info-sign"
+        intent="primary"
       >
         <h3>Profile Updated</h3>
       </Alert>
@@ -152,20 +178,20 @@ export const Profile = () => {
             }}
             validationSchema={ProfileScheme}
             onSubmit={(values, helpers) => {
-              if (submitted) return
+              if (submitted) return;
               setSubmitted(true);
               currentUser
                 ?.updateProfile({
                   displayName: values.displayName,
                   photoURL: values.photoUrl,
                 })
-                .then(() => {                  
+                .then(() => {
                   setSubmitted(false);
                   setIsAlertOpen(true);
                 })
                 .catch((err) => {
-                  console.error(err)
-                  setSubmitted(false)
+                  console.error(err);
+                  setSubmitted(false);
                 });
             }}
           >
