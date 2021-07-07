@@ -25,8 +25,7 @@ export default ({
 
     return (
         <div className='form-field-container'>
-            <TextInput
-                className='form-field-input'
+            <TextInput                
                 type={secureTextEntry ? 'password': 'text'}
                 placeholder={label as string}
                 // returnKeyType={returnKeyType}                

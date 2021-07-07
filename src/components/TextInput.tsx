@@ -10,9 +10,10 @@ interface Props
   secureTextEntry?: boolean;
 }
 
-export const TextInput = ({ style, secureTextEntry, ...restProps }: Props) => {
+export const TextInput = ({ style, className, secureTextEntry, ...restProps }: Props) => {
   return (
     <input
+      className={`${className} text-input`}
       style={style}
       type={secureTextEntry ? "password" : "text"}
       {...restProps}

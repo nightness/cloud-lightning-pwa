@@ -27,9 +27,7 @@
     text-align: center;
 }
 
-.form-field-input {
-    align-self: center;
-    justify-self: center;
+.text-input {
     flex: 1;
     background-color: white;
     color: black;
@@ -38,4 +36,9 @@
     border-radius: 5;
     justify-self: center;
     padding: 5px;
+}
+
+.form-field-input {
+    align-self: center;
+    justify-self: center;
 }
