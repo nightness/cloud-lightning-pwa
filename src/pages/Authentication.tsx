@@ -12,6 +12,7 @@ import {
 import {
   firebaseAuth,
   FirebaseError,
+  UserCredential,
   GoogleAuthProvider,
 } from "../database/Firebase";
 import { Formik, FormikHelpers, FormikProps, useFormik } from "formik";
@@ -80,7 +81,6 @@ export const Authentication = () => {
   const [scheme, setScheme] = useState<object>();
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAfterSignIn, setAfterSignIn] = useState(false);
   const [error, setError] = useState(undefined);
   const { activeTheme, setActiveTheme } = useContext(ThemeContext);
   const auth = firebaseAuth();
@@ -117,19 +117,25 @@ export const Authentication = () => {
     softReset(formikProps);
   };
 
-  const onSuccessfulLogin = () => {
-    setAfterSignIn(true);
+  const onSuccessfulLogin = ({ user }: UserCredential) => {                
+      user?.updateProfile({
+        //  displayName: // some displayName,
+        //  photoURL: // some photo url
+      })
+      .then(() => {
+        // Navigate to home
+        history.push("/");
+      })
+      .catch(console.error);
   };
 
   const onRegisterPress = async (
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
+    setIsLoading(true);
     auth
       .createUserWithEmailAndPassword(values.eMail, values.password)
-      .then(() => {
-        setIsLoading(true);
-      })
       .then(onSuccessfulLogin)
       .catch((error: FirebaseError) => {
         setSubmitted(false);
@@ -152,14 +158,16 @@ export const Authentication = () => {
     formikProps.resetForm();
   };
 
-  const onLoginPress = async (
+  const signInWithEMail = (
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
     setSubmitted(true);
     try {
-      await auth.signInWithEmailAndPassword(values.eMail, values.password);
-      onSuccessfulLogin();
+      auth
+        .signInWithEmailAndPassword(values.eMail, values.password)
+        .then(onSuccessfulLogin)
+        .catch(console.error);
     } catch (error) {
       setSubmitted(false);
       alert(error);
@@ -183,25 +191,9 @@ export const Authentication = () => {
       });
   };
 
-  const setProfile = async () => {
-    console.log("ToDo: setup basic profile after login");
-  };
-
   useEffect(() => {
     if (activeTheme === "Dark") setActiveTheme("Light");
   });
-
-  useEffect(() => {
-    if (!isAfterSignIn) return;
-    setAfterSignIn(false);
-    // Create basic profile from firebase user info
-    setProfile().then(() => {
-      // Navigate to home
-      history.push("/");
-      // Reset state
-      setIsLoading(false);
-    });
-  }, [isAfterSignIn, setAfterSignIn, setIsLoading]);
 
   useEffect(() => {
     switch (mode) {
@@ -242,7 +234,7 @@ export const Authentication = () => {
           onSubmit={(values, helpers) => {
             switch (mode) {
               case "login":
-                onLoginPress(values, helpers);
+                signInWithEMail(values, helpers);
                 break;
               case "register":
                 onRegisterPress(values, helpers);

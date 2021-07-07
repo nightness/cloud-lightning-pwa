@@ -6,6 +6,7 @@ import * as FirebaseFirestore from "react-firebase-hooks/firestore";
 
 export type FirebaseError = firebase.FirebaseError;
 export type FirebaseUser = firebase.User;
+export type UserCredential = firebase.auth.UserCredential;
 export type AuthError = firebase.auth.Error;
 export type DocumentChange<T> = firebase.firestore.DocumentChange<T>;
 export type DocumentData = firebase.firestore.DocumentData;

@@ -25,14 +25,14 @@ export const FirebaseProvider = ({ children }: Props) => {
 
     const token: any = await currentUser.getIdToken(true);
     setAuthToken(token);
-    console.log(token);
+    //console.log(token);
   };
 
   useEffect(() => {
     updateUserToken();
-    if (currentUser) {
-      console.log(currentUser);
-    }
+    //if (currentUser) {
+    //  console.log(currentUser);
+    //}
   }, [currentUser]);
 
   if (loadingUser) return <ActivityIndicator fullscreen={true} />;

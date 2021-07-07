@@ -1,10 +1,9 @@
 import { Container, ScrollView, Text, FormField, Button } from "../components";
-import { Formik, FormikHelpers, FormikProps, useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import { H1, Dialog } from "@blueprintjs/core";
+import { Dialog, Alert } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { FirebaseContext } from "../database/FirebaseContext";
-import { getAuth } from "../database/Firebase";
 
 function equalTo(ref: any, msg: any) {
   return Yup.mixed().test({
@@ -32,14 +31,10 @@ const ChangePasswordScheme = Yup.object({
 });
 
 const ProfileScheme = Yup.object({
-  displayName: Yup.string().required("Display name is a required field").min(3),
-  eMail: Yup.string()
-    .required("E-mail is a required field")
-    .email("Please enter a valid e-mail address")
-    .matches(
-      /^((?!@gmail.com).)*$/gim,
-      "Use the Google Sign-In button to automatically sign-in with your Google"
-    ),
+  displayName: Yup.string()
+    .required("Display name is a required field")
+    .min(3, "Display names must be at least three characters in length"),
+  photoURL: Yup.string().url("Invalid Photo URL"),
 });
 
 interface Props {
@@ -111,10 +106,15 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 export const Profile = () => {
   const { currentUser } = useContext(FirebaseContext);
   const [submitted, setSubmitted] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const onClose = () => {
-    setIsDialogOpen(false);
+    setIsPasswordDialogOpen(false);
+  };
+
+  const onAlertClose = () => {
+    setIsAlertOpen(false);
   };
 
   // Can only change a password with email/password accounts
@@ -122,15 +122,24 @@ export const Profile = () => {
     ? `${currentUser?.displayName} (${currentUser?.email})`
     : undefined || currentUser?.email || currentUser?.uid;
 
-  console.log(currentUser?.providerId, currentUser?.providerData);
-
   return (
     <>
       <ChangePassword
         title="Change Password"
         onClose={onClose}
-        isOpen={isDialogOpen}
+        isOpen={isPasswordDialogOpen}
       />
+      <Alert 
+        canEscapeKeyCancel
+        canOutsideClickCancel
+        isOpen={isAlertOpen}
+        confirmButtonText={"Ok"}        
+        onClose={onAlertClose}
+        icon='info-sign'        
+        intent='primary'
+      >
+        <h3>Profile Updated</h3>
+      </Alert>
       <Container>
         <ScrollView style={{ flex: 1 }}>
           <div style={{ flex: 1 }}>
@@ -138,16 +147,26 @@ export const Profile = () => {
           </div>
           <Formik
             initialValues={{
-              displayName: "",
-              eMail: "",
-              password: "",
-              confirmPassword: "",
+              displayName: currentUser?.displayName ?? "",
+              photoUrl: currentUser?.photoURL ?? "",
             }}
             validationSchema={ProfileScheme}
             onSubmit={(values, helpers) => {
-              console.log("onSubmit", values, helpers);
-              //setSubmitted(true);
-              setIsDialogOpen(true);
+              if (submitted) return
+              setSubmitted(true);
+              currentUser
+                ?.updateProfile({
+                  displayName: values.displayName,
+                  photoURL: values.photoUrl,
+                })
+                .then(() => {                  
+                  setSubmitted(false);
+                  setIsAlertOpen(true);
+                })
+                .catch((err) => {
+                  console.error(err)
+                  setSubmitted(false)
+                });
             }}
           >
             {(formikProps) => (
@@ -157,6 +176,11 @@ export const Profile = () => {
                   formikProps={formikProps}
                   fieldName="displayName"
                 />
+                <FormField
+                  label="Photo URL"
+                  formikProps={formikProps}
+                  fieldName="photoUrl"
+                />
                 <Button
                   title="Save"
                   disabled={submitted}
@@ -165,13 +189,13 @@ export const Profile = () => {
               </>
             )}
           </Formik>
-          {
+          {currentUser?.providerData[0]?.providerId === "password" ? (
             <Button
               title="Change Password"
               disabled={submitted}
-              onPress={() => setIsDialogOpen(true)}
+              onPress={() => setIsPasswordDialogOpen(true)}
             />
-          }
+          ) : undefined}
         </ScrollView>
       </Container>
     </>
