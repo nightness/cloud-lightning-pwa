@@ -214,12 +214,19 @@ export const Authentication = () => {
     return <DisplayError error={error} />;
   } else if (currentUser) {
     return (
+      // Logged In
       <div style={{ flex: 1 }}>
         <Text>{`Logged is as ${currentUser.email}`}</Text>
-        <Button title="Logout" onPress={() => auth.signOut()} />
+        <Button title="Logout" onPress={() => {
+          auth.signOut().then(() => {
+            // Reload the page to clean out any state from previous login
+            window.location.assign(`/auth`)
+          })
+        }} />
       </div>
     );
   }
+  // Logged Out
   return (
     <Container>
       <ScrollView style={{ flex: 1 }}>
