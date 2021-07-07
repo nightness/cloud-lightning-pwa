@@ -65,11 +65,11 @@ export const Navbar = () => {
         placement="bottom"
         usePortal={false}
       >
-        <Link className="link-static" to="/auth" noActiveFormatting >
+        <Link className="link-static" to="/auth" noActiveFormatting>
           {currentUser?.photoURL ? (
             <img className="img" src={currentUser?.photoURL} />
           ) : (
-            <Icon iconSize={34} icon="user" />
+            <Icon style={{ userSelect: "none" }} iconSize={34} icon="user" />
           )}
         </Link>
       </Tooltip2>

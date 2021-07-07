@@ -11,16 +11,17 @@ import { FirebaseContext } from "../database/FirebaseContext";
 import Message from "./Message";
 import { EditableText } from "@blueprintjs/core";
 
+const messageCollectionPath = "/profiles";
+
 export default () => {
   const { currentUser } = useContext(FirebaseContext);
   const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext);
-  const [snapshot, loadingCollection, errorCollection] =
-    useCollection("/profiles");
+  const [snapshot, loadingCollection, errorCollection] = useCollection(
+    messageCollectionPath, true
+  );
   const [members, setMembers] = useState<any[]>([]);
   //const [selectedMember, setSelectedMember] = useState<PickerItem>()
   const [messageText, setMessageText] = useState<string>("");
-  const [messageCollectionPath, setMessageCollectionPath] =
-    useState<string>("/public");
   const textInput = useRef<EditableText>();
 
   useEffect(() => {
@@ -31,7 +32,9 @@ export default () => {
     if (loadingCollection || errorCollection || !snapshot) return;
     var newState: any[] = [];
     const querySnapshot = snapshot as QuerySnapshot<DocumentData>;
+    console.log('=> ', querySnapshot.docs)
     querySnapshot.docs.forEach((docRef) => {
+      console.log('*', docRef)
       const push = async (docRef: DocumentData) => {
         //if (docRef.id === currentUser?.uid) return
         const name = await docRef.get("displayName");
@@ -44,7 +47,11 @@ export default () => {
         .then(() => setMembers(newState))
         .catch((err) => console.error(err));
     });
-  }, [snapshot]);
+  }, [snapshot, loadingCollection, errorCollection]);
+
+  useEffect(() => {
+    console.log(members);
+  }, [members]);
 
   // useEffect(() => {
   //     if (selectedMember && selectedMember.value)
@@ -89,7 +96,7 @@ export default () => {
   return (
     <Container>
       <div>
-        <select name="cars" id="cars">
+        <select name="members" id="members">
           {members.map((member, idx) => {
             return (
               <option key={idx} value={idx}>

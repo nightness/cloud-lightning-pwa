@@ -117,8 +117,9 @@ export const Authentication = () => {
     softReset(formikProps);
   };
 
-  const onSuccessfulLogin = ({ user }: UserCredential) => {                
-      user?.updateProfile({
+  const onSuccessfulLogin = ({ user }: UserCredential) => {
+    user
+      ?.updateProfile({
         //  displayName: // some displayName,
         //  photoURL: // some photo url
       })
@@ -138,9 +139,10 @@ export const Authentication = () => {
       .createUserWithEmailAndPassword(values.eMail, values.password)
       .then(onSuccessfulLogin)
       .catch((error: FirebaseError) => {
-        setSubmitted(false);
-        setIsLoading(false);
         alert(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -151,9 +153,10 @@ export const Authentication = () => {
       .signInWithPopup(provider)
       .then(onSuccessfulLogin)
       .catch((error) => {
-        setIsLoading(true);
-        setSubmitted(false);
         alert(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
     formikProps.resetForm();
   };
@@ -162,32 +165,31 @@ export const Authentication = () => {
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
-    setSubmitted(true);
-    try {
-      auth
-        .signInWithEmailAndPassword(values.eMail, values.password)
-        .then(onSuccessfulLogin)
-        .catch(console.error);
-    } catch (error) {
-      setSubmitted(false);
-      alert(error);
-    }
+    setIsLoading(true);
+    auth
+      .signInWithEmailAndPassword(values.eMail, values.password)
+      .then(onSuccessfulLogin)
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const sendPasswordReset = (
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
-    setSubmitted(true);
+    setIsLoading(true);
     auth
       .sendPasswordResetEmail(values.eMail)
       .then(() => {
         setMode("login");
-        setSubmitted(false);
       })
       .catch((error) => {
         alert(error);
-        setSubmitted(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -208,6 +210,10 @@ export const Authentication = () => {
     }
   }, [mode]);
 
+  const username = currentUser?.displayName
+    ? `${currentUser?.displayName} (${currentUser?.email})`
+    : undefined || currentUser?.email || currentUser?.uid;
+
   if (isLoading) {
     return <ActivityIndicator fullscreen={true} />;
   } else if (error) {
@@ -216,13 +222,20 @@ export const Authentication = () => {
     return (
       // Logged In
       <div style={{ flex: 1 }}>
-        <Text>{`Logged is as ${currentUser.email}`}</Text>
-        <Button title="Logout" onPress={() => {
-          auth.signOut().then(() => {
-            // Reload the page to clean out any state from previous login
-            window.location.assign(`/auth`)
-          }).catch(console.error)
-        }} />
+        <Text>{`Logged is as ${username}`}</Text>
+        <Button
+          title="Logout"
+          onPress={() => {
+            setIsLoading(true);
+            auth
+              .signOut()
+              .then(() => {
+                // Reload the page to clean out any state from previous login
+                window.location.assign(`/auth`);
+              })
+              .catch(console.error);
+          }}
+        />
       </div>
     );
   }
@@ -289,7 +302,6 @@ export const Authentication = () => {
                   <div style={footerView}>
                     <Button
                       title="Create Account"
-                      disabled={submitted}
                       onPress={formikProps.handleSubmit}
                     />
                   </div>
@@ -310,13 +322,11 @@ export const Authentication = () => {
                 <>
                   <div style={footerView}>
                     <Button
-                      disabled={submitted}
                       title="Reset Password"
                       onPress={formikProps.handleSubmit}
                       style={{ marginTop: 5 }}
                     />
                     <Button
-                      disabled={submitted}
                       title="Cancel"
                       onPress={() => onGotoLoginPress(formikProps)}
                       style={{ marginTop: 5 }}
@@ -329,11 +339,7 @@ export const Authentication = () => {
               {mode === "login" ? (
                 <>
                   <div style={footerView}>
-                    <Button
-                      title="Log in"
-                      disabled={submitted}
-                      onPress={formikProps.handleSubmit}
-                    />
+                    <Button title="Log in" onPress={formikProps.handleSubmit} />
                     <Button
                       title="Google Sign-In"
                       onPress={() => signInWithGoogle(formikProps)}
