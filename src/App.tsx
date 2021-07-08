@@ -13,7 +13,7 @@ const MainDocument = () => {
 
   registerPage('/', 'Home', Home)
   registerPage('/wall', "Member Walls", WallMessenger, true)
-  registerPage('/WebRTC', 'WebRTC', WebRTC, true)
+  registerPage('/WebRTC', 'Web Chat', WebRTC, true)
   registerPage('/profile', 'Profile', Profile, true)
   registerPage('/auth', 'Cloud Lightning', Authentication)
 

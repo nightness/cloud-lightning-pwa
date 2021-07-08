@@ -222,7 +222,7 @@ export const Authentication = () => {
     ? `${currentUser?.displayName} (${currentUser?.email})`
     : undefined || currentUser?.email || currentUser?.uid;
 
-  if (stage !== Stage.LoggedIn && stage != Stage.Ready) {
+  if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
     return <ActivityIndicator fullscreen={true} />;
   } else if (currentUser) {
     return (

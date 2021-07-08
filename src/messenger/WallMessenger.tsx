@@ -88,7 +88,7 @@ export default () => {
   // }
 
   // const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-  //     if (e.nativeEvent.key != 'Enter') return
+  //     if (e.nativeEvent.key !== 'Enter') return
   //     // Adds a new message to the chatroom
   //     sendMessage()
   // }
