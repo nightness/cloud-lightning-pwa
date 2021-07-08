@@ -3,7 +3,6 @@ import {
   Text,
   Button,
   ActivityIndicator,
-  DisplayError,
   ThemeContext,
   FormField,
   ScrollView,

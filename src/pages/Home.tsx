@@ -1,5 +1,5 @@
 import { Text, Container, ActivityIndicator } from "../components";
-import { H1, Button, Card, Dialog } from "@blueprintjs/core";
+import { H2, Button, Card, Dialog } from "@blueprintjs/core";
 import { useState } from "react";
 
 export function Home() {
@@ -15,7 +15,7 @@ export function Home() {
         }}
       >
         <div>
-          <H1 style={{ paddingLeft: 10 }}>Hello World</H1>
+          <H2 style={{ paddingLeft: 10 }}>Hello World</H2>
           <div style={{ width: "100%", textAlign: "center" }}>
             <Button
               intent="success"
@@ -28,7 +28,7 @@ export function Home() {
         </div>
       </Dialog>
       <Container>
-        <H1>Hello World</H1>
+        <H2>Welcome Home!</H2>
         <Button
           intent="success"
           text="Open Dialog"
