@@ -58,18 +58,26 @@ export const Navbar = () => {
         <H1>{currentPageTitle ? currentPageTitle : "Page Not Found"}</H1>
       </div>
       <Tooltip2
-        className="links"
+        className="profile-link-tooltip"
         popoverClassName="tooltip-right"
         content={`${currentUser ? "Logout" : "Login"}`}
         intent="warning"
         placement="bottom"
-        usePortal={false}
+        usePortal
       >
-        <Link className="link-static" to="/auth" noActiveFormatting>
+        <Link
+          className="link-static"
+          to="/auth"
+          noActiveFormatting
+        >
           {currentUser?.photoURL ? (
             <img className="img" src={currentUser?.photoURL} />
           ) : (
-            <Icon style={{ userSelect: "none" }} iconSize={34} icon="user" />
+            <Icon
+              style={{ userSelect: "none", pointerEvents: "none" }}
+              iconSize={34}
+              icon="user"
+            />
           )}
         </Link>
       </Tooltip2>
