@@ -19,7 +19,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
 
   return (
     <Drawer
-      className={`${Classes.DRAWER_HEADER} drawer-header`}
+      className={`drawer-header`}
       position="left"
       icon="cloud"
       isOpen={isOpen}

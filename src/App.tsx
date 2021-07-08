@@ -13,7 +13,7 @@ const MainDocument = () => {
 
   registerPage('/', 'Home', Home)
   registerPage('/wall', "Member Walls", WallMessenger, true)
-  registerPage('/WebRTC', 'Web Chat', WebRTC, true)
+  registerPage('/WebRTC', 'Video Chat', WebRTC, true)
   registerPage('/matrix', 'Matrix Chat', Matrix, true)
   registerPage('/profile', 'Profile', Profile, true)
   registerPage('/test', 'Test Page', TestPage, true)

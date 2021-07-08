@@ -94,6 +94,7 @@
 }
 
 .drawer-header {
+  position: absolute;  
   background-image: linear-gradient(to bottom, #8ff, #aff, #fff);
   width: 100%;
   padding-left: 0px !important;
