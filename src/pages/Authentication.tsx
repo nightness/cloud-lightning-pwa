@@ -230,13 +230,10 @@ export const Authentication = () => {
           onPress={() => {
             auth
               .signOut()
-              .then(() => {
+              .finally(() => {
                 // Reload the page to clean out any state from previous login
                 window.location.assign(`/auth`);
               })
-              .catch((err) => {
-                window.location.assign(`/auth`);
-              });
           }}
         />
       </div>
