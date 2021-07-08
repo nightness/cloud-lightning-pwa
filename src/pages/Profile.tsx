@@ -47,7 +47,6 @@ interface Props {
 
 const ChangePassword = ({ isOpen, title, onClose }: Props) => {
   const [submitted, setSubmitted] = useState(false);
-  const { currentUser } = useContext(FirebaseContext);
 
   return (
     <Dialog isOpen={isOpen} title={title} onClose={onClose}>
@@ -129,7 +128,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 
 export const Profile = () => {
   const { forceUpdate } = useContext(NavigationContext);
-  const { currentUser } = useContext(FirebaseContext);
+  const { currentUser, getCurrentUsername } = useContext(FirebaseContext);
   const [submitted, setSubmitted] = useState(false);
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -142,11 +141,6 @@ export const Profile = () => {
     setIsAlertOpen(false);
     forceUpdate();
   };
-
-  // Can only change a password with email/password accounts
-  const username = currentUser?.displayName
-    ? `${currentUser?.displayName} (${currentUser?.email})`
-    : undefined || currentUser?.email || currentUser?.uid;
 
   return (
     <>
@@ -169,7 +163,7 @@ export const Profile = () => {
       <Container>
         <ScrollView style={{ flex: 1 }}>
           <div style={{ flex: 1 }}>
-            <Text>{`Logged is as ${username}`}</Text>
+            <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
           </div>
           <Formik
             initialValues={{

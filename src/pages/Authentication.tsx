@@ -83,7 +83,7 @@ enum Stage {
 }
 
 export const Authentication = () => {
-  const { currentUser } = useContext(FirebaseContext);
+  const { currentUser, getCurrentUsername } = useContext(FirebaseContext);
   const [mode, setMode] = useState<"login" | "register" | "password-reset">(
     "login"
   );
@@ -218,17 +218,13 @@ export const Authentication = () => {
     setStage(Stage.Ready)
   }, [])
 
-  const username = currentUser?.displayName
-    ? `${currentUser?.displayName} (${currentUser?.email})`
-    : undefined || currentUser?.email || currentUser?.uid;
-
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
     return <ActivityIndicator fullscreen={true} />;
   } else if (currentUser) {
     return (
       // Logged In
       <div style={{ flex: 1 }}>
-        <Text>{`Logged is as ${username}`}</Text>
+        <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
         <Button
           title="Logout"
           onPress={() => {

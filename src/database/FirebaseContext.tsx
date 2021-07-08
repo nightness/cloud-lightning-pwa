@@ -5,16 +5,18 @@ import { useAuthState, FirebaseUser } from "./Firebase";
 export type UserProfile = {
   displayName?: string;
   photoUrl?: string;
-}
+};
 
 type ContextType = {
-  getCurrentUserProfile: () => UserProfile | undefined
+  getCurrentUserProfile: () => UserProfile | undefined;
+  getCurrentUsername: () => string | undefined;
   currentUser?: FirebaseUser | null;
   authToken?: string;
 };
 
 export const FirebaseContext = createContext<ContextType>({
-  getCurrentUserProfile: () => undefined
+  getCurrentUserProfile: () => undefined,
+  getCurrentUsername: () => undefined
 });
 
 interface Props {
@@ -22,12 +24,12 @@ interface Props {
 }
 
 export const FirebaseProvider = ({ children }: Props) => {
-  const getCurrentUserProfile = () => ({
-    displayName: currentUser?.displayName,
-    protoUrl: currentUser?.photoURL
-  }) as UserProfile
+  const getCurrentUserProfile = () =>
+    ({
+      displayName: currentUser?.displayName,
+      protoUrl: currentUser?.photoURL,
+    } as UserProfile);
   const [currentUser, loadingUser, errorUser] = useAuthState();
-  const [currentUserProfile, setCurrentUserProfile] = useState<UserProfile>(getCurrentUserProfile())
   const [authToken, setAuthToken] = useState();
 
   const updateUserToken = async () => {
@@ -38,14 +40,16 @@ export const FirebaseProvider = ({ children }: Props) => {
 
     const token: any = await currentUser.getIdToken(true);
     setAuthToken(token);
-    //console.log(token);
+  };
+
+  const getCurrentUsername = () => {
+    return currentUser?.displayName
+      ? `${currentUser?.displayName} (${currentUser?.email})`
+      : undefined || currentUser?.email || currentUser?.uid;
   };
 
   useEffect(() => {
     updateUserToken();
-    //if (currentUser) {
-    //  console.log(currentUser);
-    //}
   }, [currentUser]);
 
   if (loadingUser) return <ActivityIndicator fullscreen={true} />;
@@ -60,7 +64,8 @@ export const FirebaseProvider = ({ children }: Props) => {
         value={{
           currentUser,
           authToken,
-          getCurrentUserProfile
+          getCurrentUsername,
+          getCurrentUserProfile,
         }}
       >
         {children}
