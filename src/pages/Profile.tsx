@@ -1,4 +1,4 @@
-import { Container, ScrollView, Text, FormField, Button } from "../components";
+import { Page, ScrollView, Text, FormField, Button } from "../components";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Dialog, Alert } from "@blueprintjs/core";
@@ -59,7 +59,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
           }}
           validationSchema={ChangePasswordScheme}
           onSubmit={(values, helpers) => {
-            const user = firebase.auth().currentUser
+            const user = firebase.auth().currentUser;
             if (!user || !user.email) return;
             var credential = firebase.auth.EmailAuthProvider.credential(
               user.email,
@@ -67,20 +67,20 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
             );
 
             user
-              .reauthenticateWithCredential(credential)                            
+              .reauthenticateWithCredential(credential)
               .then(() => {
                 user
                   .updatePassword(values.newPassword)
                   .then(onClose)
                   .catch((err) => {
-                    console.error(err)
-                    alert(err)
-                  })
+                    console.error(err);
+                    alert(err);
+                  });
               })
               .catch((err) => {
-                console.log(err)
-                alert(err.message)
-              })
+                console.log(err);
+                alert(err.message);
+              });
           }}
         >
           {(formikProps) => (
@@ -160,64 +160,63 @@ export const Profile = () => {
       >
         <h3>Profile Updated</h3>
       </Alert>
-      <Container>
-        <ScrollView style={{ flex: 1 }}>
-          <div style={{ flex: 1 }}>
-            <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
-          </div>
-          <Formik
-            initialValues={{
-              displayName: currentUser?.displayName ?? "",
-              photoUrl: currentUser?.photoURL ?? "",
-            }}
-            validationSchema={ProfileScheme}
-            onSubmit={(values, helpers) => {
-              if (submitted) return;
-              setSubmitted(true);
-              currentUser
-                ?.updateProfile({
-                  displayName: values.displayName,
-                  photoURL: values.photoUrl,
-                })
-                .then(() => {
-                  setSubmitted(false);
-                  setIsAlertOpen(true);
-                })
-                .catch((err) => {
-                  console.error(err);
-                  setSubmitted(false);
-                });
-            }}
-          >
-            {(formikProps) => (
-              <>
-                <FormField
-                  label="Display Name"
-                  formikProps={formikProps}
-                  fieldName="displayName"
-                />
-                <FormField
-                  label="Photo URL"
-                  formikProps={formikProps}
-                  fieldName="photoUrl"
-                />
+      <Page>
+        <div style={{ flex: 1 }}>
+          <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
+        </div>
+        <Formik
+          initialValues={{
+            displayName: currentUser?.displayName ?? "",
+            photoUrl: currentUser?.photoURL ?? "",
+          }}
+          validationSchema={ProfileScheme}
+          onSubmit={(values, helpers) => {
+            if (submitted) return;
+            setSubmitted(true);
+            currentUser
+              ?.updateProfile({
+                displayName: values.displayName,
+                photoURL: values.photoUrl,
+              })
+              .then(() => {
+                setSubmitted(false);
+                setIsAlertOpen(true);
+              })
+              .catch((err) => {
+                console.error(err);
+                setSubmitted(false);
+              });
+          }}
+        >
+          {(formikProps) => (
+            <>
+              <FormField
+                label="Display Name"
+                formikProps={formikProps}
+                fieldName="displayName"
+              />
+              <FormField
+                label="Photo URL"
+                formikProps={formikProps}
+                fieldName="photoUrl"
+              />
+              <Button
+                title="Save"
+                disabled={submitted}
+                onPress={formikProps.handleSubmit}
+              />
+
+              {currentUser?.providerData[0]?.providerId === "password" ? (
                 <Button
-                  title="Save"
+                  title="Change Password"
                   disabled={submitted}
-                  onPress={formikProps.handleSubmit}
+                  onPress={() => setIsPasswordDialogOpen(true)}
                 />
-              </>
-            )}
-          </Formik>
-          {currentUser?.providerData[0]?.providerId === "password" ? (
-            <Button
-              title="Change Password"
-              disabled={submitted}
-              onPress={() => setIsPasswordDialogOpen(true)}
-            />
-          ) : undefined}
-        </ScrollView>
-      </Container>
+              ) : undefined}
+            </>
+          )}
+        </Formik>
+      </Page>
     </>
   );
 };

@@ -3,10 +3,9 @@ import { useContext, useState } from "react";
 import { Link } from "../components";
 import { H1, Icon } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
-import SideBar from "./SideBar";
 import { Tooltip2 } from "@blueprintjs/popover2";
 import { useLocation } from "react-router-dom";
-import { NavigationContext } from "./NavigationContext";
+import { NavigationContext, SideBar } from ".";
 
 export const Navbar = () => {
   const location = useLocation();

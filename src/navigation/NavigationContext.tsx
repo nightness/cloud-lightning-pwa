@@ -7,8 +7,7 @@ import React, {
 } from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { FirebaseContext } from "../database/FirebaseContext";
-import useForceUpdate from "../hooks/useForceUpdate";
-import useTimeout from "../hooks/useTimeout";
+import { useForceUpdate, useTimeout } from "../hooks";
 
 type ContextType = {
   registerPage: (

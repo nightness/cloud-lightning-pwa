@@ -16,9 +16,9 @@ import {
   H5,
   Alert,
 } from "@blueprintjs/core";
-import { CallStage, WebRtcContext } from "../matrix/WebRtcContext";
+import { CallStage, WebRtcContext } from "../webrtc/WebRtcContext";
 import "./WebRTC.css";
-import { Container } from "../components";
+import { Container, Page } from "../components";
 
 const servers = {
   iceServers: [
@@ -164,8 +164,8 @@ export function WebRTC() {
   }
 
   return (
-    <Container className="WebRTC">
-      <Alert
+    <>
+          <Alert
         canEscapeKeyCancel
         canOutsideClickCancel
         intent="primary"
@@ -176,6 +176,9 @@ export function WebRTC() {
       >
         <p>{alertMessage}</p>
       </Alert>
+
+    <Page>
+    <Container className="WebRTC">
       <div className="videos">
         <span>
           <H3>Local Stream</H3>
@@ -197,6 +200,8 @@ export function WebRTC() {
       </div>
       {options}
     </Container>
+    </Page>
+    </>
   );
 }
 

@@ -1,3 +1,9 @@
+.page {
+  width: 100%;
+  height: fit-content;
+  padding: 5px
+}
+
 .modal {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -42,3 +48,26 @@
   align-self: center;
   justify-self: center;
 }
+
+.console-container {
+  margin: 5px;
+  padding: 5px;
+  background-color: lightgrey;
+  text-align: left;
+}
+
+/* .scrollView-outer {
+  display: flex;
+  bottom: -5;
+  background-color: red;
+  padding-top: 10px;
+  width: 100%;
+} */
+/* 
+.scrollView-inner {
+  width: 100%;
+  overflow: auto;
+  background-color: orange;
+  font-family: monospace;
+  word-wrap: break-word;
+} */

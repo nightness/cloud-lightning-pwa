@@ -1,46 +1,49 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap'); */
 
 .App {
-    /* font-family: 'Syne Mono', monospace; */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    align-items: 'center';
-    border-radius: 5;
-    margin: 5;
-    background-color: 'black';
-    width: 100%;
-    height: 100%;
+  /* font-family: 'Syne Mono', monospace; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: 'center';
+  border-radius: 5;  
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .App .Light {
-    color: #2c3e50;
-    background-color: 'black';
-    border: '2px solid white';
+  color: #2c3e50;
+  background-color: "black";
+  border: "2px solid white";
 }
 
 .App .Dark {
-    color: #2c3e50;
-    background-color: 'black';
-    border: '2px solid white';
+  color: #2c3e50;
+  background-color: "black";
+  border: "2px solid white";
 }
 .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .App-link {
-    color: #61dafb;
+  color: #61dafb;
 }
 
 .content {
-    max-width: '100%';
-    margin: 0px auto;
-    padding: 20px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

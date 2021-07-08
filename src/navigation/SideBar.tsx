@@ -4,7 +4,7 @@ import { Link } from "../components";
 import { H1, Icon, Button, Drawer, Classes } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { NavigationContext } from "./NavigationContext";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import { useWindowDimensions } from "../hooks";
 
 interface SideBarProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
 
   return (
     <Drawer
-      className="drawer"
+      className={`${Classes.DRAWER_HEADER} drawer-header`}
       position="left"
       icon="cloud"
       isOpen={isOpen}
@@ -30,7 +30,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
       canEscapeKeyClose
       usePortal
     >
-      <div className={`${Classes.DRAWER_BODY} drawer`}>
+      <div className={`${Classes.DRAWER_BODY} drawer-body`}>
         <div className="side-links">
           {paths.map((path) =>
             !hasPermission(path) ? undefined : (

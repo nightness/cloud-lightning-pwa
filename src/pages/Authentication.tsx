@@ -7,6 +7,7 @@ import {
   FormField,
   ScrollView,
   Container,
+  Page
 } from "../components";
 import {
   firebaseAuth,
@@ -14,7 +15,7 @@ import {
   UserCredential,
   GoogleAuthProvider,
 } from "../database/Firebase";
-import { Formik, FormikHelpers, FormikProps, useFormik } from "formik";
+import { Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { CSSProperties } from "styled-components";
@@ -240,8 +241,7 @@ export const Authentication = () => {
   }
   // Logged Out
   return (
-    <Container>
-      <ScrollView style={{ flex: 1 }}>
+    <Page>
         <Formik
           initialValues={{
             displayName: "",
@@ -377,8 +377,7 @@ export const Authentication = () => {
         >
           <Text>{`Cloud Lightning Messenger - Beta`}</Text>
         </div>
-      </ScrollView>
-    </Container>
+    </Page>
   );
 };
 

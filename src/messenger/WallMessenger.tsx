@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { Container, TextInput, Button, ThemeContext } from "../components";
+import { Page, TextInput, Button, ThemeContext } from "../components";
 import FirestoreCollectionView from "../database/FirestoreCollectionView";
 import {
   DocumentData,
@@ -94,7 +94,7 @@ export default () => {
   // }
 
   return (
-    <Container>
+    <Page>
       <div>
         <select name="members" id="members">
           {members.map((member, idx) => {
@@ -134,6 +134,6 @@ export default () => {
           //onPress={sendMessage}
         />
       </div>
-    </Container>
+    </Page>
   );
 };

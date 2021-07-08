@@ -1,4 +1,4 @@
-import { Text, Container, ActivityIndicator } from "../components";
+import { Page } from "../components";
 import { H2, Button, Card, Dialog } from "@blueprintjs/core";
 import { useState } from "react";
 
@@ -27,7 +27,7 @@ export function Home() {
           </div>
         </div>
       </Dialog>
-      <Container>
+      <Page>
         <H2>Welcome Home!</H2>
         <Button
           intent="success"
@@ -36,7 +36,7 @@ export function Home() {
             setIsDialogOpen(true);
           }}
         />
-      </Container>
+      </Page>
     </>
   );
 }

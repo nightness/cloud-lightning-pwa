@@ -1,4 +1,3 @@
-import NavBar from "../navigation/NavBar";
 import Container from "./Container";
 import Badge from "./Badge";
 import DisplayError from "./DisplayError";
@@ -10,13 +9,14 @@ import Text from "./Text";
 import Image from "./Image";
 import ScrollView from "./ScrollView";
 import Button from "./Button";
+import ConsoleContainer from "./ConsoleContainer"
+import Page from './Page'
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
 import { Theme, NamedTheme, ThemeType, Themes } from "./ThemeTypes";
 
 export {
   Button,
   Text,
-  NavBar,
   Container,
   Badge,
   DisplayError,
@@ -28,6 +28,8 @@ export {
   Image,
   ScrollView,
   FormField,
+  ConsoleContainer,
+  Page
 };
 
 export type { Theme, NamedTheme, ThemeType, Themes };
