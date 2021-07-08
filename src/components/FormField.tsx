@@ -24,6 +24,8 @@ export default ({
 }: Props) => {
   return (
     <div className="form-field-container">
+      <div style={{ display: 'flex', flex: 1, flexDirection: 'row'}}>
+      { label ? <Text style={{ minWidth: 200 }}>{label}</Text> : undefined }
       <TextInput
         type={secureTextEntry ? "password" : "text"}
         placeholder={label as string}
@@ -42,6 +44,7 @@ export default ({
         //onBlur={formikProps.handleBlur(fieldName)}
         {...restProps}
       />
+      </div>
       {!disabled ? (
         <Text>
           {formikProps.touched[fieldName] && formikProps.errors[fieldName]}
