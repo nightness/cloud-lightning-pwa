@@ -52,7 +52,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     updateUserToken();
   }, [currentUser]);
 
-  if (loadingUser) return <Container><ActivityIndicator size={48}/></Container>
+  if (loadingUser) return <Container><ActivityIndicator size='gigantic'/></Container>
   else if (errorUser)
     return (
       <DisplayError permissionDenied={errorUser.code === "permission-denied"} />

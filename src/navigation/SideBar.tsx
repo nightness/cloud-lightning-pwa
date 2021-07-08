@@ -28,7 +28,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
       size={height > width ? "75%" : "35%"}
       canOutsideClickClose
       canEscapeKeyClose
-      usePortal
+      usePortal={false}
     >
       <div className={`${Classes.DRAWER_BODY} drawer-body`}>
         <div className="side-links">

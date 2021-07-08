@@ -221,7 +221,7 @@ export const Authentication = () => {
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
     return (
       <Container>
-        <ActivityIndicator size={48} />
+        <ActivityIndicator size='gigantic' />
       </Container>
     );
   } else if (currentUser) {

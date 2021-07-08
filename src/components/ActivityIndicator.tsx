@@ -21,7 +21,7 @@ interface Props {
     | "spinner"
     | "squares"
     | "windmill";
-  size?: number | "small" | "medium" | "large" | "huge";
+  size?: number | "small" | "medium" | "large" | "huge" | 'gigantic';
   style?: CSSProperties;
   color?: string;
   animating?: boolean;
@@ -46,6 +46,9 @@ export const ActivityIndicator = ({
       break;
     case "huge":
       numberSize = 32;
+      break;
+    case "gigantic":
+      numberSize = 48;
       break;
     default:
       numberSize = size;

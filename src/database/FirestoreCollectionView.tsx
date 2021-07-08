@@ -57,7 +57,7 @@ export default function _<T>({
     }, [snapshot])
 
     if (loadingCollection || loadingData)
-        return <Container><ActivityIndicator size={48} /></Container>
+        return <Container><ActivityIndicator size='gigantic' /></Container>
     if (errorCollection || errorData) {
         const error = (errorCollection === true ? new Error('Unknown Firebase Error') :
             (errorCollection !== undefined ? errorCollection as Error : undefined) ||

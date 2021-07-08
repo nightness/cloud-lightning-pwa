@@ -62,7 +62,7 @@ export const Navbar = () => {
         content={`${currentUser ? "Logout" : "Login"}`}
         intent="warning"
         placement="bottom"
-        usePortal
+        usePortal={false}
       >
         <Link
           className="link-static"
