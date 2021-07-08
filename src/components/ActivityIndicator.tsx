@@ -26,13 +26,11 @@ interface Props {
   color?: string;
   animating?: boolean;
   speed?: number;
-  fullscreen?: boolean;
 }
 
 export const ActivityIndicator = ({
   type = "spinner",
   size,
-  fullscreen,
   ...restProps
 }: Props) => {
   let numberSize;
@@ -56,21 +54,11 @@ export const ActivityIndicator = ({
 
   let style: CSSProperties = {
     display: "flex",
+    alignContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
     justifyContent: "center",
   };
-
-  if (fullscreen) {
-    style = {
-      ...style,
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      alignContent: "center",
-      alignSelf: "center",
-      alignItems: "center",
-    };
-    numberSize = 46;
-  }
 
   switch (type) {
     case "dots":

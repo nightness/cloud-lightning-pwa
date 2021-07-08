@@ -178,7 +178,7 @@ export function WebRTC() {
       </Alert>
 
     <Page>
-    <Container className="WebRTC">
+    <Container>
       <div className="videos">
         <span>
           <H3>Local Stream</H3>

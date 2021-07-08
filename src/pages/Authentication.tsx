@@ -7,7 +7,7 @@ import {
   FormField,
   ScrollView,
   Container,
-  Page
+  Page,
 } from "../components";
 import {
   firebaseAuth,
@@ -125,14 +125,14 @@ export const Authentication = () => {
   };
 
   const onSuccessfulLogin = ({ user }: UserCredential) => {
-    setStage(Stage.LoggedIn)
+    setStage(Stage.LoggedIn);
     user
       ?.updateProfile({
         //  displayName: // some displayName,
         //  photoURL: // some photo url
       })
       .catch(console.error)
-      .finally(() => history.push("/"))
+      .finally(() => history.push("/"));
   };
 
   const onRegisterPress = async (
@@ -144,9 +144,9 @@ export const Authentication = () => {
       .createUserWithEmailAndPassword(values.eMail, values.password)
       .then(onSuccessfulLogin)
       .catch((error: FirebaseError) => {
-        setStage(Stage.Ready)
+        setStage(Stage.Ready);
         alert(error.message);
-      })
+      });
   };
 
   const signInWithGoogle = async (formikProps: FormikProps<any>) => {
@@ -156,9 +156,9 @@ export const Authentication = () => {
       .signInWithPopup(provider)
       .then(onSuccessfulLogin)
       .catch((error) => {
-        setStage(Stage.Ready)
+        setStage(Stage.Ready);
         alert(error);
-      })
+      });
     formikProps.resetForm();
   };
 
@@ -174,9 +174,9 @@ export const Authentication = () => {
         onSuccessfulLogin(user);
       })
       .catch((err) => {
-        alert(err)
-        setStage(Stage.Ready)
-      })
+        alert(err);
+        setStage(Stage.Ready);
+      });
   };
 
   const sendPasswordReset = (
@@ -215,168 +215,165 @@ export const Authentication = () => {
   }, [currentUser]);
 
   useEffect(() => {
-    setStage(Stage.Ready)
-  }, [])
+    setStage(Stage.Ready);
+  }, []);
 
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
-    return <ActivityIndicator fullscreen={true} />;
+    return (
+      <Container>
+        <ActivityIndicator size={48} />
+      </Container>
+    );
   } else if (currentUser) {
     return (
-      // Logged In
-      <div style={{ flex: 1 }}>
-        <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
-        <Button
-          title="Logout"
-          onPress={() => {
-            auth
-              .signOut()
-              .finally(() => {
+      <Page>
+        <div style={{ flex: 1 }}>
+          <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
+          <Button
+            title="Logout"
+            onPress={() => {
+              auth.signOut().finally(() => {
                 // Reload the page to clean out any state from previous login
                 window.location.assign(`/auth`);
-              })
-          }}
-        />
-      </div>
+              });
+            }}
+          />
+        </div>
+      </Page>
     );
   }
   // Logged Out
   return (
     <Page>
-        <Formik
-          initialValues={{
-            displayName: "",
-            eMail: "",
-            password: "",
-            confirmPassword: "",
-          }}
-          validationSchema={scheme}
-          onSubmit={(values, helpers) => {
-            switch (mode) {
-              case "login":
-                signInWithEMail(values, helpers);
-                break;
-              case "register":
-                onRegisterPress(values, helpers);
-                break;
-              case "password-reset":
-                sendPasswordReset(values, helpers);
-            }
-          }}
-        >
-          {(formikProps) => (
-            <>
-              {mode === "register" ? (
-                <FormField
-                  label="Full Name"
-                  formikProps={formikProps}
-                  fieldName="displayName"
-                />
-              ) : (
-                <></>
-              )}
+      <Formik
+        initialValues={{
+          displayName: "",
+          eMail: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        validationSchema={scheme}
+        onSubmit={(values, helpers) => {
+          switch (mode) {
+            case "login":
+              signInWithEMail(values, helpers);
+              break;
+            case "register":
+              onRegisterPress(values, helpers);
+              break;
+            case "password-reset":
+              sendPasswordReset(values, helpers);
+          }
+        }}
+      >
+        {(formikProps) => (
+          <>
+            {mode === "register" ? (
+              <FormField
+                label="Full Name"
+                formikProps={formikProps}
+                fieldName="displayName"
+              />
+            ) : (
+              <></>
+            )}
+            <FormField
+              formikProps={formikProps}
+              fieldName="eMail"
+              label="E-Mail"
+            />
+            {mode !== "password-reset" ? (
               <FormField
                 formikProps={formikProps}
-                fieldName="eMail"
-                label="E-Mail"
+                secureTextEntry={true}
+                label="Password"
+                fieldName="password"
               />
-              {mode !== "password-reset" ? (
+            ) : (
+              <></>
+            )}
+
+            {mode === "register" ? (
+              <>
                 <FormField
                   formikProps={formikProps}
                   secureTextEntry={true}
-                  label="Password"
-                  fieldName="password"
+                  label="Confirm Password"
+                  fieldName="confirmPassword"
                 />
-              ) : (
-                <></>
-              )}
-
-              {mode === "register" ? (
-                <>
-                  <FormField
-                    formikProps={formikProps}
-                    secureTextEntry={true}
-                    label="Confirm Password"
-                    fieldName="confirmPassword"
+                <div style={footerView}>
+                  <Button
+                    title="Create Account"
+                    onPress={formikProps.handleSubmit}
                   />
+                </div>
+                <div style={footerView}>
+                  <Text style={{ fontSize: 16 }}>Already got an account?</Text>
+                  <Button
+                    title="Log in"
+                    onPress={() => onGotoLoginPress(formikProps)}
+                  />
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+            {mode === "password-reset" ? (
+              <>
+                <div style={footerView}>
+                  <Button
+                    title="Reset Password"
+                    onPress={formikProps.handleSubmit}
+                    style={{ marginTop: 5 }}
+                  />
+                  <Button
+                    title="Cancel"
+                    onPress={() => onGotoLoginPress(formikProps)}
+                    style={{ marginTop: 5 }}
+                  />
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+            {mode === "login" ? (
+              <>
+                <div style={footerView}>
+                  <Button title="Log in" onPress={formikProps.handleSubmit} />
+                  <Button
+                    title="Google Sign-In"
+                    onPress={() => signInWithGoogle(formikProps)}
+                    style={{ margin: 5 }}
+                  />
+                </div>
+                <div style={{ flexDirection: "row" }}>
                   <div style={footerView}>
+                    <Text style={{ fontSize: 16 }}>Don't have an account?</Text>
                     <Button
-                      title="Create Account"
-                      onPress={formikProps.handleSubmit}
+                      title="Sign up"
+                      onPress={() => onSignUpPress(formikProps)}
                     />
                   </div>
                   <div style={footerView}>
                     <Text style={{ fontSize: 16 }}>
-                      Already got an account?
+                      Did you forget your password?
                     </Text>
                     <Button
-                      title="Log in"
-                      onPress={() => onGotoLoginPress(formikProps)}
+                      title="Password Reset"
+                      onPress={() => setMode("password-reset")}
                     />
                   </div>
-                </>
-              ) : (
-                <></>
-              )}
-              {mode === "password-reset" ? (
-                <>
-                  <div style={footerView}>
-                    <Button
-                      title="Reset Password"
-                      onPress={formikProps.handleSubmit}
-                      style={{ marginTop: 5 }}
-                    />
-                    <Button
-                      title="Cancel"
-                      onPress={() => onGotoLoginPress(formikProps)}
-                      style={{ marginTop: 5 }}
-                    />
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-              {mode === "login" ? (
-                <>
-                  <div style={footerView}>
-                    <Button title="Log in" onPress={formikProps.handleSubmit} />
-                    <Button
-                      title="Google Sign-In"
-                      onPress={() => signInWithGoogle(formikProps)}
-                      style={{ margin: 5 }}
-                    />
-                  </div>
-                  <div style={{ flexDirection: "row" }}>
-                    <div style={footerView}>
-                      <Text style={{ fontSize: 16 }}>
-                        Don't have an account?
-                      </Text>
-                      <Button
-                        title="Sign up"
-                        onPress={() => onSignUpPress(formikProps)}
-                      />
-                    </div>
-                    <div style={footerView}>
-                      <Text style={{ fontSize: 16 }}>
-                        Did you forget your password?
-                      </Text>
-                      <Button
-                        title="Password Reset"
-                        onPress={() => setMode("password-reset")}
-                      />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          )}
-        </Formik>
-        <div
-          style={{ flexDirection: "row", alignSelf: "center", marginTop: 10 }}
-        >
-          <Text>{`Cloud Lightning Messenger - Beta`}</Text>
-        </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </>
+        )}
+      </Formik>
+      <div style={{ flexDirection: "row", alignSelf: "center", marginTop: 10 }}>
+        <Text>{`Cloud Lightning Messenger - Beta`}</Text>
+      </div>
     </Page>
   );
 };

@@ -1,7 +1,16 @@
 .page {
   width: 100%;
   height: fit-content;
-  padding: 5px
+  padding: 5px;
+  margin: 5px
+}
+
+.container {
+  width: 100%;
+  height: fit-content;
+  padding: 5px;
+  margin: 5px;
+  overflow: hidden;
 }
 
 .modal {

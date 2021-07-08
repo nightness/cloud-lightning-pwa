@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { ActivityIndicator, DisplayError } from "../components";
+import { ActivityIndicator, Container, DisplayError, Page } from "../components";
 import { useAuthState, FirebaseUser } from "./Firebase";
 
 export type UserProfile = {
@@ -52,7 +52,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     updateUserToken();
   }, [currentUser]);
 
-  if (loadingUser) return <ActivityIndicator fullscreen={true} />;
+  if (loadingUser) return <Container><ActivityIndicator size={48}/></Container>
   else if (errorUser)
     return (
       <DisplayError permissionDenied={errorUser.code === "permission-denied"} />

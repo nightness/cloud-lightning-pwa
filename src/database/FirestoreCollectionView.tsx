@@ -6,7 +6,7 @@ import {
     DocumentData,
     QuerySnapshot,
 } from './Firebase'
-import { ActivityIndicator, DisplayError, ThemeContext } from '../components'
+import { ActivityIndicator, Container, DisplayError, Page, ThemeContext } from '../components'
 import { FirebaseError } from './Firebase'
 import Message from '../messenger/Message'
 
@@ -57,7 +57,7 @@ export default function _<T>({
     }, [snapshot])
 
     if (loadingCollection || loadingData)
-        return <ActivityIndicator fullscreen size='huge' />
+        return <Container><ActivityIndicator size={48} /></Container>
     if (errorCollection || errorData) {
         const error = (errorCollection === true ? new Error('Unknown Firebase Error') :
             (errorCollection !== undefined ? errorCollection as Error : undefined) ||
