@@ -55,7 +55,7 @@ export const Navbar = () => {
         </Tooltip2>
       </div>
       <div className="header-title">
-        <H1>{currentPageTitle ? currentPageTitle : "Page Not Found"}</H1>
+        <H1 style={{ fontWeight: 600 }}>{currentPageTitle ? currentPageTitle : "Page Not Found"}</H1>
       </div>
       <Tooltip2
         className="profile-link-tooltip"
