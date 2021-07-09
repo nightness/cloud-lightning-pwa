@@ -56,23 +56,29 @@ const PageNotFound = () => {
 };
 
 interface PagesProps {
-  pages: PageDefinition[];  
+  pages: PageDefinition[];
 }
+
+const PageRoutes = ({ pages }: PagesProps) => (
+  <>
+    {pages.map((page) => (
+      <>
+        <Route
+          exact
+          path={page.path}
+          component={page.component}
+          key={`${Math.random()}-${page.path}`}
+        />
+        {!page.children ? undefined : <PageRoutes pages={page.children} />}
+      </>
+    ))}
+  </>
+);
 
 export const Pages = ({ pages }: PagesProps) => {
   return (
     <Switch>
-      {pages.map((page) => (
-        <>
-          <Route
-            exact
-            path={page.path}
-            component={page.component}
-            key={`${Math.random()}-${page.path}`}
-          />
-          {!page.children ? undefined : <Pages pages={page.children} />}
-        </>
-      ))}
+      <PageRoutes pages={pages} />
       <Route component={PageNotFound} />
     </Switch>
   );
