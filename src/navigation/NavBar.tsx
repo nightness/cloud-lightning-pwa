@@ -14,7 +14,7 @@ export const Navbar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const { getTitle } = useContext(NavigationContext);
-  const currentPageTitle = getTitle(location.pathname)
+  const currentPageTitle = getTitle(location.pathname);
 
   return (
     <nav className="navbar">
@@ -48,14 +48,23 @@ export const Navbar = () => {
             color="black"
             iconSize={28}
             icon="menu"
-            style={{ background: "transparent", marginLeft: 10 }}
+            style={{
+              background: "transparent",
+              marginLeft: 10,
+              paddingLeft: 5,
+              paddingTop: 10,
+              paddingBottom: 10,
+              paddingRight: 10,
+            }}
             onClick={(event) => event.currentTarget.blur()}
             onFocus={(event) => event.currentTarget.blur()}
           />
         </Tooltip2>
       </div>
       <div className="header-title">
-        <H1 style={{ fontWeight: 600 }}>{currentPageTitle ? currentPageTitle : "Page Not Found"}</H1>
+        <H1 style={{ fontWeight: 600 }}>
+          {currentPageTitle ? currentPageTitle : "Page Not Found"}
+        </H1>
       </div>
       <Tooltip2
         className="profile-link-tooltip"
@@ -65,11 +74,7 @@ export const Navbar = () => {
         placement="bottom"
         usePortal={false}
       >
-        <Link
-          className="link-static"
-          to="/auth"
-          noActiveFormatting
-        >
+        <Link className="link-static" to="/auth" noActiveFormatting>
           {currentUser?.photoURL ? (
             <img className="img" src={currentUser?.photoURL} />
           ) : (

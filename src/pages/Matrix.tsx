@@ -33,7 +33,7 @@ export default () => {
   };
 
   useEffect(() => {
-    console.log(client.current);
+    //console.log(client.current);
   }, []);
 
   return (
