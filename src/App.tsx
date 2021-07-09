@@ -9,44 +9,44 @@ import { WallMessenger } from './messenger';
 import TestPage from './pages/TestPage';
 
 const MainDocument = () => {
-  const { addPage: registerPage } = useContext(NavigationContext)
+  const { addPage } = useContext(NavigationContext)
 
-  registerPage({
+  addPage({
     path: '/',
     title: 'Home',
     component: Home
   })
-  registerPage({
+  addPage({
     path: '/wall',
     title: "Member Walls",
     component: WallMessenger,
     requiresAuthentication: true
   })
-  registerPage({
+  addPage({
     path: '/WebRTC',
     title: 'Video Chat',
     component: WebRTC,
     requiresAuthentication: true
   })
-  registerPage({
+  addPage({
     path: '/matrix',
     title: 'Matrix Chat',
     component: Matrix,
     requiresAuthentication: true
   })
-  registerPage({
+  addPage({
     path: '/profile',
     title: 'Profile',
     component: Profile,
     requiresAuthentication: true
   })
-  registerPage({
+  addPage({
     path: '/test',
     title: 'Test Page',
     component: TestPage,
     requiresAuthentication: true
   })
-  registerPage({
+  addPage({
     path: '/auth',
     title: 'Cloud Lightning',
     component: Authentication
