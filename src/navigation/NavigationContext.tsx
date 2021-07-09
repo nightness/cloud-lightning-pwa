@@ -9,28 +9,37 @@ import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { useForceUpdate, useTimeout } from "../hooks";
 
+interface PageDefinition {
+  path: string;
+  title: string;
+  component: React.FC;
+  requiresAuthentication: boolean;
+}
+
 type ContextType = {
-  registerPage: (
+  addPage: (
     path: string,
     title: string,
     component: React.FC,
     requiresAuth?: boolean
   ) => any;
-  getPaths: () => string[];
-  getTitle: (path: string) => string | undefined;
-  getComponent: (path: string) => React.FC | undefined;
-  hasPermission: (path: string) => boolean;
+  insertPage: (
+    index: number,
+    path: string,
+    title: string,
+    component: React.FC,
+    requiresAuth?: boolean
+  ) => any;
   forceUpdate: () => any;
+  pages: PageDefinition[];
   currentPath?: string;
 };
 
 export const NavigationContext = createContext<ContextType>({
-  registerPage: () => undefined,
-  getPaths: () => [],
-  getTitle: () => undefined,
-  getComponent: () => undefined,
-  hasPermission: () => false,
-  forceUpdate: () => undefined
+  addPage: () => undefined,
+  insertPage: () => undefined,
+  forceUpdate: () => undefined,
+  pages: [],
 });
 
 interface Props {
@@ -48,16 +57,15 @@ const PageNotFound = () => {
 };
 
 export const Pages = () => {
-  const { getPaths, getComponent } = useContext(NavigationContext);
-  const paths = getPaths();
+  const { pages } = useContext(NavigationContext);
   return (
     <Switch>
-      {paths.map((path) => (
+      {pages.map((page) => (
         <Route
           exact
-          path={path}
-          component={getComponent(path)}
-          key={`${Math.random()}-${path}`}
+          path={page.path}
+          component={page.component}
+          key={`${Math.random()}-${page.path}`}
         />
       ))}
       <Route component={PageNotFound} />
@@ -66,42 +74,49 @@ export const Pages = () => {
 };
 
 export const NavigationProvider = ({ children }: Props) => {
-  const forceUpdate = useForceUpdate()
+  const forceUpdate = useForceUpdate();
   const { currentUser } = useContext(FirebaseContext);
-  const [routes] = useState(new Map<string, string>());
-  const [components] = useState(new Map<string, React.FC>());
-  const [requiresAuthentication] = useState(new Map<string, boolean>());
+  const [pages] = useState<PageDefinition[]>([]);
   const location = useLocation();
 
-  const registerPage = (
+  const addPage = (
     path: string,
     title: string,
     component: React.FC,
-    requiresAuth: boolean = false
+    requiresAuthentication: boolean = false
   ) => {
-    routes.set(path, title);
-    components.set(path, component);
-    requiresAuthentication.set(path, requiresAuth);
+    if (!pages.find((page) => page.path === path))
+      pages.push({
+        path,
+        title,
+        component,
+        requiresAuthentication,
+      });
   };
 
-  const getPaths = () => Array.from(routes.keys()) as string[];
-  const getTitle = (path: string) => routes.get(path);
-  const getComponent = (path: string) => components.get(path);
-  const hasPermission = (path: string) => {
-    const requiresAuth = requiresAuthentication.get(path);
-    if (!requiresAuth) return true;
-    return !(!currentUser && requiresAuthentication.get(path));
+  const insertPage = (
+    index: number,
+    path: string,
+    title: string,
+    component: React.FC,
+    requiresAuthentication: boolean = false
+  ) => {
+    if (!pages.find((page) => page.path === path))
+      pages.splice(index, 0, {
+        path,
+        title,
+        component,
+        requiresAuthentication,
+      });
   };
 
   return (
     <NavigationContext.Provider
       value={{
-        registerPage,
-        getTitle,
-        getComponent,
-        getPaths,
-        hasPermission,
+        addPage,
+        insertPage,
         forceUpdate,
+        pages,
         currentPath: location.pathname,
       }}
     >

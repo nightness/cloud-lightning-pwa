@@ -12,8 +12,9 @@ export const Navbar = () => {
   const { currentUser } = useContext(FirebaseContext);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  const { getTitle } = useContext(NavigationContext);
-  const currentPageTitle = getTitle(location.pathname);
+  const { pages } = useContext(NavigationContext);
+  
+  const currentPageTitle = pages.find((page) => page.path === location.pathname)?.title;
 
   return (
     <nav className="navbar">

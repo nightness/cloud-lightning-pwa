@@ -9,7 +9,7 @@ import { WallMessenger } from './messenger';
 import TestPage from './pages/TestPage';
 
 const MainDocument = () => {
-  const { registerPage } = useContext(NavigationContext)
+  const { addPage: registerPage } = useContext(NavigationContext)
 
   registerPage('/', 'Home', Home)
   registerPage('/wall', "Member Walls", WallMessenger, true)

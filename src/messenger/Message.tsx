@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Text, Image, Container } from "../components";
+import { Text, Container } from "../components";
 import { Icon } from "@blueprintjs/core";
 import { Timestamp } from "../database/Firebase";
 

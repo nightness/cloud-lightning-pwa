@@ -1,5 +1,5 @@
 import "./index.css";
-import React, { CSSProperties, useEffect } from "react";
+import { CSSProperties, useEffect } from "react";
 import Container from "./Container";
 import Text from "./Text";
 

@@ -5,7 +5,6 @@ import {
   DocumentData,
   QuerySnapshot,
   useCollection,
-  callFirebaseFunction,
 } from "../database/Firebase";
 import { FirebaseContext } from "../database/FirebaseContext";
 import Message from "./Message";

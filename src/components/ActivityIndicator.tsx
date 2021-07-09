@@ -1,5 +1,5 @@
 import "./index.css";
-import React, { CSSProperties } from "react";
+import { CSSProperties } from "react";
 import {
   Dots,
   Bounce,
@@ -21,7 +21,7 @@ interface Props {
     | "spinner"
     | "squares"
     | "windmill";
-  size?: number | "small" | "medium" | "large" | "huge" | 'gigantic';
+  size?: number | "small" | "medium" | "large" | "huge" | "gigantic";
   style?: CSSProperties;
   color?: string;
   animating?: boolean;
@@ -104,6 +104,12 @@ export const ActivityIndicator = ({
       return (
         <div style={style}>
           <Windmill size={numberSize} {...restProps} />
+        </div>
+      );
+    case "bounce":
+      return (
+        <div style={style}>
+          <Bounce size={numberSize} {...restProps} />
         </div>
       );
     default:

@@ -1,7 +1,7 @@
 import "./index.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "../components";
-import { H1, Icon, Button, Drawer, Classes } from "@blueprintjs/core";
+import { Drawer, Classes } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { NavigationContext } from "./NavigationContext";
 import { useWindowDimensions } from "../hooks";
@@ -14,8 +14,8 @@ interface SideBarProps {
 export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
   const { height, width } = useWindowDimensions();
   const { currentUser } = useContext(FirebaseContext);
-  const { getPaths, getTitle, hasPermission } = useContext(NavigationContext);
-  const paths = getPaths().filter((path) => path !== "/auth");
+  const { pages } = useContext(NavigationContext);
+  const filteredPages = pages.filter((page) => page.path !== "/auth");
 
   return (
     <Drawer
@@ -32,15 +32,15 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
     >
       <div className={`${Classes.DRAWER_BODY} drawer-body`}>
         <div className="side-links">
-          {paths.map((path) =>
-            !hasPermission(path) ? undefined : (
+          {filteredPages.map((page) =>
+            page.requiresAuthentication && !currentUser ? undefined : (
               <Link
                 key={`${Math.random()}-${Math.random()}`}
                 className="sidebar-link"
-                to={path}
+                to={page.path}
                 onClick={onClose}
               >
-                {getTitle(path)}
+                {page.title}
               </Link>
             )
           )}

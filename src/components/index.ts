@@ -6,7 +6,6 @@ import Link from "./Link";
 import FormField from "./FormField";
 import TextInput from "./TextInput";
 import Text from "./Text";
-import Image from "./Image";
 import ScrollView from "./ScrollView";
 import Button from "./Button";
 import ConsoleContainer from "./ConsoleContainer"
@@ -25,7 +24,6 @@ export {
   ThemeProvider,
   ThemeContext,
   TextInput,
-  Image,
   ScrollView,
   FormField,
   ConsoleContainer,

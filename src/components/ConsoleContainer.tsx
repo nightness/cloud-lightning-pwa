@@ -1,7 +1,5 @@
 import "./index.css";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Container, Text } from ".";
-import { useForceUpdate } from "../hooks";
+import { Container } from ".";
 
 interface Props {
   messages: string[]
@@ -9,7 +7,7 @@ interface Props {
 
 export const ConsoleContainer = ({ messages }: Props) => {
   return (
-    <Container style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5 }}>
+    <Container>
       <div className='console-container'>
         {messages.length > 0 ? messages.map((message, idx) => {
           return <p key={`${Math.random()}`}>{message}</p>;
