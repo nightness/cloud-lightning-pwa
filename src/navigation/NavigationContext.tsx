@@ -56,12 +56,12 @@ const PageNotFound = () => {
 };
 
 interface PagesProps {
-  pages: PageDefinition[];
+  pages: PageDefinition[];  
 }
 
 export const Pages = ({ pages }: PagesProps) => {
   return (
-    <>
+    <Switch>
       {pages.map((page) => (
         <>
           <Route
@@ -74,7 +74,7 @@ export const Pages = ({ pages }: PagesProps) => {
         </>
       ))}
       <Route component={PageNotFound} />
-    </>
+    </Switch>
   );
 };
 

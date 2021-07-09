@@ -17,14 +17,14 @@ const MainDocument = () => {
     component: Home,
     children: [
       {
-        path: '/test1',
-        title: 'Test Page',
+        path: '/home/test',
+        title: 'Test Page 1',
         component: TestPage,
         requiresAuthentication: true,
         children: [
           {
-            path: '/test2',
-            title: 'Test Page',
+            path: '/home/test/test',
+            title: 'Test Page 1-1',
             component: TestPage,
             requiresAuthentication: true
           }
@@ -66,9 +66,7 @@ const MainDocument = () => {
     <div className={`App`}>
       <NavBar />
       <div className={`content`}>
-        <Switch>
-          <Pages pages={pages} />
-        </Switch>
+        <Pages pages={pages} />
       </div>
     </div>
   )
