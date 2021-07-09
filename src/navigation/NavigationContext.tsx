@@ -13,23 +13,13 @@ interface PageDefinition {
   path: string;
   title: string;
   component: React.FC;
-  requiresAuthentication: boolean;
+  children?: PageDefinition[];
+  requiresAuthentication?: boolean;
 }
 
 type ContextType = {
-  addPage: (
-    path: string,
-    title: string,
-    component: React.FC,
-    requiresAuth?: boolean
-  ) => any;
-  insertPage: (
-    index: number,
-    path: string,
-    title: string,
-    component: React.FC,
-    requiresAuth?: boolean
-  ) => any;
+  addPage: (page: PageDefinition, parentsChildPages?: PageDefinition[], atParentIndex?: number) => any
+  removePage: (atChildIndex: number, parentsChildPages?: PageDefinition[]) => any
   forceUpdate: () => any;
   pages: PageDefinition[];
   currentPath?: string;
@@ -37,7 +27,7 @@ type ContextType = {
 
 export const NavigationContext = createContext<ContextType>({
   addPage: () => undefined,
-  insertPage: () => undefined,
+  removePage: () => undefined,
   forceUpdate: () => undefined,
   pages: [],
 });
@@ -79,42 +69,23 @@ export const NavigationProvider = ({ children }: Props) => {
   const [pages] = useState<PageDefinition[]>([]);
   const location = useLocation();
 
-  const addPage = (
-    path: string,
-    title: string,
-    component: React.FC,
-    requiresAuthentication: boolean = false
-  ) => {
-    if (!pages.find((page) => page.path === path))
-      pages.push({
-        path,
-        title,
-        component,
-        requiresAuthentication,
-      });
-  };
+  const addPage = (page: PageDefinition, parentsChildPages: PageDefinition[] = pages, atParentIndex?: number) => {
+    if (pages.find((pg) => page.path === pg.path)) return
+    if (typeof atParentIndex !== 'number')
+      parentsChildPages.push(page);
+    else
+      parentsChildPages.splice(atParentIndex, 0, page)
+  }
 
-  const insertPage = (
-    index: number,
-    path: string,
-    title: string,
-    component: React.FC,
-    requiresAuthentication: boolean = false
-  ) => {
-    if (!pages.find((page) => page.path === path))
-      pages.splice(index, 0, {
-        path,
-        title,
-        component,
-        requiresAuthentication,
-      });
-  };
+  const removePage = (atParentIndex: number, parentsChildPages: PageDefinition[] = pages) => {
+    parentsChildPages.splice(atParentIndex, 0)
+  }
 
   return (
     <NavigationContext.Provider
       value={{
         addPage,
-        insertPage,
+        removePage,
         forceUpdate,
         pages,
         currentPath: location.pathname,
