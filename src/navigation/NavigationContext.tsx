@@ -18,8 +18,16 @@ export interface PageDefinition {
 }
 
 type ContextType = {
-  addPage: (page: PageDefinition, parentsChildPages?: PageDefinition[], atParentIndex?: number) => any
-  removePage: (atChildIndex: number, parentsChildPages?: PageDefinition[]) => any
+  addPage: (
+    page: PageDefinition,
+    parentsChildPages?: PageDefinition[],
+    atParentIndex?: number
+  ) => any;
+  removePage: (
+    atChildIndex: number,
+    parentsChildPages?: PageDefinition[]
+  ) => any;
+  getTitle: (path: string, pageGroup?: PageDefinition[]) => string | undefined;
   forceUpdate: () => any;
   pages: PageDefinition[];
   currentPath?: string;
@@ -28,6 +36,7 @@ type ContextType = {
 export const NavigationContext = createContext<ContextType>({
   addPage: () => undefined,
   removePage: () => undefined,
+  getTitle: () => undefined,
   forceUpdate: () => undefined,
   pages: [],
 });
@@ -46,20 +55,26 @@ const PageNotFound = () => {
   return <>{redirecting ? <Redirect to="/" /> : <h2>Redirecting...</h2>}</>;
 };
 
-export const Pages = () => {
-  const { pages } = useContext(NavigationContext);
+interface PagesProps {
+  pages: PageDefinition[];
+}
+
+export const Pages = ({ pages }: PagesProps) => {
   return (
-    <Switch>
+    <>
       {pages.map((page) => (
-        <Route
-          exact
-          path={page.path}
-          component={page.component}
-          key={`${Math.random()}-${page.path}`}
-        />
+        <>
+          <Route
+            exact
+            path={page.path}
+            component={page.component}
+            key={`${Math.random()}-${page.path}`}
+          />
+          {!page.children ? undefined : <Pages pages={page.children} />}
+        </>
       ))}
       <Route component={PageNotFound} />
-    </Switch>
+    </>
   );
 };
 
@@ -69,23 +84,47 @@ export const NavigationProvider = ({ children }: Props) => {
   const [pages] = useState<PageDefinition[]>([]);
   const location = useLocation();
 
-  const addPage = (page: PageDefinition, parentsChildPages: PageDefinition[] = pages, atParentIndex?: number) => {
-    if (pages.find((pg) => page.path === pg.path)) return
-    if (typeof atParentIndex !== 'number')
-      parentsChildPages.push(page);
-    else
-      parentsChildPages.splice(atParentIndex, 0, page)
-  }
+  const addPage = (
+    page: PageDefinition,
+    parentsChildPages: PageDefinition[] = pages,
+    atParentIndex?: number
+  ) => {
+    if (pages.find((pg) => page.path === pg.path)) return;
+    if (typeof atParentIndex !== "number") parentsChildPages.push(page);
+    else parentsChildPages.splice(atParentIndex, 0, page);
+  };
 
-  const removePage = (atParentIndex: number, parentsChildPages: PageDefinition[] = pages) => {
-    parentsChildPages.splice(atParentIndex, 0)
-  }
+  const removePage = (
+    atParentIndex: number,
+    parentsChildPages: PageDefinition[] = pages
+  ) => {
+    parentsChildPages.splice(atParentIndex, 0);
+  };
+
+  const getTitle = (path: string, pageGroup: PageDefinition[] = pages) => {
+    let title;
+    pageGroup.forEach((page) => {
+      if (page.path === path) {
+        title = page.title;
+        return;
+      }
+      if (page.children) {
+        const childResults = getTitle(path, page.children) as any;
+        if (childResults) {
+          title = childResults as string;
+          return;
+        }
+      }
+    });
+    return title;
+  };
 
   return (
     <NavigationContext.Provider
       value={{
         addPage,
         removePage,
+        getTitle,
         forceUpdate,
         pages,
         currentPath: location.pathname,

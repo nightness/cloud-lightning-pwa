@@ -6,15 +6,15 @@ import { FirebaseContext } from "../database/FirebaseContext";
 import { Tooltip2 } from "@blueprintjs/popover2";
 import { useLocation } from "react-router-dom";
 import { NavigationContext, SideBar } from ".";
+import { PageDefinition } from "./NavigationContext";
 
 export const Navbar = () => {
   const location = useLocation();
   const { currentUser } = useContext(FirebaseContext);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  const { pages } = useContext(NavigationContext);
-  
-  const currentPageTitle = pages.find((page) => page.path === location.pathname)?.title;
+  const { getTitle } = useContext(NavigationContext);
+  const currentPageTitle = getTitle(location.pathname)
 
   return (
     <nav className="navbar">

@@ -1,6 +1,6 @@
 import './App.css';
 import { useContext } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Home, WebRTC, Profile, Authentication, Matrix } from './pages'
 import { FirebaseProvider } from './database/FirebaseContext'
 import { WebRtcProvider } from './webrtc/WebRtcContext';
@@ -9,7 +9,7 @@ import { WallMessenger } from './messenger';
 import TestPage from './pages/TestPage';
 
 const MainDocument = () => {
-  const { addPage } = useContext(NavigationContext)
+  const { addPage, pages } = useContext(NavigationContext)
 
   addPage({
     path: '/',
@@ -17,10 +17,18 @@ const MainDocument = () => {
     component: Home,
     children: [
       {
-        path: '/home/test',
+        path: '/test1',
         title: 'Test Page',
         component: TestPage,
-        requiresAuthentication: true
+        requiresAuthentication: true,
+        children: [
+          {
+            path: '/test2',
+            title: 'Test Page',
+            component: TestPage,
+            requiresAuthentication: true
+          }
+        ]
       }
     ]
   })
@@ -58,7 +66,9 @@ const MainDocument = () => {
     <div className={`App`}>
       <NavBar />
       <div className={`content`}>
-        <Pages />
+        <Switch>
+          <Pages pages={pages} />
+        </Switch>
       </div>
     </div>
   )
