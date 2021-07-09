@@ -3,8 +3,41 @@ import { useContext } from "react";
 import { Link } from "../components";
 import { Drawer, Classes } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
-import { NavigationContext } from "./NavigationContext";
+import { NavigationContext, PageDefinition } from "./NavigationContext";
 import { useWindowDimensions } from "../hooks";
+
+interface SideBarPageLinkProps {
+  pages: PageDefinition[];
+  onClose: () => any;
+  depth: number;
+}
+
+const SideBarPageLink = ({ pages, onClose, depth }: SideBarPageLinkProps) => {
+  const { currentUser } = useContext(FirebaseContext);
+
+  return (
+    <>
+      {pages.map((page) =>
+        page.requiresAuthentication && !currentUser ? undefined : (
+          <>
+            <Link
+              key={`${Math.random()}-${Math.random()}`}
+              className="sidebar-link"
+              to={page.path}
+              onClick={onClose}
+              style={{ paddingLeft: `${depth * 10 + 5}pt` }}
+            >
+              {page.title}
+            </Link>
+            {!page.children ? undefined : (
+              <SideBarPageLink pages={page.children} depth={depth + 1} onClose={onClose} />
+            )}
+          </>
+        )
+      )}
+    </>
+  );
+};
 
 interface SideBarProps {
   isOpen: boolean;
@@ -32,18 +65,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
     >
       <div className={`${Classes.DRAWER_BODY} drawer-body`}>
         <div className="side-links">
-          {filteredPages.map((page) =>
-            page.requiresAuthentication && !currentUser ? undefined : (
-              <Link
-                key={`${Math.random()}-${Math.random()}`}
-                className="sidebar-link"
-                to={page.path}
-                onClick={onClose}
-              >
-                {page.title}
-              </Link>
-            )
-          )}
+          <SideBarPageLink pages={filteredPages} depth={0} onClose={onClose} />
           <Link
             key={`${Math.random()}-${Math.random()}`}
             className="sidebar-link"

@@ -14,7 +14,15 @@ const MainDocument = () => {
   addPage({
     path: '/',
     title: 'Home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: '/home/test',
+        title: 'Test Page',
+        component: TestPage,
+        requiresAuthentication: true
+      }
+    ]
   })
   addPage({
     path: '/wall',
@@ -38,12 +46,6 @@ const MainDocument = () => {
     path: '/profile',
     title: 'Profile',
     component: Profile,
-    requiresAuthentication: true
-  })
-  addPage({
-    path: '/test',
-    title: 'Test Page',
-    component: TestPage,
     requiresAuthentication: true
   })
   addPage({

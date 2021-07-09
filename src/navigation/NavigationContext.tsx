@@ -9,7 +9,7 @@ import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { useForceUpdate, useTimeout } from "../hooks";
 
-interface PageDefinition {
+export interface PageDefinition {
   path: string;
   title: string;
   component: React.FC;
