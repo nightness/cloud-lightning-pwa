@@ -50,11 +50,8 @@ export const Navbar = () => {
             icon="menu"
             style={{
               background: "transparent",
-              marginLeft: 10,
-              paddingLeft: 5,
-              paddingTop: 10,
-              paddingBottom: 10,
-              paddingRight: 10,
+              marginLeft: 5,
+              padding: 10,
             }}
             onClick={(event) => event.currentTarget.blur()}
             onFocus={(event) => event.currentTarget.blur()}
