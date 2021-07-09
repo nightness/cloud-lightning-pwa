@@ -62,24 +62,33 @@ interface PagesProps {
 const PageRoutes = ({ pages }: PagesProps) => (
   <>
     {pages.map((page) => (
-      <>
-        <Route
-          exact
-          path={page.path}
-          component={page.component}
-          key={`${Math.random()}-${page.path}`}
-        />
-        {!page.children ? undefined : <PageRoutes pages={page.children} />}
-      </>
+      <Route
+        exact
+        path={page.path}
+        component={page.component}
+        key={`${Math.random()}-${page.path}`}
+      />
     ))}
   </>
 );
 
-export const Pages = ({ pages }: PagesProps) => {
+const getFlattenedPages = (
+  pages: PageDefinition[],
+  memo: PageDefinition[] = []
+) => {
+  pages.map((page) => {
+    memo.push(page);
+    if (page.children) getFlattenedPages(page.children);
+  });
+  return memo;
+};
+
+export const Pages = ({ pages: root }: PagesProps) => {
+  const pages = getFlattenedPages(root);
   return (
     <Switch>
       <PageRoutes pages={pages} />
-      <Route component={PageNotFound} />
+      <Route component={PageNotFound} key={`${Math.random()}`} />
     </Switch>
   );
 };
