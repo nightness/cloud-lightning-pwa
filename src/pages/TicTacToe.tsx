@@ -56,7 +56,7 @@ export default () => {
       d1: eval3(board[0][0], board[1][1], board[2][2]),
       d2: eval3(board[2][0], board[1][1], board[2][2]),
       filled:
-        board[0][0] &&
+        !!(board[0][0] &&
         board[0][1] &&
         board[0][2] &&
         board[1][0] &&
@@ -64,20 +64,19 @@ export default () => {
         board[1][2] &&
         board[2][0] &&
         board[2][1] &&
-        board[2][2]
+        board[2][2])
     }
-    //console.log(results, board)
     setGameOver(
       newGameOver ||
-        !!results.row1 ||
-        !!results.row2 ||
-        !!results.row3 ||
-        !!results.col1 ||
-        !!results.col2 ||
-        !!results.col3 ||
-        !!results.d1 ||
-        !!results.d2 ||
-        !!results.filled
+        results.row1 ||
+        results.row2 ||
+        results.row3 ||
+        results.col1 ||
+        results.col2 ||
+        results.col3 ||
+        results.d1 ||
+        results.d2 ||
+        results.filled
     );
   }, [board]);
 
