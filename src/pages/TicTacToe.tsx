@@ -22,7 +22,7 @@ export default () => {
   const [turn, setTurn] = useState<'X' | 'O'>() 
 
   const onClickAnyCell = (row: number, col: number) => {
-    if (!isStarted || !turn) return;
+    if (!isStarted || !turn || gameOver) return;
     const newBoard = createNewBoard();
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 3; c++) {
