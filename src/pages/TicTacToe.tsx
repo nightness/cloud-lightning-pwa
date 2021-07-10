@@ -137,7 +137,7 @@ export default () => {
         col3: eval2(board[0][2], board[1][2], board[2][2]),
         d1: eval2(board[0][0], board[1][1], board[2][2]),
         d2: eval2(board[0][2], board[1][1], board[2][0]),
-      };
+      }; 
       if (results.row1 !== false)
         newBoard[0][results.row1 as number] = mySymbol;
       else if (results.row2 !== false)
