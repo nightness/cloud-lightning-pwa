@@ -102,8 +102,31 @@ export default () => {
       newBoard[results.col2 as number][1] = mySymbol;
     else if (results.col3 !== false)
       newBoard[results.col3 as number][2] = mySymbol;
-    else if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
-    else {
+    else if (results.d1 !== false) {
+      switch (results.d1) {
+        case 0:
+          newBoard[0][0] = mySymbol;
+          break;
+        case 1:
+          newBoard[1][1] = mySymbol;
+          break;
+        case 2:
+          newBoard[2][2] = mySymbol;
+          break;
+      }
+    } else if (results.d2 !== false) {
+      switch (results.d2) {
+        case 0:
+          newBoard[0][2] = mySymbol;
+          break;
+        case 1:
+          newBoard[1][1] = mySymbol;
+          break;
+        case 2:
+          newBoard[2][0] = mySymbol;
+          break;
+      }
+    } else {
       // For the block
       const results = {
         row1: eval2(board[0][0], board[0][1], board[0][2]),
@@ -128,10 +151,81 @@ export default () => {
         newBoard[results.col2 as number][1] = mySymbol;
       else if (results.col3 !== false)
         newBoard[results.col3 as number][2] = mySymbol;
-      else if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
-      else return;
+      else if (results.d1 !== false) {
+        switch (results.d1) {
+          case 0:
+            newBoard[0][0] = mySymbol;
+            break;
+          case 1:
+            newBoard[1][1] = mySymbol;
+            break;
+          case 2:
+            newBoard[2][2] = mySymbol;
+            break;
+        }
+      } else if (results.d2 !== false) {
+        switch (results.d2) {
+          case 0:
+            newBoard[0][2] = mySymbol;
+            break;
+          case 1:
+            newBoard[1][1] = mySymbol;
+            break;
+          case 2:
+            newBoard[2][0] = mySymbol;
+            break;
+        }
+      } else {          // There is no winning or blocking square available        
+        // Take Center
+        if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
+        // Corners
+        else {
+          let played = false;
+          while (!played) {
+            if (newBoard[0][0] !== '' && newBoard[0][2] !== '' && newBoard[2][0] !== '' && newBoard[2][2] !== '')
+              break;
+            switch (Math.floor(Math.random() * 4)) {
+              case 0:
+                if (newBoard[0][0] === "") {
+                  newBoard[0][0] = mySymbol;
+                  played = true;
+                }
+                break;
+              case 1:
+                if (newBoard[0][2] === "") {
+                  newBoard[0][2] = mySymbol;
+                  played = true;
+                }
+                break;
+              case 2:
+                if (newBoard[2][2] === "") {
+                  newBoard[2][2] = mySymbol;
+                  played = true;
+                }
+                break;
+              case 3:
+                if (newBoard[2][0] === "") {
+                  newBoard[2][0] = mySymbol;
+                  played = true;
+                }
+                break;
+            }
+          }
+
+          // Computer can't decide, pick any open
+          if (!played) {
+            for (let i = 0; i < 3; i++) {
+              for (let j = 0; j < 3; j++) {
+                if (newBoard[i][j] === "") {
+                  newBoard[i][j] = mySymbol
+                  break;
+                };
+              }
+            }
+          }
+        }
+      }
     }
-    console.log(results);
     setBoard(newBoard);
     setTurn(turn === "X" ? "O" : "X");
     setMessage(
