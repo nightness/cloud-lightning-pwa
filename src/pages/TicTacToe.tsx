@@ -47,7 +47,7 @@ export default () => {
     setMessage(turn === playerIs ? "Computer's Turn" : `Player's Turn (player is '${playerIs}')`);
   };
 
-  // For the computer's usage, to block player
+  // Used to determine computer's move
   // Return the unused index if only one of [(a === b) || (b === c) || (c === a)]
   // are true, and the other index is blank
   const eval2 = (a: string, b: string, c: string, symbol = playerIs) => {
