@@ -44,7 +44,7 @@ export default () => {
     newBoard[row][col] = turn;
     setBoard(newBoard);
     setTurn(turn === "X" ? "O" : "X");
-    setMessage(turn === playerIs ? "Computer's Turn" : "Player's Turn");
+    setMessage(turn === playerIs ? "Computer's Turn" : `Player's Turn (player is '${playerIs}')`);
   };
 
   // For the computer's usage, to block player
@@ -138,7 +138,6 @@ export default () => {
         d1: eval2(board[0][0], board[1][1], board[2][2]),
         d2: eval2(board[0][2], board[1][1], board[2][0]),
       };
-      console.log(results);
       if (results.row1 !== false)
         newBoard[0][results.row1 as number] = mySymbol;
       else if (results.row2 !== false)
@@ -212,7 +211,7 @@ export default () => {
             }
           }
 
-          // Computer can't decide, pick any open
+          // Can't decide, pick any open
           if (!played) {
             for (let i = 0; i < 3; i++) {
               for (let j = 0; j < 3; j++) {
