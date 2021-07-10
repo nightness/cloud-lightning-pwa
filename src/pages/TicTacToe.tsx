@@ -23,8 +23,8 @@ const createNewBoard = (existing?: Board) => {
     }
   }
 
-  return result
-}
+  return result;
+};
 
 export default () => {
   const [isStarted, setIsStarted] = useState(false);
@@ -40,32 +40,37 @@ export default () => {
     setTurn(turn === "X" ? "O" : "X");
   };
 
-  const eval3 = (a: string, b: string, c: string) =>  a && a === b && b === c && a ===c;
+  const eval3 = (a: string, b: string, c: string) =>
+    a && a === b && b === c && a === c;
+  const evalRow = (index: number) =>
+    eval3(board[index][0], board[index][1], board[index][2]);
+  const evalCol = (index: number) =>
+    eval3(board[0][index], board[1][index], board[2][index]);
+  const isFilled = () => {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (board[i][j] === "") return false;
+      }
+    }
+    return true;
+  };
 
   useEffect(() => {
     let newGameOver = gameOver;
-    const results =  {
-      row1: eval3(board[0][0], board[0][1], board[0][2]),
-      row2: eval3(board[1][0], board[1][1], board[1][2]),
-      row3: eval3(board[2][0], board[2][1], board[2][2]),
 
-      col1: eval3(board[0][0], board[1][0], board[2][0]),
-      col2: eval3(board[0][1], board[1][1], board[2][1]),
-      col3: eval3(board[0][2], board[1][2], board[2][2]),
+    const results = {
+      row1: evalRow(0),
+      row2: evalRow(1),
+      row3: evalRow(2),
+
+      col1: evalCol(0),
+      col2: evalCol(1),
+      col3: evalCol(2),
 
       d1: eval3(board[0][0], board[1][1], board[2][2]),
       d2: eval3(board[2][0], board[1][1], board[2][2]),
-      filled:
-        !!(board[0][0] &&
-        board[0][1] &&
-        board[0][2] &&
-        board[1][0] &&
-        board[1][1] &&
-        board[1][2] &&
-        board[2][0] &&
-        board[2][1] &&
-        board[2][2])
-    }
+      filled: isFilled(),
+    };
     setGameOver(
       newGameOver ||
         results.row1 ||
