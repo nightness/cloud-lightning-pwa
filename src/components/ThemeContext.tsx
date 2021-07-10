@@ -16,10 +16,9 @@ export const ThemeContext = createContext<ContextType>({
 
 interface Props {
   children: JSX.Element;
-  themes: Theme;
 }
 
-export const ThemeProvider = ({ themes, children }: Props) => {
+export const ThemeProvider = ({ children }: Props) => {
   const [activeTheme, setActiveTheme] = useState<Theme>("Light");
 
   return (

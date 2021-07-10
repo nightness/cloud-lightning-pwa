@@ -76,7 +76,7 @@ export default () => {
             <Button
               title="Connect"
               disabled={submitted}
-              onPress={formikProps.handleSubmit}
+              onClick={() => formikProps.handleSubmit()}
             />
           </>
         )}

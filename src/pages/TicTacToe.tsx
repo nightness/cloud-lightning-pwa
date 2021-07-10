@@ -311,10 +311,10 @@ export default () => {
       {isStarted && !gameOver ? (
         <></>
       ) : (
-        <Button
+        <Button          
           title="Start"
           style={{ marginTop: 30, width: "25%" }}
-          onPress={() => {
+          onClick={() => {
             const symbol = Math.random() > 0.5 ? "X" : "O";
             setBoard(createNewBoard());
             setGameOver(false);

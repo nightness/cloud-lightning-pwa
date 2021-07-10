@@ -115,7 +115,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
                 <Button
                   title="Update Password"
                   disabled={submitted}
-                  onPress={formikProps.handleSubmit}
+                  onClick={() => formikProps.handleSubmit()}
                 />
               </div>
             </div>
@@ -203,14 +203,14 @@ export const Profile = () => {
               <Button
                 title="Save"
                 disabled={submitted}
-                onPress={formikProps.handleSubmit}
+                onClick={() => formikProps.handleSubmit()}
               />
 
               {currentUser?.providerData[0]?.providerId === "password" ? (
                 <Button
                   title="Change Password"
                   disabled={submitted}
-                  onPress={() => setIsPasswordDialogOpen(true)}
+                  onClick={() => setIsPasswordDialogOpen(true)}
                 />
               ) : undefined}
             </>

@@ -14,7 +14,7 @@ export default () => {
     <Page>
       <Button
         title="Test"
-        onPress={() => {
+        onClick={() => {
           push([`${Math.random()}`]);
         }}
       />

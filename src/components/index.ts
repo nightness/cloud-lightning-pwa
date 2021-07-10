@@ -7,7 +7,7 @@ import FormField from "./FormField";
 import TextInput from "./TextInput";
 import Text from "./Text";
 import ScrollView from "./ScrollView";
-import Button from "./Button";
+import { Button } from '@blueprintjs/core';
 import ConsoleContainer from "./ConsoleContainer"
 import Page from './Page'
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
