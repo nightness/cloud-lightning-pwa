@@ -18,13 +18,13 @@ const MainDocument = () => {
     component: Home,
     children: [
       {
-        path: '/tictactoe',
+        path: '/home/TicTacToe',
         title: 'Tic Tac Toe',
         component: TicTacToe,
         children: [
           {
-            path: '/home/test/test',
-            title: 'Test Page 1-1',
+            path: '/home/test',
+            title: 'Test Page',
             component: TestPage,
           }
         ]
