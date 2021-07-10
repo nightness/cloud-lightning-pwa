@@ -47,8 +47,21 @@ export default () => {
     setMessage(turn === playerIs ? "Computer's Turn" : "Player's Turn");
   };
 
-  const eval3 = (a: string, b: string, c: string) =>
-    a && a === b && b === c && a === c;
+  // For the computer's usage, to block player
+  // Return the unused index if only one of [(a === b) || (b === c) || (c === a)]
+  // are true, and the other index is blank
+  const eval2 = (a: string, b: string, c: string) => {
+    const results = !eval3(a, b, c);
+    if (results && a === playerIs && a === b && c === "") {
+      return 3;
+    } else if (results && b === playerIs && b === c && a === "") {
+      return 0;
+    } else if (results && c === playerIs && c === a && b === "") {
+      return 1;
+    }
+    return false;
+  };
+  const eval3 = (a: string, b: string, c: string) => a && a === b && b === c;
   const evalRow = (index: number) =>
     eval3(board[index][0], board[index][1], board[index][2]);
   const evalCol = (index: number) =>
@@ -62,7 +75,22 @@ export default () => {
     return true;
   };
 
+  const doComputersMove = () => {
+    const results = {
+      row1: eval2(board[0][0], board[0][1], board[0][2]),
+      row2: eval2(board[1][0], board[1][1], board[1][2]),
+      row3: eval2(board[2][0], board[2][1], board[2][2]),
+      col1: eval2(board[0][0], board[1][0], board[2][0]),
+      col2: eval2(board[0][1], board[1][1], board[2][1]),
+      col3: eval2(board[0][2], board[1][2], board[2][2]),
+      d1: eval2(board[0][0], board[1][1], board[2][2]),
+      d2: eval2(board[0][2], board[1][1], board[2][0]),
+    };
+    console.log(results);
+  };
+
   useEffect(() => {
+    if (!isStarted) return;
     const results = {
       row1: evalRow(0),
       row2: evalRow(1),
@@ -88,13 +116,12 @@ export default () => {
       results.d2 ||
       results.filled;
 
-    const flipTurn = turn === 'O' ? 'X' : 'O'
-    const winner = results.filled ? undefined : flipTurn 
-    if (isOver) {
-      if (!winner) setMessage("Tie Game")
-      else if (winner == playerIs) setMessage("Player Wins!")
-      else setMessage("Computer Wins")  
-    }
+    const flipTurn = turn === "O" ? "X" : "O";
+    const winner = results.filled ? undefined : flipTurn;
+    if (isOver && !winner) setMessage("Tie Game");
+    else if (isOver && winner == playerIs) setMessage("Player Wins!");
+    else if (isOver) setMessage("Computer Wins");
+    else if (turn !== playerIs) doComputersMove();
     setGameOver(isOver);
   }, [board]);
 
