@@ -3,11 +3,12 @@ import { Container } from ".";
 
 interface Props {
   messages: string[]
+  ref?: React.RefObject<HTMLDivElement>
 }
 
-export const ConsoleContainer = ({ messages }: Props) => {
+export const ConsoleContainer = ({ messages, ref }: Props) => {
   return (
-    <Container>
+    <Container ref={ref}>
       <div className='console-container'>
         {messages.length > 0 ? messages.map((message, idx) => {
           return <p key={`${Math.random()}`}>{message}</p>;

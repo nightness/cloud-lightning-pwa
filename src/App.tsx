@@ -7,6 +7,7 @@ import { WebRtcProvider } from './webrtc/WebRtcContext';
 import { NavBar, NavigationContext, NavigationProvider, Pages } from './navigation';
 import { WallMessenger } from './messenger';
 import TestPage from './pages/TestPage';
+import TicTacToe from './pages/TicTacToe';
 
 const MainDocument = () => {
   const { addPage, pages } = useContext(NavigationContext)
@@ -17,16 +18,14 @@ const MainDocument = () => {
     component: Home,
     children: [
       {
-        path: '/home/test',
-        title: 'Test Page 1',
-        component: TestPage,
-        requiresAuthentication: true,
+        path: '/tictactoe',
+        title: 'Tic Tac Toe',
+        component: TicTacToe,
         children: [
           {
             path: '/home/test/test',
             title: 'Test Page 1-1',
             component: TestPage,
-            requiresAuthentication: true
           }
         ]
       }

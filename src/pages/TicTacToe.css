@@ -1,0 +1,15 @@
+.ttt-box {
+    padding: 10;
+    font-size: 24;
+    line-height: 2.5rem;
+    column-width: 2.5rem;
+    background-color: lightseagreen;
+    border-style: solid !important;
+    border-color: black !important;
+    border-width: 1px !important;
+    border-radius: 0 !important;
+    font-weight: 600;
+    font-size: 24px;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+}

@@ -59,7 +59,7 @@ export const Navbar = () => {
         </Tooltip2>
       </div>
       <div className="header-title">
-        <H1 style={{ fontWeight: 600 }}>
+        <H1 style={{ fontWeight: 600, paddingLeft: 0, marginRight: 15 }}>
           {currentPageTitle ? currentPageTitle : "Page Not Found"}
         </H1>
       </div>

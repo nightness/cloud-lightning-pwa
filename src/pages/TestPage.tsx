@@ -1,19 +1,14 @@
-import { useState } from "react";
-import { Button, ConsoleContainer, Page, Text } from "../components";
+import { useRef, useState } from "react";
+import { Button, ConsoleContainer, Page } from "../components";
 
 export default () => {
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<string[]>([]);
 
   const push = (value: string | string[]) => {
-    const newMessages = [...messages]
-    console.log("* ", newMessages)
-    if (Array.isArray(value))
-      newMessages.push(...value)
-    else
-      newMessages.push(value)
-    console.log("* ", newMessages)
-    setMessages(newMessages)
-  }
+    const newMessages = [...messages];
+    Array.isArray(value) ? newMessages.push(...value) : newMessages.push(value);
+    setMessages(newMessages);
+  };
 
   return (
     <Page>
