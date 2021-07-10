@@ -1,6 +1,6 @@
 import "./TicTacToe.css";
 import { useEffect, useState } from "react";
-import { Button, Page } from "../components";
+import { Button, Page, Text } from "../components";
 
 type Board = [
   [string, string, string],
@@ -27,7 +27,7 @@ const createNewBoard = (existing?: Board) => {
 };
 
 interface SegmentProps {
-  index: number
+  index: number;
 }
 
 export default () => {
@@ -36,6 +36,7 @@ export default () => {
   const [board, setBoard] = useState(createNewBoard());
   const [turn, setTurn] = useState<"X" | "O">();
   const [playerIs, setPlayerIs] = useState<"X" | "O">();
+  const [message, setMessage] = useState("");
 
   const onClickAnyCell = (row: number, col: number) => {
     if (!isStarted || !turn || gameOver || board[row][col] != "") return;
@@ -43,6 +44,7 @@ export default () => {
     newBoard[row][col] = turn;
     setBoard(newBoard);
     setTurn(turn === "X" ? "O" : "X");
+    setMessage(turn === playerIs ? "Computer's Turn" : "Player's Turn");
   };
 
   const eval3 = (a: string, b: string, c: string) =>
@@ -61,8 +63,6 @@ export default () => {
   };
 
   useEffect(() => {
-    let newGameOver = gameOver;
-
     const results = {
       row1: evalRow(0),
       row2: evalRow(1),
@@ -76,21 +76,29 @@ export default () => {
       d2: eval3(board[0][2], board[1][1], board[2][0]),
       filled: isFilled(),
     };
-    setGameOver(
-      newGameOver ||
-        results.row1 ||
-        results.row2 ||
-        results.row3 ||
-        results.col1 ||
-        results.col2 ||
-        results.col3 ||
-        results.d1 ||
-        results.d2 ||
-        results.filled
-    );
+
+    const isOver =
+      results.row1 ||
+      results.row2 ||
+      results.row3 ||
+      results.col1 ||
+      results.col2 ||
+      results.col3 ||
+      results.d1 ||
+      results.d2 ||
+      results.filled;
+
+    const flipTurn = turn === 'O' ? 'X' : 'O'
+    const winner = results.filled ? undefined : flipTurn 
+    if (isOver) {
+      if (!winner) setMessage("Tie Game")
+      else if (winner == playerIs) setMessage("Player Wins!")
+      else setMessage("Computer Wins")  
+    }
+    setGameOver(isOver);
   }, [board]);
 
-  const Segment = ({index}:SegmentProps) => (
+  const Segment = ({ index }: SegmentProps) => (
     <div style={{ flex: 1, flexDirection: "column" }}>
       <div className="ttt-box" onClick={() => onClickAnyCell(0, index)}>
         {board[0][index]}
@@ -127,6 +135,7 @@ export default () => {
         <Segment index={1} />
         <Segment index={2} />
       </div>
+      <Text>{message}</Text>
       {isStarted && !gameOver ? (
         <></>
       ) : (
@@ -134,11 +143,13 @@ export default () => {
           title="Start"
           style={{ marginTop: 30, width: "25%" }}
           onPress={() => {
+            const symbol = Math.random() > 0.5 ? "X" : "O";
             setBoard(createNewBoard());
             setGameOver(false);
             setIsStarted(true);
-            setPlayerIs(Math.random() > 0.5 ? "X" : "O");
+            setPlayerIs(symbol);
             setTurn("X");
+            setMessage(symbol === "O" ? "Computer's Turn" : "Player's Turn");
           }}
         />
       )}
