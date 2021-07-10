@@ -26,6 +26,10 @@ const createNewBoard = (existing?: Board) => {
   return result;
 };
 
+interface SegmentProps {
+  index: number
+}
+
 export default () => {
   const [isStarted, setIsStarted] = useState(false);
   const [gameOver, setGameOver] = useState(true);
@@ -34,7 +38,7 @@ export default () => {
   const [playerIs, setPlayerIs] = useState<"X" | "O">();
 
   const onClickAnyCell = (row: number, col: number) => {
-    if (!isStarted || !turn || gameOver || board[row][col] != '') return;
+    if (!isStarted || !turn || gameOver || board[row][col] != "") return;
     const newBoard = createNewBoard(board);
     newBoard[row][col] = turn;
     setBoard(newBoard);
@@ -86,6 +90,20 @@ export default () => {
     );
   }, [board]);
 
+  const Segment = ({index}:SegmentProps) => (
+    <div style={{ flex: 1, flexDirection: "column" }}>
+      <div className="ttt-box" onClick={() => onClickAnyCell(0, index)}>
+        {board[0][index]}
+      </div>
+      <div className="ttt-box" onClick={() => onClickAnyCell(1, index)}>
+        {board[1][index]}
+      </div>
+      <div className="ttt-box" onClick={() => onClickAnyCell(2, index)}>
+        {board[2][index]}
+      </div>
+    </div>
+  );
+
   return (
     <Page
       style={{
@@ -105,39 +123,9 @@ export default () => {
           marginTop: "20px",
         }}
       >
-        <div style={{ flex: 1, flexDirection: "column" }}>
-          <div className="ttt-box" onClick={() => onClickAnyCell(0, 0)}>
-            {board[0][0]}
-          </div>
-          <div className="ttt-box" onClick={() => onClickAnyCell(1, 0)}>
-            {board[1][0]}
-          </div>
-          <div className="ttt-box" onClick={() => onClickAnyCell(2, 0)}>
-            {board[2][0]}
-          </div>
-        </div>
-        <div style={{ flex: 1, flexDirection: "column" }}>
-          <div className="ttt-box" onClick={() => onClickAnyCell(0, 1)}>
-            {board[0][1]}
-          </div>
-          <div className="ttt-box" onClick={() => onClickAnyCell(1, 1)}>
-            {board[1][1]}
-          </div>
-          <div className="ttt-box" onClick={() => onClickAnyCell(2, 1)}>
-            {board[2][1]}
-          </div>
-        </div>
-        <div style={{ flex: 1, flexDirection: "column" }}>
-          <div className="ttt-box" onClick={() => onClickAnyCell(0, 2)}>
-            {board[0][2]}
-          </div>
-          <div className="ttt-box" onClick={() => onClickAnyCell(1, 2)}>
-            {board[1][2]}
-          </div>
-          <div className="ttt-box" onClick={() => onClickAnyCell(2, 2)}>
-            {board[2][2]}
-          </div>
-        </div>
+        <Segment index={0} />
+        <Segment index={1} />
+        <Segment index={2} />
       </div>
       {isStarted && !gameOver ? (
         <></>
@@ -150,7 +138,7 @@ export default () => {
             setGameOver(false);
             setIsStarted(true);
             setPlayerIs(Math.random() > 0.5 ? "X" : "O");
-            setTurn('X')
+            setTurn("X");
           }}
         />
       )}
