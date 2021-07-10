@@ -9,30 +9,42 @@ import { useWindowDimensions } from "../hooks";
 interface SideBarPageLinkProps {
   pages: PageDefinition[];
   onClose: () => any;
+}
+
+interface ExtendedPageDefinition extends PageDefinition {
   depth: number;
 }
 
-const SideBarPageLink = ({ pages, onClose, depth }: SideBarPageLinkProps) => {
+const getFlattenedPages = (
+  pages: PageDefinition[],
+  depth: number = 0,
+  memo: ExtendedPageDefinition[] = []
+) => {
+  pages.map((page) => {
+    const exPage = { depth, ...page };
+    memo.push(exPage);
+    if (page.children) getFlattenedPages(page.children, depth + 1, memo);
+  });
+  return memo;
+};
+
+const SideBarPageLink = ({ pages, onClose }: SideBarPageLinkProps) => {
   const { currentUser } = useContext(FirebaseContext);
+  const flattenedPages = getFlattenedPages(pages);
 
   return (
     <>
-      {pages.map((page) =>
+      {flattenedPages.map((page) =>
         page.requiresAuthentication && !currentUser ? undefined : (
-          <>
-            <Link
-              key={`${Math.random()}-${Math.random()}`}
-              className="sidebar-link"
-              to={page.path}
-              onClick={onClose}
-              style={{ paddingLeft: `${depth * 10 + 5}pt` }}
-            >
-              {page.title}
-            </Link>
-            {!page.children ? undefined : (
-              <SideBarPageLink pages={page.children} depth={depth + 1} onClose={onClose} />
-            )}
-          </>
+          <Link
+            key={`${Math.random()}-${Math.random()}`}
+            className="sidebar-link"
+            to={page.path}
+            onClick={onClose}
+            style={{ paddingLeft: `${page.depth * 10 + 5}pt` }}
+          >
+            {page.title}
+          </Link>
         )
       )}
     </>
@@ -65,7 +77,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
     >
       <div className={`${Classes.DRAWER_BODY} drawer-body`}>
         <div className="side-links">
-          <SideBarPageLink pages={filteredPages} depth={0} onClose={onClose} />
+          <SideBarPageLink pages={filteredPages} onClose={onClose} />
           <Link
             key={`${Math.random()}-${Math.random()}`}
             className="sidebar-link"

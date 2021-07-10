@@ -78,7 +78,7 @@ const getFlattenedPages = (
 ) => {
   pages.map((page) => {
     memo.push(page);
-    if (page.children) getFlattenedPages(page.children);
+    if (page.children) getFlattenedPages(page.children, memo);
   });
   return memo;
 };
