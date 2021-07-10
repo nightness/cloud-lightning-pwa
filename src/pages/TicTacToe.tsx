@@ -78,7 +78,7 @@ export default () => {
   const doComputersMove = () => {
     if (playerIs === turn) return;
     const mySymbol = turn === "O" ? "O" : "X";
-    // For the win
+    // For the win moves
     const results = {
       row1: eval2(board[0][0], board[0][1], board[0][2], mySymbol),
       row2: eval2(board[1][0], board[1][1], board[1][2], mySymbol),
@@ -89,9 +89,9 @@ export default () => {
       d1: eval2(board[0][0], board[1][1], board[2][2], mySymbol),
       d2: eval2(board[0][2], board[1][1], board[2][0], mySymbol),
     };
-    const newBoard = createNewBoard(board);
-    console.assert(newBoard !== undefined);
-    if (results.row1 !== false) newBoard[0][results.row1 as number] = mySymbol;
+    const newBoard = createNewBoard(board);    
+    if (results.row1 !== false)
+      newBoard[0][results.row1 as number] = mySymbol;
     else if (results.row2 !== false)
       newBoard[1][results.row2 as number] = mySymbol;
     else if (results.row3 !== false)
@@ -127,7 +127,7 @@ export default () => {
           break;
       }
     } else {
-      // For the block
+      // For the block moves
       const results = {
         row1: eval2(board[0][0], board[0][1], board[0][2]),
         row2: eval2(board[1][0], board[1][1], board[1][2]),
@@ -321,7 +321,7 @@ export default () => {
             setIsStarted(true);
             setPlayerIs(symbol);
             setTurn("X");
-            setMessage(symbol === "O" ? "Computer's Turn" : "Player's Turn");
+            setMessage(symbol === "O" ? "Computer's Turn" : `Player's Turn (player is '${playerIs}')`);
           }}
         />
       )}
