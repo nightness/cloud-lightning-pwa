@@ -11,20 +11,12 @@ body {
 }
 
 div#root {
-    background: linear-gradient(to left bottom, #ada9f0, #88ddd2, #8ccfdd);
+    --app-background-color: linear-gradient(to left bottom, #ada9f0, #88ddd2, #8ccfdd);
+    --app-color: hsl(0, 0%, 0%);
+    background: var(--app-background-color);
+    color: var(--app-color);
     position: absolute;
     display: flex;
     width: 100%;
     height: 100%;
 }
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-/* @media (prefers-color-scheme: dark) {
-    h1 {
-        margin: 5rem;
-        padding: 2
-    }
-} */

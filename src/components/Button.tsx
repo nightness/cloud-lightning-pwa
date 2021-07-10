@@ -1,6 +1,5 @@
 import "./index.css";
 import React, { CSSProperties, useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
 import { Button as StyledButton } from "@blueprintjs/core";
 
 interface Props {
@@ -18,15 +17,12 @@ export const Button = ({
   children,
   title,
 }: Props) => {
-  //const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
-  //const currentThemeType = getThemedComponentStyle('Button', disabled)
   const style: CSSProperties = {
     justifySelf: "center",
     userSelect: "none",
     cursor: "pointer",
     border: "2px solid black",
     borderRadius: 5,
-    //...currentThemeType[activeTheme],
     ...styleOverride,
   };
 

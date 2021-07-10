@@ -6,15 +6,12 @@ import {
   QuerySnapshot,
   useCollection,
 } from "../database/Firebase";
-import { FirebaseContext } from "../database/FirebaseContext";
 import Message from "./Message";
 import { EditableText } from "@blueprintjs/core";
 
 const messageCollectionPath = "/profiles";
 
 export default () => {
-  const { currentUser } = useContext(FirebaseContext);
-  const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext);
   const [snapshot, loadingCollection, errorCollection] = useCollection(
     messageCollectionPath, true
   );
@@ -105,7 +102,6 @@ export default () => {
           })}
         </select>
         {/* <Picker
-                    style={getThemedComponentStyle('Text')[activeTheme]}
                     data={members}
                     onValueChanged={setSelectedMember}
                 /> */}

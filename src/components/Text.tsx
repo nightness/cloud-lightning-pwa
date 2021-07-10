@@ -13,17 +13,10 @@ interface Props {
 export const Text = ({
   disabled,
   onClick,
-  style: styleOverride,
+  style,
   children,
   size,
 }: Props) => {
-  const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext);
-  const currentThemeType = getThemedComponentStyle("Text", disabled);
-  const style: CSSProperties = {
-    ...currentThemeType[activeTheme],
-    ...styleOverride,
-  };
-
   switch (size) {
     case 1:
       return (

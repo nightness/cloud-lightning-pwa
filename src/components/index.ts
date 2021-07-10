@@ -11,7 +11,6 @@ import Button from "./Button";
 import ConsoleContainer from "./ConsoleContainer"
 import Page from './Page'
 import { ThemeContext, ThemeProvider } from "./ThemeContext";
-import { Theme, NamedTheme, ThemeType, Themes } from "./ThemeTypes";
 
 export {
   Button,
@@ -29,5 +28,3 @@ export {
   ConsoleContainer,
   Page
 };
-
-export type { Theme, NamedTheme, ThemeType, Themes };

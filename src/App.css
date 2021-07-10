@@ -1,9 +1,7 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap'); */
-
 .App {
-  /* font-family: 'Syne Mono', monospace; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --app-border: 2px solid hsl(0, 0%, 0%);
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -14,32 +12,21 @@
   left: 0;
   right: 0;
   bottom: 0;
-}
-
-.App .Light {
-  color: #2c3e50;
-  background-color: "white";
-  border: "2px solid white";
-}
-
-.App .Dark {
-  color: #2c3e50;
-  background-color: "black";
-  border: "2px solid white";
+  color: var(--app-color);
+  background-color: var(--app-background-color);
+  border: var(--app-border)
 }
 .App-header {
-  background-color: #282c34;
+  --app-header-background-color: hsl(220, 13%, 18%);
+  --app-header-color: hsl(0, 0%, 50%);
+  background-color: var(--app-header-background-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+  color: var(--app-header-color)
 }
 
 .content {
