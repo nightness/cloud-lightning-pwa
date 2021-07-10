@@ -34,7 +34,7 @@ export default () => {
   const [playerIs, setPlayerIs] = useState<"X" | "O">();
 
   const onClickAnyCell = (row: number, col: number) => {
-    if (!isStarted || !turn || gameOver) return;
+    if (!isStarted || !turn || gameOver || board[row][col] != '') return;
     const newBoard = createNewBoard(board);
     newBoard[row][col] = turn;
     setBoard(newBoard);
