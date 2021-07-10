@@ -31,6 +31,7 @@ export default () => {
   const [gameOver, setGameOver] = useState(true);
   const [board, setBoard] = useState(createNewBoard());
   const [turn, setTurn] = useState<"X" | "O">();
+  const [playerIs, setPlayerIs] = useState<"X" | "O">();
 
   const onClickAnyCell = (row: number, col: number) => {
     if (!isStarted || !turn || gameOver) return;
@@ -68,7 +69,7 @@ export default () => {
       col3: evalCol(2),
 
       d1: eval3(board[0][0], board[1][1], board[2][2]),
-      d2: eval3(board[2][0], board[1][1], board[2][2]),
+      d2: eval3(board[0][2], board[1][1], board[2][0]),
       filled: isFilled(),
     };
     setGameOver(
@@ -148,7 +149,8 @@ export default () => {
             setBoard(createNewBoard());
             setGameOver(false);
             setIsStarted(true);
-            setTurn(Math.random() > 0.5 ? "X" : "O");
+            setPlayerIs(Math.random() > 0.5 ? "X" : "O");
+            setTurn('X')
           }}
         />
       )}
