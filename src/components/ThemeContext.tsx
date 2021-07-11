@@ -1,5 +1,13 @@
 import React, { createContext, useState } from "react";
 
+export const getCssVar = (name: string) => {
+  return window.getComputedStyle(document.documentElement).getPropertyValue(name)
+}
+
+export const setCssVar = (name: string, value: string) => {
+  return document.documentElement.style.setProperty(name, value)
+}
+
 export type Theme = "Light" | "Dark";
 
 type ContextType = {

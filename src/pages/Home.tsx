@@ -1,9 +1,13 @@
 import { Page, Button } from "../components";
 import { H2, Dialog } from "@blueprintjs/core";
 import { useState } from "react";
+import { getCssVar, setCssVar } from '../components/ThemeContext'
 
 export function Home() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  console.log('HELLO')
+  console.log(getCssVar('--app-background-color'))
 
   return (
     <>
