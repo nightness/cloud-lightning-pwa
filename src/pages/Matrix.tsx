@@ -74,7 +74,7 @@ export default () => {
               fieldName="accessToken"
             />
             <Button
-              title="Connect"
+              text="Connect"
               disabled={submitted}
               onClick={() => formikProps.handleSubmit()}
             />

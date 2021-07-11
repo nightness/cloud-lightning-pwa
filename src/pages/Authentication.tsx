@@ -230,7 +230,7 @@ export const Authentication = () => {
         <div style={{ flex: 1 }}>
           <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
           <Button
-            title="Logout"
+            text="Logout"
             onClick={() => {
               auth.signOut().finally(() => {
                 // Reload the page to clean out any state from previous login
@@ -303,14 +303,14 @@ export const Authentication = () => {
                 />
                 <div style={footerView}>
                   <Button
-                    title="Create Account"
+                    text="Create Account"
                     onClick={() => formikProps.handleSubmit()}
                   />
                 </div>
                 <div style={footerView}>
                   <Text style={{ fontSize: 16 }}>Already got an account?</Text>
                   <Button
-                    title="Log in"
+                    text="Log in"
                     onClick={() => onGotoLoginPress(formikProps)}
                   />
                 </div>
@@ -322,12 +322,12 @@ export const Authentication = () => {
               <>
                 <div style={footerView}>
                   <Button
-                    title="Reset Password"
+                    text="Reset Password"
                     onClick={() => formikProps.handleSubmit()}
                     style={{ marginTop: 5 }}
                   />
                   <Button
-                    title="Cancel"
+                    text="Cancel"
                     onClick={() => onGotoLoginPress(formikProps)}
                     style={{ marginTop: 5 }}
                   />
@@ -339,9 +339,9 @@ export const Authentication = () => {
             {mode === "login" ? (
               <>
                 <div style={footerView}>
-                  <Button title="Log in" onClick={() => formikProps.handleSubmit()} />
+                  <Button text="Log in" onClick={() => formikProps.handleSubmit()} />
                   <Button
-                    title="Google Sign-In"
+                    text="Google Sign-In"
                     onClick={() => signInWithGoogle(formikProps)}
                     style={{ margin: 5 }}
                   />
@@ -350,7 +350,7 @@ export const Authentication = () => {
                   <div style={footerView}>
                     <Text style={{ fontSize: 16 }}>Don't have an account?</Text>
                     <Button
-                      title="Sign up"
+                      text="Sign up"
                       onClick={() => onSignUpPress(formikProps)}
                     />
                   </div>
@@ -359,7 +359,7 @@ export const Authentication = () => {
                       Did you forget your password?
                     </Text>
                     <Button
-                      title="Password Reset"
+                      text="Password Reset"
                       onClick={() => setMode("password-reset")}
                     />
                   </div>

@@ -311,8 +311,9 @@ export default () => {
       {isStarted && !gameOver ? (
         <></>
       ) : (
-        <Button          
-          title="Start"
+        <Button
+          intent='primary'
+          text="Start"    
           style={{ marginTop: 30, width: "25%" }}
           onClick={() => {
             const symbol = Math.random() > 0.5 ? "X" : "O";

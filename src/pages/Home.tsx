@@ -1,5 +1,5 @@
-import { Page } from "../components";
-import { H2, Button, Card, Dialog } from "@blueprintjs/core";
+import { Page, Button } from "../components";
+import { H2, Dialog } from "@blueprintjs/core";
 import { useState } from "react";
 
 export function Home() {

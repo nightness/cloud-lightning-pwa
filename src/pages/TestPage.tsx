@@ -13,7 +13,7 @@ export default () => {
   return (
     <Page>
       <Button
-        title="Test"
+        text="Test"
         onClick={() => {
           push([`${Math.random()}`]);
         }}

@@ -124,7 +124,7 @@ export default () => {
           //onConfirm={onMessageKeyPress}
         />
         <Button
-          title="Send"
+          text="Send"
           disabled={messageText.length < 1}
           //onPress={sendMessage}
         />
