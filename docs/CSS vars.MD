@@ -5,9 +5,9 @@ Not MD formatted, dumping info atm
     --app-color                             hsl(0, 0%, 0%)
 
 ~/App.css
-    --app-border
-    --app-header-color
-    --app-header-background-color
+    --app-border                            2px solid hsl(0, 0%, 0%);
+    --app-header-color                      hsl(0, 0%, 50%)
+    --app-header-background-color           hsl(220, 13%, 18%)
 
 ~/src/components/index.css
     --modal-background-color                hsl(0, 0%, 100%)

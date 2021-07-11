@@ -4,7 +4,7 @@ interface Props extends ButtonProps {
 
 }
 
-export default ({intent, ...restProps}: Props) => {
-    return <Button intent={!intent ? 'primary' : intent} {...restProps} />
+export default ({...restProps}: Props) => {
+    return <Button {...restProps} />
 }
 

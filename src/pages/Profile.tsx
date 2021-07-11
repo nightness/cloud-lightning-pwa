@@ -113,6 +113,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
               />
               <div>
                 <Button
+                  intent='primary'
                   text="Update Password"
                   disabled={submitted}
                   onClick={() => formikProps.handleSubmit()}
