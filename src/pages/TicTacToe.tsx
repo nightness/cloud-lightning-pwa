@@ -322,7 +322,7 @@ export default () => {
             setIsStarted(true);
             setPlayerIs(symbol);
             setTurn("X");
-            setMessage(symbol === "O" ? "Computer's Turn" : `Player's Turn (player is '${playerIs}')`);
+            setMessage(symbol === "O" ? "Computer's Turn" : `Player's Turn (player is '${symbol}')`);
           }}
         />
       )}
