@@ -14,6 +14,7 @@ import {
   FirebaseError,
   UserCredential,
   GoogleAuthProvider,
+  getDocument,
 } from "../database/Firebase";
 import { Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
@@ -221,7 +222,7 @@ export const Authentication = () => {
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
     return (
       <Container>
-        <ActivityIndicator size='gigantic' />
+        <ActivityIndicator size="gigantic" />
       </Container>
     );
   } else if (currentUser) {
@@ -339,7 +340,10 @@ export const Authentication = () => {
             {mode === "login" ? (
               <>
                 <div style={footerView}>
-                  <Button text="Log in" onClick={() => formikProps.handleSubmit()} />
+                  <Button
+                    text="Log in"
+                    onClick={() => formikProps.handleSubmit()}
+                  />
                   <Button
                     text="Google Sign-In"
                     onClick={() => signInWithGoogle(formikProps)}

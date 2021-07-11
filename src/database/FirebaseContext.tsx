@@ -1,6 +1,11 @@
 import { createContext, useState, useEffect } from "react";
-import { ActivityIndicator, Container, DisplayError, Page } from "../components";
-import { useAuthState, FirebaseUser } from "./Firebase";
+import {
+  ActivityIndicator,
+  Container,
+  DisplayError,
+  Page,
+} from "../components";
+import { useAuthState, FirebaseUser, getDocument } from "./Firebase";
 
 export type UserProfile = {
   displayName?: string;
@@ -16,7 +21,7 @@ type ContextType = {
 
 export const FirebaseContext = createContext<ContextType>({
   getCurrentUserProfile: () => undefined,
-  getCurrentUsername: () => undefined
+  getCurrentUsername: () => undefined,
 });
 
 interface Props {
@@ -50,9 +55,34 @@ export const FirebaseProvider = ({ children }: Props) => {
 
   useEffect(() => {
     updateUserToken();
+    // This code is responsible for creating the user's profile
+    // entry from the authentication token.
+    if (currentUser) {
+      const doc = getDocument(
+        `/profiles/${currentUser ? currentUser.uid : "empty"}`
+      );
+      doc
+        .get()
+        .then((dataRef) => {
+          if (!dataRef.exists) {
+            doc
+              .set({
+                displayName: currentUser?.displayName ?? "",
+                photoUrl: currentUser?.photoURL ?? "",
+              })
+              .catch(console.error);
+          }
+        })
+        .catch(console.error);
+    }
   }, [currentUser]);
 
-  if (loadingUser) return <Container><ActivityIndicator size='gigantic'/></Container>
+  if (loadingUser)
+    return (
+      <Container>
+        <ActivityIndicator size="gigantic" />
+      </Container>
+    );
   else if (errorUser)
     return (
       <DisplayError permissionDenied={errorUser.code === "permission-denied"} />

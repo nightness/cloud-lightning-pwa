@@ -1,9 +1,13 @@
 import { Page, ScrollView, Text, FormField, Button } from "../components";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Dialog, Alert } from "@blueprintjs/core";
-import { useContext, useState } from "react";
-import firebase from "../database/Firebase";
+import { Dialog, Alert, Checkbox } from "@blueprintjs/core";
+import { useContext, useEffect, useState } from "react";
+import firebase, {
+  getCollection,
+  getDocument,
+  useDocument,
+} from "../database/Firebase";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { NavigationContext } from "../navigation/NavigationContext";
 
@@ -47,6 +51,7 @@ interface Props {
 
 const ChangePassword = ({ isOpen, title, onClose }: Props) => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSharePublic, setIsSharePublic] = useState();
 
   return (
     <Dialog isOpen={isOpen} title={title} onClose={onClose}>
@@ -113,7 +118,7 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
               />
               <div>
                 <Button
-                  intent='primary'
+                  intent="primary"
                   text="Update Password"
                   disabled={submitted}
                   onClick={() => formikProps.handleSubmit()}
@@ -172,13 +177,23 @@ export const Profile = () => {
           }}
           validationSchema={ProfileScheme}
           onSubmit={(values, helpers) => {
-            if (submitted) return;
+            if (submitted || !currentUser) return;
             setSubmitted(true);
             currentUser
-              ?.updateProfile({
+              .updateProfile({
                 displayName: values.displayName,
                 photoURL: values.photoUrl,
               })
+              .then(() =>
+                firebase
+                  .firestore()
+                  .collection("/profiles")
+                  .doc(currentUser.uid)
+                  .set({
+                    displayName: values.displayName,
+                    photoURL: values.photoUrl,
+                  })
+              )
               .then(() => {
                 setSubmitted(false);
                 setIsAlertOpen(true);

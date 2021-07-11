@@ -30,7 +30,7 @@ service cloud.firestore {
 			}
 		}
 		
-		match /profile/{profileID} {
+		match /profiles/{profileID} {
 			allow write: if isAuthorized() && (profileID == request.auth.uid)
 			allow read: if isAuthorized()
 		}
