@@ -194,14 +194,9 @@ export const Profile = () => {
                     photoURL: values.photoUrl,
                   })
               )
-              .then(() => {
-                setSubmitted(false);
-                setIsAlertOpen(true);
-              })
-              .catch((err) => {
-                console.error(err);
-                setSubmitted(false);
-              });
+              .then(() => setIsAlertOpen(true))
+              .catch(console.error)
+              .finally(() => setSubmitted(false))
           }}
         >
           {(formikProps) => (
