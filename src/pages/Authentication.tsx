@@ -186,9 +186,7 @@ export const Authentication = () => {
   ) => {
     auth
       .sendPasswordResetEmail(values.eMail)
-      .then(() => {
-        setMode("login");
-      })
+      .then(() => setMode("login"))
       .catch((error) => {
         alert(error);
       });

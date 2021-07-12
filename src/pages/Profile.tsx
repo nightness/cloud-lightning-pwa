@@ -73,15 +73,8 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
 
             user
               .reauthenticateWithCredential(credential)
-              .then(() => {
-                user
-                  .updatePassword(values.newPassword)
-                  .then(onClose)
-                  .catch((err) => {
-                    console.error(err);
-                    alert(err);
-                  });
-              })
+              .then(() => user.updatePassword(values.newPassword))
+              .then(onClose)
               .catch((err) => {
                 console.log(err);
                 alert(err.message);
@@ -196,7 +189,7 @@ export const Profile = () => {
               )
               .then(() => setIsAlertOpen(true))
               .catch(console.error)
-              .finally(() => setSubmitted(false))
+              .finally(() => setSubmitted(false));
           }}
         >
           {(formikProps) => (
