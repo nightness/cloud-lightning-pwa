@@ -1,7 +1,17 @@
+:root {
+  --app-border: 2px solid hsl(0, 0%, 0%);
+  --app-header-background-color: hsl(220, 13%, 18%);
+  --app-header-color: hsl(0, 0%, 50%);
+  --app-background-color: linear-gradient(to left bottom, #ada9f0, #88ddd2, #8ccfdd);
+  --app-color: hsl(0, 0%, 0%);
+  --modal-background-color: hsl(0, 0%, 100%);
+  --backdrop-background-color: hsla(0, 0%, 0%, 0.75);
+  --input-color: black;
+  --input-background-color: hsl(0, 0%, 100%);
+}
 .App {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --app-border: 2px solid hsl(0, 0%, 0%);
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -17,8 +27,6 @@
   border: var(--app-border)
 }
 .App-header {
-  --app-header-background-color: hsl(220, 13%, 18%);
-  --app-header-color: hsl(0, 0%, 50%);
   background-color: var(--app-header-background-color);
   min-height: 100vh;
   display: flex;

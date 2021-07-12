@@ -12,7 +12,6 @@
 }
 
 .modal {
-  --modal-background-color: hsl(0, 0%, 100%);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: var(--modal-background-color);
@@ -26,7 +25,6 @@
 }
 
 .backdrop {
-  --backdrop-background-color: hsla(0, 0%, 0%, 0.75);
   position: fixed;
   z-index: 1;
   background-color: var(--backdrop-background-color);
@@ -43,8 +41,6 @@
 }
 
 .text-input {
-  --input-color: black;
-  --input-background-color: hsl(0, 0%, 100%);
   flex: 1;  
   background-color: var(--input-background-color);
   color: var(--input-color);

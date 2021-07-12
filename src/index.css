@@ -11,8 +11,6 @@ body {
 }
 
 div#root {
-    --app-background-color: linear-gradient(to left bottom, #ada9f0, #88ddd2, #8ccfdd);
-    --app-color: hsl(0, 0%, 0%);
     background: var(--app-background-color);
     color: var(--app-color);
     position: absolute;
