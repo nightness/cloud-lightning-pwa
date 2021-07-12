@@ -2,21 +2,27 @@
   --app-border: 2px solid hsl(0, 0%, 0%);
   --app-header-background-color: hsl(220, 13%, 18%);
   --app-header-color: hsl(0, 0%, 50%);
-  --app-background-color: linear-gradient(to left bottom, #ada9f0, #88ddd2, #8ccfdd);
+  --app-background-color: linear-gradient(
+    to bottom,
+    hsl(240, 65%, 75%) 0%,
+    hsl(200, 65%, 75%) 50%,
+    hsl(160, 65%, 75%) 100%
+  );
   --app-color: hsl(0, 0%, 0%);
   --modal-background-color: hsl(0, 0%, 100%);
   --backdrop-background-color: hsla(0, 0%, 0%, 0.75);
   --input-color: black;
   --input-background-color: hsl(0, 0%, 100%);
 }
+
 .App {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
   text-align: center;
-  align-items: 'center';
-  border-radius: 5;  
+  align-items: "center";
+  border-radius: 5;
   position: absolute;
   top: 0;
   left: 0;
@@ -24,7 +30,7 @@
   bottom: 0;
   color: var(--app-color);
   background-color: var(--app-background-color);
-  border: var(--app-border)
+  border: var(--app-border);
 }
 .App-header {
   background-color: var(--app-header-background-color);
@@ -34,11 +40,24 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: var(--app-header-color)
+  color: var(--app-header-color);
 }
 
 .content {
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+/* content scroll bar */
+.content::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.content::-webkit-scrollbar-track {
+  background: hsl(240, 5%, 12%);
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: hsl(249, 81%, 60%);
 }
