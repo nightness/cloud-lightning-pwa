@@ -41,7 +41,7 @@ export const Navbar = () => {
           content="Menu"
           intent="warning"
           placement="bottom"
-          usePortal={false}
+          usePortal={true}
           isOpen={isTooltipOpen}
         >
           <Icon
@@ -69,7 +69,7 @@ export const Navbar = () => {
         content={`${currentUser ? "Logout" : "Login"}`}
         intent="warning"
         placement="bottom"
-        usePortal={false}
+        usePortal={true}
       >
         <Link className="link-static" to="/auth" noActiveFormatting>
           {currentUser?.photoURL ? (

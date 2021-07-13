@@ -1,3 +1,5 @@
+
+import './index.css'
 import Container from "./Container";
 import Badge from "./Badge";
 import DisplayError from "./DisplayError";

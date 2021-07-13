@@ -1,4 +1,3 @@
-import "./index.css";
 import { CSSProperties, useEffect } from "react";
 import Container from "./Container";
 import Text from "./Text";

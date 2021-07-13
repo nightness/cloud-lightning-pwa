@@ -1,4 +1,3 @@
-import "./index.css";
 import { Container } from ".";
 
 interface Props {

@@ -1,5 +1,4 @@
 import { CSSProperties } from "styled-components";
-import "./index.css";
 
 interface Props {
   children: JSX.Element | JSX.Element[];

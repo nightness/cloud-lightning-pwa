@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { NavLink, LinkProps, useLocation } from "react-router-dom";
-import "./index.css";
 
 interface Props extends LinkProps {
   noActiveFormatting?: boolean;

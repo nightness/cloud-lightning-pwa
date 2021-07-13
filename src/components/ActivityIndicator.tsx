@@ -1,4 +1,3 @@
-import "./index.css";
 import { CSSProperties } from "react";
 import {
   Dots,
