@@ -270,15 +270,15 @@ export default () => {
         testResults = key;
       }
     });
-    const isOver = testResults.length > 0;
 
+    const isOver = testResults.length > 0;
     const flipTurn = turn === "O" ? "X" : "O";
     const winner = results.filled ? undefined : flipTurn;
     if (isOver && !winner) setMessage("Tie Game");
     else if (isOver && winner == playerIs) setMessage("Player Wins!");
     else if (isOver) setMessage("Computer Wins");
     else if (turn !== playerIs) doComputersMove();
-    setGameOver(isOver);
+    if (gameOver != isOver) setGameOver(isOver);
   }, [board]);
 
   const getStyleFromWinResults = (
