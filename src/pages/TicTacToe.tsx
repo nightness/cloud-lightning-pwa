@@ -1,5 +1,5 @@
 import "./TicTacToe.css";
-import { useEffect, useState, CSSProperties } from "react";
+import { useEffect, useState } from "react";
 import { Button, Page, Text } from "../components";
 
 type Board = [
@@ -80,6 +80,11 @@ export default () => {
       }
     }
     return true;
+  };
+
+  const delay = async () => {
+    const delay = Math.floor(Math.random() * 1500);
+    return new Promise((res) => setTimeout(res, delay));
   };
 
   const doComputersMove = () => {
@@ -245,6 +250,11 @@ export default () => {
         : `Player's Turn (player is '${playerIs}')`
     );
   };
+
+  useEffect(() => {
+    if (!gameOver) return;
+    setPlayerIs(undefined);
+  }, [gameOver]);
 
   useEffect(() => {
     if (!isStarted) return;
