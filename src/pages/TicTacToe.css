@@ -38,8 +38,12 @@
   background-color: hsla(177, 70%, 21%, 50%);
 }
 
-.ttt-box-win {
+.ttt-box-winO {
   color: black;
-  background-color: hsla(240, 85%, 44%, 45%);
+  background-color: hsla(138, 98%, 35%, 50%);
 }
 
+.ttt-box-winX {
+  color: black;
+  background-color: hsla(7, 89%, 40%, 50%);
+}

@@ -87,6 +87,14 @@ export default () => {
     return new Promise((res) => setTimeout(res, delay));
   };
 
+  // useEffect(() => {
+  //   if (turn == playerIs) return;
+  //   const timer = setTimeout(() => {
+  //     callback.current();
+  //   }, Math.floor(Math.random() * 1500));
+  //   return () => clearTimeout(timer);
+  // }, [turn]);
+
   const doComputersMove = () => {
     if (playerIs === turn) return;
     const mySymbol = turn === "O" ? "O" : "X";
@@ -305,14 +313,15 @@ export default () => {
       (row === 0 && column === 2) ||
       (row === 1 && column == 1) ||
       (row === 2 && column == 0);
-    if (results === "row1" && row === 0) return "ttt-box-win";
-    if (results === "row2" && row === 1) return "ttt-box-win";
-    if (results === "row3" && row === 2) return "ttt-box-win";
-    if (results === "col1" && column === 0) return "ttt-box-win";
-    if (results === "col2" && column === 1) return "ttt-box-win";
-    if (results === "col3" && column === 2) return "ttt-box-win";
-    if (results === "d1" && isPartOfD1) return "ttt-box-win";
-    if (results === "d2" && isPartOfD2) return "ttt-box-win";
+    const winner = playerIs === turn ? turn : turn === 'O' ? 'X' : 'O';
+    if (results === "row1" && row === 0) return `ttt-box-win${winner}`;
+    if (results === "row2" && row === 1) return `ttt-box-win${winner}`;
+    if (results === "row3" && row === 2) return `ttt-box-win${winner}`;
+    if (results === "col1" && column === 0) return `ttt-box-win${winner}`;
+    if (results === "col2" && column === 1) return `ttt-box-win${winner}`;
+    if (results === "col3" && column === 2) return `ttt-box-win${winner}`;
+    if (results === "d1" && isPartOfD1) return `ttt-box-win${winner}`;
+    if (results === "d2" && isPartOfD2) return `ttt-box-win${winner}`;
     return "";
   };
 
