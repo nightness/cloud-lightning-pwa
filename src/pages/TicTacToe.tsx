@@ -266,7 +266,7 @@ export default () => {
     const values = Object.values(results);
     Object.keys(results).forEach((key, index) => {
       if (values[index] === true) {
-        setWinResult((value) => key);
+        setWinResult(key);
         testResults = key;
       }
     });
@@ -351,7 +351,12 @@ export default () => {
           <Segment index={1} results={winResults} board={board} />
           <Segment index={2} results={winResults} board={board} />
         </div>
-        <Text>{message}</Text>
+        <Text
+          className={`ttt-box${playerIs}`}
+          style={{ backgroundColor: "transparent" }}
+        >
+          {message}
+        </Text>
         {isStarted && !gameOver ? (
           <></>
         ) : (
@@ -365,7 +370,7 @@ export default () => {
               setGameOver(false);
               setIsStarted(true);
               setPlayerIs(symbol);
-              setWinResult("")
+              setWinResult("");
               setTurn("X");
               setMessage(
                 symbol === "O"

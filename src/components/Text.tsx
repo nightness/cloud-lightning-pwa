@@ -7,6 +7,7 @@ interface Props {
   disabled?: boolean;
   onClick?: () => any;
   children: string;
+  className?: string;
 }
 
 export const Text = ({
@@ -15,41 +16,42 @@ export const Text = ({
   style,
   children,
   size,
+  className
 }: Props) => {
   switch (size) {
     case 1:
       return (
-        <h1 style={style} onClick={onClick}>
+        <h1 className={className} style={style} onClick={onClick}>
           {children}
         </h1>
       );
     case 2:
       return (
-        <h2 style={style} onClick={onClick}>
+        <h2 className={className} style={style} onClick={onClick}>
           {children}
         </h2>
       );
     case 3:
       return (
-        <h3 style={style} onClick={onClick}>
+        <h3 className={className} style={style} onClick={onClick}>
           {children}
         </h3>
       );
     case 4:
       return (
-        <h4 style={style} onClick={onClick}>
+        <h4 className={className} style={style} onClick={onClick}>
           {children}
         </h4>
       );
     case 5:
       return (
-        <h5 style={style} onClick={onClick}>
+        <h5 className={className} style={style} onClick={onClick}>
           {children}
         </h5>
       );
     default:
       return (
-        <p style={style} onClick={onClick}>
+        <p className={className} style={style} onClick={onClick}>
           {children}
         </p>
       );
