@@ -40,21 +40,6 @@
 
 .ttt-box-win {
   color: black;
-}
-
-.ttt-box-win-horz {
-  
-}
-
-.ttt-box-win-vert {
-  
-}
-
-.ttt-box-win-tlrb {
-  
-}
-
-.ttt-box-win-bltr {
-  
+  background-color: hsla(240, 85%, 44%, 45%);
 }
 

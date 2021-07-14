@@ -251,6 +251,7 @@ export default () => {
     );
   };
 
+  // Resets the text color to default
   useEffect(() => {
     if (!gameOver) return;
     setPlayerIs(undefined);
