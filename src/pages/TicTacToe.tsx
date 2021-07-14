@@ -1,5 +1,5 @@
 import "./TicTacToe.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import { Button, Page, Text } from "../components";
 
 type Board = [
@@ -28,6 +28,8 @@ const createNewBoard = (existing?: Board) => {
 
 interface SegmentProps {
   index: number;
+  results: string;
+  board: Board;
 }
 
 export default () => {
@@ -37,6 +39,7 @@ export default () => {
   const [turn, setTurn] = useState<"X" | "O">();
   const [playerIs, setPlayerIs] = useState<"X" | "O">();
   const [message, setMessage] = useState("");
+  const [winResults, setWinResult] = useState<string>("");
 
   const onClickAnyCell = (row: number, col: number) => {
     if (!isStarted || !turn || gameOver || board[row][col] != "") return;
@@ -44,7 +47,11 @@ export default () => {
     newBoard[row][col] = turn;
     setBoard(newBoard);
     setTurn(turn === "X" ? "O" : "X");
-    setMessage(turn === playerIs ? "Computer's Turn" : `Player's Turn (player is '${playerIs}')`);
+    setMessage(
+      turn === playerIs
+        ? "Computer's Turn"
+        : `Player's Turn (player is '${playerIs}')`
+    );
   };
 
   // Used to determine computer's move
@@ -89,9 +96,8 @@ export default () => {
       d1: eval2(board[0][0], board[1][1], board[2][2], mySymbol),
       d2: eval2(board[0][2], board[1][1], board[2][0], mySymbol),
     };
-    const newBoard = createNewBoard(board);    
-    if (results.row1 !== false)
-      newBoard[0][results.row1 as number] = mySymbol;
+    const newBoard = createNewBoard(board);
+    if (results.row1 !== false) newBoard[0][results.row1 as number] = mySymbol;
     else if (results.row2 !== false)
       newBoard[1][results.row2 as number] = mySymbol;
     else if (results.row3 !== false)
@@ -137,7 +143,7 @@ export default () => {
         col3: eval2(board[0][2], board[1][2], board[2][2]),
         d1: eval2(board[0][0], board[1][1], board[2][2]),
         d2: eval2(board[0][2], board[1][1], board[2][0]),
-      }; 
+      };
       if (results.row1 !== false)
         newBoard[0][results.row1 as number] = mySymbol;
       else if (results.row2 !== false)
@@ -174,14 +180,20 @@ export default () => {
             newBoard[2][0] = mySymbol;
             break;
         }
-      } else {          // There is no winning or blocking square available        
+      } else {
+        // There is no winning or blocking square available
         // Take Center
         if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
         // Corners
         else {
           let played = false;
           while (!played) {
-            if (newBoard[0][0] !== '' && newBoard[0][2] !== '' && newBoard[2][0] !== '' && newBoard[2][2] !== '')
+            if (
+              newBoard[0][0] !== "" &&
+              newBoard[0][2] !== "" &&
+              newBoard[2][0] !== "" &&
+              newBoard[2][2] !== ""
+            )
               break;
             switch (Math.floor(Math.random() * 4)) {
               case 0:
@@ -216,9 +228,9 @@ export default () => {
             for (let i = 0; i < 3; i++) {
               for (let j = 0; j < 3; j++) {
                 if (newBoard[i][j] === "") {
-                  newBoard[i][j] = mySymbol
+                  newBoard[i][j] = mySymbol;
                   break;
-                };
+                }
               }
             }
           }
@@ -250,16 +262,15 @@ export default () => {
       filled: isFilled(),
     };
 
-    const isOver =
-      results.row1 ||
-      results.row2 ||
-      results.row3 ||
-      results.col1 ||
-      results.col2 ||
-      results.col3 ||
-      results.d1 ||
-      results.d2 ||
-      results.filled;
+    let testResults = "";
+    const values = Object.values(results);
+    Object.keys(results).forEach((key, index) => {
+      if (values[index] === true) {
+        setWinResult((value) => key);
+        testResults = key;
+      }
+    });
+    const isOver = testResults.length > 0;
 
     const flipTurn = turn === "O" ? "X" : "O";
     const winner = results.filled ? undefined : flipTurn;
@@ -270,15 +281,54 @@ export default () => {
     setGameOver(isOver);
   }, [board]);
 
-  const Segment = ({ index }: SegmentProps) => (
+  const getStyleFromWinResults = (
+    row: number,
+    column: number,
+    results: string
+  ) => {
+    const isPartOfD1 =
+      (row === 0 && column === 0) ||
+      (row === 1 && column == 1) ||
+      (row === 2 && column == 2);
+    const isPartOfD2 =
+      (row === 0 && column === 2) ||
+      (row === 1 && column == 1) ||
+      (row === 2 && column == 0);
+    if (results === "row1" && row === 0) return "ttt-box-win";
+    if (results === "row2" && row === 1) return "ttt-box-win";
+    if (results === "row3" && row === 2) return "ttt-box-win";
+    if (results === "col1" && column === 0) return "ttt-box-win";
+    if (results === "col2" && column === 1) return "ttt-box-win";
+    if (results === "col3" && column === 2) return "ttt-box-win";
+    if (results === "d1" && isPartOfD1) return "ttt-box-win";
+    if (results === "d2" && isPartOfD2) return "ttt-box-win";
+    return "";
+  };
+
+  const Segment = ({ index, results, board }: SegmentProps) => (
     <div style={{ flex: 1, flexDirection: "column" }}>
-      <div className="ttt-box" onClick={() => onClickAnyCell(0, index)}>
+      <div
+        className={`ttt-box-common ttt-box${
+          board[0][index]
+        } ${getStyleFromWinResults(0, index, results)}`}
+        onClick={() => onClickAnyCell(0, index)}
+      >
         {board[0][index]}
       </div>
-      <div className="ttt-box" onClick={() => onClickAnyCell(1, index)}>
+      <div
+        className={`ttt-box-common ttt-box${
+          board[1][index]
+        } ${getStyleFromWinResults(1, index, results)}`}
+        onClick={() => onClickAnyCell(1, index)}
+      >
         {board[1][index]}
       </div>
-      <div className="ttt-box" onClick={() => onClickAnyCell(2, index)}>
+      <div
+        className={`ttt-box-common ttt-box${
+          board[2][index]
+        } ${getStyleFromWinResults(2, index, results)}`}
+        onClick={() => onClickAnyCell(2, index)}
+      >
         {board[2][index]}
       </div>
     </div>
@@ -295,37 +345,37 @@ export default () => {
         alignContent: "center",
       }}
     >
-      <div
-        className="ttt-box"
-        style={{
-          display: "flex",
-          alignSelf: "center",
-          marginTop: "20px",
-        }}
-      >
-        <Segment index={0} />
-        <Segment index={1} />
-        <Segment index={2} />
+      <div className="ttt-container">
+        <div className="ttt-board">
+          <Segment index={0} results={winResults} board={board} />
+          <Segment index={1} results={winResults} board={board} />
+          <Segment index={2} results={winResults} board={board} />
+        </div>
+        <Text>{message}</Text>
+        {isStarted && !gameOver ? (
+          <></>
+        ) : (
+          <Button
+            intent="primary"
+            text="Start"
+            style={{ marginTop: 30, width: "25%" }}
+            onClick={() => {
+              const symbol = Math.random() > 0.5 ? "X" : "O";
+              setBoard(createNewBoard());
+              setGameOver(false);
+              setIsStarted(true);
+              setPlayerIs(symbol);
+              setWinResult("")
+              setTurn("X");
+              setMessage(
+                symbol === "O"
+                  ? "Computer's Turn"
+                  : `Player's Turn (player is '${symbol}')`
+              );
+            }}
+          />
+        )}
       </div>
-      <Text>{message}</Text>
-      {isStarted && !gameOver ? (
-        <></>
-      ) : (
-        <Button
-          intent='primary'
-          text="Start"    
-          style={{ marginTop: 30, width: "25%" }}
-          onClick={() => {
-            const symbol = Math.random() > 0.5 ? "X" : "O";
-            setBoard(createNewBoard());
-            setGameOver(false);
-            setIsStarted(true);
-            setPlayerIs(symbol);
-            setTurn("X");
-            setMessage(symbol === "O" ? "Computer's Turn" : `Player's Turn (player is '${symbol}')`);
-          }}
-        />
-      )}
     </Page>
   );
 };

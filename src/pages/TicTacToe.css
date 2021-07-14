@@ -1,16 +1,60 @@
-.ttt-box {
-    padding: 10;
-    font-size: 24;
-    line-height: 2.5rem;
-    column-width: 2.5rem;
-    background-color: hsl(177, 70%, 41%);
-    border-style: solid !important;
-    border-color: black !important;
-    border-width: 1px !important;
-    border-radius: 0 !important;
-    font-weight: 600;
-    font-size: 24px;
-    min-width: 2.75rem;
-    min-height: 2.75rem;
-    user-select: none;
+.ttt-container {
+    padding: 20px;
 }
+
+.ttt-board {
+  display: flex;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.ttt-box-common {
+  padding: 10;
+  font-size: 24;
+  line-height: 2.5rem;
+  column-width: 2.5rem;
+  border-style: solid !important;
+  border-color: black !important;
+  border-width: 1px !important;
+  border-radius: 0 !important;
+  font-weight: 600;
+  font-size: 24px;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  user-select: none;
+}
+
+.ttt-box {
+  background-color: hsla(177, 70%, 41%, 50%);
+}
+
+.ttt-boxO {
+  color:hsl(138, 98%, 35%);
+  background-color: hsla(177, 70%, 21%, 50%);
+}
+
+.ttt-boxX {
+  color:hsl(7, 89%, 40%);
+  background-color: hsla(177, 70%, 21%, 50%);
+}
+
+.ttt-box-win {
+  color: black;
+}
+
+.ttt-box-win-horz {
+  
+}
+
+.ttt-box-win-vert {
+  
+}
+
+.ttt-box-win-tlrb {
+  
+}
+
+.ttt-box-win-bltr {
+  
+}
+
