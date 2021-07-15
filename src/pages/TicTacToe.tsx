@@ -42,6 +42,7 @@ export default () => {
   const [winResults, setWinResult] = useState<string>("");
   const [turnCount, setTurnCount] = useState(0);
 
+
   const onClickAnyCell = (row: number, col: number) => {
     if (!isStarted || !turn || gameOver || board[row][col] != "") return;
     const newBoard = createNewBoard(board);
@@ -195,31 +196,30 @@ export default () => {
             newBoard[2][0] = mySymbol;
             break;
         }
-      } else {    // There is no winning or blocking square available
+      } else {
+        // There is no winning or blocking square available
         // Defend against a corner first attack
         if (turnCount === 1 && newBoard[0][0] === playerIs) {
           newBoard[2][2] = mySymbol;
-        }
-        else if (turnCount === 1 && newBoard[0][2] === playerIs) {
+        } else if (turnCount === 1 && newBoard[0][2] === playerIs) {
           newBoard[2][0] = mySymbol;
-        }
-        else if (turnCount === 1 && newBoard[2][0] === playerIs) {
+        } else if (turnCount === 1 && newBoard[2][0] === playerIs) {
           newBoard[0][2] = mySymbol;
-        }
-        else if (turnCount === 1 && newBoard[2][2] === playerIs) {
+        } else if (turnCount === 1 && newBoard[2][2] === playerIs) {
           newBoard[0][0] = mySymbol;
         }
         // Defend against a corner cluster attack
-        else if (turnCount === 1 && newBoard[0][1] === playerIs) { // Top row
+        else if (turnCount === 1 && newBoard[0][1] === playerIs) {
+          // Top row
           newBoard[0][Math.floor(Math.random() * 2) === 0 ? 0 : 2] = mySymbol;
-        }
-        else if (turnCount === 1 && newBoard[1][0] === playerIs) {  // Left column
+        } else if (turnCount === 1 && newBoard[1][0] === playerIs) {
+          // Left column
           newBoard[Math.floor(Math.random() * 2) === 0 ? 0 : 2][0] = mySymbol;
-        }
-        else if (turnCount === 1 && newBoard[2][1] === playerIs) {  // Bottom row
+        } else if (turnCount === 1 && newBoard[2][1] === playerIs) {
+          // Bottom row
           newBoard[2][Math.floor(Math.random() * 2) === 0 ? 0 : 2] = mySymbol;
-        }
-        else if (turnCount === 1 && newBoard[1][2] === playerIs) {  // Right column
+        } else if (turnCount === 1 && newBoard[1][2] === playerIs) {
+          // Right column
           newBoard[Math.floor(Math.random() * 2) === 0 ? 0 : 2][2] = mySymbol;
         }
         // Take Center
@@ -413,8 +413,9 @@ export default () => {
             intent="primary"
             text="Start"
             style={{ marginTop: 30, width: "25%" }}
-            onClick={() => {
-              const symbol = Math.random() > 0.5 ? "X" : "O";
+            onClick={(event) => {
+              const symbol =
+                event.shiftKey || Math.random() > 0.5 ? "X" : "O";
               setBoard(createNewBoard());
               setGameOver(false);
               setIsStarted(true);
