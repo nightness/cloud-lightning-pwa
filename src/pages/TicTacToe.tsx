@@ -71,12 +71,14 @@ export default () => {
     }
     return false;
   };
+
   const eval3 = (a: string, b: string, c: string) => a && a === b && b === c;
   const evalRow = (index: number) =>
     eval3(board[index][0], board[index][1], board[index][2]);
   const evalCol = (index: number) =>
     eval3(board[0][index], board[1][index], board[2][index]);
-  const isFilled = () => {
+  
+    const isFilled = () => {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (board[i][j] === "") return false;
@@ -228,6 +230,7 @@ export default () => {
         else {
           let played = false;
           while (!played) {
+            // Break if corners are unavailable
             if (
               newBoard[0][0] !== "" &&
               newBoard[0][2] !== "" &&
