@@ -40,6 +40,7 @@ export default () => {
   const [playerIs, setPlayerIs] = useState<"X" | "O">();
   const [message, setMessage] = useState("");
   const [winResults, setWinResult] = useState<string>("");
+  const [turnCount, setTurnCount] = useState(0)
 
   const onClickAnyCell = (row: number, col: number) => {
     if (!isStarted || !turn || gameOver || board[row][col] != "") return;
@@ -47,6 +48,7 @@ export default () => {
     newBoard[row][col] = turn;
     setBoard(newBoard);
     setTurn(turn === "X" ? "O" : "X");
+    setTurnCount(turnCount + 1)
     setMessage(
       turn === playerIs
         ? "Computer's Turn"
@@ -195,8 +197,15 @@ export default () => {
         }
       } else {
         // There is no winning or blocking square available
+        // Defend against a corner first attack
+        if (turnCount === 1) {
+          if (newBoard[0][0] === playerIs) { newBoard[2][2] = mySymbol }
+          if (newBoard[0][2] === playerIs) { newBoard[2][0] = mySymbol }
+          if (newBoard[2][0] === playerIs) { newBoard[0][2] = mySymbol }
+          if (newBoard[2][2] === playerIs) { newBoard[0][0] = mySymbol }
+        }
         // Take Center
-        if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
+        else if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
         // Corners
         else {
           let played = false;
@@ -252,6 +261,7 @@ export default () => {
     }
     setBoard(newBoard);
     setTurn(turn === "X" ? "O" : "X");
+    setTurnCount(turnCount + 1)
     setMessage(
       turn === playerIs
         ? "Computer's Turn"
@@ -263,6 +273,7 @@ export default () => {
   useEffect(() => {
     if (!gameOver) return;
     setPlayerIs(undefined);
+    setTurnCount(0)
   }, [gameOver]);
 
   useEffect(() => {
