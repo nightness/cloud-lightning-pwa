@@ -2,6 +2,8 @@ import "./TicTacToe.css";
 import { useEffect, useState } from "react";
 import { Button, Page, Text } from "../components";
 
+type TicTacToeSymbol = "X" | "O";
+
 type Board = [
   [string, string, string],
   [string, string, string],
@@ -36,8 +38,8 @@ export default () => {
   const [isStarted, setIsStarted] = useState(false);
   const [gameOver, setGameOver] = useState(true);
   const [board, setBoard] = useState(createNewBoard());
-  const [turn, setTurn] = useState<"X" | "O">();
-  const [playerIs, setPlayerIs] = useState<"X" | "O">();
+  const [turn, setTurn] = useState<TicTacToeSymbol>();
+  const [playerIs, setPlayerIs] = useState<TicTacToeSymbol>();
   const [message, setMessage] = useState("");
   const [winResults, setWinResult] = useState<string>("");
   const [turnCount, setTurnCount] = useState(0);
@@ -266,7 +268,7 @@ export default () => {
             }
           }
 
-          // No corner, pick any open
+          // No corner, pick any open, only non-random move
           if (!played) {
             for (let i = 0; i < 3; i++) {
               for (let j = 0; j < 3; j++) {
