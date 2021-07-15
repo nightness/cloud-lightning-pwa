@@ -209,6 +209,19 @@ export default () => {
         else if (turnCount === 1 && newBoard[2][2] === playerIs) {
           newBoard[0][0] = mySymbol;
         }
+        // Defend against a corner cluster attack
+        else if (turnCount === 1 && newBoard[0][1] === playerIs) { // Top row
+          newBoard[0][Math.floor(Math.random() * 2) === 0 ? 0 : 2] = mySymbol;
+        }
+        else if (turnCount === 1 && newBoard[1][0] === playerIs) {  // Left column
+          newBoard[Math.floor(Math.random() * 2) === 0 ? 0 : 2][0] = mySymbol;
+        }
+        else if (turnCount === 1 && newBoard[2][1] === playerIs) {  // Bottom row
+          newBoard[2][Math.floor(Math.random() * 2) === 0 ? 0 : 2] = mySymbol;
+        }
+        else if (turnCount === 1 && newBoard[1][2] === playerIs) {  // Right column
+          newBoard[Math.floor(Math.random() * 2) === 0 ? 0 : 2][2] = mySymbol;
+        }
         // Take Center
         else if (newBoard[1][1] === "") newBoard[1][1] = mySymbol;
         // Corners
