@@ -266,7 +266,7 @@ export default () => {
             }
           }
 
-          // Can't decide, pick any open
+          // No corner, pick any open
           if (!played) {
             for (let i = 0; i < 3; i++) {
               for (let j = 0; j < 3; j++) {
