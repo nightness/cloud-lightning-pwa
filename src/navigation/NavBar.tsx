@@ -1,7 +1,7 @@
 import "./index.css";
-import { useContext, useState } from "react";
-import { Link } from "../components";
-import { H1, Icon } from "@blueprintjs/core";
+import { useContext, useEffect, useState } from "react";
+import { Link, ThemeContext } from "../components";
+import { Button, H1, Icon } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { Tooltip2 } from "@blueprintjs/popover2";
 import { useLocation } from "react-router-dom";
@@ -10,6 +10,7 @@ import { PageDefinition } from "./NavigationContext";
 
 export const Navbar = () => {
   const location = useLocation();
+  const { activeTheme, setActiveTheme } = useContext(ThemeContext);
   const { currentUser } = useContext(FirebaseContext);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -39,13 +40,13 @@ export const Navbar = () => {
         <Tooltip2
           popoverClassName="tooltip-left"
           content="Menu"
-          intent="warning"
+          intent="none"
           placement="bottom"
           usePortal={true}
           isOpen={isTooltipOpen}
         >
           <Icon
-            color="black"
+            color={`${activeTheme === 'Light' ? 'black' : 'white'}`}
             iconSize={28}
             icon="menu"
             style={{
@@ -59,30 +60,55 @@ export const Navbar = () => {
         </Tooltip2>
       </div>
       <div className="header-title">
-        <H1 style={{ fontWeight: 600, paddingLeft: 0, marginRight: 15 }}>
           {currentPageTitle ? currentPageTitle : "Page Not Found"}
-        </H1>
       </div>
-      <Tooltip2
-        className="profile-link-tooltip"
-        popoverClassName="tooltip-right"
-        content={`${currentUser ? "Logout" : "Login"}`}
-        intent="warning"
-        placement="bottom"
-        usePortal={true}
+      <div
+        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
-        <Link className="link-static" to="/auth" noActiveFormatting>
-          {currentUser?.photoURL ? (
-            <img className="img" src={currentUser?.photoURL} />
-          ) : (
+        <Tooltip2
+          className="profile-link-tooltip"
+          popoverClassName="tooltip-right"
+          content="Switch Themes"
+          intent="warning"
+          placement="bottom"
+          usePortal={true}
+        >
+          <Button
+            style={{ backgroundColor: "transparent" }}
+            onClick={() => {
+              if (!setActiveTheme) return;
+              setActiveTheme(activeTheme === "Dark" ? "Light" : "Dark");
+            }}
+          >
             <Icon
               style={{ userSelect: "none", pointerEvents: "none" }}
               iconSize={34}
-              icon="user"
+              intent='none'
+              icon="full-circle"
             />
-          )}
-        </Link>
-      </Tooltip2>
+          </Button>
+        </Tooltip2>
+        <Tooltip2
+          className="profile-link-tooltip"
+          popoverClassName="tooltip-right"
+          content={`${currentUser ? "Logout" : "Login"}`}
+          intent="warning"
+          placement="bottom"
+          usePortal={true}
+        >
+          <Link className="link-static" to="/auth" noActiveFormatting>
+            {currentUser?.photoURL ? (
+              <img className="img" src={currentUser?.photoURL} />
+            ) : (
+              <Icon
+                style={{ userSelect: "none", pointerEvents: "none" }}
+                iconSize={34}
+                icon="user"
+              />
+            )}
+          </Link>
+        </Tooltip2>
+      </div>
     </nav>
   );
 };

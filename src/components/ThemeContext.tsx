@@ -1,25 +1,26 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const getCssVar = (name: string) => {
-  return window.getComputedStyle(document.documentElement).getPropertyValue(name)
-}
+  return window
+    .getComputedStyle(document.documentElement)
+    .getPropertyValue(name);
+};
 
 export const setCssVar = (name: string, value: string) => {
-  return document.documentElement.style.setProperty(name, value)
-}
+  return document.documentElement.style.setProperty(name, value);
+};
 
 export type Theme = "Light" | "Dark";
 
 type ContextType = {
   activeTheme: Theme;
-  setActiveTheme: (theme: Theme) => void;
+  setActiveTheme?: (theme: Theme) => void;
   themes?: any[];
   styles?: any[];
 };
 
 export const ThemeContext = createContext<ContextType>({
   activeTheme: "Light",
-  setActiveTheme: (theme: Theme) => undefined,
 });
 
 interface Props {
@@ -29,11 +30,26 @@ interface Props {
 export const ThemeProvider = ({ children }: Props) => {
   const [activeTheme, setActiveTheme] = useState<Theme>("Light");
 
+  useEffect(() => {
+    console.log("Theme: ", activeTheme);
+    const names = [
+      "app-background-color",
+      "app-border",
+      "app-color",
+    ];
+    names.forEach((name) => {
+      setCssVar(
+        `--${name}`,
+        `var(--${name}-${activeTheme === "Light" ? "light" : "dark"})`
+      );
+    });
+  }, [activeTheme, setActiveTheme]);
+
   return (
     <ThemeContext.Provider
       value={{
         activeTheme,
-        setActiveTheme
+        setActiveTheme,
       }}
     >
       {children}

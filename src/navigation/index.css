@@ -15,6 +15,10 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  font-weight: 600;
+  padding-left: 0;
+  margin-left: 45px;
+  font-size: 32px;
 }
 
 .navbar h1 {

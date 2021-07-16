@@ -1,65 +1,71 @@
-import './App.css';
-import { useContext } from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
-import { Home, WebRTC, Profile, Authentication, Matrix } from './pages'
-import { FirebaseProvider } from './database/FirebaseContext'
-import { WebRtcProvider } from './webrtc/WebRtcContext';
-import { NavBar, NavigationContext, NavigationProvider, Pages } from './navigation';
-import { WallMessenger } from './messenger';
-import TestPage from './pages/TestPage';
-import TicTacToe from './pages/TicTacToe';
+import "./App.css";
+import { useContext } from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { Home, WebRTC, Profile, Authentication, Matrix } from "./pages";
+import { FirebaseProvider } from "./database/FirebaseContext";
+import { WebRtcProvider } from "./webrtc/WebRtcContext";
+import {
+  NavBar,
+  NavigationContext,
+  NavigationProvider,
+  Pages,
+} from "./navigation";
+import { WallMessenger } from "./messenger";
+import TestPage from "./pages/TestPage";
+import TicTacToe from "./pages/TicTacToe";
+import { ThemeProvider } from "./components";
 
 const MainDocument = () => {
-  const { addPage, pages } = useContext(NavigationContext)
+  const { addPage, pages } = useContext(NavigationContext);
 
   addPage({
-    path: '/',
-    title: 'Home',
+    path: "/",
+    title: "Home",
     component: Home,
     children: [
       {
-        path: '/home/TicTacToe',
-        title: 'Tic Tac Toe',
+        path: "/home/TicTacToe",
+        title: "Tic Tac Toe",
         component: TicTacToe,
         children: [
           {
-            path: '/home/test',
-            title: 'Test Page',
+            path: "/home/test",
+            title: "Test Page",
             component: TestPage,
-          }
-        ]
-      }
-    ]
-  })
+          },
+        ],
+      },
+    ],
+  });
   addPage({
-    path: '/wall',
+    path: "/wall",
     title: "Member Walls",
     component: WallMessenger,
-    requiresAuthentication: true
-  })
+    requiresAuthentication: true,
+  });
   addPage({
-    path: '/WebRTC',
-    title: 'Video Chat',
+    path: "/WebRTC",
+    title: "Video Chat",
     component: WebRTC,
-    requiresAuthentication: true
-  })
+    requiresAuthentication: true,
+  });
   addPage({
-    path: '/matrix',
-    title: 'Matrix Chat',
+    path: "/matrix",
+    title: "Matrix Chat",
     component: Matrix,
-    requiresAuthentication: true
-  })
+    requiresAuthentication: true,
+  });
   addPage({
-    path: '/profile',
-    title: 'Profile',
+    path: "/profile",
+    title: "Profile",
     component: Profile,
-    requiresAuthentication: true
-  })
+    requiresAuthentication: true,
+  });
   addPage({
-    path: '/auth',
-    title: 'Cloud Lightning',
-    component: Authentication
-  })
+    path: "/auth",
+    title: "Cloud Lightning",
+    component: Authentication,
+  });
 
   return (
     <div className={`App`}>
@@ -68,20 +74,22 @@ const MainDocument = () => {
         <Pages pages={pages} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 function App() {
   return (
-    <Router>
-      <FirebaseProvider>
-        <NavigationProvider>
-          <WebRtcProvider>
-            <MainDocument />
-          </WebRtcProvider>
-        </NavigationProvider>
-      </FirebaseProvider>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <FirebaseProvider>
+          <NavigationProvider>
+            <WebRtcProvider>
+              <MainDocument />
+            </WebRtcProvider>
+          </NavigationProvider>
+        </FirebaseProvider>
+      </Router>
+    </ThemeProvider>
   );
 }
 
