@@ -4,12 +4,16 @@
 
 .ttt-board {
   display: flex;
-  align-self: center;
+  justify-content: center;
   margin-top: 20px;
+  margin-left: 35%;
+  margin-right: 35%;
 }
 
 .ttt-message {
   margin-top: 10px;
+  font-weight: 500;
+  font-size: medium;
 }
 
 .ttt-box-common {
@@ -32,7 +36,6 @@
 
 .ttt-box {
   background-color: hsla(177, 70%, 41%, 50%);
-  font-weight: 500;
 }
 
 .ttt-boxO {
