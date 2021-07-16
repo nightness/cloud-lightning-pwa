@@ -8,6 +8,10 @@
   margin-top: 20px;
 }
 
+.ttt-message {
+  margin-top: 10px;
+}
+
 .ttt-box-common {
   padding: 10;
   font-size: 24;
@@ -28,10 +32,11 @@
 
 .ttt-box {
   background-color: hsla(177, 70%, 41%, 50%);
+  font-weight: 500;
 }
 
 .ttt-boxO {
-  color:hsl(138, 98%, 35%);
+  color:hsl(140, 93%, 11%);
   background-color: hsla(177, 70%, 21%, 50%);
 }
 

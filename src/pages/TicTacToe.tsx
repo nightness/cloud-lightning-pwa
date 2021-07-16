@@ -44,7 +44,6 @@ export default () => {
   const [winResults, setWinResult] = useState<string>("");
   const [turnCount, setTurnCount] = useState(0);
 
-
   const onClickAnyCell = (row: number, col: number) => {
     if (!isStarted || !turn || gameOver || board[row][col] != "") return;
     const newBoard = createNewBoard(board);
@@ -268,7 +267,7 @@ export default () => {
             }
           }
 
-          // No corner, pick any open, only non-random move
+          // No corner, pick any open (only non-random move)
           if (!played) {
             for (let i = 0; i < 3; i++) {
               for (let j = 0; j < 3; j++) {
@@ -406,7 +405,7 @@ export default () => {
           <Segment index={2} results={winResults} board={board} />
         </div>
         <Text
-          className={`ttt-box${playerIs}`}
+          className={`ttt-message ttt-box${playerIs}`}
           style={{ backgroundColor: "transparent" }}
         >
           {message}
