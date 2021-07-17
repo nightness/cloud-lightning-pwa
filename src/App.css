@@ -36,7 +36,7 @@
   /* */
   --tooltip-background-light: hsl(0, 0%, 83%);
   --tooltip-background-dark: hsl(0, 0%, 15%);
-  --tooltip-background: var(var(--tooltip-background-light));
+  --tooltip-background: var(--tooltip-background-light);
   /* */
   --console-background-color-light: hsl(0, 0%, 83%);
   --console-background-color-dark: hsl(0, 0%, 13%);
