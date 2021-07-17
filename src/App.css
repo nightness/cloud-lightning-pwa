@@ -29,7 +29,23 @@
   --input-color: black;
   /* */
   --input-background-color: hsl(0, 0%, 100%);
+  /* */
+  --drawer-background-light: linear-gradient(to bottom, #8ff, #aff, #fff);
+  --drawer-background-dark: linear-gradient(to bottom, #04a, #25c, #48f);
+  --drawer-background: var(--drawer-background-light);
+  /* */
+  --tooltip-background-light: hsl(0, 0%, 83%);
+  --tooltip-background-dark: hsl(0, 0%, 15%);
+  --tooltip-background: var(var(--tooltip-background-light));
+  /* */
+  --console-background-color-light: hsl(0, 0%, 83%);
+  --console-background-color-dark: hsl(0, 0%, 13%);
+  --console-background-color: var(--console-background-color-light)
 }
+
+/* * {
+  color: var(--app-color);
+} */
 
 .App {
   -webkit-font-smoothing: antialiased;
@@ -48,6 +64,7 @@
   background-color: var(--app-background-color);
   border: var(--app-border);
 }
+
 .App-header {
   background-color: var(--app-header-background-color);
   min-height: 100vh;
@@ -76,4 +93,13 @@
 
 .content::-webkit-scrollbar-thumb {
   background-color: hsl(249, 81%, 60%);
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--app-color);
+  font-weight: 500;
+}
+
+bp3-button-text {
+  color: red
 }

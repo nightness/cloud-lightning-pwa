@@ -15,7 +15,7 @@ export function Home() {
         }}
       >
         <div>
-          <H2 style={{ paddingLeft: 10 }}>Hello World</H2>
+          <h2 style={{ paddingLeft: 10 }}>Hello World</h2>
           <div style={{ width: "100%", textAlign: "center" }}>
             <Button
               intent="success"
@@ -28,7 +28,7 @@ export function Home() {
         </div>
       </Dialog>
       <Page>
-        <H2>Welcome Home!</H2>
+        <h2>Welcome Home!</h2>
         <Button
           intent="success"
           text="Open Dialog"

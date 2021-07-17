@@ -36,6 +36,9 @@ export const ThemeProvider = ({ children }: Props) => {
       "app-background-color",
       "app-border",
       "app-color",
+      "drawer-background",
+      "tooltip-background",
+      "console-background-color"
     ];
     names.forEach((name) => {
       setCssVar(
