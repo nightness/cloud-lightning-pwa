@@ -67,6 +67,11 @@ export const WebRtcProvider = ({ children }: Props) => {
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
   const subscriptions = useRef<Subscriptions>({});
 
+  // Clean-up subscriptions and firebase docs
+  useEffect(() => () => {
+    //alert('webRTC clean-up')
+  })
+
   const init = async () => {
     let currentStream: MediaStream;
     let pc = peerConnection;

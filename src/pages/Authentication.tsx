@@ -193,6 +193,7 @@ export const Authentication = () => {
   };
 
   useEffect(() => {
+    if (currentUser) return
     if (setActiveTheme && activeTheme === "Dark") setActiveTheme("Light");
   });
 

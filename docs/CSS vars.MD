@@ -1,10 +1,8 @@
 Not MD formatted, dumping info atm
 
-~/index.css
+~/App.css
     --app-background-color                  linear-gradient(to left bottom, #ada9f0, #88ddd2, #8ccfdd)
     --app-color                             hsl(0, 0%, 0%)
-
-~/App.css
     --app-border                            2px solid hsl(0, 0%, 0%);
     --app-header-color                      hsl(0, 0%, 50%)
     --app-header-background-color           hsl(220, 13%, 18%)

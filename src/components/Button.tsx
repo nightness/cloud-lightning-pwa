@@ -5,12 +5,14 @@ import { useState } from "react";
 interface Props extends ButtonProps {
   style?: React.CSSProperties;
   onLongPress?: () => any
+  ref?: React.LegacyRef<Button>
 }
 
-export default ({ className, style, onLongPress, ...restProps }: Props) => {
+export default ({ className, style, ref, onLongPress, ...restProps }: Props) => {
   const [touchDown, setTouchDown] = useState<Date>()
   return (
     <Button
+      ref={ref}
       style={style}
       className={`button-common ${className}`}
       onPointerDown={(event) => {
