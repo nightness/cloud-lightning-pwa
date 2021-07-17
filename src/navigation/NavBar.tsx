@@ -82,7 +82,7 @@ export const Navbar = () => {
           >
             <Icon
               style={{ userSelect: "none", pointerEvents: "none" }}
-              iconSize={34}
+              iconSize={16}
               intent='none'
               icon="full-circle"
             />

@@ -17,12 +17,9 @@
 }
 
 .ttt-box-common {
-  padding: 10;
-  font-size: 24;
-  line-height: 3rem;
-  column-width: 3rem;
+  padding: 10px;
   border-style: solid !important;
-  border-color: black !important;
+  border-color: var(--app-border) !important;
   border-width: 1px !important;
   border-radius: 0 !important;
   font-weight: 600;

@@ -358,6 +358,20 @@ export default () => {
     return "";
   };
 
+  const newGame = (symbol: TicTacToeSymbol) => {
+    setBoard(createNewBoard());
+    setGameOver(false);
+    setIsStarted(true);
+    setPlayerIs(symbol);
+    setWinResult("");
+    setTurn("X");
+    setMessage(
+      symbol === "O"
+        ? "Computer's Turn"
+        : `Player's Turn (player is '${symbol}')`
+    );
+  }
+
   const Segment = ({ index, results, board }: SegmentProps) => (
     <div style={{ flex: 1, flexDirection: "column" }}>
       <div
@@ -417,20 +431,13 @@ export default () => {
             intent="primary"
             text="Start"
             style={{ marginTop: 30, width: "25%" }}
+            onLongPress={() => {
+              newGame('X')
+            }}
             onClick={(event) => {
               const symbol =
                 event.shiftKey || Math.random() > 0.5 ? "X" : "O";
-              setBoard(createNewBoard());
-              setGameOver(false);
-              setIsStarted(true);
-              setPlayerIs(symbol);
-              setWinResult("");
-              setTurn("X");
-              setMessage(
-                symbol === "O"
-                  ? "Computer's Turn"
-                  : `Player's Turn (player is '${symbol}')`
-              );
+              newGame(symbol)
             }}
           />
         )}
