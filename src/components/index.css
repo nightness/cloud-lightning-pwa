@@ -64,6 +64,11 @@
 }
 
 
+.button-common {
+  color: var(--app-color) !important;
+  background-color: var(--button-background) !important;
+}
+
 /* .scrollView-outer {
   display: flex;
   bottom: -5;

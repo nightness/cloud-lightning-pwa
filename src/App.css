@@ -31,7 +31,7 @@
   --input-background-color: hsl(0, 0%, 100%);
   /* */
   --drawer-background-light: linear-gradient(to bottom, #8ff, #aff, #fff);
-  --drawer-background-dark: linear-gradient(to bottom, #04a, #25c, #48f);
+  --drawer-background-dark: linear-gradient(to bottom, #028, #13a, #24c);
   --drawer-background: var(--drawer-background-light);
   /* */
   --tooltip-background-light: hsl(0, 0%, 83%);
@@ -40,7 +40,11 @@
   /* */
   --console-background-color-light: hsl(0, 0%, 83%);
   --console-background-color-dark: hsl(0, 0%, 13%);
-  --console-background-color: var(--console-background-color-light)
+  --console-background-color: var(--console-background-color-light);
+  /* */
+  --button-background-light: hsl(0, 0%, 60%);
+  --button-background-dark: hsl(0, 0%, 20%);
+  --button-background: var(--button-background-light)
 }
 
 /* * {
@@ -100,6 +104,3 @@ h1, h2, h3, h4, h5 {
   font-weight: 500;
 }
 
-bp3-button-text {
-  color: red
-}
