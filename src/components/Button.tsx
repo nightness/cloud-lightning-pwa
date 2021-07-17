@@ -1,3 +1,4 @@
+import './index.css'
 import { Button, ButtonProps } from "@blueprintjs/core";
 import { useState } from "react";
 

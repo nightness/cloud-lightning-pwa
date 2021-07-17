@@ -41,7 +41,7 @@
 }
 
 .text-input {
-  flex: 1;  
+  flex: 1;
   background-color: var(--input-background-color);
   color: var(--input-color);
   min-width: 200px;
@@ -62,7 +62,6 @@
   background-color: var(--console-background-color);
   text-align: left;
 }
-
 
 .button-common {
   color: var(--app-color) !important;

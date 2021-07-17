@@ -14,14 +14,14 @@
   margin-top: 10px;
   font-weight: 500;
   font-size: medium;
+  user-select: none;
 }
 
 .ttt-box-common {
   padding: 10px;
   border-style: solid !important;
-  border-color: var(--app-border) !important;
   border-width: 1px !important;
-  border-radius: 0 !important;
+  border-radius: 0px !important;
   font-weight: 600;
   font-size: 24px;
   min-width: 3rem;
@@ -33,16 +33,21 @@
 
 .ttt-box {
   background-color: hsla(177, 70%, 41%, 50%);
+  border-color: var(--app-border) !important;
 }
 
 .ttt-boxO {
-  color:hsl(140, 93%, 11%);
+  --o-color: hsl(140, 93%, 11%);
+  color: var(--o-color);
   background-color: hsla(177, 70%, 21%, 50%);
+  border-color: var(--o-color) !important;
 }
 
 .ttt-boxX {
-  color:hsl(7, 89%, 40%);
+  --x-color: hsl(7, 89%, 40%);
+  color: var(--x-color);
   background-color: hsla(177, 70%, 21%, 50%);
+  border-color: var(--x-color) !important;
 }
 
 .ttt-box-winO {
