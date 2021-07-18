@@ -88,7 +88,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
           </Link>
         </div>
       </div>
-      <div className={Classes.DRAWER_FOOTER}>
+      <div className={`${Classes.DRAWER_FOOTER} sidebar-footer`}>
         Powered by React and Blueprint
       </div>
     </Drawer>

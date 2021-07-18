@@ -70,6 +70,10 @@
   cursor: pointer;
 }
 
+.sidebar-footer {
+  background: var(--card-background-color) !important;
+}
+
 .sidebar-link {
   color: var(--app-color);
   font-size: 2rem;
@@ -80,7 +84,8 @@
 }
 
 .drawer-header {
-  position: absolute;  
+  position: absolute;
+  color: var(--app-color);
   background: var(--drawer-background);
   width: 100%;
   padding-left: 0px !important;

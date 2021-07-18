@@ -9,7 +9,6 @@ Not MD formatted, dumping info atm
 
 ~/src/components/index.css
     --modal-background-color                hsl(0, 0%, 100%)
-    --backdrop-background-color             hsla(0, 0%, 0%, 0.75)
     --input-color                           black
     --input-background-color                hsl(0, 0%, 100%)
     --console-background-color              hsl(0, 0%, 83%);

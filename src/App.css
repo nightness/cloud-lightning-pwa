@@ -24,27 +24,38 @@
   /* */
   --modal-background-color: hsl(0, 0%, 100%);
   /* */
-  --backdrop-background-color: hsla(0, 0%, 0%, 0.75);
-  /* */
-  --input-color: black;
-  /* */
-  --input-background-color: hsl(0, 0%, 100%);
-  /* */
+  --input-color-light: black;
+  --input-color-dark: white;
+  --input-color: var(--input-color-light);
+  /* input-background-color */
+  --input-background-color-light: hsl(0, 0%, 80%);
+  --input-background-color-dark: hsl(0, 0%, 20%);
+  --input-background-color: var(--input-background-color-light);
+  /* drawer-background */
   --drawer-background-light: linear-gradient(to bottom, #8ff, #aff, #fff);
-  --drawer-background-dark: linear-gradient(to bottom, #028, #13a, #24c);
+  --drawer-background-dark: linear-gradient(
+    to bottom,
+    hsl(226, 100%, 20%) 0%,
+    hsl(226, 82%, 15%) 35%,
+    hsl(226, 71%, 10%) 100%
+  );
   --drawer-background: var(--drawer-background-light);
-  /* */
+  /* tooltip-background */
   --tooltip-background-light: hsl(0, 0%, 83%);
   --tooltip-background-dark: hsl(0, 0%, 15%);
   --tooltip-background: var(--tooltip-background-light);
-  /* */
+  /* console-background-color */
   --console-background-color-light: hsl(0, 0%, 83%);
   --console-background-color-dark: hsl(0, 0%, 13%);
   --console-background-color: var(--console-background-color-light);
-  /* */
+  /* button-background */
   --button-background-light: hsl(0, 0%, 60%);
   --button-background-dark: hsl(0, 0%, 20%);
-  --button-background: var(--button-background-light)
+  --button-background: var(--button-background-light);
+  /* card-background-color */
+  --card-background-color-dark: hsl(0, 0%, 20%);
+  --card-background-color-light: hsl(0, 0%, 80%);
+  --card-background-color: var(--card-background-color-light);
 }
 
 /* * {
@@ -99,8 +110,11 @@
   background-color: hsl(249, 81%, 60%);
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: var(--app-color);
   font-weight: 500;
 }
-
