@@ -49,7 +49,7 @@
   --console-background-color-dark: hsl(0, 0%, 13%);
   --console-background-color: var(--console-background-color-light);
   /* button-background */
-  --button-background-light: hsl(0, 0%, 60%);
+  --button-background-light: hsl(0, 0%, 80%);
   --button-background-dark: hsl(0, 0%, 20%);
   --button-background: var(--button-background-light);
   /* card-background-color */
