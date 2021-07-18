@@ -45,7 +45,7 @@ const MainDocument = () => {
   });
   addPage({
     path: "/WebRTC",
-    title: "Video Chat",
+    title: "WebRTC Chat",
     component: WebRTC,
     requiresAuthentication: true,
   });

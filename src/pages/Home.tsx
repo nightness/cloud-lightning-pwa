@@ -1,19 +1,29 @@
 import { Page, Button, Text } from "../components";
 import { NavLink, LinkProps, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { FirebaseContext } from "../database/FirebaseContext";
 
 export function Home() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { currentUser } = useContext(FirebaseContext);
 
   return (
     <Page>
-      <NavLink className="sidebar-link" to="/home/TicTacToe">
-        TicTacToe isn't the only featured component here.
-      </NavLink>
-      <br/>
-      <NavLink className="sidebar-link" to="/auth">
-        Login to see more!
-      </NavLink>
+      {!currentUser ? (
+        <>
+          <NavLink className="sidebar-link" to="/home/TicTacToe">
+            TicTacToe isn't the only featured component here.
+          </NavLink>
+          <br />
+          <NavLink className="sidebar-link" to="/auth">
+            Login to see more!
+          </NavLink>
+        </>
+      ) : (
+        <>
+          <h1>Welcome</h1>
+        </>
+      )}
     </Page>
   );
 }
