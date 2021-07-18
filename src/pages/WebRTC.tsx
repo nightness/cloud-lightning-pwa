@@ -147,7 +147,7 @@ export function WebRTC() {
     <Container>
       <div className="videos">
         <span>
-          <h3>Local Stream</h3>
+          <h1>Local Stream</h1>
           <video
             ref={webcamVideo}
             id="webcamVideo"
@@ -157,7 +157,7 @@ export function WebRTC() {
         </span>
         {callStage >= 1 ? (
           <span>
-            <h3>Remote Stream</h3>
+            <h1>Remote Stream</h1>
             <video ref={remoteVideo} autoPlay playsInline />
           </span>
         ) : (
