@@ -1,20 +1,23 @@
 import './index.css'
-import { Button, ButtonProps } from "@blueprintjs/core";
 import { useState } from "react";
+import { Text } from '.'
 
-interface Props extends ButtonProps {
-  style?: React.CSSProperties;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
+  intent?: string;
+  text: string;
+  //style?: React.CSSProperties;
   onLongPress?: () => any
-  ref?: React.LegacyRef<Button>
+  ref?: React.LegacyRef<HTMLButtonElement>
 }
 
-export default ({ className, style, ref, onLongPress, ...restProps }: Props) => {
+export default ({ className, text, style, ref, onLongPress, ...restProps }: Props) => {
   const [touchDown, setTouchDown] = useState<Date>()
   return (
-    <Button
+    <button
       ref={ref}
       style={style}
-      className={`button-common ${className}`}
+      className={`button-common ${className ? className : ''}`}
       onPointerDown={(event) => {
         setTouchDown(new Date())
       }}
@@ -52,6 +55,6 @@ export default ({ className, style, ref, onLongPress, ...restProps }: Props) => 
         }
       }}
       {...restProps}
-    />
+    ><Text>{text}</Text></button>
   );
 };

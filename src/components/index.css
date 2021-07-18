@@ -66,6 +66,11 @@
 .button-common {
   color: var(--app-color) !important;
   background-color: var(--button-background) !important;
+  font-size: medium;
+  padding: 5px 15px 0px 15px;
+  width: auto;
+  border: medium;
+  border-radius: 10px;
 }
 
 /* .scrollView-outer {

@@ -37,7 +37,7 @@
 }
 
 .ttt-boxO {
-  --o-color: hsl(140, 93%, 11%);
+  --o-color: hsl(140, 93%, 18%);
   color: var(--o-color);
   background-color: hsla(177, 70%, 21%, 50%);
   border-color: var(--o-color) !important;

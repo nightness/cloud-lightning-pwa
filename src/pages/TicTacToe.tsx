@@ -430,10 +430,9 @@ export default () => {
           <Button
             intent="primary"
             text="Start"
-            style={{ marginTop: 30, width: "25%" }}
-            onLongPress={() => {
-              newGame('X')
-            }}
+            // onLongPress={() => {
+            //   newGame('X')
+            // }}
             onClick={(event) => {
               const symbol =
                 event.shiftKey || Math.random() > 0.5 ? "X" : "O";
