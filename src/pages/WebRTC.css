@@ -10,3 +10,7 @@ video {
     align-items: center;
     justify-content: center;
 }
+
+.call-id-input {
+    margin-right: 10px;
+}

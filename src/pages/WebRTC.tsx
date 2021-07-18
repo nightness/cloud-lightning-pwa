@@ -110,7 +110,7 @@ export function WebRTC() {
               }}
             >
               <h2>Answer a Call</h2>
-              <TextInput value={callId} onChangeValue={(value) => setCallId(value)} />
+              <TextInput className='call-id-input' value={callId} onChangeValue={(value) => setCallId(value)} />
               <Button text='Answer' onClick={answerButtonClick} />
             </span>
           </div>
