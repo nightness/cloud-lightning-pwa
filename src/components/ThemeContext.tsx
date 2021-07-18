@@ -42,7 +42,9 @@ export const ThemeProvider = ({ children }: Props) => {
       "button-background",
       "card-background-color",
       "input-background-color",
-      "input-color"
+      "input-color",
+      "scrollbar-chat",
+      "scrollbar-thumb"
     ];
     names.forEach((name) => {
       setCssVar(

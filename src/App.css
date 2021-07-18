@@ -15,7 +15,7 @@
   --app-background-color: var(--app-background-color-light);
   /* app-border */
   --app-border-light: 2px solid hsl(0, 0%, 0%);
-  --app-border-dark: 2px solid hsl(0, 100%, 100%);
+  --app-border-dark: 2px solid hsl(0, 0%, 60%);
   --app-border: var(--app-border-light);
   /* app-color */
   --app-color-light: hsl(0, 0%, 0%);
@@ -56,6 +56,14 @@
   --card-background-color-dark: hsl(0, 0%, 20%);
   --card-background-color-light: hsl(0, 0%, 80%);
   --card-background-color: var(--card-background-color-light);
+  /* scrollbar-chat */
+  --scrollbar-chat-light: hsl(249, 81%, 60%);
+  --scrollbar-chat-dark: hsl(249, 81%, 60%);
+  --scrollbar-chat: var(--scrollbar-chat-light);
+  /* scrollbar-chat */
+  --scrollbar-thumb-light: hsl(240, 5%, 12%);
+  --scrollbar-thumb-dark: hsl(240, 5%, 12%);
+  --scrollbar-thumb: var(var(--scrollbar-thumb-light));
 }
 
 /* * {
@@ -103,11 +111,11 @@
 }
 
 .content::-webkit-scrollbar-track {
-  background: hsl(240, 5%, 12%);
+  background: var(--scrollbar-chat); 
 }
 
 .content::-webkit-scrollbar-thumb {
-  background-color: hsl(249, 81%, 60%);
+  background: var(--scrollbar-thumb);
 }
 
 h1,

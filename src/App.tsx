@@ -20,7 +20,7 @@ const MainDocument = () => {
 
   addPage({
     path: "/",
-    title: "Home",
+    title: "Cloud Lightning",
     component: Home,
     children: [
       {

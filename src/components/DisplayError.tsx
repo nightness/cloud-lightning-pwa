@@ -50,12 +50,12 @@ const localStyles = {
   displayErrorHeader: {
     paddingTop: 5,
     fontSize: 18,
-    fontWeight: 600,
+    fontWeight: 500,
   } as CSSProperties,
   displayErrorText: {
     paddingTop: 5,
     paddingLeft: 10,
     fontSize: 14,
-    fontWeight: 600,
+    fontWeight: 500,
   } as CSSProperties,
 };
