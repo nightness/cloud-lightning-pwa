@@ -75,7 +75,7 @@
 }
 
 .sidebar-link {
-  color: var(--app-color);
+  color: var(--link-color);
   font-size: 2rem;
   font-weight: 500;
   margin: 0 2rem 0 10px;

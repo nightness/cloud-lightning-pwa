@@ -21,7 +21,7 @@ export function Home() {
         </>
       ) : (
         <>
-          <h1>Welcome</h1>
+          <Text size={1}>Welcome</Text>
         </>
       )}
     </Page>

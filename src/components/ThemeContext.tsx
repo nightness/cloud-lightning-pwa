@@ -44,7 +44,8 @@ export const ThemeProvider = ({ children }: Props) => {
       "input-background-color",
       "input-color",
       "scrollbar-chat",
-      "scrollbar-thumb"
+      "scrollbar-thumb",
+      "link-color"
     ];
     names.forEach((name) => {
       setCssVar(

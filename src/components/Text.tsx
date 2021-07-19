@@ -1,5 +1,4 @@
 import React, { CSSProperties, useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
 
 interface Props {
   size?: 1 | 2 | 3 | 4 | 5;
@@ -21,37 +20,37 @@ export const Text = ({
   switch (size) {
     case 1:
       return (
-        <h1 className={className} style={style} onClick={onClick}>
+        <h1 className={`text ${className ? className : ''}`} style={style} onClick={onClick}>
           {children}
         </h1>
       );
     case 2:
       return (
-        <h2 className={className} style={style} onClick={onClick}>
+        <h2 className={`text ${className ? className : ''}`} style={style} onClick={onClick}>
           {children}
         </h2>
       );
     case 3:
       return (
-        <h3 className={className} style={style} onClick={onClick}>
+        <h3 className={`text ${className ? className : ''}`} style={style} onClick={onClick}>
           {children}
         </h3>
       );
     case 4:
       return (
-        <h4 className={className} style={style} onClick={onClick}>
+        <h4 className={`text ${className ? className : ''}`} style={style} onClick={onClick}>
           {children}
         </h4>
       );
     case 5:
       return (
-        <h5 className={className} style={style} onClick={onClick}>
+        <h5 className={`text ${className ? className : ''}`} style={style} onClick={onClick}>
           {children}
         </h5>
       );
     default:
       return (
-        <p className={className} style={style} onClick={onClick}>
+        <p className={`text ${className ? className : ''}`} style={style} onClick={onClick}>
           {children}
         </p>
       );

@@ -21,6 +21,10 @@
   --app-color-light: hsl(0, 0%, 0%);
   --app-color-dark: hsl(0, 100%, 100%);
   --app-color: var(--app-color-light);
+  /* app-color */
+  --link-color-light: hsl(241, 80%, 30%);
+  --link-color-dark: hsl(241, 80%, 65%);
+  --link-color: var(--link-color-light);
   /* */
   --modal-background-color: hsl(0, 0%, 100%);
   /* */
