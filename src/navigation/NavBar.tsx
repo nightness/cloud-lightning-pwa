@@ -74,7 +74,7 @@ export const Navbar = () => {
           usePortal={true}
         >
           <Button
-            style={{ backgroundColor: "transparent", margin: "5px" }}
+            style={{ backgroundColor: "transparent", margin: "5px", padding: "5px" }}
             onClick={() => {
               if (!setActiveTheme) return;
               setActiveTheme(activeTheme === "Dark" ? "Light" : "Dark");
