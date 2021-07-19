@@ -17,7 +17,7 @@
   font-weight: 700;
   padding-left: 0;
   margin-left: 45px;
-  font-size: 1.5rem;
+  font-size: calc(var(--device-font-size) * 1.5);
 }
 
 .side-links {
@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   color: var(--app-color);
-  font-size: 1.6rem;
+  font-size: calc(var(--device-font-size) * 1.6);
   line-height: 2.2rem;
   white-space: nowrap;
 }
@@ -76,10 +76,9 @@
 
 .sidebar-link {
   color: var(--link-color);
-  font-size: 2rem;
   font-weight: 500;
   margin: 0 2rem 0 10px;
-  font-size: 1.25rem;
+  font-size: calc(var(--device-font-size) * 1.25);
   line-height: 2rem;
 }
 
@@ -89,7 +88,6 @@
   background: var(--drawer-background);
   width: 100%;
   padding-left: 0px !important;
-  padding: 0px !important;
 }
 
 .drawer-body {
@@ -117,14 +115,14 @@
   display: flex;
   flex-direction: row;
   color: var(--app-color);
-  font-size: 1.6rem;
+  font-size: calc(var(--device-font-size) * 1.6);
   line-height: 2.2rem;
 }
 
 .tooltip-left {
   margin-left: 5px;
   padding: 10px 10px 10px 10px;
-  font-size: 0.75rem;
+  font-size: calc(var(--device-font-size) * 0.6);
   font-weight: 500;
   color: var(--app-color);
   background: var(--tooltip-background);
@@ -135,7 +133,7 @@
   margin-left: 50px;
   margin-right: 5px;
   padding: 10px 10px 10px 10px;
-  font-size: 0.75rem;
+  font-size: calc(var(--device-font-size) * 0.6);
   font-weight: 500;
   color: var(--app-color);
   background: var(--tooltip-background);

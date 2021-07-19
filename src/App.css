@@ -1,4 +1,6 @@
 :root {
+  /* device-font-size */
+  --device-font-size: 1rem;
   /* app-background */
   --app-background-color-light: linear-gradient(
     to bottom,

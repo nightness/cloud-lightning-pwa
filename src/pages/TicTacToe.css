@@ -13,7 +13,7 @@
 .ttt-message {
   margin-top: 10px;
   font-weight: 500;
-  font-size: medium;
+  font-size: calc(var(--device-font-size) * 1.2);
   user-select: none;
 }
 
@@ -23,7 +23,7 @@
   border-width: 1px !important;
   border-radius: 0px !important;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: calc(var(--device-font-size) * 1.5);
   min-width: 3rem;
   min-height: 3rem;
   max-width: 3rem;
