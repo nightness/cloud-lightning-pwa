@@ -1,4 +1,5 @@
 import { CSSProperties, useEffect } from "react";
+import { Page } from ".";
 import Container from "./Container";
 import Text from "./Text";
 
@@ -23,18 +24,20 @@ export default ({ permissionDenied, error, suppressConsoleMessage }: Props) => {
   }, [error]);
 
   return (
-    <Container style={localStyles.filletedBorderView}>
-      <Text style={localStyles.displayErrorHeader}>
-        {`Sorry, an ${
-          !errorMessageText ? "unknown error" : "error"
-        } has occurred`}
-      </Text>
-      {errorMessageText ? (
-        <Text style={localStyles.displayErrorText}>{errorMessageText}</Text>
-      ) : (
-        <></>
-      )}
-    </Container>
+    <Page>
+      <Container style={localStyles.filletedBorderView}>
+        <Text style={localStyles.displayErrorHeader}>
+          {`Sorry, an ${
+            !errorMessageText ? "unknown error" : "error"
+          } has occurred`}
+        </Text>
+        {errorMessageText ? (
+          <Text style={localStyles.displayErrorText}>{errorMessageText}</Text>
+        ) : (
+          <></>
+        )}
+      </Container>
+    </Page>
   );
 };
 

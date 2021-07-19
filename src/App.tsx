@@ -13,7 +13,11 @@ import {
 import { WallMessenger } from "./messenger";
 import TestPage from "./pages/TestPage";
 import TicTacToe from "./pages/TicTacToe";
-import { ThemeProvider } from "./components";
+import { DisplayError, ThemeProvider } from "./components";
+
+const DisplayErrorText: React.FC = (props) => {
+  return <DisplayError permissionDenied />
+}
 
 const MainDocument = () => {
   const { addPage, pages } = useContext(NavigationContext);
@@ -33,6 +37,11 @@ const MainDocument = () => {
             title: "Test Page",
             component: TestPage,
           },
+          {
+            path: "/home/error",
+            title: "Display Error",
+            component: DisplayErrorText
+          }
         ],
       },
     ],

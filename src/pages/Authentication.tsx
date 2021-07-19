@@ -219,7 +219,7 @@ export const Authentication = () => {
   }, []);
 
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
-    return <ActivityIndicator size="gigantic" fullscreen />;
+    return <ActivityIndicator size="gigantic" />;
   } else if (currentUser) {
     return (
       <Page>
