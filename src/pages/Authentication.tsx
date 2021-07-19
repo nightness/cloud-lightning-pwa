@@ -90,7 +90,6 @@ export const Authentication = () => {
   );
   const [scheme, setScheme] = useState<object>();
   const [stage, setStage] = useState<Stage>(Stage.Init);
-  const { activeTheme, setActiveTheme } = useContext(ThemeContext);
   const auth = firebaseAuth();
   const history = useHistory();
 
@@ -193,11 +192,6 @@ export const Authentication = () => {
   };
 
   useEffect(() => {
-    if (currentUser) return;
-    if (setActiveTheme && activeTheme === "Dark") setActiveTheme("Light");
-  });
-
-  useEffect(() => {
     switch (mode) {
       case "login":
         setScheme(LoginScheme);
@@ -219,7 +213,7 @@ export const Authentication = () => {
   }, []);
 
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
-    return <ActivityIndicator size="gigantic" />;
+    return <ActivityIndicator size="gigantic" fullscreen />;
   } else if (currentUser) {
     return (
       <Page>
