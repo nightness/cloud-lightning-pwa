@@ -24,6 +24,7 @@
         "@blueprintjs/select": "^3.16.4",
         "@blueprintjs/table": "^3.8.33",
         "@blueprintjs/timezone": "^3.9.4",
+        "@w11r/use-breakpoint": "^2.0.0",
         "firebase": "8.6.1",
         "formik": "^2.2.9",
         "matrix-js-sdk": "^12.0.1",

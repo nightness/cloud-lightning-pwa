@@ -14,10 +14,11 @@ import { WallMessenger } from "./messenger";
 import TestPage from "./pages/TestPage";
 import TicTacToe from "./pages/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
+import { BreakpointProvider } from "@w11r/use-breakpoint";
 
 const DisplayErrorText: React.FC = (props) => {
-  return <DisplayError permissionDenied />
-}
+  return <DisplayError permissionDenied />;
+};
 
 const MainDocument = () => {
   const { addPage, pages } = useContext(NavigationContext);
@@ -40,8 +41,8 @@ const MainDocument = () => {
           {
             path: "/home/error",
             title: "Display Error",
-            component: DisplayErrorText
-          }
+            component: DisplayErrorText,
+          },
         ],
       },
     ],
@@ -88,17 +89,19 @@ const MainDocument = () => {
 
 function App() {
   return (
-    <ThemeProvider>
-      <Router>
-        <FirebaseProvider>
-          <NavigationProvider>
-            <WebRtcProvider>
-              <MainDocument />
-            </WebRtcProvider>
-          </NavigationProvider>
-        </FirebaseProvider>
-      </Router>
-    </ThemeProvider>
+    <BreakpointProvider>
+      <ThemeProvider>
+        <Router>
+          <FirebaseProvider>
+            <NavigationProvider>
+              <WebRtcProvider>
+                <MainDocument />
+              </WebRtcProvider>
+            </NavigationProvider>
+          </FirebaseProvider>
+        </Router>
+      </ThemeProvider>
+    </BreakpointProvider>
   );
 }
 

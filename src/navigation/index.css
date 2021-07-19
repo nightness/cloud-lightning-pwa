@@ -15,8 +15,7 @@
   justify-content: center;
   width: 100%;
   font-weight: 700;
-  padding-left: 0;
-  margin-left: 45px;
+  padding-left: calc(var(--device-font-size) * 1.5);
   font-size: calc(var(--device-font-size) * 1.5);
 }
 
