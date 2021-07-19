@@ -23,7 +23,7 @@
   --app-color: var(--app-color-light);
   /* app-color */
   --link-color-light: hsl(241, 80%, 30%);
-  --link-color-dark: hsl(241, 80%, 65%);
+  --link-color-dark: hsl(231, 80%, 80%);
   --link-color: var(--link-color-light);
   /* */
   --modal-background-color: hsl(0, 0%, 100%);
@@ -90,17 +90,6 @@
   color: var(--app-color);
   background-color: var(--app-background-color);
   border: var(--app-border);
-}
-
-.App-header {
-  background-color: var(--app-header-background-color);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--app-header-color);
 }
 
 .content {

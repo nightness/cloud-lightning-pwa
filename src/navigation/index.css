@@ -17,7 +17,7 @@
   font-weight: 700;
   padding-left: 0;
   margin-left: 45px;
-  font-size: 28px;
+  font-size: 1.5rem;
 }
 
 .side-links {
@@ -124,7 +124,7 @@
 .tooltip-left {
   margin-left: 5px;
   padding: 10px 10px 10px 10px;
-  font-size: 14px;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--app-color);
   background: var(--tooltip-background);
@@ -135,7 +135,7 @@
   margin-left: 50px;
   margin-right: 5px;
   padding: 10px 10px 10px 10px;
-  font-size: 14px;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--app-color);
   background: var(--tooltip-background);
