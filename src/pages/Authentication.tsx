@@ -193,7 +193,7 @@ export const Authentication = () => {
   };
 
   useEffect(() => {
-    if (currentUser) return
+    if (currentUser) return;
     if (setActiveTheme && activeTheme === "Dark") setActiveTheme("Light");
   });
 
@@ -219,11 +219,7 @@ export const Authentication = () => {
   }, []);
 
   if (stage !== Stage.LoggedIn && stage !== Stage.Ready) {
-    return (
-      <Container>
-        <ActivityIndicator size="gigantic" />
-      </Container>
-    );
+    return <ActivityIndicator size="gigantic" fullscreen />;
   } else if (currentUser) {
     return (
       <Page>

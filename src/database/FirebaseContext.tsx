@@ -4,6 +4,7 @@ import {
   Container,
   DisplayError,
   Page,
+  Text
 } from "../components";
 import { useAuthState, FirebaseUser, getDocument } from "./Firebase";
 
@@ -77,12 +78,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     }
   }, [currentUser]);
 
-  if (loadingUser)
-    return (
-      <Container>
-        <ActivityIndicator size="gigantic" />
-      </Container>
-    );
+  if (loadingUser) return <ActivityIndicator size="gigantic" fullscreen />;
   else if (errorUser)
     return (
       <DisplayError permissionDenied={errorUser.code === "permission-denied"} />
