@@ -11,7 +11,7 @@ import { FirebaseContext } from "../database/FirebaseContext";
 import { IMatrixClientCreateOpts, MatrixClient } from "matrix-js-sdk";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { MatrixContext } from "../matrix/MatrixContext";
+import { MatrixContext } from "./MatrixContext";
 
 const MatrixScheme = Yup.object({
   userId: Yup.string().required("User ID is a required field"),
