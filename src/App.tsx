@@ -16,6 +16,7 @@ import TicTacToe from "./pages/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
 import { MatrixProvider } from "./matrix/MatrixContext";
+import Tetris from "./tetris/Tetris";
 
 const DisplayErrorText: React.FC = (props) => {
   return <DisplayError permissionDenied />;
@@ -45,7 +46,11 @@ const MainDocument = () => {
             component: DisplayErrorText,
           },
         ],
-      },
+      }, {
+        path: "/home/Tetris",
+        title: "Tetris",
+        component: Tetris,
+      }
     ],
   });
   addPage({
