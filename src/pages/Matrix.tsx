@@ -11,6 +11,7 @@ import { FirebaseContext } from "../database/FirebaseContext";
 import { IMatrixClientCreateOpts, MatrixClient } from "matrix-js-sdk";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { MatrixContext } from "../matrix/MatrixContext";
 
 const MatrixScheme = Yup.object({
   userId: Yup.string().required("User ID is a required field"),
@@ -19,22 +20,12 @@ const MatrixScheme = Yup.object({
 
 export default () => {
   const { currentUser } = useContext(FirebaseContext);
-  const client = useRef<MatrixClient>();
+  const { client, actions } = useContext(MatrixContext);
   const [submitted, setSubmitted] = useState(false);
 
-  const connect = () => {
-    const ops: IMatrixClientCreateOpts = {
-      baseUrl: "https://matrix-client.matrix.org",
-      // accessToken: myAccessToken,
-      // userId: myUserId,
-    };
-
-    client.current = new MatrixClient(ops);
-  };
-
   useEffect(() => {
-    //console.log(client.current);
-  }, []);
+    console.log(client);
+  }, [client]);
 
   return (
     <Page>
@@ -46,19 +37,16 @@ export default () => {
         validationSchema={MatrixScheme}
         onSubmit={(values, helpers) => {
           if (submitted) return;
-          // setSubmitted(true);
-          // currentUser
-          //   ?.updateProfile({
-          //     displayName: values.displayName,
-          //     photoURL: values.photoUrl,
-          //   })
-          //   .then(() => {
-          //     setSubmitted(false);
-          //   })
-          //   .catch((err) => {
-          //     console.error(err);
-          //     setSubmitted(false);
-          //   });
+          actions.loginWithAccessToken(
+            "https://matrix-client.matrix.org",
+            values.userId,
+            values.accessToken
+          ).then((client) => {
+            console.log('client', client)
+            console.log('client-isLoggedIn', client?.isLoggedIn())
+            //setSubmitted(false);
+          })
+          setSubmitted(true);
         }}
       >
         {(formikProps) => (

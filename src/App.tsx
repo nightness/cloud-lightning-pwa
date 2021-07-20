@@ -15,6 +15,7 @@ import TestPage from "./pages/TestPage";
 import TicTacToe from "./pages/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
+import { MatrixProvider } from "./matrix/MatrixContext";
 
 const DisplayErrorText: React.FC = (props) => {
   return <DisplayError permissionDenied />;
@@ -93,11 +94,13 @@ function App() {
       <ThemeProvider>
         <Router>
           <FirebaseProvider>
-            <NavigationProvider>
-              <WebRtcProvider>
-                <MainDocument />
-              </WebRtcProvider>
-            </NavigationProvider>
+            <MatrixProvider>
+              <NavigationProvider>
+                <WebRtcProvider>
+                  <MainDocument />
+                </WebRtcProvider>
+              </NavigationProvider>
+            </MatrixProvider>
           </FirebaseProvider>
         </Router>
       </ThemeProvider>
