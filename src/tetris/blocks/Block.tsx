@@ -1,8 +1,24 @@
 import { CSSProperties } from "react";
 
+import { I, J, L, O, S, T, Z } from "..";
+export type BlockTypes = "I" | "J" | "L" | "O" | "S" | "T" | "Z";
+export type OrientationValue = 0 | 90 | 180 | 270;
+
 export interface BlockProps {
-  orientation: 0 | 90 | 180 | 270;
+  orientation: OrientationValue;
   style?: CSSProperties;
 }
 
-export type Block = (props: BlockProps) => JSX.Element
+export interface Props extends BlockProps {
+  blockType: BlockTypes;
+}
+
+export default ({ blockType, style, orientation }: Props) => {
+  if (blockType === "I") return <I style={style} orientation={orientation} />;
+  if (blockType === "J") return <J style={style} orientation={orientation} />;
+  if (blockType === "L") return <L style={style} orientation={orientation} />;
+  if (blockType === "O") return <O style={style} orientation={orientation} />;
+  if (blockType === "S") return <S style={style} orientation={orientation} />;
+  if (blockType === "T") return <T style={style} orientation={orientation} />;
+  return <Z style={style} orientation={orientation} />;
+};

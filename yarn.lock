@@ -2315,6 +2315,13 @@
   dependencies:
     "@types/react" "^16"
 
+"@types/react-keyboard-event-handler@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@types/react-keyboard-event-handler/-/react-keyboard-event-handler-1.5.1.tgz#ac3a2dec1d82ddbff9f7e77c6c84dcfa6ca34fe5"
+  integrity sha512-Kp2DBgOi60ShZk+EOoNa0Lmk4QtaA8ceEByG8Go1D+au+D1IXHpyJCCEHIrh9f8TmBIwgIPmjpvoRKycE53H8w==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^7.1.16":
   version "7.1.17"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.17.tgz#b9ccd01624c2a282b7af3762411cbf8945712438"
@@ -10942,6 +10949,11 @@ react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-keyboard-event-handler@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/react-keyboard-event-handler/-/react-keyboard-event-handler-1.5.4.tgz#bd0ccafbf62a96f605ddac78828f22efc54181f0"
+  integrity sha512-MSOxU/sQ5q9XWNHhXAJxzh4xVLZjKORGNC2Pzvx3qUo24TQeztGB0tq8oSArwX6vfKSIVijiw8wBmkN5pJOB4w==
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"

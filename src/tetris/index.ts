@@ -9,9 +9,9 @@ import Z from './blocks/Z'
 import TestPanel from "./TestPanel";
 import Tetris from "./Tetris";
 import TetrisBoard from "./TetrisBoard";
-import { Block, BlockProps } from "./blocks/Block"
+import Block, { BlockProps, BlockTypes, OrientationValue } from "./blocks/Block"
 
-export { Tetris, TetrisBoard, TestPanel };
+export { Block, Tetris, TetrisBoard, TestPanel };
 export { I, J, L, O, S, T, Z }
 
-export type { Block, BlockProps }
+export type { BlockProps, BlockTypes, OrientationValue }
