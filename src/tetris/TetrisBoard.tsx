@@ -1,4 +1,3 @@
-import { FLEX_EXPANDER } from "@blueprintjs/core/lib/esm/common/classes";
 import { useState } from "react";
 
 type Board = number[][];
@@ -7,7 +6,7 @@ const getEmptyBoard = () => {
   const board = Array(20)
     .fill(0)
     .map((x) => Array(10).fill(0));
-  return board as number[][];
+  return board as Board;
 };
 
 export default function TetrisBoard() {
@@ -19,7 +18,7 @@ export default function TetrisBoard() {
         {board?.map((value) => (
           <div style={{ display: "flex", flexDirection: "row" }}>
             {value.map((v) => (
-              <div className={`board-block board-block-${v}`}>{}</div>
+              <div className={`board-block board-block-${v}`} key={`${Math.random()}`}>{}</div>
             ))}
           </div>
         ))}
