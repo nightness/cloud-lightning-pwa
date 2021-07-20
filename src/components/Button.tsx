@@ -15,6 +15,7 @@ export default ({ className, text, style, ref, onLongPress, ...restProps }: Prop
   const [touchDown, setTouchDown] = useState<Date>()
   return (
     <button
+      type='button'
       ref={ref}
       style={style}
       className={`button-common ${className ? className : ''}`}
