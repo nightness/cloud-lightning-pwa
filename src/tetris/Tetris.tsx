@@ -30,6 +30,12 @@ export default function Tetris() {
         <O orientation={270} style={{ padding: '10px' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: "row" }}>
+        <T orientation={0} style={{ padding: '10px' }} />
+        <T orientation={90} style={{ padding: '10px' }} />
+        <T orientation={180} style={{ padding: '10px' }} />
+        <T orientation={270} style={{ padding: '10px' }} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: "row" }}>
         <S orientation={0} style={{ padding: '10px' }} />
         <S orientation={90} style={{ padding: '10px' }} />
         <S orientation={180} style={{ padding: '10px' }} />
