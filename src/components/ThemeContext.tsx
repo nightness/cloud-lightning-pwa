@@ -32,20 +32,20 @@ interface Props {
 export const ThemeProvider = ({ children }: Props) => {
   const [activeTheme, setActiveTheme] = useState<Theme>("Light");
   const { width, height } = useWindowDimensions();
-  const value = useBreakpoint("none", [
-    ["micro", "0.8rem"],
-    ["mobile", "0.9rem"],
-    ["tablet", "1.0rem"],
-    ["small", "1.1rem"],
-    ["medium", "1.2rem"],
-    ["large", "1.3rem"],
-    ["device", "1rem"],
-    ["smallDevice", "0.9rem"]
-  ]);
+  // const value = useBreakpoint("none", [
+  //   ["micro", "0.8rem"],
+  //   ["mobile", "0.9rem"],
+  //   ["tablet", "1.0rem"],
+  //   ["small", "1.1rem"],
+  //   ["medium", "1.2rem"],
+  //   ["large", "1.3rem"],
+  //   ["device", "1rem"],
+  //   ["smallDevice", "0.9rem"]
+  // ]);
 
-  useEffect(() => {
-    setCssVar('--device-font-size', value)
-  }, [value])
+  // useEffect(() => {
+  //   setCssVar('--device-font-size', value)
+  // }, [value])
 
   useEffect(() => {
     console.log("Theme: ", activeTheme);
