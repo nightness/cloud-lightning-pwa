@@ -45,7 +45,7 @@ export default () => {
   const [turnCount, setTurnCount] = useState(0);
 
   const onClickAnyCell = (row: number, col: number) => {
-    if (!isStarted || !turn || gameOver || board[row][col] != "") return;
+    if (!isStarted || !turn || gameOver || board[row][col] !== "") return;
     const newBoard = createNewBoard(board);
     newBoard[row][col] = turn;
     setBoard(newBoard);
@@ -94,7 +94,7 @@ export default () => {
   };
 
   // useEffect(() => {
-  //   if (turn == playerIs) return;
+  //   if (turn === playerIs) return;
   //   const timer = setTimeout(() => {
   //     callback.current();
   //   }, Math.floor(Math.random() * 1500));
@@ -327,10 +327,10 @@ export default () => {
     const flipTurn = turn === "O" ? "X" : "O";
     const winner = results.filled ? undefined : flipTurn;
     if (isOver && !winner) setMessage("Tie Game");
-    else if (isOver && winner == playerIs) setMessage("Player Wins!");
+    else if (isOver && winner === playerIs) setMessage("Player Wins!");
     else if (isOver) setMessage("Computer Wins");
     else if (turn !== playerIs) doComputersMove();
-    if (gameOver != isOver) setGameOver(isOver);
+    if (gameOver !== isOver) setGameOver(isOver);
   }, [board]);
 
   const getStyleFromWinResults = (
@@ -340,12 +340,12 @@ export default () => {
   ) => {
     const isPartOfD1 =
       (row === 0 && column === 0) ||
-      (row === 1 && column == 1) ||
-      (row === 2 && column == 2);
+      (row === 1 && column === 1) ||
+      (row === 2 && column === 2);
     const isPartOfD2 =
       (row === 0 && column === 2) ||
-      (row === 1 && column == 1) ||
-      (row === 2 && column == 0);
+      (row === 1 && column === 1) ||
+      (row === 2 && column === 0);
     const winner = playerIs === turn ? turn : turn === "O" ? "X" : "O";
     if (results === "row1" && row === 0) return `ttt-box-win${winner}`;
     if (results === "row2" && row === 1) return `ttt-box-win${winner}`;

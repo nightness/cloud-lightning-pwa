@@ -23,7 +23,7 @@ export default ({ currentUser }: Props) => {
     }, [snapshot])
 
     useEffect(() => {
-        //console.log(`loadingCollection == ${loadingCollection}`)
+        //console.log(`loadingCollection === ${loadingCollection}`)
     }, [loadingCollection])
 
     useEffect(() => {

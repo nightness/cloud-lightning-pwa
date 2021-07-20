@@ -3,20 +3,20 @@ service cloud.firestore {
   	match /databases/{database}/documents {
     	// Function to check if user is authorized
     	function isAuthorized() {
-      		return request.auth.uid != null
+      		return request.auth.uid !== null
     	}
 
 		// Calls
 		match /calls/{callId} {
 			function callParticipant(resource) {
-				return resource.data.creator == request.auth.uid || resource.data.target == request.auth.uid
+				return resource.data.creator === request.auth.uid || resource.data.target === request.auth.uid
 			}
 			allow read, write: if isAuthorized() && callParticipant(resource)
 			allow create, list: if isAuthorized()
 
 			function inCall(callId, uid) {
 				let data = get(/databases/$(database)/documents/calls/$(callId)).data;
-				return data.creator == uid || data.target == uid
+				return data.creator === uid || data.target === uid
 			}
 
 			// Offer Canidates
@@ -31,7 +31,7 @@ service cloud.firestore {
 		}
 		
 		match /profiles/{profileID} {
-			allow write: if isAuthorized() && (profileID == request.auth.uid)
+			allow write: if isAuthorized() && (profileID === request.auth.uid)
 			allow read: if isAuthorized()
 		}
  	}
