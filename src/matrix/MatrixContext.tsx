@@ -62,8 +62,6 @@ export const MatrixProvider = ({ children }: Props) => {
       userId,
     };
     const newClient = createClient(ops);
-    console.log('ops', ops)
-    console.log('client', newClient)
     setClient(newClient);
     return newClient;
   };
