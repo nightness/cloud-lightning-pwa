@@ -1,11 +1,7 @@
 import React, { CSSProperties } from "react";
+import { BlockProps } from "..";
 
-interface Props {
-  orientation: 0 | 90 | 180 | 270;
-  style?: CSSProperties;
-}
-
-export default function J({ style, orientation }: Props) {
+export default ({ style, orientation }: BlockProps) => {
   let outerClass = "flex-column";
   let innerClass = "flex-row";
   switch (orientation) {

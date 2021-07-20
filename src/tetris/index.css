@@ -1,3 +1,26 @@
+.tetris-board {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.tetris-board-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-block {
+    width: 25px;
+    height: 25px;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.board-block-0 {
+    background-color: hsla(0, 90%, 4%, 30%);
+}
+
 .box {
     width: 25px;
     height: 25px;

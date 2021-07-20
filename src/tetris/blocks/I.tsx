@@ -1,11 +1,6 @@
-import React, { CSSProperties } from "react";
+import { BlockProps } from "./Block";
 
-interface Props {
-  orientation: 0 | 90 | 180 | 270;
-  style?: CSSProperties;
-}
-
-export default function I({ style, orientation }: Props) {
+export default ({ style, orientation }: BlockProps) => {
   return (
     <div
       style={style}

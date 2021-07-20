@@ -1,12 +1,8 @@
 import React from "react";
 import { CSSProperties } from "styled-components";
+import { BlockProps } from "..";
 
-interface Props {
-  orientation: 0 | 90 | 180 | 270;
-  style?: CSSProperties
-}
-
-export default function S({ style, orientation }: Props) {
+export default ({ style, orientation }: BlockProps) => {
   return (
     <div
       style={style}
