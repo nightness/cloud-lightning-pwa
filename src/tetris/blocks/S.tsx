@@ -1,5 +1,3 @@
-import React from "react";
-import { CSSProperties } from "styled-components";
 import { BlockProps } from "..";
 
 export default ({ style, orientation }: BlockProps) => {

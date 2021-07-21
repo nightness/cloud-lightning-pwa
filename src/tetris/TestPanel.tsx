@@ -45,6 +45,12 @@ export default function TestPanel() {
         <Block blockType='Z' orientation={180} style={{ padding: '10px' }} />
         <Block blockType='Z' orientation={270} style={{ padding: '10px' }} />
       </div>
+      <div style={{ display: 'flex', flexDirection: "row" }}>
+        <Block blockType='X' orientation={0} style={{ padding: '10px' }} />
+        <Block blockType='X' orientation={90} style={{ padding: '10px' }} />
+        <Block blockType='X' orientation={180} style={{ padding: '10px' }} />
+        <Block blockType='X' orientation={270} style={{ padding: '10px' }} />
+      </div>
     </>
   );
 }
