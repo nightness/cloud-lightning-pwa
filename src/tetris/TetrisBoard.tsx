@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockTypes, OrientationValue } from ".";
 
@@ -23,6 +23,7 @@ const getBlockWidth = (
   if (blockType === "I" && (orientation === 90 || orientation === 270))
     return 1;
   if (blockType === "I") return 4;
+  if ((blockType === 'Z' || blockType === 'S') && (orientation === 90 || orientation === 270)) return 2;
   if (blockType === "O") return 2;
   if (blockType === "T" && (orientation === 90 || orientation === 270))
     return 2;
@@ -34,12 +35,13 @@ const getBlockHeight = (
   orientation: OrientationValue
 ) => {
   if (
-    (blockType === "J" || blockType === "T") &&
+    (blockType === "J" || blockType === "L") &&
     (orientation === 0 || orientation === 180)
   )
     return 2;
   if (blockType === "I" && (orientation === 0 || orientation === 180)) return 1;
   if (blockType === "I") return 4;
+  if ((blockType === 'Z' || blockType === 'S') && (orientation === 0 || orientation === 180)) return 2;
   if (blockType === "O") return 2;
   if (blockType === "T" && (orientation === 0 || orientation === 180)) return 2;
   return 3;
@@ -47,7 +49,7 @@ const getBlockHeight = (
 
 export default function TetrisBoard() {
   const [board, setBoard] = useState<Board>(getEmptyBoard());
-  const [currentBlockType, setCurrentBlockType] = useState<BlockTypes>("J");
+  const [currentBlockType, setCurrentBlockType] = useState<BlockTypes>("XO");
   const [verticalOffset, setVerticalOffset] = useState(0);
   const [horizontalOffset, setHorizontalOffset] = useState(0);
   const [orientation, setOrientation] = useState<OrientationValue>(0);
