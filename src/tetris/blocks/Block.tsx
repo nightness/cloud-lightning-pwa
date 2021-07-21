@@ -5,6 +5,7 @@ export type BlockTypes = "I" | "J" | "L" | "O" | "S" | "T" | "Z" | 'XO';
 export type OrientationValue = 0 | 90 | 180 | 270;
 
 export interface BlockProps {
+  
   orientation: OrientationValue;
   style?: CSSProperties;
 }
