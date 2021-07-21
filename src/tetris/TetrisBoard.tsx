@@ -1,6 +1,7 @@
 import { useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockTypes, OrientationValue } from ".";
+import useInterval from "../hooks/useInterval";
 
 type Board = number[][];
 
@@ -49,10 +50,20 @@ const getBlockHeight = (
 
 export default function TetrisBoard() {
   const [board, setBoard] = useState<Board>(getEmptyBoard());
-  const [currentBlockType, setCurrentBlockType] = useState<BlockTypes>("XO");
+  const [currentBlockType, setCurrentBlockType] = useState<BlockTypes>("O");
   const [verticalOffset, setVerticalOffset] = useState(0);
   const [horizontalOffset, setHorizontalOffset] = useState(0);
   const [orientation, setOrientation] = useState<OrientationValue>(0);
+  const [isStarted, setIsStarted] = useState(true);
+
+  useInterval(() => {
+    if (!isStarted) return
+    setVerticalOffset(
+      Math.min(
+        Math.max(verticalOffset + 25, 0),
+        500 - getBlockHeight(currentBlockType, orientation) * 25
+      ))
+  }, 1000)
 
   return (
     <div className="tetris-board">

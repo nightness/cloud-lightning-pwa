@@ -5,7 +5,7 @@ export default function Tetris() {
   return (
     <Page>
         <TetrisBoard />
-        <TestPanel />
+        {/* <TestPanel /> */}
     </Page>
   );
 }
