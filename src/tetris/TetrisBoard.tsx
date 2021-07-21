@@ -44,7 +44,7 @@ export default function TetrisBoard() {
       <KeyboardEventHandler
         handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
         onKeyEvent={(key, e) => {
-          setCurrentBlockType(key === "X" || key === 'O' ? "XO" : key as BlockTypes)
+          setCurrentBlockType(key === "X" ? "XO" : key as BlockTypes)
         }}
       />
       <div className="tetris-board-inner">
