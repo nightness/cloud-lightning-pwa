@@ -8,10 +8,6 @@ export default ({ style, orientation }: BlockProps) => {
       outerClass = "flex-row-reverse";
       innerClass = "flex-column";
       break;
-    // case 180:
-    //   outerClass = "flex-column-reverse";
-    //   innerClass = "flex-row-reverse";
-    //   break;
     case 270:
       outerClass = "flex-row";
       innerClass = "flex-column-reverse";
@@ -20,12 +16,6 @@ export default ({ style, orientation }: BlockProps) => {
 
   return (
     <div style={style} className={outerClass}>
-      {/* <div className={innerClass}>
-        <div className="blank" />
-        <div className="blank" />
-        <div className="blank" />
-        <div className="blank" />
-      </div> */}
       <div className={innerClass}>
         <div className="box" />
         <div className="box" />
