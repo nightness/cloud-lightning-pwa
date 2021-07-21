@@ -139,6 +139,7 @@ export default function TetrisBoard() {
               top: verticalOffset,
               left: horizontalOffset,
             }}
+            key={`${Math.random()}`}
           />
         ) : (
           <></>
