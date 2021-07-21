@@ -1,4 +1,4 @@
-import { CSSProperties } from "styled-components";
+import { CSSProperties } from "react";
 
 interface Props {
   children: JSX.Element | JSX.Element[];

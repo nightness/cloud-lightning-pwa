@@ -19,7 +19,7 @@ import {
 import { Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
 import { FirebaseContext } from "../database/FirebaseContext";
-import { CSSProperties } from "styled-components";
+import { CSSProperties } from "react";
 import { useHistory } from "react-router-dom";
 
 interface AuthenticationFields {

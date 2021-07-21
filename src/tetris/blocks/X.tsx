@@ -1,36 +1,47 @@
-import React, { CSSProperties } from "react";
 import { BlockProps } from "..";
 
 export default ({ style, orientation }: BlockProps) => {
-  let outerClass = "flex-column";
-  let innerClass = "flex-row";
-  switch (orientation) {
-    case 90:
-      outerClass = "flex-row-reverse";
-      innerClass = "flex-column";
-      break;
-    case 180:
-      outerClass = "flex-column";
-      innerClass = "flex-row";
-      break;
-    case 270:
-      outerClass = "flex-row-reverse";
-      innerClass = "flex-column-reverse";
-      break;
-  }
-
+  const o1 = orientation === 0 || orientation === 180 ? "box" : "blank";
+  const o2 = orientation === 0 || orientation === 180 ? "blank" : "box";
   return (
-    <div style={style} className={outerClass}>
-      <div className={innerClass}>
-        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box'}`} />
-        <div className='box' />
-        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box'}`} />
+    <div style={style} className="flex-row">
+      <div className="flex-column">
+        <div className={o1} />
+        <div className={o2} />
+        <div className={o1} />
       </div>
-      <div className={innerClass}>
-        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box'}`} />
-        <div className='box' />
-        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box'}`} />
+      <div className="flex-column">
+        <div className={o2} />
+        <div className={o1} />
+        <div className={o2} />
+      </div>
+      <div className="flex-column">
+        <div className={o1} />
+        <div className={o2} />
+        <div className={o1} />
       </div>
     </div>
   );
-}
+};
+
+// export default ({ style, orientation }: BlockProps) => {
+//   return (
+//     <div style={style} className="flex-row">
+//       <div className="flex-column">
+//         <div className="box" />
+//         <div className="blank" />
+//         <div className="box" />
+//       </div>
+//       <div className="flex-column">
+//         <div className="blank" />
+//         <div className="box" />
+//         <div className="blank" />
+//       </div>
+//       <div className="flex-column">
+//         <div className="box" />
+//         <div className="blank" />
+//         <div className="box" />
+//       </div>
+//     </div>
+//   );
+// };

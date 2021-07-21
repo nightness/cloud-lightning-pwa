@@ -42,7 +42,7 @@ export default function TetrisBoard() {
         }}
       />
       <KeyboardEventHandler
-        handleKeys={["I", "J", "L", "O", "S", "T", "Z"]}
+        handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
         onKeyEvent={(key, e) => {
           setCurrentBlockType(key as BlockTypes)
         }}
