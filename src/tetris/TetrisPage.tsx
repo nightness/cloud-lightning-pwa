@@ -7,7 +7,7 @@ export default function Tetris() {
         <TetrisBoard />
         {/* <TestPanel /> */}
         <div>
-          <h3>Use a desktop keyboard to interact atm</h3>
+          <h3>Use of a physical keyboard is the only way to interact atm</h3>
           <h4>Change piece with the following keys: I, J, L, O, S, T, X, Z</h4>
           <h4>Rotate piece with SpaceBar</h4>
           <h4>Use Left, Right, Up, Down to move the piece</h4>

@@ -91,10 +91,9 @@ export default function TetrisBoard() {
         handleKeys={["UP", "DOWN"]}
         onKeyEvent={(key, e) =>
           setVerticalOffset(
-            Math.min(
-              Math.max(verticalOffset + (key === "UP" ? -25 : 25), 0),
-              500 - getBlockHeight(currentBlockType, orientation) * 25
-            )
+            key === "UP"
+              ? 0
+              : 500 - getBlockHeight(currentBlockType, orientation) * 25
           )
         }
       />
