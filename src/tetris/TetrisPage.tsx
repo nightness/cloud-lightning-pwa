@@ -10,7 +10,7 @@ export default function Tetris() {
           <h3>Use of a physical keyboard is the only way to interact atm</h3>
           <h4>Change piece with the following keys: I, J, L, O, S, T, X, Z</h4>
           <h4>Rotate piece with SpaceBar</h4>
-          <h4>Use Left (-1), Right (1), Up (top), Down (bottom) to move the piece</h4>
+          <h4>Move the piece with: Left (-1x), Right (1x), Up (top), Down (bottom) to move the piece</h4>
         </div>
     </Page>
   );
