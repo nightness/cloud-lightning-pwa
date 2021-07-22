@@ -24,7 +24,11 @@ const getBlockWidth = (
   if (blockType === "I" && (orientation === 90 || orientation === 270))
     return 1;
   if (blockType === "I") return 4;
-  if ((blockType === 'Z' || blockType === 'S') && (orientation === 90 || orientation === 270)) return 2;
+  if (
+    (blockType === "Z" || blockType === "S") &&
+    (orientation === 90 || orientation === 270)
+  )
+    return 2;
   if (blockType === "O") return 2;
   if (blockType === "T" && (orientation === 90 || orientation === 270))
     return 2;
@@ -42,7 +46,11 @@ const getBlockHeight = (
     return 2;
   if (blockType === "I" && (orientation === 0 || orientation === 180)) return 1;
   if (blockType === "I") return 4;
-  if ((blockType === 'Z' || blockType === 'S') && (orientation === 0 || orientation === 180)) return 2;
+  if (
+    (blockType === "Z" || blockType === "S") &&
+    (orientation === 0 || orientation === 180)
+  )
+    return 2;
   if (blockType === "O") return 2;
   if (blockType === "T" && (orientation === 0 || orientation === 180)) return 2;
   return 3;
@@ -57,13 +65,14 @@ export default function TetrisBoard() {
   const [isStarted, setIsStarted] = useState(true);
 
   useInterval(() => {
-    if (!isStarted) return
+    if (!isStarted) return;
     setVerticalOffset(
       Math.min(
         Math.max(verticalOffset + 25, 0),
         500 - getBlockHeight(currentBlockType, orientation) * 25
-      ))
-  }, 1000)
+      )
+    );
+  }, 1000);
 
   return (
     <div className="tetris-board">
@@ -121,7 +130,10 @@ export default function TetrisBoard() {
       />
       <div className="tetris-board-inner">
         {board?.map((value) => (
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            style={{ display: "flex", flexDirection: "row" }}
+            key={`${Math.random()}`}
+          >
             {value.map((v) => (
               <div
                 className={`board-block board-block-${v}`}
@@ -139,11 +151,8 @@ export default function TetrisBoard() {
               top: verticalOffset,
               left: horizontalOffset,
             }}
-            key={`${Math.random()}`}
           />
-        ) : (
-          <></>
-        )}
+        ) : undefined}
       </div>
     </div>
   );
