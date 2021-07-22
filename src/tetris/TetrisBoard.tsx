@@ -2,76 +2,22 @@ import { useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockType, OrientationValue } from ".";
 import useInterval from "../hooks/useInterval";
-
-type Board = number[][];
-
-const getEmptyBoard = () => {
-  const board = Array(20)
-    .fill(0)
-    .map((x) => Array(10).fill(0));
-  return board as Board;
-};
-
-const copyBoard = (board: Board) => {
-  return board.map((arr) => arr.slice());
-};
-
-const getBlockWidth = (blockType: BlockType, orientation: OrientationValue) => {
-  if (
-    (blockType === "J" || blockType === "T") &&
-    (orientation === 90 || orientation === 270)
-  )
-    return 2;
-  if (blockType === "I" && (orientation === 90 || orientation === 270))
-    return 1;
-  if (blockType === "I") return 4;
-  if (
-    (blockType === "Z" || blockType === "S") &&
-    (orientation === 90 || orientation === 270)
-  )
-    return 2;
-  if (blockType === "O") return 2;
-  if (blockType === "T" && (orientation === 90 || orientation === 270))
-    return 2;
-  return 3;
-};
-
-const getBlockHeight = (
-  blockType: BlockType,
-  orientation: OrientationValue
-) => {
-  if (
-    (blockType === "J" || blockType === "L") &&
-    (orientation === 0 || orientation === 180)
-  )
-    return 2;
-  if (blockType === "I" && (orientation === 0 || orientation === 180)) return 1;
-  if (blockType === "I") return 4;
-  if (
-    (blockType === "Z" || blockType === "S") &&
-    (orientation === 0 || orientation === 180)
-  )
-    return 2;
-  if (blockType === "O") return 2;
-  if (blockType === "T" && (orientation === 0 || orientation === 180)) return 2;
-  return 3;
-};
-
-const randomBlock = () => {
-  const blocks: BlockType[] = ["I", "J", "L", "O", "S", "T", "Z", "X!"];
-  return blocks[Math.floor(Math.random() * 8)];
-};
-
-const minmax = (value: number, min: number, max: number) =>
-  Math.min(Math.max(value, min), max);
+import {
+  Board,
+  getEmptyBoard,
+  randomBlock,
+  copyBoard,
+  minmax,
+  getBlockHeight,
+  getBlockWidth,
+  createBlockPattern,
+} from "./TetrisSupport";
 
 export default function TetrisBoard() {
   const BLOCK_SIZE = 25; // Pixels
   const [board, setBoard] = useState<Board>(getEmptyBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>("O");
   const [blockLocation, setBlockLocation] = useState([0, 4]); // [Height, Width]
-  // const [verticalOffset, setVerticalOffset] = useState(0);
-  // const [horizontalOffset, setHorizontalOffset] = useState(0);
   const [orientation, setOrientation] = useState<OrientationValue>(0);
   const [isStarted, setIsStarted] = useState(true);
 
@@ -90,7 +36,16 @@ export default function TetrisBoard() {
       blockLocation[0],
       blockLocation[1]
     );
-    newBoard[19][9] = 1;
+    const blockMap: Board = createBlockPattern(currentBlockType, orientation);
+    // Now "map" the change on to the board
+    blockMap.map((arrayValue, index, array) => {
+      const map = blockMap[index].map((map, idx) => blockMap[index][idx] || array[index][idx])
+      return newBoard[blockLocation[0] + index].splice(
+        blockMap[index].length,
+        blockMap[index].length, 
+        ...map
+      );
+    });
     setBoard(newBoard);
     newBlock();
   };
@@ -106,7 +61,11 @@ export default function TetrisBoard() {
       placeOnBoard();
       return;
     }
-    setBlockLocation([newOffset, blockLocation[1]]);
+    // Need to check that each box in the block is no touching any
+    // non-zero board value
+    if (board[newOffset + 1][blockLocation[1]] === 0)
+      setBlockLocation([newOffset, blockLocation[1]]);
+    else placeOnBoard();
   }, 1000);
 
   return (
@@ -119,7 +78,7 @@ export default function TetrisBoard() {
             minmax(
               blockLocation[1] + (key === "LEFT" ? -1 : 1),
               0,
-              9 - getBlockWidth(currentBlockType, orientation)
+              10 - getBlockWidth(currentBlockType, orientation)
             ),
           ])
         }
