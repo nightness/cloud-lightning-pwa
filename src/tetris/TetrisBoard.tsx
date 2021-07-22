@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { array } from "yup/lib/locale";
 import { Block, BlockType, OrientationValue } from ".";
@@ -46,7 +46,7 @@ export default function TetrisBoard() {
           blockMap[index][idx] ||
           board[blockLocation.row + index][blockLocation.column + idx]
       );
-      console.log("|MAP|: ", map);
+      //console.log("|MAP|: ", map);
       return newBoard[blockLocation.row + index + (endOfBoard ? 1 : 0)].splice(
         blockLocation.column,
         map.length,
@@ -56,6 +56,14 @@ export default function TetrisBoard() {
     setBoard(newBoard);
     newBlock();
   };
+
+  useEffect(() => {
+    const topRow = board[0]
+    topRow.forEach((cell) => {
+      if (cell !== 0)
+        setIsStarted(false)
+    })
+  }, [board])
 
   useInterval(() => {
     if (!isStarted) return;
@@ -84,7 +92,7 @@ export default function TetrisBoard() {
       return;
     }
     setBlockLocation({ row: newOffset, column: blockLocation.column });
-  }, 3000);
+  }, 500);
 
   const handleRotate = () => {
     const newOrientation =
