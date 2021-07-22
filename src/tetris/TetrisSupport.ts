@@ -31,10 +31,10 @@ export const getBoardSubset = (
   size: Size
 ) => {
   const results = createNewBoard(size[0], size[1]);
-  for (let c = 0; c < size[0]; c++) {
-    for (let r = 0; r < size[1]; r++) {
+  for (let i = 0; i < size[0]; i++) {
+    for (let j = 0; j < size[1]; j++) {
       //console.log("Test: ", board[column + c][row + r], column, row, c, r)
-      results[c][r] = board[row + c][column + r];
+      results[i][j] = board[row + i][column + j];
     }
   }
   return results;
