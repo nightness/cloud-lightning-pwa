@@ -39,10 +39,13 @@ export default function TetrisBoard() {
     const blockMap: Board = createBlockPattern(currentBlockType, orientation);
     // Now "map" the change on to the board
     blockMap.map((arrayValue, index, array) => {
-      const map = blockMap[index].map((map, idx) => blockMap[index][idx] || array[index][idx])
+      const map = blockMap[index].map(
+        (map, idx) => blockMap[index][idx] || array[index][idx]
+      );
+      console.log(map)
       return newBoard[blockLocation[0] + index].splice(
-        blockMap[index].length,
-        blockMap[index].length, 
+        map.length + 1,
+        map.length,
         ...map
       );
     });
@@ -87,9 +90,11 @@ export default function TetrisBoard() {
         handleKeys={["UP", "DOWN"]}
         onKeyEvent={(key, e) =>
           setBlockLocation([
-            key === "UP"
-              ? 0
-              : 20 - getBlockHeight(currentBlockType, orientation),
+            minmax(
+              (key === "DOWN" ? blockLocation[0] + 1 : 0),
+              0,
+              20 - getBlockHeight(currentBlockType, orientation)
+            ),
             blockLocation[1],
           ])
         }
