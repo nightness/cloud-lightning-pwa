@@ -147,15 +147,15 @@ export default function TetrisBoard() {
               ? 270
               : 0;
 
-          const width = minmax(
-            blockLocation[1] + getBlockWidth(currentBlockType, newOrientation),
-            0,
-            9
-          );
           const height = minmax(
-            blockLocation[0] + getBlockHeight(currentBlockType, newOrientation),
+            blockLocation[0],
             0,
-            19
+            19 - getBlockHeight(currentBlockType, newOrientation)
+          );
+          const width = minmax(
+            blockLocation[1],
+            0,
+            9 - getBlockWidth(currentBlockType, newOrientation)
           );
 
           setBlockLocation([height, width]);
@@ -188,8 +188,8 @@ export default function TetrisBoard() {
             orientation={orientation}
             style={{
               position: "absolute",
-              top: blockLocation[0] * 25,
-              left: blockLocation[1] * 25,
+              top: blockLocation[0] * BLOCK_SIZE,
+              left: blockLocation[1] * BLOCK_SIZE,
             }}
           />
         ) : undefined}
