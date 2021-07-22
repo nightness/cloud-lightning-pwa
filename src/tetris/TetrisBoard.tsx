@@ -47,6 +47,7 @@ export default function TetrisBoard() {
           board[blockLocation.row + index][blockLocation.column + idx]
       );
       //console.log("|MAP|: ", map);
+      console.log('end of board')
       return newBoard[blockLocation.row + index + (endOfBoard ? 1 : 0)].splice(
         blockLocation.column,
         map.length,
@@ -57,6 +58,7 @@ export default function TetrisBoard() {
     newBlock();
   };
 
+  // Stops the game
   useEffect(() => {
     const topRow = board[0]
     topRow.forEach((cell) => {
@@ -92,7 +94,7 @@ export default function TetrisBoard() {
       return;
     }
     setBlockLocation({ row: newOffset, column: blockLocation.column });
-  }, 500);
+  }, 1000);
 
   const handleRotate = () => {
     const newOrientation =
