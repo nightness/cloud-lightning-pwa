@@ -46,8 +46,6 @@ export default function TetrisBoard() {
           blockMap[index][idx] ||
           board[blockLocation.row + index][blockLocation.column + idx]
       );
-      //console.log("|MAP|: ", map);
-      console.log('end of board')
       return newBoard[blockLocation.row + index + (endOfBoard ? 1 : 0)].splice(
         blockLocation.column,
         map.length,
@@ -62,8 +60,10 @@ export default function TetrisBoard() {
   useEffect(() => {
     const topRow = board[0]
     topRow.forEach((cell) => {
-      if (cell !== 0)
+      if (cell !== 0) {
         setIsStarted(false)
+        console.log("Stopped gamed; pieces on top line")
+      }
     })
   }, [board])
 
@@ -82,7 +82,6 @@ export default function TetrisBoard() {
         blockLocation.column,
         [blockMap.length, blockMap[0].length]
       );
-      console.log("Board Intersection: ", boardMap);
       boardMap.forEach((r, rIndex, rArray) => {
         r.forEach((block) => {
           if (block !== 0) impact = true;
@@ -153,6 +152,7 @@ export default function TetrisBoard() {
       <KeyboardEventHandler
         handleKeys={["R"]}
         onKeyEvent={(key, e) => {
+          setIsStarted(true);
           setBoard(createNewBoard());
           newBlock();
         }}

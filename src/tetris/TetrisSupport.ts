@@ -18,6 +18,7 @@ export const copyBoard = (board: Board) => {
   return board.map((arr) => arr.slice());
 };
 
+// DOWN BUTTON NEEDS THIS CHECK; IT'S CAUSING PROBLEMS
 export const wouldOccupySameSpace = (board: Board, block: Board, blockRow: number, blockColumn: number) => {
   for (let b = blockRow; b < blockColumn; b++ ) {
     const first = board[b]

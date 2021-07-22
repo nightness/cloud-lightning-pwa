@@ -5,7 +5,7 @@ export default function Tetris() {
   return (
     <Page>
         <TetrisBoard />
-        <TestPanel />
+        {/* <TestPanel /> */}
         <div>
           <h3>Use of a physical keyboard is the only way to interact atm</h3>
           <h4>Change piece with the following keys: I, J, L, O, S, T, X, Z</h4>
