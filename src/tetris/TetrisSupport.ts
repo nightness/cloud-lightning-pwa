@@ -1,12 +1,16 @@
-import { exception } from "console";
 import { BlockType, OrientationValue } from ".";
 
 export type Board = number[][];
+export type Size = [number, number];
+export type Location = {
+  row: number,
+  column: number
+}
 
-export const getEmptyBoard = () => {
-  const board = Array(20)
+export const createNewBoard = (height: number = 20, width: number = 10) => {
+  const board = Array(height)
     .fill(0)
-    .map((x) => Array(10).fill(0));
+    .map((x) => Array(width).fill(0));
   return board as Board;
 };
 
@@ -14,7 +18,32 @@ export const copyBoard = (board: Board) => {
   return board.map((arr) => arr.slice());
 };
 
-export const getBlockWidth = (blockType: BlockType, orientation: OrientationValue) => {
+export const wouldOccupySameSpace = (board: Board, block: Board, blockRow: number, blockColumn: number) => {
+  for (let b = blockRow; b < blockColumn; b++ ) {
+    const first = board[b]
+  }
+}
+
+export const getBoardSubset = (
+  board: Board,
+  row: number,
+  column: number,
+  size: Size
+) => {
+  const results = createNewBoard(size[0], size[1]);
+  for (let c = 0; c < size[0]; c++) {
+    for (let r = 0; r < size[1]; r++) {
+      //console.log("Test: ", board[column + c][row + r], column, row, c, r)
+      results[c][r] = board[row + c][column + r];
+    }
+  }
+  return results;
+};
+
+export const getBlockWidth = (
+  blockType: BlockType,
+  orientation: OrientationValue
+) => {
   if (
     (blockType === "J" || blockType === "T") &&
     (orientation === 90 || orientation === 270)
@@ -61,7 +90,7 @@ export const createBlockPattern = (
 ) => {
   if (blockType === "I") {
     const map: Board =
-      orientation === 90 || orientation === 270
+      orientation === 0 || orientation === 180
         ? [[1, 1, 1, 1]]
         : [[1], [1], [1], [1]];
     return map;
@@ -84,11 +113,12 @@ export const createBlockPattern = (
             [0, 1, 0],
             [1, 1, 1],
           ]
-        : [ // orientation === 270
-          [1, 0],
-          [1, 1],
-          [1, 0],
-        ]
+        : [
+            // orientation === 270
+            [1, 0],
+            [1, 1],
+            [1, 0],
+          ];
     return map;
   }
 
@@ -110,11 +140,12 @@ export const createBlockPattern = (
             [0, 0, 1],
             [1, 1, 1],
           ]
-        : [ // orientation === 270
-          [1, 0],
-          [1, 0],
-          [1, 1],
-        ]
+        : [
+            // orientation === 270
+            [1, 0],
+            [1, 0],
+            [1, 1],
+          ];
     return map;
   }
 
@@ -136,19 +167,20 @@ export const createBlockPattern = (
             [1, 1, 1],
             [0, 0, 1],
           ]
-        : [ // orientation === 270
-          [0, 1],
-          [0, 1],
-          [1, 1],
-        ]
+        : [
+            // orientation === 270
+            [0, 1],
+            [0, 1],
+            [1, 1],
+          ];
     return map;
   }
 
   if (blockType === "O") {
     const map: Board = [
-            [1, 1],
-            [1, 1],
-          ]
+      [1, 1],
+      [1, 1],
+    ];
     return map;
   }
 
@@ -159,11 +191,12 @@ export const createBlockPattern = (
             [0, 1, 1],
             [1, 1, 0],
           ]
-        : [ // Orientation of 90 or 270
+        : [
+            // Orientation of 90 or 270
             [1, 0],
             [1, 1],
             [0, 1],
-          ]
+          ];
     return map;
   }
 
@@ -174,11 +207,12 @@ export const createBlockPattern = (
             [1, 1, 0],
             [0, 1, 1],
           ]
-        : [ // Orientation of 90 or 270
+        : [
+            // Orientation of 90 or 270
             [0, 1],
             [1, 1],
             [1, 0],
-          ]
+          ];
     return map;
   }
 
@@ -190,16 +224,17 @@ export const createBlockPattern = (
             [0, 1, 0],
             [1, 0, 1],
           ]
-        : [ // Orientation of 90 or 270
+        : [
+            // Orientation of 90 or 270
             [0, 1, 0],
             [1, 0, 1],
             [0, 1, 0],
-          ]
+          ];
     return map;
   }
 
-  throw new Error('missing blockType')
-  return [[]] as Board
+  throw new Error("missing blockType");
+  return [[]] as Board;
 };
 
 export const randomBlock = () => {
