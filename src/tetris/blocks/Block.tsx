@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 
 import { I, J, L, O, S, T, Z, XO } from "..";
-export type BlockTypes = "I" | "J" | "L" | "O" | "S" | "T" | "Z" | 'X!';
+export type BlockType = "I" | "J" | "L" | "O" | "S" | "T" | "Z" | 'X!';
 export type OrientationValue = 0 | 90 | 180 | 270;
 
 export interface BlockProps {
@@ -11,7 +11,7 @@ export interface BlockProps {
 }
 
 export interface Props extends BlockProps {
-  blockType: BlockTypes;
+  blockType: BlockType;
 }
 
 export default ({ blockType, style, orientation }: Props) => {

@@ -22,6 +22,10 @@
     background-color: hsla(0, 90%, 4%, 30%);
 }
 
+.board-block-1 {
+    background-color: hsla(0, 90%, 50%, 60%);
+}
+
 .box {
     width: 25px;
     height: 25px;
