@@ -58,14 +58,14 @@ export default function TetrisBoard() {
 
   // Stops the game
   useEffect(() => {
-    const topRow = board[0]
+    const topRow = board[0];
     topRow.forEach((cell) => {
       if (cell !== 0) {
-        setIsStarted(false)
-        console.log("Stopped gamed; pieces on top line")
+        setIsStarted(false);
+        console.log("Stopped gamed; pieces on top line");
       }
-    })
-  }, [board])
+    });
+  }, [board]);
 
   useInterval(() => {
     if (!isStarted) return;
@@ -94,6 +94,12 @@ export default function TetrisBoard() {
     }
     setBlockLocation({ row: newOffset, column: blockLocation.column });
   }, 1000);
+
+  const handleReset = () => {
+    setIsStarted(true);
+    setBoard(createNewBoard());
+    newBlock();
+  };
 
   const handleRotate = () => {
     const newOrientation =
@@ -149,14 +155,7 @@ export default function TetrisBoard() {
         }
       />
       <KeyboardEventHandler handleKeys={["SPACE"]} onKeyEvent={handleRotate} />
-      <KeyboardEventHandler
-        handleKeys={["R"]}
-        onKeyEvent={(key, e) => {
-          setIsStarted(true);
-          setBoard(createNewBoard());
-          newBlock();
-        }}
-      />
+      <KeyboardEventHandler handleKeys={["R"]} onKeyEvent={handleReset} />
       <KeyboardEventHandler
         handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
         onKeyEvent={(key, e) => {
