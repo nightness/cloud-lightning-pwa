@@ -74,7 +74,7 @@ export default function TetrisBoard() {
     ]);
     const impactMap = boardMap.map((value, index, array) =>
       value.map((map, idx) =>
-        blockMap[index][idx] && board[row + index][blockLocation.column + idx]
+        blockMap[index][idx] && board[row + index][column + idx]
           ? 1
           : 0
       )
@@ -129,6 +129,18 @@ export default function TetrisBoard() {
         : 0;
 
     if (checkForRoomToRotate()) {
+      setBlockLocation({
+        row: minmax(
+          blockLocation.row,
+          0,
+          19 - getBlockWidth(currentBlockType, orientation)
+        ),
+        column: minmax(
+          blockLocation.column,
+          0,
+          9 - getBlockHeight(currentBlockType, orientation)
+        ),
+      });
       setOrientation(newOrientation);
     }
   };
@@ -141,7 +153,7 @@ export default function TetrisBoard() {
         column: minmax(
           blockLocation.column + offset,
           0,
-          9 - getBlockWidth(currentBlockType, orientation)
+          10 - getBlockWidth(currentBlockType, orientation)
         ),
       });
     }
