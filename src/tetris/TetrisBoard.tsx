@@ -44,6 +44,32 @@ export default function TetrisBoard() {
       );
       return newBoard[row + index].splice(column, map.length, ...map);
     });
+
+    // Find out which row need removing
+    const removeRows = [] as number[];
+    newBoard.forEach((row, index) => {
+      let isFull = true;
+      row.map((block) => {
+        if (block === 0) isFull = false;
+      });
+      if (isFull) removeRows.push(index);
+    });
+
+    if (removeRows.length > 0) console.log("- : ", removeRows);
+
+    console.log("Remove Rows: ", removeRows)
+
+    // Remove those rows
+    removeRows.forEach((rowIndex, index) => {
+      newBoard.splice(rowIndex - index, 1);
+    });
+
+    // Add the same number of new rows at the top of the board
+    for (let i = 0; i < removeRows.length; i++) {
+      const row = Array(10).fill(0);
+      newBoard.unshift(row);
+    }
+
     setBoard(newBoard);
     newBlock();
   };
@@ -58,27 +84,6 @@ export default function TetrisBoard() {
         return;
       }
     });
-
-    // Find out which row need removing
-    const removeRows = [] as number[];
-    board.forEach((row, index) => {
-      let isFull = true;
-      row.map((block) => {
-        if (block === 0) isFull = false;
-      });
-      if (isFull) removeRows.push(index);
-    });
-
-    // Remove those rows
-    removeRows.forEach((rowIndex) => {
-      board.splice(rowIndex, 1);
-    });
-
-    // Add the same number of new rows at the top of the board
-    for (let i = 0; i < removeRows.length; i++) {
-      const row = Array(10).fill(0);
-      board.unshift(row);
-    }
   }, [board]);
 
   //
