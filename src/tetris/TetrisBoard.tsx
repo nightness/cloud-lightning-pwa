@@ -48,17 +48,42 @@ export default function TetrisBoard() {
     newBlock();
   };
 
-  // Stops the game
+  // Stops the game and clears rows when ever the board changes
   useEffect(() => {
     const topRow = board[0];
     topRow.forEach((cell) => {
       if (cell !== 0) {
         setIsStarted(false);
         console.log("Stopped gamed; pieces on top line");
+        return;
       }
     });
+
+    // Find out which row need removing
+    const removeRows = [] as number[];
+    board.forEach((row, index) => {
+      let isFull = true;
+      row.map((block) => {
+        if (block === 0) isFull = false;
+      });
+      if (isFull) removeRows.push(index);
+    });
+
+    // Remove those rows
+    removeRows.forEach((rowIndex) => {
+      board.splice(rowIndex, 1);
+    });
+
+    // Add the same number of new rows at the top of the board
+    for (let i = 0; i < removeRows.length; i++) {
+      const row = Array(10).fill(0);
+      board.unshift(row);
+    }
   }, [board]);
 
+  //
+  // TODO
+  //
   const checkForRoomToRotate = () => {
     let canRotate = true;
 
@@ -74,9 +99,7 @@ export default function TetrisBoard() {
     ]);
     const impactMap = boardMap.map((value, index, array) =>
       value.map((map, idx) =>
-        blockMap[index][idx] && board[row + index][column + idx]
-          ? 1
-          : 0
+        blockMap[index][idx] && board[row + index][column + idx] ? 1 : 0
       )
     );
     impactMap.forEach((r, rIndex, rArray) => {
