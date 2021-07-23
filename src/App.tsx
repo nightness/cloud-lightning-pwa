@@ -11,7 +11,7 @@ import {
   Pages,
 } from "./navigation";
 import { WallMessenger } from "./messenger";
-import TestPage from "./pages/TestPage";
+import { TestPage, Games } from "./pages"
 import TicTacToe from "./pages/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
@@ -31,34 +31,40 @@ const MainDocument = () => {
     component: Home,
     children: [
       {
-        path: "/home/TicTacToe",
+        path: "/home/test",
+        title: "Test Page",
+        component: TestPage,
+      },
+      {
+        path: "/home/error",
+        title: "Display Error",
+        component: DisplayErrorText,
+      },
+    ]
+  });
+  addPage({
+    path: "/games",
+    title: "Games",
+    component: Games,
+    children: [
+      {
+        path: "/games/TicTacToe",
         title: "Tic Tac Toe",
         component: TicTacToe,
-        children: [
-          {
-            path: "/home/test",
-            title: "Test Page",
-            component: TestPage,
-          },
-          {
-            path: "/home/error",
-            title: "Display Error",
-            component: DisplayErrorText,
-          },
-        ],
       }, {
-        path: "/home/Tetris",
+        path: "/games/Tetris",
         title: "Tetris",
         component: TetrisPage,
       }
-    ],
+    ]    
+    // requiresAuthentication: true,
   });
-  addPage({
-    path: "/wall",
-    title: "Member Walls",
-    component: WallMessenger,
-    requiresAuthentication: true,
-  });
+  // addPage({
+  //   path: "/wall",
+  //   title: "Member Walls",
+  //   component: WallMessenger,
+  //   requiresAuthentication: true,
+  // });
   addPage({
     path: "/WebRTC",
     title: "WebRTC Chat",
