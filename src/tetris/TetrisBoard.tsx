@@ -18,7 +18,7 @@ import {
 export default function TetrisBoard() {
   const BLOCK_SIZE = 25; // Pixels
   const [board, setBoard] = useState<Board>(createNewBoard());
-  const [currentBlockType, setCurrentBlockType] = useState<BlockType>("O");
+  const [currentBlockType, setCurrentBlockType] = useState<BlockType>(randomBlock());
   const [blockLocation, setBlockLocation] = useState({ row: 0, column: 4 }); // [row, column]
   const [orientation, setOrientation] = useState<OrientationValue>(0);
   const [isStarted, setIsStarted] = useState(true);
