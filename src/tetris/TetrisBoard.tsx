@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
-import { array } from "yup/lib/locale";
 import { Block, BlockType, OrientationValue } from ".";
 import useInterval from "../hooks/useInterval";
 import {
@@ -34,7 +33,7 @@ export default function TetrisBoard() {
 
   const placeOnBoard = (row: number, column: number) => {
     const newBoard = copyBoard(board);
-    console.log("Place Block :", currentBlockType, orientation, row, column);
+    //console.log("Place Block :", currentBlockType, orientation, row, column);
 
     const blockMap: Board = createBlockPattern(currentBlockType, orientation);
     // Now "map" the change on to the board
@@ -54,10 +53,6 @@ export default function TetrisBoard() {
       });
       if (isFull) removeRows.push(index);
     });
-
-    if (removeRows.length > 0) console.log("- : ", removeRows);
-
-    console.log("Remove Rows: ", removeRows)
 
     // Remove those rows
     removeRows.forEach((rowIndex, index) => {
