@@ -18,10 +18,13 @@ import {
 export default function TetrisBoard() {
   const BLOCK_SIZE = 25; // Pixels
   const [board, setBoard] = useState<Board>(createNewBoard());
-  const [currentBlockType, setCurrentBlockType] = useState<BlockType>(randomBlock());
+  const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
+    randomBlock()
+  );
   const [blockLocation, setBlockLocation] = useState({ row: 0, column: 4 }); // [row, column]
   const [orientation, setOrientation] = useState<OrientationValue>(0);
   const [isStarted, setIsStarted] = useState(true);
+  const [isPaused, setIsPaused] = useState(false)
 
   const newBlock = () => {
     setCurrentBlockType(randomBlock());
@@ -46,7 +49,7 @@ export default function TetrisBoard() {
           blockMap[index][idx] ||
           board[blockLocation.row + index][blockLocation.column + idx]
       );
-      return newBoard[blockLocation.row + index + (endOfBoard ? 1 : 0)].splice(
+      return newBoard[blockLocation.row + index].splice(
         blockLocation.column,
         map.length,
         ...map
@@ -68,7 +71,7 @@ export default function TetrisBoard() {
   }, [board]);
 
   useInterval(() => {
-    if (!isStarted) return;
+    if (!isStarted || isPaused) return;
     // Drop the block by one
     const height = getBlockHeight(currentBlockType, orientation);
     const newOffset = minmax(blockLocation.row + 1, 0, 20 - height);
@@ -82,7 +85,17 @@ export default function TetrisBoard() {
         blockLocation.column,
         [blockMap.length, blockMap[0].length]
       );
-      boardMap.forEach((r, rIndex, rArray) => {
+      const impactMap = boardMap.map((value, index, array) =>
+        value.map(
+          (map, idx) =>
+            blockMap[index][idx] &&
+            board[blockLocation.row + index][blockLocation.column + idx] ? 1 : 0
+        )
+      );
+
+      console.log('blockMap for impact detection: ', blockMap)
+
+      impactMap.forEach((r, rIndex, rArray) => {
         r.forEach((block) => {
           if (block !== 0) impact = true;
         });
@@ -100,6 +113,10 @@ export default function TetrisBoard() {
     setBoard(createNewBoard());
     newBlock();
   };
+
+  const handlePause = () => {
+    setIsPaused((val) => !val)
+  }
 
   const handleRotate = () => {
     const newOrientation =
@@ -156,6 +173,7 @@ export default function TetrisBoard() {
       />
       <KeyboardEventHandler handleKeys={["SPACE"]} onKeyEvent={handleRotate} />
       <KeyboardEventHandler handleKeys={["R"]} onKeyEvent={handleReset} />
+      <KeyboardEventHandler handleKeys={["P"]} onKeyEvent={handlePause} />
       <KeyboardEventHandler
         handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
         onKeyEvent={(key, e) => {
