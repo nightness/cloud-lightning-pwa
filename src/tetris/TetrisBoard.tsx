@@ -3,15 +3,17 @@ import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockType, OrientationValue } from ".";
 import useInterval from "../hooks/useInterval";
 import {
-  Board,
-  createNewBoard,
+  createBlockPattern,
   randomBlock,
-  copyBoard,
-  minmax,
   getBlockHeight,
   getBlockWidth,
-  createBlockPattern,
+} from "./blocks/Block";
+import {
+  createNewBoard,
+  copyBoard,
   getBoardSubset,
+  minmax,
+  TwoDimNumberArray,
 } from "./TetrisSupport";
 
 interface Props {
@@ -33,7 +35,7 @@ export default function TetrisBoard({
   const STARTING_SPEED = 1000; // ms
   const SPEED_INCREASE_RATE = 30; // ms
   const FASTEST_RATE = 100; // down by one per 100ms
-  const [board, setBoard] = useState<Board>(createNewBoard());
+  const [board, setBoard] = useState<TwoDimNumberArray>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
     randomBlock(!enable8thPiece)
   );
@@ -52,7 +54,10 @@ export default function TetrisBoard({
 
   const placeOnBoard = (row: number, column: number) => {
     const newBoard = copyBoard(board);
-    const blockMap: Board = createBlockPattern(currentBlockType, orientation);
+    const blockMap: TwoDimNumberArray = createBlockPattern(
+      currentBlockType,
+      orientation
+    );
     // Now "map" the change on to the board
     blockMap.map((arrayValue, index, array) => {
       const map = arrayValue.map(

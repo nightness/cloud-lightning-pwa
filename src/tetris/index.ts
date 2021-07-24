@@ -15,4 +15,4 @@ import Block, { BlockProps, BlockType, OrientationValue } from "./blocks/Block"
 export { Block, Tetris, TetrisBoard, TestPanel };
 export { I, J, L, O, S, T, Z, XO }
 
-export type { BlockProps, BlockType, OrientationValue }
+export type { BlockProps, BlockType, OrientationValue,  }
