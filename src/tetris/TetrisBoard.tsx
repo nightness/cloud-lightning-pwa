@@ -84,15 +84,14 @@ export default function TetrisBoard() {
   //
   // TODO
   //
-  const checkForRoomToRotate = () => {
-    let canRotate = true;
 
-    return canRotate;
-  };
-
-  const checkForImpact = (row: number, column: number) => {
+  const willBlockImpact = (
+    row: number,
+    column: number,
+    blockOrientation: OrientationValue = orientation
+  ) => {
     var impact = false;
-    const blockMap = createBlockPattern(currentBlockType, orientation);
+    const blockMap = createBlockPattern(currentBlockType, blockOrientation);
     const boardMap = getBoardSubset(board, row, column, [
       blockMap.length,
       blockMap[0].length,
@@ -119,7 +118,7 @@ export default function TetrisBoard() {
     const newOffset = minmax(blockLocation.row + 1, 0, 20 - height);
     let endOfBoard = newOffset >= 20 - height;
     const impact =
-      endOfBoard || checkForImpact(newOffset, blockLocation.column);
+      endOfBoard || willBlockImpact(newOffset, blockLocation.column);
 
     if (endOfBoard) console.log("endOfBoard detection");
 
@@ -142,6 +141,7 @@ export default function TetrisBoard() {
   };
 
   const handleRotate = () => {
+    if (isPaused || !isStarted) return;
     const newOrientation =
       orientation === 0
         ? 90
@@ -151,43 +151,45 @@ export default function TetrisBoard() {
         ? 270
         : 0;
 
-    if (checkForRoomToRotate()) {
-      setBlockLocation({
-        row: minmax(
-          blockLocation.row,
-          0,
-          19 - getBlockWidth(currentBlockType, orientation)
-        ),
-        column: minmax(
-          blockLocation.column,
-          0,
-          9 - getBlockHeight(currentBlockType, orientation)
-        ),
-      });
+    let row = minmax(
+      blockLocation.row,
+      0,
+      19 - getBlockWidth(currentBlockType, orientation)
+    );
+    let column = minmax(
+      blockLocation.column,
+      0,
+      9 - getBlockHeight(currentBlockType, orientation)
+    );
+
+    if (!willBlockImpact(row, column, newOrientation)) {
+      setBlockLocation({ row, column })
       setOrientation(newOrientation);
     }
   };
 
   const handleHorizontalMove = (key: string) => {
+    if (isPaused || !isStarted) return;
     const offset = key === "LEFT" ? -1 : 1;
-    if (!checkForImpact(blockLocation.row, blockLocation.column + offset)) {
-      setBlockLocation({
-        row: blockLocation.row,
-        column: minmax(
-          blockLocation.column + offset,
-          0,
-          10 - getBlockWidth(currentBlockType, orientation)
-        ),
-      });
+    const row = blockLocation.row;
+    const column = minmax(
+        blockLocation.column + offset,
+        0,
+        10 - getBlockWidth(currentBlockType, orientation)
+      );
+
+    if (!willBlockImpact(row, column)) {
+      setBlockLocation({ row, column });
     }
   };
 
   const handleVerticalMove = (key: string) => {
+    if (isPaused || !isStarted) return;
     if (key == "UP") {
       setBlockLocation({ row: 0, column: blockLocation.column });
       return;
     }
-    if (!checkForImpact(blockLocation.row + 1, blockLocation.column)) {
+    if (!willBlockImpact(blockLocation.row + 1, blockLocation.column)) {
       setBlockLocation({
         row: minmax(
           blockLocation.row + 1,
@@ -197,6 +199,11 @@ export default function TetrisBoard() {
         column: blockLocation.column,
       });
     }
+  };
+
+  const handleChangeBlockType = (key: string) => {
+    if (isPaused || !isStarted) return;
+    setCurrentBlockType(key === "X" ? "X!" : (key as BlockType));
   };
 
   return (
@@ -214,9 +221,7 @@ export default function TetrisBoard() {
       <KeyboardEventHandler handleKeys={["P"]} onKeyEvent={handlePause} />
       <KeyboardEventHandler
         handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
-        onKeyEvent={(key, e) => {
-          setCurrentBlockType(key === "X" ? "X!" : (key as BlockType));
-        }}
+        onKeyEvent={handleChangeBlockType}
       />
       <div className="tetris-board-inner">
         {board?.map((value) => (
