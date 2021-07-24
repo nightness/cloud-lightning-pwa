@@ -81,52 +81,50 @@ export default function TetrisBoard() {
     });
   }, [board]);
 
-  //
-  // TODO
-  //
-
   const willBlockImpact = (
     row: number,
     column: number,
     blockOrientation: OrientationValue = orientation
   ) => {
-    var impact = false;
-    const blockMap = createBlockPattern(currentBlockType, blockOrientation);
-    const boardMap = getBoardSubset(board, row, column, [
-      blockMap.length,
-      blockMap[0].length,
-    ]);
-    const impactMap = boardMap.map((value, index, array) =>
-      value.map((map, idx) =>
-        blockMap[index][idx] && board[row + index][column + idx] ? 1 : 0
-      )
-    );
-    impactMap.forEach((r, rIndex, rArray) => {
-      r.forEach((block) => {
-        if (block !== 0) impact = true;
-      });
-    });
+    const height = getBlockHeight(currentBlockType, orientation);
+    let endOfBoard = row > 20 - height;
+    let impact = endOfBoard;
 
-    if (impact) console.log("impactMap", impactMap);
+    if (endOfBoard) console.log("endOfBoard detection");
+
+    if (!impact) {
+      const blockMap = createBlockPattern(currentBlockType, blockOrientation);
+      const boardMap = getBoardSubset(board, row, column, [
+        blockMap.length,
+        blockMap[0].length,
+      ]);
+      const impactMap = boardMap.map((value, index, array) =>
+        value.map((map, idx) =>
+          blockMap[index][idx] && board[row + index][column + idx] ? 1 : 0
+        )
+      );
+      impactMap.forEach((r, rIndex, rArray) => {
+        r.forEach((block) => {
+          if (block !== 0) impact = true;
+        });
+      });
+
+      if (impact) console.log("impactMap", impactMap);
+    }
     return impact;
   };
 
   useInterval(() => {
     if (!isStarted || isPaused) return;
     // Drop the block by one
-    const height = getBlockHeight(currentBlockType, orientation);
-    const newOffset = minmax(blockLocation.row + 1, 0, 20 - height);
-    let endOfBoard = newOffset >= 20 - height;
-    const impact =
-      endOfBoard || willBlockImpact(newOffset, blockLocation.column);
+    const row = blockLocation.row + 1;
+    const column = blockLocation.column;
 
-    if (endOfBoard) console.log("endOfBoard detection");
-
-    if (impact) {
-      placeOnBoard(newOffset - (endOfBoard ? 0 : 1), blockLocation.column);
+    if (willBlockImpact(row, column)) {
+      placeOnBoard(blockLocation.row, blockLocation.column);
       return;
     }
-    setBlockLocation({ row: newOffset, column: blockLocation.column });
+    setBlockLocation({ row, column });
   }, 1000);
 
   const handleReset = () => {
@@ -192,7 +190,7 @@ export default function TetrisBoard() {
     const row = minmax(
       blockLocation.row + 1,
       0,
-      19 - getBlockHeight(currentBlockType, orientation)
+      20 - getBlockHeight(currentBlockType, orientation)
     );
     const column = blockLocation.column;
 
