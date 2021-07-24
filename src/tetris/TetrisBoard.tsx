@@ -18,7 +18,8 @@ import {
 
 interface Props {
   devMode?: boolean;
-  increaseSpeedAfter: number; // after... number of rows removed
+  increaseSpeedAfter?: number; // after... number of rows removed
+  increaseSpeedBy?: number; // by... number of ms
   enable8thPiece?: boolean;
   onStartedChanged?: (isStarted: boolean) => any;
   onRowsRemoved?: (numberOfRowsRemoved: number) => any;
@@ -26,14 +27,14 @@ interface Props {
 
 export default function TetrisBoard({
   devMode,
-  increaseSpeedAfter,
+  increaseSpeedAfter = 1,
+  increaseSpeedBy = 20,
   enable8thPiece,
   onStartedChanged,
   onRowsRemoved,
 }: Props) {
   const BLOCK_SIZE = 25; // Pixels
   const STARTING_SPEED = 1000; // ms
-  const SPEED_INCREASE_RATE = 30; // ms
   const FASTEST_RATE = 100; // down by one per 100ms
   const [board, setBoard] = useState<TwoDimNumberArray>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
@@ -79,7 +80,7 @@ export default function TetrisBoard({
         setRowsRemoved(total);
         onRowsRemoved?.(removeRows.length);
         const speed = Math.min(
-          STARTING_SPEED - (total / increaseSpeedAfter) * SPEED_INCREASE_RATE,
+          STARTING_SPEED - (total / increaseSpeedAfter) * increaseSpeedBy,
           FASTEST_RATE
         );
         if (speed != gameSpeed) {

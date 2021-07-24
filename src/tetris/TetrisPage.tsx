@@ -10,7 +10,6 @@ export default function Tetris() {
     <Page>
       <TetrisBoard
         devMode
-        increaseSpeedAfter={1}
         onStartedChanged={setIsStarted}
         onRowsRemoved={(rows) => setRowsRemoved(rowsRemoved + rows)}
       />
