@@ -15,11 +15,16 @@ import {
 } from "./TetrisSupport";
 
 interface Props {
-  devMode?: boolean
-  enable8thPiece?: boolean
+  devMode?: boolean;
+  enable8thPiece?: boolean;
+  onStartedChanged?: (isStarted: boolean) => any;
 }
 
-export default function TetrisBoard({devMode, enable8thPiece}: Props) {
+export default function TetrisBoard({
+  devMode,
+  enable8thPiece,
+  onStartedChanged,
+}: Props) {
   const BLOCK_SIZE = 25; // Pixels
   const [board, setBoard] = useState<Board>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
@@ -27,7 +32,7 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
   );
   const [blockLocation, setBlockLocation] = useState({ row: 0, column: 4 }); // [row, column]
   const [orientation, setOrientation] = useState<OrientationValue>(0);
-  const [isStarted, setIsStarted] = useState(true);
+  const [isStarted, setIsStarted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
   const newBlock = () => {
@@ -86,6 +91,10 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
       console.log("Stopped gamed; the last block was placed on top row");
   }, [board]);
 
+  useEffect(() => {
+    onStartedChanged?.(isStarted)
+  }, [isStarted]);
+
   // Will the current block impact a filled in part of the board,
   // given the parameters supplied.
   const willBlockImpact = (
@@ -94,7 +103,7 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
     blockOrientation: OrientationValue = orientation
   ) => {
     const height = getBlockHeight(currentBlockType, blockOrientation);
-    const width = getBlockWidth(currentBlockType, blockOrientation)
+    const width = getBlockWidth(currentBlockType, blockOrientation);
     let endOfBoard = row > 20 - height || column < 0 || column > 10 - width;
     let impact = endOfBoard; // Block would be off the board, so impact is true
 
@@ -115,7 +124,7 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
           blockMap[index][idx] && board[row + index][column + idx] ? 1 : 0
         )
       );
-      
+
       // If there are any impacts in the impactMap, set impact = true
       impactMap.forEach((r, rIndex, rArray) => {
         r.forEach((block) => {
@@ -166,11 +175,18 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
         : 0;
 
     // Rotates 'I' from "the middle", not the top
-    let columnOffset = (currentBlockType !== 'I') ? 0 :
-      (newOrientation === 0) ? -1 :
-      (newOrientation === 90) ? 1 :
-      (newOrientation === 180) ? -2 :
-      (newOrientation === 270) ? 2 : 0
+    let columnOffset =
+      currentBlockType !== "I"
+        ? 0
+        : newOrientation === 0
+        ? -1
+        : newOrientation === 90
+        ? 1
+        : newOrientation === 180
+        ? -2
+        : newOrientation === 270
+        ? 2
+        : 0;
 
     let row = minmax(
       blockLocation.row,
@@ -229,7 +245,10 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
         handleKeys={["DOWN"]}
         onKeyEvent={handleVerticalMove}
       />
-      <KeyboardEventHandler handleKeys={["SPACE", "UP"]} onKeyEvent={handleRotate} />
+      <KeyboardEventHandler
+        handleKeys={["SPACE", "UP"]}
+        onKeyEvent={handleRotate}
+      />
       <KeyboardEventHandler handleKeys={["R"]} onKeyEvent={handleReset} />
       <KeyboardEventHandler handleKeys={["P"]} onKeyEvent={handlePause} />
       <KeyboardEventHandler
@@ -250,7 +269,7 @@ export default function TetrisBoard({devMode, enable8thPiece}: Props) {
             ))}
           </div>
         ))}
-        {currentBlockType ? (
+        {currentBlockType && isStarted ? (
           <Block
             blockType={currentBlockType}
             orientation={orientation}
