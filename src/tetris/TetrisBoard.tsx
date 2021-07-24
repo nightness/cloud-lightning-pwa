@@ -28,7 +28,7 @@ export default function TetrisBoard() {
   const newBlock = () => {
     setCurrentBlockType(randomBlock());
     setOrientation(0);
-    setBlockLocation({ row: 0, column: 3 });
+    setBlockLocation({ row: 0, column: 1 + Math.floor(Math.random() * 6) });
   };
 
   const placeOnBoard = (row: number, column: number) => {
@@ -163,7 +163,7 @@ export default function TetrisBoard() {
     );
 
     if (!willBlockImpact(row, column, newOrientation)) {
-      setBlockLocation({ row, column })
+      setBlockLocation({ row, column });
       setOrientation(newOrientation);
     }
   };
@@ -173,10 +173,10 @@ export default function TetrisBoard() {
     const offset = key === "LEFT" ? -1 : 1;
     const row = blockLocation.row;
     const column = minmax(
-        blockLocation.column + offset,
-        0,
-        10 - getBlockWidth(currentBlockType, orientation)
-      );
+      blockLocation.column + offset,
+      0,
+      10 - getBlockWidth(currentBlockType, orientation)
+    );
 
     if (!willBlockImpact(row, column)) {
       setBlockLocation({ row, column });
@@ -189,15 +189,15 @@ export default function TetrisBoard() {
       setBlockLocation({ row: 0, column: blockLocation.column });
       return;
     }
-    if (!willBlockImpact(blockLocation.row + 1, blockLocation.column)) {
-      setBlockLocation({
-        row: minmax(
-          blockLocation.row + 1,
-          0,
-          19 - getBlockHeight(currentBlockType, orientation)
-        ),
-        column: blockLocation.column,
-      });
+    const row = minmax(
+      blockLocation.row + 1,
+      0,
+      19 - getBlockHeight(currentBlockType, orientation)
+    );
+    const column = blockLocation.column;
+
+    if (!willBlockImpact(row, column)) {
+      setBlockLocation({ row, column });
     }
   };
 
