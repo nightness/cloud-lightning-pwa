@@ -159,13 +159,20 @@ export default function TetrisBoard() {
         ? 270
         : 0;
 
+    // Rotates 'I' from "the middle", not the top
+    let columnOffset = (currentBlockType !== 'I') ? 0 :
+      (newOrientation === 0) ? -1 :
+      (newOrientation === 90) ? 1 :
+      (newOrientation === 180) ? -2 :
+      (newOrientation === 270) ? 2 : 0
+
     let row = minmax(
       blockLocation.row,
       0,
       20 - getBlockWidth(currentBlockType, orientation)
     );
     let column = minmax(
-      blockLocation.column,
+      blockLocation.column + columnOffset,
       0,
       10 - getBlockHeight(currentBlockType, orientation)
     );
