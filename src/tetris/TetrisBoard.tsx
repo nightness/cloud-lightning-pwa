@@ -273,6 +273,13 @@ export default function TetrisBoard({
         handleKeys={["SPACE", "UP"]}
         onKeyEvent={handleRotate}
       />
+      <KeyboardEventHandler
+        handleKeys={["PageUp", "HOME"]}
+        onKeyEvent={() => {
+          if (devMode)
+            setBlockLocation({ row: 0, column: blockLocation.column });
+        }}
+      />
       <KeyboardEventHandler handleKeys={["R"]} onKeyEvent={handleReset} />
       <KeyboardEventHandler handleKeys={["P"]} onKeyEvent={handlePause} />
       <KeyboardEventHandler
