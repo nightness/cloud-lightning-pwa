@@ -94,16 +94,23 @@ export default function TetrisBoard() {
 
     // If not endOfBoard, and check the board for impacts with filled in squares
     if (!impact) {
+      // A 2D array of a block
       const blockMap = createBlockPattern(currentBlockType, blockOrientation);
+      
+      // A 2D subset of the board, same size as blockMap for comparison
       const boardMap = getBoardSubset(board, row, column, [
         blockMap.length,
         blockMap[0].length,
       ]);
+
+      // Builds a same sized 2D array of 0 or 1, 1 indicates an impact
       const impactMap = boardMap.map((value, index, array) =>
         value.map((map, idx) =>
           blockMap[index][idx] && board[row + index][column + idx] ? 1 : 0
         )
       );
+      
+      // If there are any impacts in the impactMap, set impact = true
       impactMap.forEach((r, rIndex, rArray) => {
         r.forEach((block) => {
           if (block !== 0) impact = true;
