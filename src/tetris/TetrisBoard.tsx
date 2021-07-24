@@ -96,7 +96,7 @@ export default function TetrisBoard() {
     if (!impact) {
       // A 2D array of a block
       const blockMap = createBlockPattern(currentBlockType, blockOrientation);
-      
+
       // A 2D subset of the board, same size as blockMap for comparison
       const boardMap = getBoardSubset(board, row, column, [
         blockMap.length,
@@ -126,10 +126,14 @@ export default function TetrisBoard() {
     const row = blockLocation.row + 1;
     const column = blockLocation.column;
 
+    // If a move would cause an impact, place the current piece on
+    // the board (in it's current location).
     if (willBlockImpact(row, column)) {
       placeOnBoard(blockLocation.row, blockLocation.column);
       return;
     }
+
+    // Move the Block
     setBlockLocation({ row, column });
   }, 1000);
 
@@ -158,12 +162,12 @@ export default function TetrisBoard() {
     let row = minmax(
       blockLocation.row,
       0,
-      19 - getBlockWidth(currentBlockType, orientation)
+      20 - getBlockWidth(currentBlockType, orientation)
     );
     let column = minmax(
       blockLocation.column,
       0,
-      9 - getBlockHeight(currentBlockType, orientation)
+      10 - getBlockHeight(currentBlockType, orientation)
     );
 
     if (!willBlockImpact(row, column, newOrientation)) {
