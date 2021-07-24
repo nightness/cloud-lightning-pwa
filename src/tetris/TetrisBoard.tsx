@@ -88,7 +88,7 @@ export default function TetrisBoard() {
     column: number,
     blockOrientation: OrientationValue = orientation
   ) => {
-    const height = getBlockHeight(currentBlockType, orientation);
+    const height = getBlockHeight(currentBlockType, blockOrientation);
     let endOfBoard = row > 20 - height;
     let impact = endOfBoard;
 
