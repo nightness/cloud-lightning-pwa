@@ -33,8 +33,6 @@ export default function TetrisBoard() {
 
   const placeOnBoard = (row: number, column: number) => {
     const newBoard = copyBoard(board);
-    //console.log("Place Block :", currentBlockType, orientation, row, column);
-
     const blockMap: Board = createBlockPattern(currentBlockType, orientation);
     // Now "map" the change on to the board
     blockMap.map((arrayValue, index, array) => {
@@ -72,13 +70,15 @@ export default function TetrisBoard() {
   // Stops the game and clears rows when ever the board changes
   useEffect(() => {
     const topRow = board[0];
+    let wasStopped = false;
     topRow.forEach((cell) => {
       if (cell !== 0) {
         setIsStarted(false);
-        console.log("Stopped gamed; pieces on top line");
-        return;
+        wasStopped = true;
       }
     });
+    if (wasStopped)
+      console.log("Stopped gamed; pieces on top line");
   }, [board]);
 
   const willBlockImpact = (

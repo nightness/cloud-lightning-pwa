@@ -240,7 +240,7 @@ export const createBlockPattern = (
 
 export const randomBlock = () => {
   const blocks: BlockType[] = ["I", "J", "L", "O", "S", "T", "Z", "X!"];
-  return blocks[Math.floor(Math.random() * 7.15)];
+  return blocks[Math.floor(Math.random() * 7.1)];
 };
 
 export const minmax = (value: number, min: number, max: number) =>
