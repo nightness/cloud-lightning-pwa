@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
-import { Block, BlockType, OrientationValue } from ".";
+import { Block, BlockType, OrientationValue, Plane, Size } from ".";
 import useInterval from "../hooks/useInterval";
 import {
   createBlockPattern,
@@ -8,13 +8,12 @@ import {
   getBlockHeight,
   getBlockWidth,
 } from "./blocks/Block";
-import {
-  createNewBoard,
-  copyBoard,
-  getBoardSubset,
-  minmax,
-  TwoDimNumberArray,
-} from "./TetrisSupport";
+
+const TOTAL_ROWS = 20;
+const TOTAL_COLUMNS = 10;
+const BLOCK_SIZE = 25; // Pixels
+const STARTING_SPEED = 1000; // ms
+const FASTEST_RATE = 100; // down by one per 100ms
 
 interface Props {
   devMode?: boolean;
@@ -33,10 +32,7 @@ export default function TetrisBoard({
   onStartedChanged,
   onRowsRemoved,
 }: Props) {
-  const BLOCK_SIZE = 25; // Pixels
-  const STARTING_SPEED = 1000; // ms
-  const FASTEST_RATE = 100; // down by one per 100ms
-  const [board, setBoard] = useState<TwoDimNumberArray>(createNewBoard());
+  const [board, setBoard] = useState<Plane>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
     randomBlock(!enable8thPiece)
   );
@@ -55,10 +51,7 @@ export default function TetrisBoard({
 
   const placeOnBoard = (row: number, column: number) => {
     const newBoard = copyBoard(board);
-    const blockMap: TwoDimNumberArray = createBlockPattern(
-      currentBlockType,
-      orientation
-    );
+    const blockMap: Plane = createBlockPattern(currentBlockType, orientation);
     // Now "map" the change on to the board
     blockMap.map((arrayValue, index, array) => {
       const map = arrayValue.map(
@@ -79,9 +72,10 @@ export default function TetrisBoard({
         const total = rowsRemoved + removeRows.length;
         setRowsRemoved(total);
         onRowsRemoved?.(removeRows.length);
-        const speed = Math.min(
+        const speed = minmax(
           STARTING_SPEED - (total / increaseSpeedAfter) * increaseSpeedBy,
-          FASTEST_RATE
+          FASTEST_RATE,
+          STARTING_SPEED
         );
         if (speed != gameSpeed) {
           setGameSpeed(speed);
@@ -97,8 +91,7 @@ export default function TetrisBoard({
 
     // Add the same number of new rows at the top of the board
     for (let i = 0; i < removeRows.length; i++) {
-      const row = Array(10).fill(0);
-      newBoard.unshift(row);
+      newBoard.unshift(Array(TOTAL_COLUMNS).fill(0));
     }
 
     setBoard(newBoard);
@@ -132,7 +125,8 @@ export default function TetrisBoard({
   ) => {
     const height = getBlockHeight(currentBlockType, blockOrientation);
     const width = getBlockWidth(currentBlockType, blockOrientation);
-    let endOfBoard = row > 20 - height || column < 0 || column > 10 - width;
+    let endOfBoard =
+      row > TOTAL_ROWS - height || column < 0 || column > TOTAL_COLUMNS - width;
     let impact = endOfBoard; // Block would be off the board, so impact is true
 
     // If not endOfBoard, and check the board for impacts with filled in squares
@@ -184,6 +178,8 @@ export default function TetrisBoard({
     setIsStarted(true);
     setIsPaused(false);
     setBoard(createNewBoard());
+    setGameSpeed(STARTING_SPEED)
+    setRowsRemoved(0)
     newBlock();
   };
 
@@ -219,12 +215,12 @@ export default function TetrisBoard({
     let row = minmax(
       blockLocation.row,
       0,
-      20 - getBlockWidth(currentBlockType, orientation)
+      TOTAL_ROWS - getBlockWidth(currentBlockType, orientation)
     );
     let column = minmax(
       blockLocation.column + columnOffset,
       0,
-      10 - getBlockHeight(currentBlockType, orientation)
+      TOTAL_COLUMNS - getBlockHeight(currentBlockType, orientation)
     );
 
     if (!willBlockImpact(row, column, newOrientation)) {
@@ -312,3 +308,33 @@ export default function TetrisBoard({
     </div>
   );
 }
+
+export const createNewBoard = (height: number = TOTAL_ROWS, width: number = TOTAL_COLUMNS) => {
+  const board = Array(height)
+    .fill(0)
+    .map((x) => Array(width).fill(0));
+  return board as Plane;
+};
+
+export const copyBoard = (board: Plane) => {
+  return board.map((arr) => arr.slice());
+};
+
+export const getBoardSubset = (
+  board: Plane,
+  row: number,
+  column: number,
+  size: Size
+) => {
+  const results = createNewBoard(size[0], size[1]);
+  for (let i = 0; i < size[0]; i++) {
+    for (let j = 0; j < size[1]; j++) {
+      //console.log("Test: ", board[column + c][row + r], column, row, c, r)
+      results[i][j] = board[row + i][column + j];
+    }
+  }
+  return results;
+};
+
+export const minmax = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);

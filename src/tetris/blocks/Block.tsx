@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 
 import { I, J, L, O, S, T, Z, XO } from "..";
-import { TwoDimNumberArray } from "../TetrisSupport";
+import { Plane } from "..";
 export type BlockType = "I" | "J" | "L" | "O" | "S" | "T" | "Z" | 'X!';
 export type OrientationValue = 0 | 90 | 180 | 270;
 
@@ -70,14 +70,14 @@ export const createBlockPattern = (
   orientation: OrientationValue
 ) => {
   if (blockType === "I") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0 || orientation === 180
         ? [[1, 1, 1, 1]]
         : [[1], [1], [1], [1]];
     return map;
   }
   if (blockType === "T") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0
         ? [
             [1, 1, 1],
@@ -104,7 +104,7 @@ export const createBlockPattern = (
   }
 
   if (blockType === "L") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0
         ? [
             [1, 1, 1],
@@ -131,7 +131,7 @@ export const createBlockPattern = (
   }
 
   if (blockType === "J") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0
         ? [
             [1, 0, 0],
@@ -158,7 +158,7 @@ export const createBlockPattern = (
   }
 
   if (blockType === "O") {
-    const map: TwoDimNumberArray = [
+    const map: Plane = [
       [1, 1],
       [1, 1],
     ];
@@ -166,7 +166,7 @@ export const createBlockPattern = (
   }
 
   if (blockType === "S") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0 || orientation == 180
         ? [
             [0, 1, 1],
@@ -182,7 +182,7 @@ export const createBlockPattern = (
   }
 
   if (blockType === "Z") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0 || orientation == 180
         ? [
             [1, 1, 0],
@@ -198,7 +198,7 @@ export const createBlockPattern = (
   }
 
   if (blockType === "X!") {
-    const map: TwoDimNumberArray =
+    const map: Plane =
       orientation === 0 || orientation == 180
         ? [
             [1, 0, 1],
@@ -215,7 +215,7 @@ export const createBlockPattern = (
   }
 
   throw new Error("missing blockType");
-  return [[]] as TwoDimNumberArray;
+  return [[]] as Plane;
 };
 
 export const randomBlock = (disable8thBlock: boolean) => {
