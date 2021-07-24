@@ -31,7 +31,7 @@ export default function TetrisBoard({
 }: Props) {
   const BLOCK_SIZE = 25; // Pixels
   const STARTING_SPEED = 1000; // ms
-  const SPEED_INCREASE_RATE = 20; // ms
+  const SPEED_INCREASE_RATE = 30; // ms
   const [board, setBoard] = useState<Board>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
     randomBlock(!enable8thPiece)
