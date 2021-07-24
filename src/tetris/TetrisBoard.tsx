@@ -81,6 +81,8 @@ export default function TetrisBoard() {
       console.log("Stopped gamed; pieces on top line");
   }, [board]);
 
+  // Will the current block impact a filled in part of the board,
+  // given the parameters supplied.
   const willBlockImpact = (
     row: number,
     column: number,
@@ -89,8 +91,6 @@ export default function TetrisBoard() {
     const height = getBlockHeight(currentBlockType, orientation);
     let endOfBoard = row > 20 - height;
     let impact = endOfBoard;
-
-    if (endOfBoard) console.log("endOfBoard detection");
 
     if (!impact) {
       const blockMap = createBlockPattern(currentBlockType, blockOrientation);
