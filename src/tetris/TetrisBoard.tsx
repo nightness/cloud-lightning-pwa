@@ -15,11 +15,11 @@ import {
 } from "./TetrisSupport";
 
 interface Props {
-  enableUp?: boolean
+  devMode?: boolean
   enable8thPiece?: boolean
 }
 
-export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
+export default function TetrisBoard({devMode, enable8thPiece}: Props) {
   const BLOCK_SIZE = 25; // Pixels
   const [board, setBoard] = useState<Board>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
@@ -94,7 +94,8 @@ export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
     blockOrientation: OrientationValue = orientation
   ) => {
     const height = getBlockHeight(currentBlockType, blockOrientation);
-    let endOfBoard = row > 20 - height;
+    const width = getBlockWidth(currentBlockType, blockOrientation)
+    let endOfBoard = row > 20 - height || column < 0 || column > 10 - width;
     let impact = endOfBoard; // Block would be off the board, so impact is true
 
     // If not endOfBoard, and check the board for impacts with filled in squares
@@ -192,11 +193,7 @@ export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
     if (isPaused || !isStarted) return;
     const offset = key === "LEFT" ? -1 : 1;
     const row = blockLocation.row;
-    const column = minmax(
-      blockLocation.column + offset,
-      0,
-      10 - getBlockWidth(currentBlockType, orientation)
-    );
+    const column = blockLocation.column + offset;
 
     if (!willBlockImpact(row, column)) {
       setBlockLocation({ row, column });
@@ -205,10 +202,6 @@ export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
 
   const handleVerticalMove = (key: string) => {
     if (isPaused || !isStarted) return;
-    if (key == "UP" && enableUp) {
-      setBlockLocation({ row: 0, column: blockLocation.column });
-      return;
-    }
     const row = minmax(
       blockLocation.row + 1,
       0,
@@ -222,7 +215,7 @@ export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
   };
 
   const handleChangeBlockType = (key: string) => {
-    if (isPaused || !isStarted) return;
+    if (isPaused || !isStarted || !devMode) return;
     setCurrentBlockType(key === "X" ? "X!" : (key as BlockType));
   };
 
@@ -233,10 +226,10 @@ export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
         onKeyEvent={handleHorizontalMove}
       />
       <KeyboardEventHandler
-        handleKeys={["UP", "DOWN"]}
+        handleKeys={["DOWN"]}
         onKeyEvent={handleVerticalMove}
       />
-      <KeyboardEventHandler handleKeys={["SPACE"]} onKeyEvent={handleRotate} />
+      <KeyboardEventHandler handleKeys={["SPACE", "UP"]} onKeyEvent={handleRotate} />
       <KeyboardEventHandler handleKeys={["R"]} onKeyEvent={handleReset} />
       <KeyboardEventHandler handleKeys={["P"]} onKeyEvent={handlePause} />
       <KeyboardEventHandler

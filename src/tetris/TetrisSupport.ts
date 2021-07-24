@@ -3,9 +3,9 @@ import { BlockType, OrientationValue } from ".";
 export type Board = number[][];
 export type Size = [number, number];
 export type Location = {
-  row: number,
-  column: number
-}
+  row: number;
+  column: number;
+};
 
 export const createNewBoard = (height: number = 20, width: number = 10) => {
   const board = Array(height)
@@ -17,13 +17,6 @@ export const createNewBoard = (height: number = 20, width: number = 10) => {
 export const copyBoard = (board: Board) => {
   return board.map((arr) => arr.slice());
 };
-
-// DOWN BUTTON NEEDS THIS CHECK; IT'S CAUSING PROBLEMS
-export const wouldOccupySameSpace = (board: Board, block: Board, blockRow: number, blockColumn: number) => {
-  for (let b = blockRow; b < blockColumn; b++ ) {
-    const first = board[b]
-  }
-}
 
 export const getBoardSubset = (
   board: Board,
@@ -46,21 +39,18 @@ export const getBlockWidth = (
   orientation: OrientationValue
 ) => {
   if (
-    (blockType === "J" || blockType === "T") &&
+    (blockType === "J" ||
+      blockType === "T" ||
+      blockType === "L" ||
+      blockType === "Z" ||
+      blockType === "S") &&
     (orientation === 90 || orientation === 270)
   )
     return 2;
   if (blockType === "I" && (orientation === 90 || orientation === 270))
     return 1;
   if (blockType === "I") return 4;
-  if (
-    (blockType === "Z" || blockType === "S") &&
-    (orientation === 90 || orientation === 270)
-  )
-    return 2;
   if (blockType === "O") return 2;
-  if (blockType === "T" && (orientation === 90 || orientation === 270))
-    return 2;
   return 3;
 };
 
@@ -69,19 +59,17 @@ export const getBlockHeight = (
   orientation: OrientationValue
 ) => {
   if (
-    (blockType === "J" || blockType === "L") &&
+    (blockType === "J" ||
+      blockType === "L" ||
+      blockType === "T" ||
+      blockType === "Z" ||
+      blockType === "S") &&
     (orientation === 0 || orientation === 180)
   )
     return 2;
   if (blockType === "I" && (orientation === 0 || orientation === 180)) return 1;
   if (blockType === "I") return 4;
-  if (
-    (blockType === "Z" || blockType === "S") &&
-    (orientation === 0 || orientation === 180)
-  )
-    return 2;
   if (blockType === "O") return 2;
-  if (blockType === "T" && (orientation === 0 || orientation === 180)) return 2;
   return 3;
 };
 
