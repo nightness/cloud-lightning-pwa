@@ -90,8 +90,9 @@ export default function TetrisBoard() {
   ) => {
     const height = getBlockHeight(currentBlockType, blockOrientation);
     let endOfBoard = row > 20 - height;
-    let impact = endOfBoard;
+    let impact = endOfBoard; // Block would be off the board, so impact is true
 
+    // If not endOfBoard, and check the board for impacts with filled in squares
     if (!impact) {
       const blockMap = createBlockPattern(currentBlockType, blockOrientation);
       const boardMap = getBoardSubset(board, row, column, [
@@ -108,8 +109,6 @@ export default function TetrisBoard() {
           if (block !== 0) impact = true;
         });
       });
-
-      if (impact) console.log("impactMap", impactMap);
     }
     return impact;
   };
