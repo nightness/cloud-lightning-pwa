@@ -32,6 +32,7 @@ export default function TetrisBoard({
   const BLOCK_SIZE = 25; // Pixels
   const STARTING_SPEED = 1000; // ms
   const SPEED_INCREASE_RATE = 30; // ms
+  const FASTEST_RATE = 100; // down by one per 100ms
   const [board, setBoard] = useState<Board>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
     randomBlock(!enable8thPiece)
@@ -72,8 +73,10 @@ export default function TetrisBoard({
         const total = rowsRemoved + removeRows.length;
         setRowsRemoved(total);
         onRowsRemoved?.(removeRows.length);
-        const speed =
-          STARTING_SPEED - (total / increaseSpeedAfter) * SPEED_INCREASE_RATE;
+        const speed = Math.min(
+          STARTING_SPEED - (total / increaseSpeedAfter) * SPEED_INCREASE_RATE,
+          FASTEST_RATE
+        );
         if (speed != gameSpeed) {
           setGameSpeed(speed);
           // onGameSpeedChange
