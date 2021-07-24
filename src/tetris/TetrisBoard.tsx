@@ -16,16 +16,22 @@ import {
 
 interface Props {
   devMode?: boolean;
+  increaseSpeedAfter: number; // after... number of rows removed
   enable8thPiece?: boolean;
   onStartedChanged?: (isStarted: boolean) => any;
+  onRowsRemoved?: (numberOfRowsRemoved: number) => any;
 }
 
 export default function TetrisBoard({
   devMode,
+  increaseSpeedAfter,
   enable8thPiece,
   onStartedChanged,
+  onRowsRemoved,
 }: Props) {
   const BLOCK_SIZE = 25; // Pixels
+  const STARTING_SPEED = 1000; // ms
+  const SPEED_INCREASE_RATE = 20; // ms
   const [board, setBoard] = useState<Board>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
     randomBlock(!enable8thPiece)
@@ -34,6 +40,8 @@ export default function TetrisBoard({
   const [orientation, setOrientation] = useState<OrientationValue>(0);
   const [isStarted, setIsStarted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [rowsRemoved, setRowsRemoved] = useState(0);
+  const [gameSpeed, setGameSpeed] = useState(STARTING_SPEED);
 
   const newBlock = () => {
     setCurrentBlockType(randomBlock(!enable8thPiece));
@@ -59,7 +67,18 @@ export default function TetrisBoard({
       row.map((block) => {
         if (block === 0) isFull = false;
       });
-      if (isFull) removeRows.push(index);
+      if (isFull) {
+        removeRows.push(index);
+        const total = rowsRemoved + removeRows.length;
+        setRowsRemoved(total);
+        onRowsRemoved?.(removeRows.length);
+        const speed =
+          STARTING_SPEED - (total / increaseSpeedAfter) * SPEED_INCREASE_RATE;
+        if (speed != gameSpeed) {
+          setGameSpeed(speed);
+          // onGameSpeedChange
+        }
+      }
     });
 
     // Remove those rows
@@ -92,7 +111,7 @@ export default function TetrisBoard({
   }, [board]);
 
   useEffect(() => {
-    onStartedChanged?.(isStarted)
+    onStartedChanged?.(isStarted);
   }, [isStarted]);
 
   // Will the current block impact a filled in part of the board,
@@ -150,7 +169,7 @@ export default function TetrisBoard({
 
     // Move the Block
     setBlockLocation({ row, column });
-  }, 1000);
+  }, gameSpeed);
 
   const handleReset = () => {
     setIsStarted(true);

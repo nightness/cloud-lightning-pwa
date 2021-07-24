@@ -4,10 +4,16 @@ import { useState } from "react";
 
 export default function Tetris() {
   const [isStarted, setIsStarted] = useState(false);
+  const [rowsRemoved, setRowsRemoved] = useState(0);
 
   return (
     <Page>
-      <TetrisBoard onStartedChanged={(started) => setIsStarted(started)} />
+      <TetrisBoard
+        devMode
+        increaseSpeedAfter={1}
+        onStartedChanged={setIsStarted}
+        onRowsRemoved={(rows) => setRowsRemoved(rowsRemoved + rows)}
+      />
       {/* <TestPanel /> */}
       {!isStarted ? (
         <div>
@@ -17,7 +23,9 @@ export default function Tetris() {
           <h4>Move the piece with: Left (-1x), Right (1x), Down (+1y)</h4>
         </div>
       ) : (
-        <></>
+        <div>
+          <h4>Rows Removed: {rowsRemoved}</h4>
+        </div>
       )}
     </Page>
   );
