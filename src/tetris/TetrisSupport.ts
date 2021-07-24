@@ -238,9 +238,9 @@ export const createBlockPattern = (
   return [[]] as Board;
 };
 
-export const randomBlock = () => {
+export const randomBlock = (disable8thBlock: boolean) => {
   const blocks: BlockType[] = ["I", "J", "L", "O", "S", "T", "Z", "X!"];
-  return blocks[Math.floor(Math.random() * 7.1)];
+  return blocks[Math.floor(Math.random() * (disable8thBlock ? 7 : 7.1))];
 };
 
 export const minmax = (value: number, min: number, max: number) =>

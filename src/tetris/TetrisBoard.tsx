@@ -14,11 +14,16 @@ import {
   getBoardSubset,
 } from "./TetrisSupport";
 
-export default function TetrisBoard() {
+interface Props {
+  enableUp?: boolean
+  enable8thPiece?: boolean
+}
+
+export default function TetrisBoard({enableUp, enable8thPiece}: Props) {
   const BLOCK_SIZE = 25; // Pixels
   const [board, setBoard] = useState<Board>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
-    randomBlock()
+    randomBlock(!enable8thPiece)
   );
   const [blockLocation, setBlockLocation] = useState({ row: 0, column: 4 }); // [row, column]
   const [orientation, setOrientation] = useState<OrientationValue>(0);
@@ -26,7 +31,7 @@ export default function TetrisBoard() {
   const [isPaused, setIsPaused] = useState(false);
 
   const newBlock = () => {
-    setCurrentBlockType(randomBlock());
+    setCurrentBlockType(randomBlock(!enable8thPiece));
     setOrientation(0);
     setBlockLocation({ row: 0, column: 1 + Math.floor(Math.random() * 6) });
   };
@@ -78,7 +83,7 @@ export default function TetrisBoard() {
       }
     });
     if (wasStopped)
-      console.log("Stopped gamed; pieces on top line");
+      console.log("Stopped gamed; the last block was placed on top row");
   }, [board]);
 
   // Will the current block impact a filled in part of the board,
@@ -200,7 +205,7 @@ export default function TetrisBoard() {
 
   const handleVerticalMove = (key: string) => {
     if (isPaused || !isStarted) return;
-    if (key == "UP") {
+    if (key == "UP" && enableUp) {
       setBlockLocation({ row: 0, column: blockLocation.column });
       return;
     }
