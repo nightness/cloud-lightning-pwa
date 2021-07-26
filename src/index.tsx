@@ -19,6 +19,7 @@ ReactDOM.render(
       <title>{title}</title>
       <meta name="color-scheme" content="light dark" />
       <meta name="supported-color-scheme" content="light dark" />
+      <meta name="description" content="Cloud Lightning is a social media platform" />
     </MetaTags>
     <App />
   </React.StrictMode>,

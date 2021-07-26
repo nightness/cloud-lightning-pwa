@@ -108,14 +108,14 @@ export const getDocument = (documentPath: string) =>
   getFirestore().doc(documentPath);
 export const useDocument = (
   documentPath: string,
-  includeMetadataChanges = false
+  includeMetadataChanges = true
 ) => {
   try {
     return FirebaseFirestore.useDocument(getDocument(documentPath), {
       snapshotListenOptions: { includeMetadataChanges },
     });
   } catch (error) {
-    return [undefined, false, error];
+    return [undefined, false, error] as [firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> | undefined, boolean, firebase.FirebaseError | undefined];
   }
 };
 

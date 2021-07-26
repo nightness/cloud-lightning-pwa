@@ -11,12 +11,21 @@ import {
   Pages,
 } from "./navigation";
 import { WallMessenger } from "./messenger";
-import { TestPage, Games } from "./pages"
+import { TestPage, Games } from "./pages";
 import TicTacToe from "./pages/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
 import { MatrixProvider } from "./matrix/MatrixContext";
 import TetrisPage from "./tetris/TetrisPage";
+import Spotify from "./spotify/Spotify";
+
+function App() {
+  return (
+    <ProviderNest>
+      <MainDocument />
+    </ProviderNest>
+  );
+}
 
 const DisplayErrorText: React.FC = (props) => {
   return <DisplayError permissionDenied />;
@@ -31,6 +40,12 @@ const MainDocument = () => {
     component: Home,
     children: [
       {
+        path: "/home/spotify",
+        title: "Spotify",
+        component: Spotify,
+        requiresAuthentication: true
+      },
+      {
         path: "/home/test",
         title: "Test Page",
         component: TestPage,
@@ -40,7 +55,7 @@ const MainDocument = () => {
         title: "Display Error",
         component: DisplayErrorText,
       },
-    ]
+    ],
   });
   addPage({
     path: "/games",
@@ -51,12 +66,13 @@ const MainDocument = () => {
         path: "/games/TicTacToe",
         title: "Tic Tac Toe",
         component: TicTacToe,
-      }, {
+      },
+      {
         path: "/games/Tetris",
         title: "Tetris",
         component: TetrisPage,
-      }
-    ]    
+      },
+    ],
     // requiresAuthentication: true,
   });
   // addPage({
@@ -99,7 +115,11 @@ const MainDocument = () => {
   );
 };
 
-function App() {
+interface Props {
+  children: JSX.Element;
+}
+
+function ProviderNest({ children }: Props) {
   return (
     <BreakpointProvider>
       <ThemeProvider>
@@ -107,9 +127,7 @@ function App() {
           <FirebaseProvider>
             <MatrixProvider>
               <NavigationProvider>
-                <WebRtcProvider>
-                  <MainDocument />
-                </WebRtcProvider>
+                <WebRtcProvider>{children}</WebRtcProvider>
               </NavigationProvider>
             </MatrixProvider>
           </FirebaseProvider>
