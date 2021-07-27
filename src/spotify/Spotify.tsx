@@ -23,11 +23,14 @@ export default function Spotify() {
   }, [doc, loading, error])
 
   useEffect(() => {
-    if (code) {
-      //const docRef = doc?.get('');
+    if (code && doc && currentUser) {
+      const docRef = doc.ref;
+      docRef.set({
+        code
+      })
       window.close();
     }
-  });
+  }, [code, doc, currentUser]);
 
   // const [spotifyApi, setSpotifyApi] = useState(
   //   new SpotifyApi({

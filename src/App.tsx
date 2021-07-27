@@ -43,7 +43,7 @@ const MainDocument = () => {
         path: "/home/spotify",
         title: "Spotify",
         component: Spotify,
-        requiresAuthentication: true
+        requiresAuthentication: true,
       },
       {
         path: "/home/test",
@@ -115,11 +115,7 @@ const MainDocument = () => {
   );
 };
 
-interface Props {
-  children: JSX.Element;
-}
-
-function ProviderNest({ children }: Props) {
+function ProviderNest({ children }: { children: JSX.Element }) {
   return (
     <BreakpointProvider>
       <ThemeProvider>
