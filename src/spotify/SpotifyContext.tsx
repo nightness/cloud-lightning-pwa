@@ -10,13 +10,6 @@ interface Props {
 
 export const SpotifyProvider = ({ children }: Props) => {
   return (
-    <>
-      {/* <FirebaseNotifications currentUser={currentUser} /> */}
-      <SpotifyContext.Provider value={{
-
-      }}>
-        {children}
-      </SpotifyContext.Provider>
-    </>
+    <SpotifyContext.Provider value={{}}>{children}</SpotifyContext.Provider>
   );
 };
