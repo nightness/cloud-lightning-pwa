@@ -1,64 +1,62 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Page } from "../components";
-import SpotifyApi from "spotify-web-api-node";
-import { clientSecret, clientId } from "../private";
-import { useSpotify } from "./useSpotify";
-import { FirebaseContext } from "../database/FirebaseContext"
+import { FirebaseContext } from "../database/FirebaseContext";
 import { useDocument } from "../database/Firebase";
+import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
 
 export const redirectUri = encodeURI("http://localhost:3000/home/spotify");
 
 export default function Spotify() {
-  const spotify = useSpotify(redirectUri);
-  const { currentUser } = useContext(FirebaseContext)
-  const [doc, loading, error] = useDocument(`private/${currentUser?.uid}`)
-  const code = new URLSearchParams(window.location.search).get("code");
+  const { spotify } = useContext(SpotifyContext);
+  const { currentUser } = useContext(FirebaseContext);
+  const [doc, loading, error] = useDocument(`private/${currentUser?.uid}`);
+  const [code, setCode] = useState<string | null>(null);
+  const parameters = new URLSearchParams(window.location.hash.substr(1))
+  const accessToken = parameters.get("access_token")
+  const expiresIn = parameters.get("expires_in")
 
   useEffect(() => {
-    if (!doc || loading || error) return
-    console.log("testing: ", doc, loading, error)
-    const data = doc.data()
-
-    console.log(data);
-  }, [doc, loading, error])
+    if (!doc || loading || error) return;
+    console.log("testing: ", doc, loading, error);
+    const data = doc.data() as SpotifyFirebaseData;
+    if (data?.accessToken) {
+      spotify.setAccessToken(data.accessToken)
+      setCode(data.accessToken);
+    }
+    console.log("accessToken: ", data.accessToken);
+  }, [doc, loading, error]);
 
   useEffect(() => {
-    if (code && doc && currentUser) {
+    if (accessToken && expiresIn && doc && currentUser) {
       const docRef = doc.ref;
-      docRef.set({
-        code
-      })
-      window.close();
+      docRef
+        .set({
+          //spotifyCode: codeInUri,
+          accessToken,
+          expiresIn
+        })
+        .then(() => {
+          window.close();
+        });
     }
-  }, [code, doc, currentUser]);
+  }, [accessToken, expiresIn, doc, currentUser]);
 
-  // const [spotifyApi, setSpotifyApi] = useState(
-  //   new SpotifyApi({
-  //     redirectUri: "http://localhost:3000",
-  //     clientId,
-  //     clientSecret,
-  //   })
-  // );
+  if (accessToken) return <h3>Signing-in...</h3>;
 
-  useEffect(() => {
-    console.log("code: ", code);
-    if (code) {
-      // spotifyApi.authorizationCodeGrant(code, (error, response) => {
-      //   if (error) {
-      //     console.log("Error")
-      //     return;
-      //   }
-      //   spotifyApi.setAccessToken(response.body.access_token)
-      //   spotifyApi.setRefreshToken(response.body.refresh_token)
-      //   //const expiresIn = response.body.expires_in
-      //   console.log("Spotify is signed-in")
-      // })
-    }
-  }, [code]);
+  // http://localhost:3000/home/spotify#
+  // access_token=BQCwYXm7MzVOLriMMMnSnBC3PPl4Viu2pw40wvggQyuUeMQ2z_B8C2TWgfzk8wlXcwTvxNQ1a40yr_TdhuZVs__9msvDWeUlMtSBEne9t0L_gUa_RoTTYDCVJX8uk5xD83u_4LsXkSMeXuCC_X2BmiqRLG5VE_TixffT_GwHWs0GYNtLX1K3o9rkAVDf
+  // &token_type=Bearer&expires_in=3600
 
   return (
     <Page>
-      <Button text="Login" onClick={() => spotify.authorize()} />
+      <Button
+        text="Login"
+        onClick={() => spotify.authorize()}
+      />
+      <Button
+        text="Test"
+        onClick={() => spotify.test()}
+      />
     </Page>
   );
 }

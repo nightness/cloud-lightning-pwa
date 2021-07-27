@@ -18,6 +18,7 @@ import { BreakpointProvider } from "@w11r/use-breakpoint";
 import { MatrixProvider } from "./matrix/MatrixContext";
 import TetrisPage from "./tetris/TetrisPage";
 import Spotify from "./spotify/Spotify";
+import { SpotifyProvider } from "./spotify/SpotifyContext";
 
 function App() {
   return (
@@ -122,9 +123,11 @@ function ProviderNest({ children }: { children: JSX.Element }) {
         <Router>
           <FirebaseProvider>
             <MatrixProvider>
-              <NavigationProvider>
-                <WebRtcProvider>{children}</WebRtcProvider>
-              </NavigationProvider>
+              <SpotifyProvider>
+                <NavigationProvider>
+                  <WebRtcProvider>{children}</WebRtcProvider>
+                </NavigationProvider>
+              </SpotifyProvider>
             </MatrixProvider>
           </FirebaseProvider>
         </Router>
