@@ -20,7 +20,7 @@ export default function Spotify() {
   useEffect(() => {
     if (!doc || loading || error) return;
     const data = doc.data() as SpotifyFirebaseData;
-    if (data?.accessToken) {
+    if (data && data.accessToken && data.expiresAt && data.expiresAt < Date.now()) {
       spotify.setAccessToken(data.accessToken);
       setAccessToken(data.accessToken);
     }
@@ -29,10 +29,11 @@ export default function Spotify() {
   useEffect(() => {
     if (accessTokenParam && expiresInParam && doc && currentUser) {
       const docRef = doc.ref;
+      const expireTime = Date.now() + parseInt(expiresInParam);      
       docRef
         .set({
           accessToken: accessTokenParam,
-          expiresIn: expiresInParam,
+          expiresAt: expireTime,
         })
         .then(() => {
           window.close();

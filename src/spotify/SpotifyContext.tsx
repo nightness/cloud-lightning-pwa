@@ -12,7 +12,7 @@ export interface ISpotify {
 
 export interface SpotifyFirebaseData {
   accessToken?: string
-  expiresIn?: string
+  expiresAt?: number
 }
 
 type ContextType = {

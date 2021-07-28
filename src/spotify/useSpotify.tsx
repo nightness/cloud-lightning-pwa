@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { clientId } from "../private";
 import SpotifyApi from "spotify-web-api-node";
 import { ISpotify } from "./SpotifyContext";
+import useInterval from "../hooks/useInterval";
 
 export const authRequestUrl = "https://accounts.spotify.com/authorize";
 
@@ -16,10 +17,8 @@ export function useSpotify(redirectUri: string) {
     new SpotifyApi({ redirectUri, clientId })
   );
 
-  useEffect(() => {}, []);
-
   const authorize = () => {
-    window.open(url, "_blank", "width=150,height=300");
+    window.open(url, "_blank", "width=350,height=500");
   };
 
   const setAccessToken = (code: string) => {
