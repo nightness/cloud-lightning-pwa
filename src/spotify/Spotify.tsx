@@ -31,7 +31,6 @@ export default function Spotify() {
       const docRef = doc.ref;
       docRef
         .set({
-          //spotifyCode: codeInUri,
           accessToken,
           expiresIn
         })
