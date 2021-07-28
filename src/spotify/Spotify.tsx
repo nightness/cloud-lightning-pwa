@@ -20,7 +20,7 @@ export default function Spotify() {
   useEffect(() => {
     if (!doc || loading || error) return;
     const data = doc.data() as SpotifyFirebaseData;
-    if (data && data.accessToken && data.expiresAt && data.expiresAt < Date.now()) {
+    if (data && data.accessToken && data.expiresAt && data.expiresAt > Date.now()) {
       spotify.setAccessToken(data.accessToken);
       setAccessToken(data.accessToken);
     }
