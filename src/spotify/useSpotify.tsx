@@ -1,14 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { clientId } from "../private";
 import SpotifyApi from "spotify-web-api-node";
+import { ISpotify } from "./SpotifyContext";
 
 export const authRequestUrl = "https://accounts.spotify.com/authorize";
-
-export interface ISpotify {
-  authorize: () => any;
-  setAccessToken: (code: string) => any;
-  test: () => any;
-}
 
 export function useSpotify(redirectUri: string) {
   const url =
@@ -28,20 +23,20 @@ export function useSpotify(redirectUri: string) {
   };
 
   const setAccessToken = (code: string) => {
-    console.log("Access Token Set")
     spotifyApi.setAccessToken(code)
   };
 
   const test = () => {
     spotifyApi.getMe().then((response) => {
-      console.log(response.body.uri)
+      console.log(response.body.email)
     })    
   }
 
   const result: ISpotify = {
     authorize,
     setAccessToken,
-    test
+    test,
+    api: spotifyApi
   };
 
   // Return an object for handling the spotify api

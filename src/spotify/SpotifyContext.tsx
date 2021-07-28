@@ -1,6 +1,14 @@
 import { createContext } from "react";
 import { redirectUri } from "./Spotify";
-import { useSpotify, ISpotify } from "./useSpotify";
+import { useSpotify} from "./useSpotify";
+import SpotifyApi from 'spotify-web-api-node'
+
+export interface ISpotify {
+  authorize: () => any;
+  setAccessToken: (code: string) => any;
+  test: () => any;
+  api: SpotifyApi
+}
 
 export interface SpotifyFirebaseData {
   accessToken?: string
