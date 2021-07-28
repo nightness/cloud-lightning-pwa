@@ -46,10 +46,17 @@ export default function Spotify() {
       setSearchResults([]);
       return;
     }
+    let cancel = false;
     spotify.api.searchTracks(searchText).then((response) => {
+      if (cancel) return;
       setSearchResults(response.body.tracks?.items || [])
     })
+    return () => { cancel = true };
   }, [searchText, accessToken])
+
+  useEffect(() => {
+    console.log(searchResults)
+  }, [searchResults])
 
   if (accessTokenParam) return <h3>Signing-in...</h3>;
 
