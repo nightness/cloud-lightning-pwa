@@ -12,6 +12,7 @@ export default function Tetris() {
         devMode
         increaseSpeedBy={20}
         onStartedChanged={setIsStarted}
+        onRestart={() => setRowsRemoved(0)}
         onRowsRemoved={(rows) => setRowsRemoved(rowsRemoved + rows)}
       />
       {/* <TestPanel /> */}

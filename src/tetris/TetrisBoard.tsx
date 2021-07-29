@@ -22,6 +22,7 @@ interface Props {
   enable8thPiece?: boolean;
   onStartedChanged?: (isStarted: boolean) => any;
   onRowsRemoved?: (numberOfRowsRemoved: number) => any;
+  onRestart?: () => any;
 }
 
 export default function TetrisBoard({
@@ -31,6 +32,7 @@ export default function TetrisBoard({
   enable8thPiece,
   onStartedChanged,
   onRowsRemoved,
+  onRestart,
 }: Props) {
   const [board, setBoard] = useState<Plane>(createNewBoard());
   const [currentBlockType, setCurrentBlockType] = useState<BlockType>(
@@ -181,6 +183,7 @@ export default function TetrisBoard({
     setGameSpeed(STARTING_SPEED)
     setRowsRemoved(0)
     newBlock();
+    onRestart?.()
   };
 
   const handlePause = () => {
