@@ -16,13 +16,14 @@ export function useSpotify(redirectUri: string) {
   const [spotifyApi, setSpotifyApi] = useState(
     new SpotifyApi({ redirectUri, clientId })
   );
+  const [popupWindow, setPopupWindow] = useState<Window | null>(null)
 
   const authorize = () => {
-    window.open(url, "_blank", "width=350,height=500");
+    setPopupWindow(window.open(url, "_blank", "width=350,height=500"));
   };
 
-  const setAccessToken = (code: string) => {
-    spotifyApi.setAccessToken(code)
+  const setAccessToken = (accessToken: string) => {
+    spotifyApi.setAccessToken(accessToken)
   };
 
   const test = () => {
@@ -35,7 +36,8 @@ export function useSpotify(redirectUri: string) {
     authorize,
     setAccessToken,
     test,
-    api: spotifyApi
+    api: spotifyApi,
+    popupWindow
   };
 
   // Return an object for handling the spotify api

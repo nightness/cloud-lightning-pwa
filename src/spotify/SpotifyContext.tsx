@@ -5,9 +5,10 @@ import SpotifyApi from 'spotify-web-api-node'
 
 export interface ISpotify {
   authorize: () => any;
-  setAccessToken: (code: string) => any;
+  setAccessToken: (accessToken: string) => any;
   test: () => any;
-  api: SpotifyApi
+  api: SpotifyApi,
+  popupWindow: Window | null
 }
 
 export interface SpotifyFirebaseData {
