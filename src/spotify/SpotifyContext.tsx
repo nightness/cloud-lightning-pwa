@@ -10,6 +10,7 @@ export const authRequestUrl = "https://accounts.spotify.com/authorize";
 
 export interface ISpotify {
   authorize: () => any;
+  accessToken: string | null
   setAccessToken: (accessToken: string) => any;
   callback: ((state: CallbackState) => any) | null;
   trackUris: string[];
@@ -28,6 +29,7 @@ export interface SpotifyFirebaseData {
 
 export const SpotifyContext = createContext<ISpotify>({
   authorize: () => null,
+  accessToken: null,
   setAccessToken: (code: string) => null,
   callback: null,
   trackUris: [],
@@ -53,6 +55,7 @@ export const SpotifyProvider = ({ children }: Props) => {
   const [spotifyApi, setSpotifyApi] = useState(
     new SpotifyApi({ redirectUri, clientId })
   );
+  const [accessToken, setAccessToken] = useState<string | null>()
   const [play, setPlay] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [trackUris, setTrackUris] = useState<string[]>([]);
@@ -66,7 +69,8 @@ export const SpotifyProvider = ({ children }: Props) => {
     setPopupWindow(window.open(url, "_blank", "width=350,height=500"));
   };
 
-  const setAccessToken = (accessToken: string) => {
+  const setSpotifyAccessToken = (accessToken: string) => {
+    setAccessToken(accessToken)
     spotifyApi.setAccessToken(accessToken);
   };
 
@@ -89,7 +93,8 @@ export const SpotifyProvider = ({ children }: Props) => {
     <SpotifyContext.Provider
       value={{
         authorize,
-        setAccessToken,
+        accessToken: accessToken ?? null,
+        setAccessToken: setSpotifyAccessToken,
         test,
         callback,
         playTrack,

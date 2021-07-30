@@ -12,6 +12,7 @@ export default function Player() {
       callback={spotify.callback ?? undefined}
       play={spotify.isPlaying}
       uris={spotify.trackUris}
+      
     />
   );
 }

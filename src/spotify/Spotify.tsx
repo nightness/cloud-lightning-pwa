@@ -101,8 +101,6 @@ export default function Spotify() {
                 onClick={() => {
                   console.log("click", track.uri);
                   spotify.playTrack(track.uri)
-                  // setTrackUri(track.uri);
-                  // setPlay(true);
                 }}
                 key={`${Math.random()}`}
               >
@@ -127,7 +125,6 @@ export default function Spotify() {
               </div>
             ))}
           </div>
-          {/* <Button text="Test" onClick={() => spotify.test()} /> */}
         </div>
       )}
     </Page>
