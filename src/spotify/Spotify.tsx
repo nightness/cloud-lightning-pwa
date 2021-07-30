@@ -117,6 +117,7 @@ export default function Spotify() {
                   style={{ justifyContent: "center", alignContent: "center" }}
                 >
                   <h3>{track.artists[0].name}</h3>
+                  {/* Self-Title Album check */}
                   {track.album.name === track.artists[0].name ? (
                     <></>
                   ) : (
