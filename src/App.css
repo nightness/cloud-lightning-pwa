@@ -137,3 +137,15 @@ h5 {
 .test {
   /* transform: skew(10deg); */
 }
+
+.__23rxcu > div {
+  top: -280% !important;
+}
+
+.spotify-player {
+
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+}

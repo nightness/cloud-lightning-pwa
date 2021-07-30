@@ -6,13 +6,14 @@ export default function Player() {
   const spotify = useContext(SpotifyContext);
 
   return (
-    <SpotifyPlayer
-      token={spotify.api.getAccessToken() ?? ""}
-      showSaveIcon
-      callback={spotify.callback ?? undefined}
-      play={spotify.isPlaying}
-      uris={spotify.trackUris}
-      
-    />
+    <div className="spotify-player">
+      <SpotifyPlayer
+        token={spotify.api.getAccessToken() ?? ""}
+        showSaveIcon
+        callback={spotify.callback ?? undefined}
+        play={spotify.isPlaying}
+        uris={spotify.trackUris}
+      />
+    </div>
   );
 }
