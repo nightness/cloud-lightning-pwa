@@ -18,7 +18,8 @@ import { BreakpointProvider } from "@w11r/use-breakpoint";
 import { MatrixProvider } from "./matrix/MatrixContext";
 import TetrisPage from "./tetris/TetrisPage";
 import Spotify from "./spotify/Spotify";
-import { SpotifyProvider } from "./spotify/SpotifyContext";
+import { SpotifyContext, SpotifyProvider } from "./spotify/SpotifyContext";
+import SpotifyPlayer from "./spotify/Player";
 
 function App() {
   return (
@@ -33,6 +34,45 @@ const DisplayErrorText: React.FC = (props) => {
 };
 
 const MainDocument = () => {
+  const { pages } = usePages();
+  const spotify = useContext(SpotifyContext);
+
+  return (
+    <div className={`App`}>
+      <NavBar />
+      <div className={`content`}>
+        <Pages pages={pages} />
+      </div>
+      {spotify.api.getAccessToken() ? (
+        <SpotifyPlayer />
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+};
+
+function ProviderNest({ children }: { children: JSX.Element }) {
+  return (
+    <BreakpointProvider>
+      <ThemeProvider>
+        <Router>
+          <FirebaseProvider>
+            <MatrixProvider>
+              <SpotifyProvider>
+                <NavigationProvider>
+                  <WebRtcProvider>{children}</WebRtcProvider>
+                </NavigationProvider>
+              </SpotifyProvider>
+            </MatrixProvider>
+          </FirebaseProvider>
+        </Router>
+      </ThemeProvider>
+    </BreakpointProvider>
+  );
+}
+
+const usePages = () => {
   const { addPage, pages } = useContext(NavigationContext);
 
   addPage({
@@ -106,34 +146,7 @@ const MainDocument = () => {
     component: Authentication,
   });
 
-  return (
-    <div className={`App`}>
-      <NavBar />
-      <div className={`content`}>
-        <Pages pages={pages} />
-      </div>
-    </div>
-  );
+  return { pages };
 };
-
-function ProviderNest({ children }: { children: JSX.Element }) {
-  return (
-    <BreakpointProvider>
-      <ThemeProvider>
-        <Router>
-          <FirebaseProvider>
-            <MatrixProvider>
-              <SpotifyProvider>
-                <NavigationProvider>
-                  <WebRtcProvider>{children}</WebRtcProvider>
-                </NavigationProvider>
-              </SpotifyProvider>
-            </MatrixProvider>
-          </FirebaseProvider>
-        </Router>
-      </ThemeProvider>
-    </BreakpointProvider>
-  );
-}
 
 export default App;

@@ -3,17 +3,14 @@ import { Button, Page, TextInput } from "../components";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { useDocument } from "../database/Firebase";
 import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
-import SpotifyPlayer from "react-spotify-web-playback";
 export const redirectUri = encodeURI("http://localhost:3000/home/spotify");
 
 export default function Spotify() {
-  const { spotify } = useContext(SpotifyContext);
+  const spotify = useContext(SpotifyContext);
   const { currentUser } = useContext(FirebaseContext);
   const [doc, loading, error] = useDocument(`private/${currentUser?.uid}`);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
-  const [play, setPlay] = useState(false);
-  const [trackUri, setTrackUri] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<
     SpotifyApi.TrackObjectFull[]
   >([]);
@@ -31,7 +28,7 @@ export default function Spotify() {
       spotify.setAccessToken(data.accessToken);
       setAccessToken(data.accessToken);
     } else {
-      spotify.authorize();
+      //spotify.authorize();
     }
   }, [doc, loading, error]);
 
@@ -103,8 +100,9 @@ export default function Spotify() {
                 }}
                 onClick={() => {
                   console.log("click", track.uri);
-                  setTrackUri(track.uri);
-                  setPlay(true);
+                  spotify.playTrack(track.uri)
+                  // setTrackUri(track.uri);
+                  // setPlay(true);
                 }}
                 key={`${Math.random()}`}
               >
@@ -117,8 +115,9 @@ export default function Spotify() {
                   style={{ justifyContent: "center", alignContent: "center" }}
                 >
                   <h3>{track.artists[0].name}</h3>
-                  {/* Self-Title Album check */}
-                  {track.album.name === track.artists[0].name ? (
+                  {/* Self-Titled Album check */}
+                  {track.album.name.toLowerCase() ===
+                  track.artists[0].name.toLowerCase() ? (
                     <></>
                   ) : (
                     <h4>{track.album.name}</h4>
@@ -129,15 +128,6 @@ export default function Spotify() {
             ))}
           </div>
           {/* <Button text="Test" onClick={() => spotify.test()} /> */}
-          <SpotifyPlayer
-            token={accessToken}
-            showSaveIcon
-            callback={(state) => {
-              if (!state.isPlaying) setPlay(false);
-            }}
-            play={play}
-            uris={trackUri ? [trackUri] : []}
-          />
         </div>
       )}
     </Page>
