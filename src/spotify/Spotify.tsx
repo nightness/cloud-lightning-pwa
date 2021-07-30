@@ -112,7 +112,10 @@ export default function Spotify() {
                   src={track.album.images[0].url}
                   style={{ width: 64, height: 64 }}
                 />
-                <div className="flex-column" style={{ justifyContent: 'center' }}>
+                <div
+                  className="flex-column"
+                  style={{ justifyContent: "center", alignContent: "center" }}
+                >
                   <h3>{track.artists[0].name}</h3>
                   {track.album.name === track.artists[0].name ? (
                     <></>
@@ -120,7 +123,7 @@ export default function Spotify() {
                     <h4>{track.album.name}</h4>
                   )}
                 </div>
-                <h2 style={{ textAlign: 'left'}}>{track.name}</h2>
+                <h2 style={{ textAlign: "left" }}>{track.name}</h2>
               </div>
             ))}
           </div>
