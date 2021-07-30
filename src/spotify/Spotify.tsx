@@ -3,7 +3,7 @@ import { Button, Page, TextInput } from "../components";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { useDocument } from "../database/Firebase";
 import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
-export const redirectUri = encodeURI("http://localhost:3000/home/spotify");
+import TrackResult from "./TrackResult";
 
 export default function Spotify() {
   const spotify = useContext(SpotifyContext);
@@ -24,7 +24,7 @@ export default function Spotify() {
     const data = doc.data() as SpotifyFirebaseData;
     const remainingTime = data.expiresAt ? data.expiresAt - Date.now() : 0;
     //console.log("Test: ", data.accessToken, data?.expiresAt, Date.now(), remainingTime);
-    if (data && data.accessToken && remainingTime > 10000) {
+    if (data && data.accessToken && remainingTime > 30000) {
       spotify.setAccessToken(data.accessToken);
       setAccessToken(data.accessToken);
     } else {
@@ -78,7 +78,7 @@ export default function Spotify() {
       {!accessToken ? (
         <Button text="Login" onClick={() => spotify.authorize()} />
       ) : (
-        <div className="flex-column test">
+        <div className="flex-column" style={{ paddingBottom: "2.5rem" }}>
           <div>
             <TextInput
               value={searchText}
@@ -89,40 +89,7 @@ export default function Spotify() {
           </div>
           <div style={{ position: "relative", width: "100%" }}>
             {searchResults.map((track, index, array) => (
-              <div
-                className=""
-                style={{
-                  padding: "5px",
-                  display: "grid",
-                  gridTemplateColumns: "64px 45% 45%",
-                  width: "100%",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  console.log("click", track.uri);
-                  spotify.playTrack(track.uri)
-                }}
-                key={`${Math.random()}`}
-              >
-                <img
-                  src={track.album.images[0].url}
-                  style={{ width: 64, height: 64 }}
-                />
-                <div
-                  className="flex-column"
-                  style={{ justifyContent: "center", alignContent: "center" }}
-                >
-                  <h3>{track.artists[0].name}</h3>
-                  {/* Self-Titled Album check */}
-                  {track.album.name.toLowerCase() ===
-                  track.artists[0].name.toLowerCase() ? (
-                    <></>
-                  ) : (
-                    <h4>{track.album.name}</h4>
-                  )}
-                </div>
-                <h2 style={{ textAlign: "left" }}>{track.name}</h2>
-              </div>
+              <TrackResult track={track} />
             ))}
           </div>
         </div>

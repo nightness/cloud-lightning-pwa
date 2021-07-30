@@ -1,16 +1,21 @@
 import { createContext } from "react";
-import { redirectUri } from "./Spotify";
 import SpotifyApi from "spotify-web-api-node";
 import { CallbackState } from "react-spotify-web-playback/lib";
 import React, { useEffect, useRef, useState } from "react";
 import { clientId } from "../private";
 import useInterval from "../hooks/useInterval";
 
+export const redirectUri = window.location.host === 'localhost' ?
+   encodeURI("http://localhost:3000/home/spotify") :
+   encodeURI("https://cloud-lightning-lite.web.app/home/spotify");
+
 export const authRequestUrl = "https://accounts.spotify.com/authorize";
 
 export interface ISpotify {
   authorize: () => any;
   accessToken: string | null
+  search?: [string, React.Dispatch<React.SetStateAction<string>>]
+  results?: [SpotifyApi.TrackObjectFull[], React.Dispatch<React.SetStateAction<SpotifyApi.TrackObjectFull[]>>]
   setAccessToken: (accessToken: string) => any;
   callback: ((state: CallbackState) => any) | null;
   trackUris: string[];
