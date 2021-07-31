@@ -25,7 +25,7 @@ export default function TrackResult({ track }: Props) {
     >
       <img src={track.album.images[0].url} style={{ width: 64, height: 64 }} />
       <div
-        className="flex-column"
+        className="flex-column-center"
         style={{ justifyContent: "center", alignContent: "center" }}
       >
         <h3>{track.artists[0].name}</h3>

@@ -45,19 +45,23 @@
 .flex-row {
     display: flex;
     flex-direction: row;
+    align-items: initial;
 }
 
 .flex-row-reverse {
     display: flex;
     flex-direction: row-reverse;
+    align-items: initial;
 }
 
 .flex-column {
     display: flex;
     flex-direction: column;
+    align-items: initial;
 }
 
 .flex-column-reverse {
     display: flex;
     flex-direction: column-reverse;
+    align-items: initial;
 }
