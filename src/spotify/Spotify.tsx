@@ -85,7 +85,6 @@ export default function Spotify() {
               onChangeValue={setSearchText}
               placeholder="Search Songs/Albums"
             />
-            <Button text="Search" onClick={() => console.log(searchResults)} />
           </div>
           <div style={{ position: "relative", width: "100%" }}>
             {searchResults.map((track, index, array) => (

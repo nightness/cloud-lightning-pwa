@@ -8,14 +8,14 @@ export default function Tetris() {
 
   return (
     <Page>
-      {/* <TetrisBoard
+      <TetrisBoard
         devMode
         increaseSpeedBy={20}
         onStartedChanged={setIsStarted}
         onRestart={() => setRowsRemoved(0)}
         onRowsRemoved={(rows) => setRowsRemoved(rowsRemoved + rows)}
-      /> */}
-      <TestPanel />
+      />
+      {/* <TestPanel /> */}
       {!isStarted ? (
         <div>
           <h3>Use of a physical keyboard is the only way to interact atm</h3>
