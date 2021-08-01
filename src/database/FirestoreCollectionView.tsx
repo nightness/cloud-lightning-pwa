@@ -73,6 +73,9 @@ export default function _<T>({
     }
     return (
         <ul>
+            {
+                console.log(messages)
+            }
             { messages.map((message, ind) =>
                 <li style={{ textDecoration: 'none'}}><Message item={message} /></li>
             )}

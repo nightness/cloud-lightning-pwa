@@ -55,7 +55,10 @@ service cloud.firestore {
 		}
 
 		match /walls/{wallId}/messages/{messageId} {
-			allow write: if isAuthorized() && (wallId == request.auth.uid)
+			allow write: if isAuthorized() && 
+				(wallId == request.auth.uid) &&
+				(request.resource.data.message is string) &&
+				(request.resource.data.message.size() > 0)
 			allow read: if isAuthorized()
 		}
  	}
