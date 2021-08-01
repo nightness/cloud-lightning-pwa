@@ -38,5 +38,10 @@ service cloud.firestore {
 			allow write: if isAuthorized() && (profileID == request.auth.uid)
 			allow read: if isAuthorized()
 		}
+
+		match /walls/{wallId} {
+			allow write: if isAuthorized() && (wallId == request.auth.uid)
+			allow read: if isAuthorized()
+		}
  	}
 }

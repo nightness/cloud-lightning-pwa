@@ -1,24 +1,28 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Page, TextInput, Button, ThemeContext } from "../components";
 import FirestoreCollectionView from "../database/FirestoreCollectionView";
-import {
+import firebase, {
   DocumentData,
   QuerySnapshot,
-  useCollection,
+  useCollection,  
 } from "../database/Firebase";
 import Message from "./Message";
 import { EditableText } from "@blueprintjs/core";
+import { FirebaseContext } from "../database/FirebaseContext";
 
 const messageCollectionPath = "/profiles";
 
 export default () => {
   const [snapshot, loadingCollection, errorCollection] = useCollection(
-    messageCollectionPath, true
+    messageCollectionPath,
+    true
   );
+  const { currentUser } = useContext(FirebaseContext)
   const [members, setMembers] = useState<any[]>([]);
   //const [selectedMember, setSelectedMember] = useState<PickerItem>()
-  const [messageText, setMessageText] = useState<string>("");
+  const [messageText, setMessageText] = useState<string | null>(null);
   const textInput = useRef<EditableText>();
+  const querySnapshot = snapshot as QuerySnapshot<DocumentData>;
 
   useEffect(() => {
     //textInput.current?.focus()
@@ -26,11 +30,10 @@ export default () => {
 
   useEffect(() => {
     if (loadingCollection || errorCollection || !snapshot) return;
-    var newState: any[] = [];
-    const querySnapshot = snapshot as QuerySnapshot<DocumentData>;
-    console.log('=> ', querySnapshot.docs)
+    var newState: any[] = [];    
+    //console.log("=> ", querySnapshot.docs);
     querySnapshot.docs.forEach((docRef) => {
-      console.log('*', docRef)
+      //console.log("*", docRef);
       const push = async (docRef: DocumentData) => {
         //if (docRef.id === currentUser?.uid) return
         const name = await docRef.get("displayName");
@@ -46,7 +49,7 @@ export default () => {
   }, [snapshot, loadingCollection, errorCollection]);
 
   useEffect(() => {
-    console.log(members);
+    //console.log(members);
   }, [members]);
 
   // useEffect(() => {
@@ -59,74 +62,55 @@ export default () => {
   //     console.log(claims)
   // }, [claims])
 
-  // const sendMessage = () => {
-  //     if (!selectedMember) return
-  //     const text = messageText
-  //     setMessageText('')
-  //     console.log(`sendMessage: ${selectedMember.value}`)
-  //     callFirebaseFunction('setMessage', {
-  //         collectionPath: `/walls`,
-  //         documentId: selectedMember.value,
-  //         message: text,
-  //     }).then((results) => {
-  //         const data = results.data
-  //         if (typeof data.type === 'string') {
-  //             console.error(data.message)
-  //             if (data.type === 'silent') return
-  //             alert(data.message)
-  //         } else {
-  //             console.log(data)
-  //         }
-  //         textInput.current?.focus()
-  //     }).catch((error) => {
-  //         console.error(error)
-  //     })
-  // }
-
-  // const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-  //     if (e.nativeEvent.key !== 'Enter') return
-  //     // Adds a new message to the chatroom
-  //     sendMessage()
-  // }
+  const sendMessage = () => {
+      if (!messageText || messageText.length === 0) return;
+      const text = messageText
+      console.log('Send: ', messageText)
+      setMessageText('')
+      // const docRef = firebase.firestore().doc(`/walls/${currentUser}`);
+      // docRef.get().then((dataRef) => {
+          
+      // })
+      // callFirebaseFunction('setMessage', {
+      //     collectionPath: `/walls`,
+      //     documentId: selectedMember.value,
+      //     message: text,
+      // }).then((results) => {
+  }
 
   return (
     <Page>
-      <div>
+      {/* <div>
         <select name="members" id="members">
           {members.map((member, idx) => {
+            console.log("member: ", member.label)
             return (
               <option key={idx} value={idx}>
-                {member.name}
+                {member.label}
               </option>
             );
           })}
         </select>
-        {/* <Picker
-                    data={members}
-                    onValueChanged={setSelectedMember}
-                /> */}
+      </div> */}
+      <div className="messenger-message-content">
+        <FirestoreCollectionView<Message>
+          collectionPath={messageCollectionPath}
+          autoScrollToEnd={true}
+          orderBy="postedAt"
+          limitLength={25}
+          // @ts-ignore
+          renderItem={({ item }) => <Message item={item} />}
+        />
       </div>
-      <FirestoreCollectionView<Message>
-        collectionPath={messageCollectionPath}
-        autoScrollToEnd={true}
-        orderBy="postedAt"
-        limitLength={25}
-        // @ts-ignore
-        renderItem={({ item }) => <Message item={item} />}
-      />
       <div>
         <TextInput
-          value={messageText}
-          onChange={
-            (event: React.ChangeEvent) => undefined
-            //setMessageText(event.nativeEvent.returnValue)
-          }
-          //onConfirm={onMessageKeyPress}
-        />
-        <Button
-          text="Send"
-          disabled={messageText.length < 1}
-          //onPress={sendMessage}
+          style={{ width: '80%', marginTop: "10px" }}
+          value={messageText ?? ""}
+          onChangeValue={(value) => setMessageText(value)}
+          onKeyDown={(event) => {
+            if (event.key !== 'Enter') return;
+            sendMessage()
+          }}
         />
       </div>
     </Page>

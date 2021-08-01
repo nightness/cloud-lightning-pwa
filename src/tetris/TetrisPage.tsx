@@ -8,7 +8,7 @@ export default function Tetris() {
 
   return (
     <Page>
-      <TetrisBoard
+      <TetrisBoard      
         devMode
         increaseSpeedBy={20}
         onStartedChanged={setIsStarted}

@@ -81,6 +81,12 @@ const usePages = () => {
     component: Home,
     children: [
       {
+        path: "/home/wall",
+        title: "My Wall",
+        component: WallMessenger,
+        requiresAuthentication: true,
+      },
+      {
         path: "/home/spotify",
         title: "Spotify",
         component: Spotify,
@@ -116,12 +122,6 @@ const usePages = () => {
     ],
     // requiresAuthentication: true,
   });
-  // addPage({
-  //   path: "/wall",
-  //   title: "Member Walls",
-  //   component: WallMessenger,
-  //   requiresAuthentication: true,
-  // });
   addPage({
     path: "/WebRTC",
     title: "WebRTC Chat",

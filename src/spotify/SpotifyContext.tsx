@@ -1,21 +1,26 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import SpotifyApi from "spotify-web-api-node";
 import { CallbackState } from "react-spotify-web-playback/lib";
 import React, { useEffect, useRef, useState } from "react";
 import { clientId } from "../private";
+import { FirebaseContext } from "../database/FirebaseContext";
 import useInterval from "../hooks/useInterval";
 
-export const redirectUri = window.location.host === 'localhost' ?
-   encodeURI("http://localhost:3000/home/spotify") :
-   encodeURI("https://cloud-lightning-lite.web.app/home/spotify");
+export const redirectUri =
+  window.location.host === "localhost"
+    ? encodeURI("http://localhost:3000/home/spotify")
+    : encodeURI("https://cloud-lightning-lite.web.app/home/spotify");
 
 export const authRequestUrl = "https://accounts.spotify.com/authorize";
 
 export interface ISpotify {
   authorize: () => any;
-  accessToken: string | null
-  search?: [string, React.Dispatch<React.SetStateAction<string>>]
-  results?: [SpotifyApi.TrackObjectFull[], React.Dispatch<React.SetStateAction<SpotifyApi.TrackObjectFull[]>>]
+  accessToken: string | null;
+  search?: [string, React.Dispatch<React.SetStateAction<string>>];
+  results?: [
+    SpotifyApi.TrackObjectFull[],
+    React.Dispatch<React.SetStateAction<SpotifyApi.TrackObjectFull[]>>
+  ];
   setAccessToken: (accessToken: string) => any;
   callback: ((state: CallbackState) => any) | null;
   trackUris: string[];
@@ -60,7 +65,8 @@ export const SpotifyProvider = ({ children }: Props) => {
   const [spotifyApi, setSpotifyApi] = useState(
     new SpotifyApi({ redirectUri, clientId })
   );
-  const [accessToken, setAccessToken] = useState<string | null>()
+  const { currentUser } = useContext(FirebaseContext);
+  const [accessToken, setAccessToken] = useState<string | null>();
   const [play, setPlay] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [trackUris, setTrackUris] = useState<string[]>([]);
@@ -70,18 +76,24 @@ export const SpotifyProvider = ({ children }: Props) => {
     }
   );
 
+  useEffect(() => {
+    if (currentUser) return;
+    setAccessToken(null);
+    setPlay(false);
+  }, [currentUser]);
+
   const authorize = () => {
     setPopupWindow(window.open(url, "_blank", "width=350,height=500"));
   };
 
   const setSpotifyAccessToken = (accessToken: string) => {
-    setAccessToken(accessToken)
+    setAccessToken(accessToken);
     spotifyApi.setAccessToken(accessToken);
   };
 
   const playTrack = (trackUri: string) => {
-    setTrackUris([trackUri])
-    setPlay(true)
+    setTrackUris([trackUri]);
+    setPlay(true);
   };
 
   const test = () => {
@@ -91,8 +103,8 @@ export const SpotifyProvider = ({ children }: Props) => {
   };
 
   const stop = () => {
-    setPlay(false)
-  }
+    setPlay(false);
+  };
 
   return (
     <SpotifyContext.Provider

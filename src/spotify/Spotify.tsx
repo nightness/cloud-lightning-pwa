@@ -79,7 +79,7 @@ export default function Spotify() {
         <Button text="Login" onClick={() => spotify.authorize()} />
       ) : (
         <div className="flex-column" style={{ paddingBottom: "2.5rem" }}>
-          <div>
+          <div style={{ position:'relative', width: '80%', left: '10%'}}>
             <TextInput
               value={searchText}
               onChangeValue={setSearchText}
