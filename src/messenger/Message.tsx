@@ -31,7 +31,7 @@ export default class Message extends PureComponent<Props> {
     ).toLocaleTimeString();
   }
 
-  static readonly iconSize = 32;
+  static readonly iconSize = 48;
 
   render() {
     return (
@@ -49,10 +49,10 @@ export default class Message extends PureComponent<Props> {
           <Icon icon="user" iconSize={Message.iconSize} />
         )}
         <div style={{ paddingLeft: 5, paddingRight: 5 }}>
-          <Text style={{ fontSize: 12, fontWeight: 500 }}>
+          <Text style={{ fontSize: 14, fontWeight: 500 }}>
             {`${this.item.authorName} [ ${this.date} @ ${this.time} ] `}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: 400, textAlign: 'left' }}>
+          <Text style={{ fontSize: 16, fontWeight: 400, textAlign: 'left' }}>
             {this.item.message}
           </Text>
         </div>

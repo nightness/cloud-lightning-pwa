@@ -153,4 +153,5 @@ h5 {
   align-items: flex-start;
   justify-content: flex-start;
   justify-items: flex-start;
+  padding: 0.75rem;
 }
