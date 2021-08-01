@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { Text, Container } from "../components";
+import { PureComponent } from "react";
+import { Text } from "../components";
 import { Icon } from "@blueprintjs/core";
 import { Timestamp } from "../database/Firebase";
 
@@ -35,7 +35,7 @@ export default class Message extends PureComponent<Props> {
 
   render() {
     return (
-      <div className='flex-row'>
+      <div className='flex-row' style={{ marginBottom: '5px' }}>
         {this.item.photoURL ? (
           <img
             src={this.item.photoURL}
