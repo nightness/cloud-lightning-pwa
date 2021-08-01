@@ -149,4 +149,8 @@ h5 {
   border-color: black;
   border-style: solid;
   height: 78vh;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
+  justify-items: flex-start;
 }

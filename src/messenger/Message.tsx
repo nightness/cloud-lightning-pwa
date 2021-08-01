@@ -35,7 +35,7 @@ export default class Message extends PureComponent<Props> {
 
   render() {
     return (
-      <Container style={{ flexDirection: "row", alignItems: "center" }}>
+      <div className='flex-row'>
         {this.item.photoURL ? (
           <img
             src={this.item.photoURL}
@@ -48,15 +48,15 @@ export default class Message extends PureComponent<Props> {
         ) : (
           <Icon icon="user" iconSize={Message.iconSize} />
         )}
-        <div key={this.item.id} style={{ paddingLeft: 5, paddingRight: 5 }}>
+        <div style={{ paddingLeft: 5, paddingRight: 5 }}>
           <Text style={{ fontSize: 12, fontWeight: 500 }}>
             {`${this.item.authorName} [ ${this.date} @ ${this.time} ] `}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: 400 }}>
+          <Text style={{ fontSize: 14, fontWeight: 400, textAlign: 'left' }}>
             {this.item.message}
           </Text>
         </div>
-      </Container>
+      </div>
     );
   }
 }

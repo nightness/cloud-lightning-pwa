@@ -41,6 +41,8 @@ export default () => {
       .doc(postTime)
       .set({
         message: messageText,
+        authorName: currentUser?.displayName,
+        photoURL: currentUser?.photoURL
       })
       .then(() => new Promise(() => setMessageText("")))
       .catch(console.error);
