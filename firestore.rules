@@ -54,7 +54,7 @@ service cloud.firestore {
 				(request.resource.data.uid == request.auth.uid)
 		}
 
-		match /walls/{wallId} {
+		match /walls/{wallId}/messages/{messageId} {
 			allow write: if isAuthorized() && (wallId == request.auth.uid)
 			allow read: if isAuthorized()
 		}

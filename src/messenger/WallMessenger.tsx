@@ -4,7 +4,7 @@ import FirestoreCollectionView from "../database/FirestoreCollectionView";
 import firebase, {
   DocumentData,
   QuerySnapshot,
-  useCollection,  
+  useCollection,
 } from "../database/Firebase";
 import Message from "./Message";
 import { EditableText } from "@blueprintjs/core";
@@ -17,20 +17,20 @@ export default () => {
     messageCollectionPath,
     true
   );
-  const { currentUser } = useContext(FirebaseContext)
+  const { currentUser } = useContext(FirebaseContext);
   const [members, setMembers] = useState<any[]>([]);
   //const [selectedMember, setSelectedMember] = useState<PickerItem>()
   const [messageText, setMessageText] = useState<string | null>(null);
   const textInput = useRef<EditableText>();
   const querySnapshot = snapshot as QuerySnapshot<DocumentData>;
 
-  useEffect(() => {
-    //textInput.current?.focus()
-  }, [textInput]);
+  // useEffect(() => {
+  //   textInput.current?.focus()
+  // }, [textInput]);
 
   useEffect(() => {
     if (loadingCollection || errorCollection || !snapshot) return;
-    var newState: any[] = [];    
+    var newState: any[] = [];
     //console.log("=> ", querySnapshot.docs);
     querySnapshot.docs.forEach((docRef) => {
       //console.log("*", docRef);
@@ -48,50 +48,21 @@ export default () => {
     });
   }, [snapshot, loadingCollection, errorCollection]);
 
-  useEffect(() => {
-    //console.log(members);
-  }, [members]);
-
-  // useEffect(() => {
-  //     if (selectedMember && selectedMember.value)
-  //         setMessageCollectionPath(`/walls/${selectedMember.value}/messages/`)
-  //     console.log(selectedMember)
-  // }, [selectedMember])
-
-  // useEffect(() => {
-  //     console.log(claims)
-  // }, [claims])
-
   const sendMessage = () => {
-      if (!messageText || messageText.length === 0) return;
-      const text = messageText
-      console.log('Send: ', messageText)
-      setMessageText('')
-      // const docRef = firebase.firestore().doc(`/walls/${currentUser}`);
-      // docRef.get().then((dataRef) => {
-          
-      // })
-      // callFirebaseFunction('setMessage', {
-      //     collectionPath: `/walls`,
-      //     documentId: selectedMember.value,
-      //     message: text,
-      // }).then((results) => {
-  }
+    if (!messageText || messageText.length === 0) return;
+    console.log("Send: ", messageText);
+    const postTime = `${Date.now()}`;
+    firebase.firestore().collection(`/walls/${currentUser?.uid}/messages`)
+      .doc(postTime)
+      .set({
+        message: messageText,
+      })
+      .then(() => new Promise(() => setMessageText("")))
+      .catch(console.error);
+  };
 
   return (
     <Page>
-      {/* <div>
-        <select name="members" id="members">
-          {members.map((member, idx) => {
-            console.log("member: ", member.label)
-            return (
-              <option key={idx} value={idx}>
-                {member.label}
-              </option>
-            );
-          })}
-        </select>
-      </div> */}
       <div className="messenger-message-content">
         <FirestoreCollectionView<Message>
           collectionPath={messageCollectionPath}
@@ -104,14 +75,15 @@ export default () => {
       </div>
       <div>
         <TextInput
-          style={{ width: '80%', marginTop: "10px" }}
+          style={{ width: "80%", marginTop: "10px" }}
           value={messageText ?? ""}
           onChangeValue={(value) => setMessageText(value)}
           onKeyDown={(event) => {
-            if (event.key !== 'Enter') return;
-            sendMessage()
+            if (event.key !== "Enter") return;
+            sendMessage();
           }}
         />
+        <Button text="Send" onClick={sendMessage} />
       </div>
     </Page>
   );
