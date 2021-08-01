@@ -37,12 +37,14 @@ export default () => {
     if (!messageText || messageText.length === 0) return;
     console.log("Send: ", messageText);
     const postTime = `${Date.now()}`;
-    firebase.firestore().collection(`/walls/${currentUser?.uid}/messages`)
+    firebase
+      .firestore()
+      .collection(`/walls/${currentUser?.uid}/messages`)
       .doc(postTime)
       .set({
         message: messageText,
         authorName: currentUser?.displayName,
-        photoURL: currentUser?.photoURL
+        photoURL: currentUser?.photoURL,
       })
       .then(() => new Promise(() => setMessageText("")))
       .catch(console.error);
@@ -60,9 +62,8 @@ export default () => {
           renderItem={({ item }) => <Message item={item} />}
         />
       </div>
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', paddingTop: '10px' }}>
         <TextInput
-          style={{ width: "80%", marginTop: "10px" }}
           value={messageText ?? ""}
           onChangeValue={(value) => setMessageText(value)}
           onKeyDown={(event) => {
