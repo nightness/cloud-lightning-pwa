@@ -81,6 +81,7 @@ export default function Spotify() {
         <div className="flex-column" style={{ paddingBottom: "2.5rem" }}>
           <div style={{ position:'relative', width: '80%', left: '10%'}}>
             <TextInput
+              style={{ width: '90vh'}}
               value={searchText}
               onChangeValue={setSearchText}
               placeholder="Search Songs/Albums"
