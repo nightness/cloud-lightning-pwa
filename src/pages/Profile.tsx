@@ -131,6 +131,7 @@ export const Profile = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("Profile Updated");
 
   const onClose = () => {
     setIsPasswordDialogOpen(false);
@@ -154,10 +155,10 @@ export const Profile = () => {
         confirmButtonText={"Ok"}
         isOpen={isAlertOpen}
         onClose={onAlertClose}
-        icon="info-sign"
-        intent="primary"
+        icon={alertMessage === "Profile Updated" ? "info-sign" : "error"}
+        intent={alertMessage === "Profile Updated" ? "primary" : "warning"}
       >
-        <h3>Profile Updated</h3>
+        <h3>{alertMessage}</h3>
       </Alert>
       <Page>
         <div style={{ flex: 1 }}>
@@ -172,11 +173,32 @@ export const Profile = () => {
           onSubmit={(values, helpers) => {
             if (submitted || !currentUser) return;
             setSubmitted(true);
-            currentUser
-              .updateProfile({
-                displayName: values.displayName,
-                photoURL: values.photoUrl,
+
+            const usernameDoc = firebase
+              .firestore()
+              .collection("/usernames")
+              .doc(values.displayName);
+
+            usernameDoc
+              .get()
+              .then((docRef) => {
+                if (!docRef.exists) {
+                  // Create username protection token
+                  usernameDoc.set({
+                    uid: currentUser.uid,
+                  });
+                  return;
+                }
+                const data = docRef.data();
+                if (!data || data.uid !== currentUser.uid)
+                  throw new Error("Username already exists");
               })
+              .then(() =>
+                currentUser.updateProfile({
+                  displayName: values.displayName,
+                  photoURL: values.photoUrl,
+                })
+              )
               .then(() =>
                 firebase
                   .firestore()
@@ -187,8 +209,15 @@ export const Profile = () => {
                     photoURL: values.photoUrl,
                   })
               )
-              .then(() => setIsAlertOpen(true))
-              .catch(console.error)
+              .then(() => {
+                setAlertMessage("Profile Updated");
+                setIsAlertOpen(true);
+              })
+              .catch((error: Error) => {
+                const message = error?.message ?? "Error saving your profile!";
+                setAlertMessage(message);
+                setIsAlertOpen(true);
+              })
               .finally(() => setSubmitted(false));
           }}
         >

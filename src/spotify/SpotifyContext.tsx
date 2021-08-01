@@ -30,6 +30,7 @@ export interface ISpotify {
   test: () => any;
   api: SpotifyApi;
   popupWindow: Window | null;
+  play: boolean;
 }
 
 export interface SpotifyFirebaseData {
@@ -49,6 +50,7 @@ export const SpotifyContext = createContext<ISpotify>({
   popupWindow: null,
   test: () => undefined,
   api: new SpotifyApi(),
+  play: false,
 });
 
 interface Props {
@@ -109,6 +111,7 @@ export const SpotifyProvider = ({ children }: Props) => {
   return (
     <SpotifyContext.Provider
       value={{
+        play,
         authorize,
         accessToken: accessToken ?? null,
         setAccessToken: setSpotifyAccessToken,
