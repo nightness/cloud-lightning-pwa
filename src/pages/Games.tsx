@@ -9,13 +9,15 @@ export function Home() {
 
   return (
     <Page>
-      <NavLink to="/games/TicTacToe">
-        <Text size={1}>TicTacToe</Text>
-      </NavLink>
-      <br />
-      <NavLink to="/games/Tetris">
-        <Text size={1}>Tetris</Text>
-      </NavLink>
+      <div>
+        <NavLink to="/games/TicTacToe">
+          <Text size={1}>TicTacToe</Text>
+        </NavLink>
+        <br />
+        <NavLink to="/games/Tetris">
+          <Text size={1}>Tetris</Text>
+        </NavLink>
+      </div>
     </Page>
   );
 }
