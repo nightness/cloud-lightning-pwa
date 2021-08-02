@@ -19,15 +19,10 @@ export default function Spotify() {
   const accessTokenParam = parameters.get("access_token");
   const expiresInParam = parameters.get("expires_in");
 
-  console.log("host: ", window.location.host)
-  console.log("ABC: ", accessTokenParam)
-
   useEffect(() => {
     if (!doc || loading || error) return;
     const data = doc.data() as SpotifyFirebaseData;
     const remainingTime = data?.expiresAt ? data.expiresAt - Date.now() : 0;
-    //console.log("Test: ", data.accessToken, data?.expiresAt, Date.now(), remainingTime);
-    console.log("Test: ", remainingTime);
     if (data && data.accessToken && remainingTime > 30000) {
       spotify.setAccessToken(data.accessToken);
       setAccessToken(data.accessToken);
