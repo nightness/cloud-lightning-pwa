@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockType, OrientationValue, Plane, Size } from ".";
+import { setCssVar } from "../components/ThemeContext";
 import useInterval from "../hooks/useInterval";
 import {
   createBlockPattern,
@@ -46,7 +47,8 @@ export default function TetrisBoard({
   const [gameSpeed, setGameSpeed] = useState(STARTING_SPEED);
 
   const newBlock = () => {
-    setCurrentBlockType(randomBlock(!enable8thPiece));
+    const block = randomBlock(!enable8thPiece);    
+    setCurrentBlockType(block);
     setOrientation(0);
     setBlockLocation({ row: 0, column: 1 + Math.floor(Math.random() * 6) });
   };

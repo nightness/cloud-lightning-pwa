@@ -1,68 +1,104 @@
 .tetris-board {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .tetris-board-inner {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
+.tetris-block-none {
+  background: hsla(0, 0%, 0%, 25%);
+}
+
+.tetris-block-i {
+  background: hsl(174, 72%, 46%);
+}
+
+.tetris-block-j {
+  background: hsl(240, 100%, 35%);
+}
+
+.tetris-block-l {
+  background: hsl(16, 100%, 60%);
+}
+
+.tetris-block-o {
+  background: hsl(72, 80%, 50%);
+}
+
+.tetris-block-t {
+  background: hsl(280, 50%, 50%);
+}
+
+.tetris-block-s {
+  background: hsl(46, 40%, 70%);
+}
+
+.tetris-block-z {
+  background: hsl(208, 50%, 70%);
+}
+
+.tetris-block-xo {
+  background: maroon;
+}
+
+
 .board-block {
-    width: 25px;
-    height: 25px;
-    border-color: black;
-    border-width: 1px;
-    border-style: solid;
+  width: 25px;
+  height: 25px;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .board-block-0 {
-    background-color: hsla(0, 90%, 4%, 30%);
+  background-color: hsla(0, 90%, 4%, 30%);
 }
 
 .board-block-1 {
-    background-color: hsla(0, 90%, 50%, 60%);
+  background-color: hsla(0, 90%, 50%, 60%);
 }
 
 .box {
-    width: 25px;
-    height: 25px;
-    background-color: brown;
-    border-color: black;
-    border-width: 1px;
-    border-style: solid;
+  width: 25px;
+  height: 25px;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .blank {
-    width: 25px;
-    height: 25px;
-    background-color: transparent !important;
-    border-style: none;
+  width: 25px;
+  height: 25px;
+  background-color: transparent !important;
+  border-style: none;
 }
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
-    align-items: initial;
+  display: flex;
+  flex-direction: row;
+  align-items: initial;
 }
 
 .flex-row-reverse {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: initial;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: initial;
 }
 
 .flex-column {
-    display: flex;
-    flex-direction: column;
-    align-items: initial;
+  display: flex;
+  flex-direction: column;
+  align-items: initial;
 }
 
 .flex-column-reverse {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: initial;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: initial;
 }

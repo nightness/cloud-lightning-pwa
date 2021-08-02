@@ -13,8 +13,8 @@ export default ({ style, orientation }: BlockProps) => {
           orientation === 0 || orientation === 180 ? "flex-row" : "flex-column-reverse"
         }`}
       >
-        <div className="box" />
-        <div className="box" />
+        <div className="box tetris-block-z" />
+        <div className="box tetris-block-z" />
         <div className="blank" />
       </div>
       <div
@@ -23,8 +23,8 @@ export default ({ style, orientation }: BlockProps) => {
         }`}
       >
         <div className="blank" />
-        <div className="box" />
-        <div className="box" />
+        <div className="box tetris-block-z" />
+        <div className="box tetris-block-z" />
       </div>
     </div>
   );

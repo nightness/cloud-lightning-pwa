@@ -22,14 +22,14 @@ export default ({ style, orientation }: BlockProps) => {
   return (
     <div style={style} className={outerClass}>
       <div className={innerClass}>
-        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box'}`} />
-        <div className='box' />
-        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box'}`} />
+        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box tetris-block-t'}`} />
+        <div className='box tetris-block-t' />
+        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box tetris-block-t'}`} />
       </div>
       <div className={innerClass}>
-        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box'}`} />
-        <div className='box' />
-        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box'}`} />
+        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box tetris-block-t'}`} />
+        <div className='box tetris-block-t' />
+        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box tetris-block-t'}`} />
       </div>
     </div>
   );

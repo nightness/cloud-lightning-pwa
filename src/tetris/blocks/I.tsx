@@ -17,10 +17,10 @@ export default ({ style, orientation }: BlockProps) => {
   return (
     <div style={style} className={outerClass}>
       <div className={innerClass}>
-        <div className="box" />
-        <div className="box" />
-        <div className="box" />
-        <div className="box" />
+        <div className="box tetris-block-i" />
+        <div className="box tetris-block-i" />
+        <div className="box tetris-block-i" />
+        <div className="box tetris-block-i" />
       </div>
     </div>
   );
