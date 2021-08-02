@@ -1,7 +1,6 @@
 import { CSSProperties, useContext, useState } from "react";
 import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
 import SpotifyPlayer, { CallbackState } from "react-spotify-web-playback";
-import { Button } from "../components";
 
 export default function Player() {
   const spotify = useContext(SpotifyContext);
@@ -28,13 +27,16 @@ export default function Player() {
           uris={spotify.trackUris}
         />
       </div>
-      <Button
+      <div
         className="spotify-player-toggle"
-        text={isHidden ? "Show" : "Hide"}
         onClick={() => {
           setIsHidden(!isHidden);
         }}
-      />
+      >
+        <h3 className='spotify-player-button'>
+          {isHidden ? "Show Player" : "Hide Player"}
+        </h3>
+      </div>
     </div>
   );
 }
