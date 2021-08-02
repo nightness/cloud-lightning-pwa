@@ -7,7 +7,7 @@ import { FirebaseContext } from "../database/FirebaseContext";
 import useInterval from "../hooks/useInterval";
 
 export const redirectUri =
-  window.location.host === "localhost"
+  window.location.host === "localhost:3000"
     ? encodeURI("http://localhost:3000/home/spotify")
     : encodeURI("https://cloud-lightning-lite.web.app/home/spotify");
 

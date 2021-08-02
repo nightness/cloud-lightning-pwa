@@ -1,5 +1,11 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { Page, TextInput, Button, ThemeContext, Container } from "../components";
+import {
+  Page,
+  TextInput,
+  Button,
+  ThemeContext,
+  Container,
+} from "../components";
 import FirestoreCollectionView from "../database/FirestoreCollectionView";
 import firebase, {
   DocumentData,
@@ -52,7 +58,7 @@ export default () => {
 
   return (
     <Container>
-      <div className="messenger-message-content page">
+      <div className="messenger-message-content">
         <FirestoreCollectionView<Message>
           collectionPath={messageCollectionPath}
           autoScrollToEnd={true}
@@ -62,9 +68,23 @@ export default () => {
           renderItem={({ item }) => <Message item={item} />}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', paddingTop: '10px' }}>
+      <div
+        style={{
+          display: "relative",
+          justifyContent: "center",
+          alignContent: "center",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          paddingTop: "10px",
+          paddingLeft: "5px",
+          marginLeft: "5px",
+          paddingRight: "5px",
+          marginRight: "5px"
+        }}
+      >
         <TextInput
-          style={{ marginRight: '5px' }}
+          style={{ width: '70vw' }}
           value={messageText ?? ""}
           onChangeValue={(value) => setMessageText(value)}
           onKeyDown={(event) => {
@@ -72,7 +92,7 @@ export default () => {
             sendMessage();
           }}
         />
-        <Button text="Send" onClick={sendMessage} />
+        <Button style={{minWidth: '15vw'}} text="Send" onClick={sendMessage} />
       </div>
     </Container>
   );

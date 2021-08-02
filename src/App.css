@@ -63,12 +63,12 @@
   --card-background-color-light: hsl(0, 0%, 80%);
   --card-background-color: var(--card-background-color-light);
   /* scrollbar-chat */
-  --scrollbar-chat-light: hsl(249, 81%, 60%);
-  --scrollbar-chat-dark: hsl(249, 81%, 60%);
+  --scrollbar-chat-light: hsl(249, 20%, 80%);
+  --scrollbar-chat-dark: hsl(240, 5%, 12%);
   --scrollbar-chat: var(--scrollbar-chat-light);
   /* scrollbar-chat */
-  --scrollbar-thumb-light: hsl(240, 5%, 12%);
-  --scrollbar-thumb-dark: hsl(240, 5%, 12%);
+  --scrollbar-thumb-light: hsl(249, 81%, 60%);
+  --scrollbar-thumb-dark: hsl(249, 20%, 80%);
   --scrollbar-thumb: var(var(--scrollbar-thumb-light));
 }
 

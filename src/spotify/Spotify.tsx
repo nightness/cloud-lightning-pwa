@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Page, TextInput } from "../components";
+import { Button, DisplayError, Page, TextInput } from "../components";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { useDocument } from "../database/Firebase";
 import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
@@ -19,11 +19,15 @@ export default function Spotify() {
   const accessTokenParam = parameters.get("access_token");
   const expiresInParam = parameters.get("expires_in");
 
+  console.log("host: ", window.location.host)
+  console.log("ABC: ", accessTokenParam)
+
   useEffect(() => {
     if (!doc || loading || error) return;
     const data = doc.data() as SpotifyFirebaseData;
-    const remainingTime = data.expiresAt ? data.expiresAt - Date.now() : 0;
+    const remainingTime = data?.expiresAt ? data.expiresAt - Date.now() : 0;
     //console.log("Test: ", data.accessToken, data?.expiresAt, Date.now(), remainingTime);
+    console.log("Test: ", remainingTime);
     if (data && data.accessToken && remainingTime > 30000) {
       spotify.setAccessToken(data.accessToken);
       setAccessToken(data.accessToken);
@@ -34,8 +38,10 @@ export default function Spotify() {
 
   useEffect(() => {
     if (accessTokenParam && expiresInParam && doc && currentUser) {
+      console.log(accessTokenParam)
       const docRef = doc.ref;
       const expireTime = Date.now() + parseInt(expiresInParam) * 1000;
+      console.log("expireTime: ", expireTime)
       docRef
         .set({
           accessToken: accessTokenParam,
@@ -68,8 +74,11 @@ export default function Spotify() {
   }, [searchText, accessToken]);
 
   useEffect(() => {
-    console.log(searchResults);
+    //console.log(searchResults);
   }, [searchResults]);
+
+  if (error)
+    return <DisplayError error={error} />
 
   if (accessTokenParam) return <h3>Signing-in...</h3>;
 
