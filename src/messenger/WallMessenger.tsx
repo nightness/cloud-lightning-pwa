@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { Page, TextInput, Button, ThemeContext } from "../components";
+import { Page, TextInput, Button, ThemeContext, Container } from "../components";
 import FirestoreCollectionView from "../database/FirestoreCollectionView";
 import firebase, {
   DocumentData,
@@ -51,8 +51,8 @@ export default () => {
   };
 
   return (
-    <Page>
-      <div className="messenger-message-content">
+    <Container>
+      <div className="messenger-message-content page">
         <FirestoreCollectionView<Message>
           collectionPath={messageCollectionPath}
           autoScrollToEnd={true}
@@ -74,6 +74,6 @@ export default () => {
         />
         <Button text="Send" onClick={sendMessage} />
       </div>
-    </Page>
+    </Container>
   );
 };

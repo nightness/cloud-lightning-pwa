@@ -32,8 +32,8 @@ export default class Message extends PureComponent<Props> {
   static readonly iconSize = 48;
 
   render() {
-    const date = new Date()
-    const sentAt = date.setTime(this.props.item.sentAt)
+    const sentAt = new Date()
+    sentAt.setTime(this.props.item.sentAt)
 
     return (
       <div className='flex-row' style={{ marginBottom: '5px' }}>
@@ -51,7 +51,7 @@ export default class Message extends PureComponent<Props> {
         )}
         <div style={{ paddingLeft: 5, paddingRight: 5 }}>
           <Text style={{ fontSize: 16, fontWeight: 500 }}>
-            {`${this.props.item.authorName} [ ${date} ] `}
+            {`${this.props.item.authorName} [ ${sentAt.toLocaleString()} ] `}
           </Text>
           <Text style={{ fontSize: 18, fontWeight: 400, textAlign: 'left' }}>
             {this.props.item.message}
