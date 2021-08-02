@@ -56,7 +56,7 @@ export default () => {
         <FirestoreCollectionView<Message>
           collectionPath={messageCollectionPath}
           autoScrollToEnd={true}
-          orderBy="postedAt"
+          orderBy="sentAt"
           limitLength={25}
           // @ts-ignore
           renderItem={({ item }) => <Message item={item} />}

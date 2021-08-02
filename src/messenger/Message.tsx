@@ -8,7 +8,7 @@ interface MessageProps {
   photoURL?: string;
   id: string;
   message: string;
-  postedAt: Timestamp;
+  sentAt: number;
 }
 
 interface Props {
@@ -16,29 +16,30 @@ interface Props {
 }
 
 export default class Message extends PureComponent<Props> {
-  private item: MessageProps;
-  private date: string;
-  private time: string;
-
   constructor(props: Props) {
     super(props);
-    this.item = props.item;
-    this.date = (
-      this.item.postedAt ? this.item.postedAt.toDate() : new Date()
-    ).toLocaleDateString();
-    this.time = (
-      this.item.postedAt ? this.item.postedAt.toDate() : new Date()
-    ).toLocaleTimeString();
+    this.state = {
+      item: props.item,
+      date: (
+        props.item.sentAt ? new Date(props.item.sentAt) : new Date()
+      ).toLocaleDateString(),
+      time: (
+        props.item.sentAt ? new Date(props.item.sentAt) : new Date()
+      ).toLocaleTimeString()
+    }
   }
 
   static readonly iconSize = 48;
 
   render() {
+    const date = new Date()
+    const sentAt = date.setTime(this.props.item.sentAt)
+
     return (
       <div className='flex-row' style={{ marginBottom: '5px' }}>
-        {this.item.photoURL ? (
+        {this.props.item.photoURL ? (
           <img
-            src={this.item.photoURL}
+            src={this.props.item.photoURL}
             style={{
               width: Message.iconSize,
               height: Message.iconSize,
@@ -50,10 +51,10 @@ export default class Message extends PureComponent<Props> {
         )}
         <div style={{ paddingLeft: 5, paddingRight: 5 }}>
           <Text style={{ fontSize: 16, fontWeight: 500 }}>
-            {`${this.item.authorName} [ ${this.date} @ ${this.time} ] `}
+            {`${this.props.item.authorName} [ ${date} ] `}
           </Text>
           <Text style={{ fontSize: 18, fontWeight: 400, textAlign: 'left' }}>
-            {this.item.message}
+            {this.props.item.message}
           </Text>
         </div>
       </div>
