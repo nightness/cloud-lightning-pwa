@@ -56,6 +56,6 @@ export default ({ className, text, style, ref, onLongPress, ...restProps }: Prop
         }
       }}
       {...restProps}
-    ><Text>{text}</Text></button>
+    >{text}</button>
   );
 };
