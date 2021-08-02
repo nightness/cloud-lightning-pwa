@@ -64,6 +64,7 @@ export default () => {
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', paddingTop: '10px' }}>
         <TextInput
+          style={{ marginRight: '5px' }}
           value={messageText ?? ""}
           onChangeValue={(value) => setMessageText(value)}
           onKeyDown={(event) => {
