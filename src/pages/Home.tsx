@@ -18,11 +18,11 @@ export function Home() {
             <NavLink to="/home/Tetris" style={{ fontSize: 24 }}>
               <Text>Tetris</Text>
             </NavLink>
-            and
+            <Text fontSize={24}>and</Text>
             <NavLink to="/home/TicTacToe" style={{ fontSize: 24 }}>
               <Text>TicTacToe</Text>
             </NavLink>
-            Are not the only featured components here.
+            <Text fontSize={24}>are not the only featured components here!</Text>
           </div>
           <br />
           <NavLink to="/auth" style={{ fontSize: 28 }}>
