@@ -46,7 +46,7 @@ export const Navbar = () => {
           isOpen={isTooltipOpen}
         >
           <Icon
-            color={`${activeTheme === 'Light' ? 'black' : 'white'}`}
+            color={`${activeTheme === "Light" ? "black" : "white"}`}
             iconSize={28}
             icon="menu"
             style={{
@@ -60,54 +60,20 @@ export const Navbar = () => {
         </Tooltip2>
       </div>
       <div className="header-title">
-          {currentPageTitle ? currentPageTitle : "Page Not Found"}
+        {currentPageTitle ? currentPageTitle : "Page Not Found"}
       </div>
-      <div
-        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-      >
-        <Tooltip2
-          className="profile-link-tooltip"
-          popoverClassName="tooltip-right"
-          content="Switch Themes"
-          intent="warning"
-          placement="bottom"
-          usePortal={true}
-        >
-          <Button
-            style={{ backgroundColor: "transparent", margin: "5px", padding: "5px" }}
-            onClick={() => {
-              if (!setActiveTheme) return;
-              setActiveTheme(activeTheme === "Dark" ? "Light" : "Dark");
-            }}
-          >
+      <div style={{ marginRight: '25px'}}>
+        <Link className="link-static" to="/auth" noActiveFormatting>
+          {currentUser?.photoURL ? (
+            <img className="img" src={currentUser?.photoURL} />
+          ) : (
             <Icon
               style={{ userSelect: "none", pointerEvents: "none" }}
-              iconSize={16}
-              intent='none'
-              icon="full-circle"
+              iconSize={34}
+              icon="user"
             />
-          </Button>
-        </Tooltip2>
-        <Tooltip2
-          className="profile-link-tooltip"
-          popoverClassName="tooltip-right"
-          content={`${currentUser ? "Logout" : "Login"}`}
-          intent="warning"
-          placement="bottom"
-          usePortal={true}
-        >
-          <Link className="link-static" to="/auth" noActiveFormatting>
-            {currentUser?.photoURL ? (
-              <img className="img" src={currentUser?.photoURL} />
-            ) : (
-              <Icon
-                style={{ userSelect: "none", pointerEvents: "none" }}
-                iconSize={34}
-                icon="user"
-              />
-            )}
-          </Link>
-        </Tooltip2>
+          )}
+        </Link>
       </div>
     </nav>
   );

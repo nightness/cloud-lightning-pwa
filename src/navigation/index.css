@@ -15,8 +15,8 @@
   justify-content: center;
   width: 100%;
   font-weight: 700;
-  padding-left: calc(var(--device-font-size) * 1.5);
-  font-size: calc(var(--device-font-size) * 1.5);
+  margin-right: 5px;
+  font-size: calc(var(--device-font-size) * 1.2);
 }
 
 .side-links {

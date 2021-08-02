@@ -92,6 +92,7 @@ export const Authentication = () => {
   const [stage, setStage] = useState<Stage>(Stage.Init);
   const auth = firebaseAuth();
   const history = useHistory();
+  const { activeTheme, setActiveTheme } = useContext(ThemeContext);
 
   const softReset = (formikProps: FormikProps<any>) => {
     formikProps.setValues({
@@ -218,16 +219,25 @@ export const Authentication = () => {
     return (
       <Page>
         <div style={{ flex: 1 }}>
-          <Text>{`Logged is as ${getCurrentUsername()}`}</Text>
-          <Button
-            text="Logout"
-            onClick={() => {
-              auth.signOut().finally(() => {
-                // Reload the page to clean out any state from previous login
-                window.location.assign(`/auth`);
-              });
-            }}
-          />
+          <Text size={2}>{`Logged is as ${getCurrentUsername()}`}</Text>
+          <div style={{ marginTop: "10px" }}>
+            <Button
+              text="Toggle Dark Mode"
+              onClick={() => {
+                if (!setActiveTheme) return;
+                setActiveTheme(activeTheme === "Dark" ? "Light" : "Dark");
+              }}
+            />
+            <Button
+              text="Logout"
+              onClick={() => {
+                auth.signOut().finally(() => {
+                  // Reload the page to clean out any state from previous login
+                  window.location.assign(`/auth`);
+                });
+              }}
+            />
+          </div>
         </div>
       </Page>
     );
