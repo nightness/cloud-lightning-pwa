@@ -4,27 +4,37 @@ import { useContext, useState } from "react";
 import { FirebaseContext } from "../database/FirebaseContext";
 
 export function Home() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { currentUser } = useContext(FirebaseContext);
 
   return (
     <Page>
       {!currentUser ? (
-        <>
-          <NavLink className="sidebar-link" to="/home/TicTacToe">
-            TicTacToe isn't the only featured component here.
-          </NavLink>
+        <div>
+          <div className='flex-row' style={{ 
+            alignContent: 'center',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <NavLink to="/home/Tetris" style={{ fontSize: 24 }}>
+              <Text>Tetris</Text>
+            </NavLink>
+            and
+            <NavLink to="/home/TicTacToe" style={{ fontSize: 24 }}>
+              <Text>TicTacToe</Text>
+            </NavLink>
+            Are not the only featured components here.
+          </div>
           <br />
-          <NavLink className="sidebar-link" to="/auth">
+          <NavLink to="/auth" style={{ fontSize: 28 }}>
             Login to see more!
           </NavLink>
-        </>
+        </div>
       ) : (
         <>
           <Text size={1} style={{ paddingBottom: "1.5rem" }}>
-            {
-              `Welcome${currentUser.displayName ? ` ${currentUser.displayName}` : "!"}`
-            }
+            {`Welcome${
+              currentUser.displayName ? ` ${currentUser.displayName}` : "!"
+            }`}
           </Text>
           <NavLink to="/home/wall">
             <Text size={1}>My Wall</Text>
