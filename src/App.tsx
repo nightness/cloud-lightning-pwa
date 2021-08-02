@@ -92,16 +92,16 @@ const usePages = () => {
         component: Spotify,
         requiresAuthentication: true,
       },
-      {
-        path: "/home/test",
-        title: "Test Page",
-        component: TestPage,
-      },
-      {
-        path: "/home/error",
-        title: "Display Error",
-        component: DisplayErrorText,
-      },
+      // {
+      //   path: "/home/test",
+      //   title: "Test Page",
+      //   component: TestPage,
+      // },
+      // {
+      //   path: "/home/error",
+      //   title: "Display Error",
+      //   component: DisplayErrorText,
+      // },
     ],
   });
   addPage({
