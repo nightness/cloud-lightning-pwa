@@ -1,4 +1,4 @@
-import { Page, Button, Text } from "../components";
+import { Page, Button, Text, Link } from "../components";
 import { NavLink, LinkProps, useLocation } from "react-router-dom";
 import { useContext, useState } from "react";
 import { FirebaseContext } from "../database/FirebaseContext";
@@ -9,12 +9,12 @@ export function Home() {
 
   return (
     <Page>
-      <NavLink className="sidebar-link" to="/games/TicTacToe">
-        TicTacToe
+      <NavLink to="/games/TicTacToe">
+        <Text size={1}>TicTacToe</Text>
       </NavLink>
       <br />
-      <NavLink className="sidebar-link" to="/games/Tetris">
-        Tetris
+      <NavLink to="/games/Tetris">
+        <Text size={1}>Tetris</Text>
       </NavLink>
     </Page>
   );

@@ -21,7 +21,18 @@ export function Home() {
         </>
       ) : (
         <>
-          <Text size={1}>Welcome</Text>
+          <Text size={1} style={{ paddingBottom: "1.5rem" }}>
+            {
+              `Welcome${currentUser.displayName ? ` ${currentUser.displayName}` : "!"}`
+            }
+          </Text>
+          <NavLink to="/home/wall">
+            <Text size={1}>My Wall</Text>
+          </NavLink>
+          <br />
+          <NavLink to="/home/spotify">
+            <Text size={1}>Spotify Player</Text>
+          </NavLink>
         </>
       )}
     </Page>
