@@ -5,7 +5,7 @@ type BoardValue = 0 | 1 | 2;
 
 // Looks to see if either player won, if so it returns that's player's number id
 type FindWinner = (board: BoardValue[][]) => Player | void | undefined
-const findWinner: FindWinner = (board: BoardValue[][]) => {
+const findWinner: FindWinner = (board) => {
     
 }
 
