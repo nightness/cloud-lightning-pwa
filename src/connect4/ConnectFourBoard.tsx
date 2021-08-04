@@ -6,8 +6,8 @@ type Player = 1 | 2;
 type ComputerMove = (board: number[][], maximizeFor: Player) => [number, number]
 
 const computerMove: ComputerMove = (board, maximizeFor) => {
-    let row = 0;
-    let column = 0;
+    let row = -1;
+    let column = -1;
     return [row, column]
 }
 
