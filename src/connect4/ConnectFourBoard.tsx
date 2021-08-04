@@ -12,14 +12,32 @@ type Board = BoardValue[][];
 type FindWinner = (board: BoardValue[][]) => Player | void | undefined;
 const findWinner: FindWinner = (board) => {
   let winner = 0;
-  board.forEach((row, idx) => {
-    const rowStr = row.toString().replaceAll(",", "");
-    if (rowStr.indexOf("1111") >= 0 || rowStr.indexOf("2222") >= 0) {
-      console.log("Winner on row");
-      winner = rowStr.indexOf("0000") >= 0 ? 1 : 2;
+  const getColumn = (column: number) => {
+    const result: number[] = []
+    for (let i = 0; i < board.length; i++) {
+      result.push(board[i][column])
     }
-    //console.log(`[${idx}]: `, rowStr);
+    return result;
+  }
+
+  board.forEach((row, idx) => {
+    const resultStr = row.toString().replaceAll(",", "");
+    if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
+      winner = resultStr.indexOf("0000") >= 0 ? 1 : 2;
+    }
   });
+
+  if (winner) return winner as Player;
+
+  for (let i = 0; i < board.length; i++) {
+    const column = getColumn(i);
+    const resultStr = column.toString().replaceAll(",", "");
+    if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
+      console.log("Winner on column");
+      winner = resultStr.indexOf("0000") >= 0 ? 1 : 2;
+    }
+  }
+
   return winner ? winner as Player : undefined;
 };
 
