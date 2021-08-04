@@ -91,14 +91,13 @@ const findWinner: FindWinner = (board) => {
   return winner ? (winner as Player) : undefined;
 };
 
-// Returns [Row, Column] in a tuple of the, if row and column are negative, their is
-// no move and the game is over.
-type ComputerMove = (board: Board, maximizeFor: Player) => [number, number];
+// Returns the column, if row is negative, their is
+// no move available and the game is over.
+type ComputerMove = (board: Board, maximizeFor: Player) => number;
 const computerMove: ComputerMove = (board, maximizeFor) => {
-  let row = -1;
   let column = -1;
 
-  return [row, column];
+  return column;
 };
 
 export const createNewBoard = (
