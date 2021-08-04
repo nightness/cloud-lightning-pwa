@@ -20,6 +20,7 @@ import TetrisPage from "./tetris/TetrisPage";
 import Spotify from "./spotify/Spotify";
 import { SpotifyContext, SpotifyProvider } from "./spotify/SpotifyContext";
 import SpotifyPlayer from "./spotify/Player";
+import ConnectFourBoard from "./connect4/ConnectFourBoard";
 
 function App() {
   return (
@@ -119,6 +120,12 @@ const usePages = () => {
         title: "Tetris",
         component: TetrisPage,
       },
+      {
+        path: "/games/connect4",
+        title: "Connect Four",
+        component: ConnectFourBoard,
+      },
+
     ],
     // requiresAuthentication: true,
   });

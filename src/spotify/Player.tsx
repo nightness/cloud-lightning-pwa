@@ -19,7 +19,8 @@ export default function Player() {
   return (
     <div className="spotify-player">
       <div style={style}>
-        <SpotifyPlayer
+        <SpotifyPlayer 
+          autoPlay
           token={spotify.api.getAccessToken() ?? ""}
           showSaveIcon
           callback={spotify.callback ?? undefined}
