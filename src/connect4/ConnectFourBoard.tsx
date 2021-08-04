@@ -80,8 +80,6 @@ const findWinner: FindWinner = (board) => {
   if (winner) return winner as Player;
 
   // Diangle win detections
-  // 1. The number if diangle paths equals twice the number of rows
-  // 2. Half are LTR paths and the other half RTL paths
   const results = getDiangle();
   for (let i = 0; i < results.length; i++) {
     const resultStr = results[i].toString().replaceAll(",", "");
