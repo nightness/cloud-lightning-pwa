@@ -8,6 +8,7 @@ type Player = 1 | 2;
 type BoardValue = 0 | 1 | 2;
 type Board = BoardValue[][];
 
+
 // Looks to see if either player won, if so it returns that's player's number id
 type FindWinner = (board: BoardValue[][]) => Player | void | undefined;
 const findWinner: FindWinner = (board) => {
@@ -91,11 +92,22 @@ const findWinner: FindWinner = (board) => {
   return winner ? (winner as Player) : undefined;
 };
 
-// Returns the column, if row is negative, their is
+const biases = [
+  [0, 1, 2, 3, 2, 1, 0],
+  [1, 2, 3, 4, 3, 2, 1],
+  [2, 3, 4, 5, 4, 3, 2],
+  [3, 4, 5, 6, 5, 4, 3],
+  [4, 5, 6, 7, 6, 5, 4],
+  [5, 6, 7, 8, 7, 6, 5],
+]
+
+
+// Returns the column, if drop column is negative, their is
 // no move available and the game is over.
 type ComputerMove = (board: Board, maximizeFor: Player) => number;
 const computerMove: ComputerMove = (board, maximizeFor) => {
   let column = -1;
+  
 
   return column;
 };
@@ -155,6 +167,25 @@ export default function ConnectFourBoard() {
                 className={`board-block`}
                 style={{ userSelect: "none", cursor: "pointer" }}
                 onClick={() => handleClick(rIdx, cIdx)}
+                key={`${Math.random()}`}
+              >
+                {v}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{ margin: "5px" }} />
+      <div className="game-board-inner">
+        {board?.map((value, rIdx) => (
+          <div
+            style={{ display: "flex", flexDirection: "row" }}
+            key={`${Math.random()}`}
+          >
+            {value.map((v, cIdx) => (
+              <div
+                className={`board-block`}
+                style={{ userSelect: "none", cursor: "pointer" }}
                 key={`${Math.random()}`}
               >
                 {v}
