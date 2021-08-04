@@ -54,17 +54,28 @@ export const getBoardSubset = (
 export default function ConnectFourBoard() {
   const [board, setBoard] = useState<Board>(createNewBoard());
 
+  const handleClick = (rIdx: number, cIdx: number) => {
+    const newBoard = copyBoard(board);
+    newBoard[rIdx][cIdx] =
+      board[rIdx][cIdx] === 0 ? 1 : board[rIdx][cIdx] === 1 ? 2 : 0;
+    setBoard(newBoard);
+    const result = findWinner(board)
+    console.log('findWinner: ', result)
+  };
+
   return (
     <div className="tetris-board">
       <div className="tetris-board-inner">
-        {board?.map((value) => (
+        {board?.map((value, rIdx) => (
           <div
             style={{ display: "flex", flexDirection: "row" }}
             key={`${Math.random()}`}
           >
-            {value.map((v) => (
+            {value.map((v, cIdx) => (
               <div
-                className={`board-block board-block-${v}`}
+                className={`board-block`}
+                style={{ userSelect: "none", cursor: "pointer" }}
+                onClick={() => handleClick(rIdx, cIdx)}
                 key={`${Math.random()}`}
               >
                 {v}
