@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ConsoleContainer } from "../components";
 
 const TOTAL_ROWS = 6;
 const TOTAL_COLUMNS = 7;
@@ -9,7 +10,18 @@ type Board = BoardValue[][];
 
 // Looks to see if either player won, if so it returns that's player's number id
 type FindWinner = (board: BoardValue[][]) => Player | void | undefined;
-const findWinner: FindWinner = (board) => {};
+const findWinner: FindWinner = (board) => {
+  let winner = 0;
+  board.forEach((row, idx) => {
+    const rowStr = row.toString().replaceAll(",", "");
+    if (rowStr.indexOf("1111") >= 0 || rowStr.indexOf("2222") >= 0) {
+      console.log("Winner on row");
+      winner = rowStr.indexOf("0000") >= 0 ? 1 : 2;
+    }
+    //console.log(`[${idx}]: `, rowStr);
+  });
+  return winner ? winner as Player : undefined;
+};
 
 // Returns [Row, Column] in a tuple of the, if row and column are negative, their is
 // no move and the game is over.
@@ -59,8 +71,8 @@ export default function ConnectFourBoard() {
     newBoard[rIdx][cIdx] =
       board[rIdx][cIdx] === 0 ? 1 : board[rIdx][cIdx] === 1 ? 2 : 0;
     setBoard(newBoard);
-    const result = findWinner(board)
-    console.log('findWinner: ', result)
+    const result = findWinner(newBoard);
+    console.log("findWinner: ", result);
   };
 
   return (
