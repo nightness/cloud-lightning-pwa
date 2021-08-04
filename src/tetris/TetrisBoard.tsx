@@ -265,7 +265,7 @@ export default function TetrisBoard({
   };
 
   return (
-    <div className="tetris-board">
+    <div className="game-board">
       <KeyboardEventHandler
         handleKeys={["LEFT", "RIGHT"]}
         onKeyEvent={handleHorizontalMove}
@@ -291,7 +291,7 @@ export default function TetrisBoard({
         handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
         onKeyEvent={handleChangeBlockType}
       />
-      <div className="tetris-board-inner">
+      <div className="game-board-inner">
         {board?.map((value) => (
           <div
             style={{ display: "flex", flexDirection: "row" }}

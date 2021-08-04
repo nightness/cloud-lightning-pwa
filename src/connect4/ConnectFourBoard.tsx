@@ -64,8 +64,8 @@ export default function ConnectFourBoard() {
   };
 
   return (
-    <div className="tetris-board">
-      <div className="tetris-board-inner">
+    <div className="game-board">
+      <div className="game-board-inner">
         {board?.map((value, rIdx) => (
           <div
             style={{ display: "flex", flexDirection: "row" }}
