@@ -85,7 +85,6 @@ const findWinner: FindWinner = (board) => {
     const resultStr = results[i].toString().replaceAll(",", "");
     if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
       winner = resultStr.indexOf("1111") >= 0 ? 1 : 2;
-      console.log("Winner Diangle")
     }
   }
 
