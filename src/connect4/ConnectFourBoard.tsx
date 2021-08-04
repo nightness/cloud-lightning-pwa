@@ -23,7 +23,7 @@ const findWinner: FindWinner = (board) => {
   board.forEach((row, idx) => {
     const resultStr = row.toString().replaceAll(",", "");
     if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
-      winner = resultStr.indexOf("0000") >= 0 ? 1 : 2;
+      winner = resultStr.indexOf("1111") >= 0 ? 1 : 2;
     }
   });
 
@@ -33,8 +33,7 @@ const findWinner: FindWinner = (board) => {
     const column = getColumn(i);
     const resultStr = column.toString().replaceAll(",", "");
     if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
-      console.log("Winner on column");
-      winner = resultStr.indexOf("0000") >= 0 ? 1 : 2;
+      winner = resultStr.indexOf("1111") >= 0 ? 1 : 2;
     }
   }
 
