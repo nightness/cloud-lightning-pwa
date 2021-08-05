@@ -27,8 +27,8 @@ const findWinner: FindWinner = (board) => {
     const result: number[][] = [];
     for (let i = 0; i < iLength; i++) {
       let row: number[] = [];
-      for (let j = jLength - 1, shear = i; j >= 0 && shear < iLength; j--) {
-        row.push(board[shear++][j]);
+      for (let j = 0, shear = i; j < jLength && shear >= 0; j++) {
+        row.push(board[shear--][j]);
       }
       if (row.length >= 4) result.push(row);
       row = [];
@@ -42,12 +42,12 @@ const findWinner: FindWinner = (board) => {
       }
       if (row.length >= 4) result.push(row);
       row = [];
-      for (let j = 0, shear = i; j < jLength && shear < iLength; j++) {
+      for (let j = jLength - 1, shear = i; j >= 0 && shear < iLength; j--) {
         row.push(board[shear++][j]);
       }
       if (row.length >= 4) result.push(row);
     }
-    console.log(result);
+    console.log(result)
     return result;
   };
 
