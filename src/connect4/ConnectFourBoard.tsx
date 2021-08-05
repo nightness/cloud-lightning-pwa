@@ -8,7 +8,6 @@ type Player = 1 | 2;
 type BoardValue = 0 | 1 | 2;
 type Board = BoardValue[][];
 
-
 // Looks to see if either player won, if so it returns that's player's number id
 type FindWinner = (board: BoardValue[][]) => Player | void | undefined;
 const findWinner: FindWinner = (board) => {
@@ -22,42 +21,33 @@ const findWinner: FindWinner = (board) => {
     return result;
   };
 
-  const getDiangle = () => {
+  const getDiagonal = () => {
     const iLength = board.length;
     const jLength = board[0].length;
     const result: number[][] = [];
     for (let i = 0; i < iLength; i++) {
-      let iDrift = i;
-      const row: number[] = [];
-      for (let j = 0; j < jLength && iDrift < iLength; j++) {
-        row.push(board[iDrift++][j]);
+      let row: number[] = [];
+      for (let j = jLength - 1, shear = i; j >= 0 && shear < iLength; j--) {
+        row.push(board[shear++][j]);
+      }
+      if (row.length >= 4) result.push(row);
+      row = [];
+      for (let j = 0, shear = i; j < jLength && shear < iLength; j++) {
+        row.push(board[shear++][j]);
+      }
+      if (row.length >= 4) result.push(row);
+      row = [];
+      for (let j = jLength - 1, shear = i; j >= 0 && shear >= 0; j--) {
+        row.push(board[shear--][j]);
+      }
+      if (row.length >= 4) result.push(row);
+      row = [];
+      for (let j = 0, shear = i; j < jLength && shear < iLength; j++) {
+        row.push(board[shear++][j]);
       }
       if (row.length >= 4) result.push(row);
     }
-    for (let j = jLength - 1; j >= 0 ; j--) {
-      let jDrift = j;
-      const row: number[] = [];
-      for (let i = 0; i < iLength && jDrift >= 0; i++) {
-        row.push(board[i][jDrift--]);
-      }
-      if (row.length >= 4) result.push(row);
-    }
-    for (let i = iLength - 1; i >= 0; i--) {
-      let iDrift = i;
-      const row: number[] = [];
-      for (let j = 0; j < jLength && iDrift >= 0; j++) {
-        row.push(board[iDrift--][j]);
-      }
-      if (row.length >= 4) result.push(row);
-    }    
-    for (let j = jLength - 1; j >= 0; j--) {
-      let jDrift = j;
-      const row: number[] = [];
-      for (let i = iLength - 1; i >= 0 && jDrift >= 0; i--) {
-        row.push(board[i][jDrift--]);
-      }
-      if (row.length >= 4) result.push(row);
-    }
+    console.log(result);
     return result;
   };
 
@@ -80,8 +70,8 @@ const findWinner: FindWinner = (board) => {
   }
   if (winner) return winner as Player;
 
-  // Diangle win detections
-  const results = getDiangle();
+  // Diagonal win detections
+  const results = getDiagonal();
   for (let i = 0; i < results.length; i++) {
     const resultStr = results[i].toString().replaceAll(",", "");
     if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
@@ -99,15 +89,13 @@ const biases = [
   [3, 4, 5, 6, 5, 4, 3],
   [4, 5, 6, 7, 6, 5, 4],
   [5, 6, 7, 8, 7, 6, 5],
-]
-
+];
 
 // Returns the column, if drop column is negative, their is
 // no move available and the game is over.
 type ComputerMove = (board: Board, maximizeFor: Player) => number;
 const computerMove: ComputerMove = (board, maximizeFor) => {
   let column = -1;
-  
 
   return column;
 };
@@ -175,7 +163,7 @@ export default function ConnectFourBoard() {
           </div>
         ))}
       </div>
-      <div style={{ margin: "5px" }} />
+      {/* <div style={{ margin: "5px" }} />
       <div className="game-board-inner">
         {board?.map((value, rIdx) => (
           <div
@@ -193,7 +181,7 @@ export default function ConnectFourBoard() {
             ))}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
