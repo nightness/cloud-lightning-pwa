@@ -23,12 +23,13 @@ export default function Player() {
       <div style={style}>
         <SpotifyPlayer 
           autoPlay
+          magnifySliderOnHover          
           token={spotify.api.getAccessToken() ?? ""}
-          showSaveIcon
+          showSaveIcon={false}       
           callback={spotify.callback ?? undefined}
           play={spotify.isPlaying}
           uris={spotify.trackUris}
-          styles={{ height: 42 }}
+          styles={{ height: "2.25rem" }}
         />
       </div>
       <div
