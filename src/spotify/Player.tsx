@@ -11,9 +11,11 @@ export default function Player() {
         maxHeight: "0px",
         overflow: "hidden",
         width: "90vw",
+        maxWidth: "70%"
       }
     : {
         width: "90vw",
+        maxWidth: "70%"
       };
 
   return (
@@ -26,6 +28,7 @@ export default function Player() {
           callback={spotify.callback ?? undefined}
           play={spotify.isPlaying}
           uris={spotify.trackUris}
+          styles={{ height: 42 }}
         />
       </div>
       <div
