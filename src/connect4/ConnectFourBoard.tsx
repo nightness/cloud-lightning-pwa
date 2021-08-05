@@ -71,7 +71,7 @@ const findWinner: FindWinner = (board) => {
   if (winner) return winner as Player;
 
   // Column win detection
-  for (let i = 0; i < board.length; i++) {
+  for (let i = 0; i < board[0].length; i++) {
     const column = getColumn(i);
     const resultStr = column.toString().replaceAll(",", "");
     if (resultStr.indexOf("1111") >= 0 || resultStr.indexOf("2222") >= 0) {
