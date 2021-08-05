@@ -26,26 +26,26 @@ const findWinner: FindWinner = (board) => {
     const jLength = board[0].length;
     const result: number[][] = [];
     for (let i = 0; i < iLength; i++) {
-      let row: number[] = [];
-      for (let j = 0, shear = i; j < jLength && shear >= 0; j++) {
-        row.push(board[shear--][j]);
+      let rowUp: number[] = [];
+      let rowDown: number[] = [];
+      for (let j = 0, shearUp = i, shearDown = i; j < jLength; j++) {
+        if (shearDown >= 0)
+          rowDown.push(board[shearDown--][j]);
+        if (shearUp < iLength)
+          rowUp.push(board[shearUp++][j]);
       }
-      if (row.length >= 4) result.push(row);
-      row = [];
-      for (let j = 0, shear = i; j < jLength && shear < iLength; j++) {
-        row.push(board[shear++][j]);
+      if (rowUp.length >= 4) result.push(rowUp);
+      if (rowDown.length >= 4) result.push(rowDown);
+      rowUp = [];
+      rowDown = [];
+      for (let j = jLength - 1, shearUp = i, shearDown = i; j >= 0; j--) {
+        if (shearDown >= 0)
+          rowDown.push(board[shearDown--][j]);
+        if (shearUp < iLength)
+          rowUp.push(board[shearUp++][j]);
       }
-      if (row.length >= 4) result.push(row);
-      row = [];
-      for (let j = jLength - 1, shear = i; j >= 0 && shear >= 0; j--) {
-        row.push(board[shear--][j]);
-      }
-      if (row.length >= 4) result.push(row);
-      row = [];
-      for (let j = jLength - 1, shear = i; j >= 0 && shear < iLength; j--) {
-        row.push(board[shear++][j]);
-      }
-      if (row.length >= 4) result.push(row);
+      if (rowUp.length >= 4) result.push(rowUp);
+      if (rowDown.length >= 4) result.push(rowDown);
     }
     console.log(result)
     return result;
