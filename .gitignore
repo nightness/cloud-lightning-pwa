@@ -16,3 +16,5 @@ private/
 
 # macOS
 .DS_Store
+
+private.ts
