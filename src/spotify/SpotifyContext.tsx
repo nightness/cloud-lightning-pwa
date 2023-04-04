@@ -1,10 +1,14 @@
-import { createContext, useContext } from "react";
 import SpotifyApi from "spotify-web-api-node";
 import { CallbackState } from "react-spotify-web-playback/lib";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  useCallback,
+  useContext,
+} from "react";
 import { clientId } from "../private";
 import { FirebaseContext } from "../database/FirebaseContext";
-import useInterval from "../hooks/useInterval";
 
 export const redirectUri =
   window.location.host === "localhost:3000"
@@ -72,11 +76,9 @@ export const SpotifyProvider = ({ children }: Props) => {
   const [play, setPlay] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [trackUris, setTrackUris] = useState<string[]>([]);
-  const [callback] = useState<((state: CallbackState) => any) | null>(
-    (state) => {
-      if (state && !state.isPlaying) setPlay(false);
-    }
-  );
+  const callback = useCallback<(state: CallbackState) => any>((state) => {
+    if (state && !state.isPlaying) setPlay(false);
+  }, []);
 
   useEffect(() => {
     if (currentUser) return;
