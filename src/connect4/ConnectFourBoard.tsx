@@ -216,7 +216,7 @@ export default function ConnectFourBoard() {
       <div>
         {winner && (
           <div>
-            <h1>Winner: {winner}</h1>
+            <h1>Winner: {winner ? "red" : "yellow"}</h1>
           </div>
         )}
       </div>

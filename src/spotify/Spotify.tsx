@@ -4,6 +4,7 @@ import { FirebaseContext } from "../database/FirebaseContext";
 import { useDocument } from "../database/Firebase";
 import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
 import TrackResult from "./TrackResult";
+import { setDoc } from "firebase/firestore";
 
 export default function Spotify() {
   const spotify = useContext(SpotifyContext);
@@ -33,18 +34,16 @@ export default function Spotify() {
 
   useEffect(() => {
     if (accessTokenParam && expiresInParam && doc && currentUser) {
-      console.log(accessTokenParam)
+      console.log(accessTokenParam);
       const docRef = doc.ref;
       const expireTime = Date.now() + parseInt(expiresInParam) * 1000;
-      console.log("expireTime: ", expireTime)
-      docRef
-        .set({
-          accessToken: accessTokenParam,
-          expiresAt: expireTime,
-        })
-        .then(() => {
-          window.close();
-        });
+      console.log("expireTime: ", expireTime);
+      setDoc(docRef, {
+        accessToken: accessTokenParam,
+        expiresAt: expireTime,
+      }).then(() => {
+        window.close();
+      });
     }
   }, [accessTokenParam, expiresInParam, doc, currentUser]);
 
@@ -72,8 +71,7 @@ export default function Spotify() {
     //console.log(searchResults);
   }, [searchResults]);
 
-  if (error)
-    return <DisplayError error={error} />
+  if (error) return <DisplayError error={error} />;
 
   if (accessTokenParam) return <h3>Signing-in...</h3>;
 
@@ -83,9 +81,9 @@ export default function Spotify() {
         <Button text="Login" onClick={() => spotify.authorize()} />
       ) : (
         <div className="flex-column" style={{ paddingBottom: "2.5rem" }}>
-          <div style={{ position:'relative', width: '80%', left: '10%'}}>
+          <div style={{ position: "relative", width: "80%", left: "10%" }}>
             <TextInput
-              style={{ width: '90vh'}}
+              style={{ width: "90vh" }}
               value={searchText}
               onChangeValue={setSearchText}
               placeholder="Search Songs/Albums"

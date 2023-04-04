@@ -4,9 +4,10 @@ import {
   Container,
   DisplayError,
   Page,
-  Text
+  Text,
 } from "../components";
-import { useAuthState, FirebaseUser, getDocument } from "./Firebase";
+import { useAuthState, FirebaseUser, getDocumentRef } from "./Firebase";
+import { getDoc, setDoc } from "firebase/firestore";
 
 export type UserProfile = {
   displayName?: string;
@@ -59,19 +60,16 @@ export const FirebaseProvider = ({ children }: Props) => {
     // This code is responsible for creating the user's profile
     // entry from the authentication token.
     if (currentUser) {
-      const doc = getDocument(
+      const doc = getDocumentRef(
         `/profiles/${currentUser ? currentUser.uid : "empty"}`
       );
-      doc
-        .get()
+      getDoc(doc)
         .then((dataRef) => {
           if (!dataRef.exists) {
-            doc
-              .set({
-                displayName: currentUser?.displayName ?? "",
-                photoUrl: currentUser?.photoURL ?? "",
-              })
-              .catch(console.error);
+            setDoc(doc, {
+              displayName: currentUser?.displayName ?? "",
+              photoUrl: currentUser?.photoURL ?? "",
+            }).catch(console.error);
           }
         })
         .catch(console.error);
@@ -81,7 +79,7 @@ export const FirebaseProvider = ({ children }: Props) => {
   if (loadingUser) return <ActivityIndicator size="gigantic" fullscreen />;
   else if (errorUser)
     return (
-      <DisplayError permissionDenied={errorUser.code === "permission-denied"} />
+      <DisplayError permissionDenied={errorUser.name === "permission-denied"} />
     );
   return (
     <>

@@ -15,8 +15,9 @@ import firebase, {
 import Message from "./Message";
 import { EditableText } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
 
-export default () => {
+function WallMessenger() {
   const { currentUser } = useContext(FirebaseContext);
   const messageCollectionPath = `/walls/${currentUser?.uid}/messages`;
   const [snapshot, loadingCollection, errorCollection] = useCollection(
@@ -43,15 +44,16 @@ export default () => {
     if (!messageText || messageText.length === 0) return;
     console.log("Send: ", messageText);
     const postTime = `${Date.now()}`;
-    firebase
-      .firestore()
-      .collection(`/walls/${currentUser?.uid}/messages`)
-      .doc(postTime)
-      .set({
-        message: messageText,
-        authorName: currentUser?.displayName,
-        photoURL: currentUser?.photoURL,
-      })
+    const collectionRef = collection(
+      getFirestore(),
+      `/walls/${currentUser?.uid}/messages`
+    );
+    const docRef = doc(collectionRef, postTime);
+    setDoc(docRef, {
+      message: messageText,
+      authorName: currentUser?.displayName,
+      photoURL: currentUser?.photoURL,
+    })
       .then(() => new Promise(() => setMessageText("")))
       .catch(console.error);
   };
@@ -80,11 +82,11 @@ export default () => {
           paddingLeft: "5px",
           marginLeft: "5px",
           paddingRight: "5px",
-          marginRight: "5px"
+          marginRight: "5px",
         }}
       >
         <TextInput
-          style={{ width: '70vw' }}
+          style={{ width: "70vw" }}
           value={messageText ?? ""}
           onChangeValue={(value) => setMessageText(value)}
           onKeyDown={(event) => {
@@ -92,8 +94,14 @@ export default () => {
             sendMessage();
           }}
         />
-        <Button style={{minWidth: '15vw'}} text="Send" onClick={sendMessage} />
+        <Button
+          style={{ minWidth: "15vw" }}
+          text="Send"
+          onClick={sendMessage}
+        />
       </div>
     </Container>
   );
-};
+}
+
+export default WallMessenger;

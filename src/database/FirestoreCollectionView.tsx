@@ -1,18 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  useCollection,
-  getDocumentsDataWithId,
-  getData,
-  DocumentData,
-  QuerySnapshot,
-} from "./Firebase";
-import {
-  ActivityIndicator,
-  Container,
-  DisplayError,
-  Page,
-  ThemeContext,
-} from "../components";
+import { useCollection, DocumentData, QuerySnapshot } from "./Firebase";
+import { ActivityIndicator, DisplayError, ThemeContext } from "../components";
 import { FirebaseError } from "./Firebase";
 import Message from "../messenger/Message";
 

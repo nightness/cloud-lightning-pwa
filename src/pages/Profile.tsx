@@ -5,11 +5,25 @@ import { Dialog, Alert, Checkbox } from "@blueprintjs/core";
 import { useContext, useEffect, useState } from "react";
 import firebase, {
   getCollection,
-  getDocument,
+  getDocumentRef,
   useDocument,
 } from "../database/Firebase";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { NavigationContext } from "../navigation/NavigationContext";
+import {
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
+import {
+  EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+  updatePassword,
+  updateProfile,
+} from "firebase/auth";
 
 function equalTo(ref: any, msg: any) {
   return Yup.mixed().test({
@@ -64,16 +78,15 @@ const ChangePassword = ({ isOpen, title, onClose }: Props) => {
           }}
           validationSchema={ChangePasswordScheme}
           onSubmit={(values, helpers) => {
-            const user = firebase.auth().currentUser;
+            const user = getAuth().currentUser;
             if (!user || !user.email) return;
-            var credential = firebase.auth.EmailAuthProvider.credential(
+            var credential = EmailAuthProvider.credential(
               user.email,
               values.oldPassword
             );
 
-            user
-              .reauthenticateWithCredential(credential)
-              .then(() => user.updatePassword(values.newPassword))
+            reauthenticateWithCredential(user, credential)
+              .then(() => updatePassword(user, values.newPassword))
               .then(onClose)
               .catch((err) => {
                 console.log(err);
@@ -174,41 +187,36 @@ export const Profile = () => {
             if (submitted || !currentUser) return;
             setSubmitted(true);
 
-            const usernameDoc = firebase
-              .firestore()
-              .collection("/usernames")
-              .doc(values.displayName);
-
-            usernameDoc
-              .get()
-              .then((docRef) => {
-                if (!docRef.exists) {
+            const usernameDoc = firebase;
+            const collectionRef = collection(getFirestore(), "/usernames");
+            const docRef = doc(collectionRef, values.displayName);
+            getDoc(docRef)
+              .then((docData) => {
+                if (!docData.exists) {
                   // Create username protection token
-                  usernameDoc.set({
+                  setDoc(docRef, {
                     uid: currentUser.uid,
                   });
                   return;
                 }
-                const data = docRef.data();
+                const data = docData.data();
                 if (!data || data.uid !== currentUser.uid)
                   throw new Error("Username already exists");
               })
               .then(() =>
-                currentUser.updateProfile({
+                updateProfile(currentUser, {
                   displayName: values.displayName,
                   photoURL: values.photoUrl,
                 })
               )
-              .then(() =>
-                firebase
-                  .firestore()
-                  .collection("/profiles")
-                  .doc(currentUser.uid)
-                  .set({
-                    displayName: values.displayName,
-                    photoURL: values.photoUrl,
-                  })
-              )
+              .then(() => {
+                const collectionRef = collection(getFirestore(), "/profiles");
+                const docRef = doc(collectionRef, currentUser.uid);
+                setDoc(docRef, {
+                  displayName: values.displayName,
+                  photoURL: values.photoUrl,
+                });
+              })
               .then(() => {
                 setAlertMessage("Profile Updated");
                 setIsAlertOpen(true);

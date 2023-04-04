@@ -1,21 +1,50 @@
-import firebase from "firebase";
-import "firebase/firestore";
-import "firebase/functions";
+// import "firebase/firestore";
+// import "firebase/functions";
 import * as FirebaseAuth from "react-firebase-hooks/auth";
 import * as FirebaseFirestore from "react-firebase-hooks/firestore";
 
-export type FirebaseError = firebase.FirebaseError;
-export type FirebaseUser = firebase.User;
-export type UserCredential = firebase.auth.UserCredential;
-export type AuthError = firebase.auth.Error;
-export type DocumentChange<T> = firebase.firestore.DocumentChange<T>;
-export type DocumentData = firebase.firestore.DocumentData;
-export type DocumentReference<T> = firebase.firestore.DocumentReference<T>;
-export type DocumentSnapshot<T> = firebase.firestore.DocumentSnapshot<T>;
-export type Timestamp = firebase.firestore.Timestamp;
-export type QuerySnapshot<T> = firebase.firestore.QuerySnapshot<T>;
-export type QueryDocumentSnapshot<T> =
-  firebase.firestore.QueryDocumentSnapshot<T>;
+import { FirebaseError, initializeApp } from "firebase/app";
+import {
+  User as FirebaseUser,
+  GoogleAuthProvider,
+  UserCredential,
+  AuthError,
+  getAuth,
+} from "firebase/auth";
+import {
+  DocumentChange,
+  DocumentData,
+  DocumentReference,
+  DocumentSnapshot,
+  Timestamp,
+  QuerySnapshot,
+  QueryDocumentSnapshot,
+  serverTimestamp,
+  collection,
+  getFirestore,
+  doc,
+  getDocs,
+  query,
+  limitToLast,
+  startAfter,
+  deleteDoc,
+  getDoc,
+} from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
+
+export { FirebaseError, getAuth, GoogleAuthProvider };
+export type {
+  AuthError,
+  DocumentChange,
+  DocumentData,
+  DocumentReference,
+  DocumentSnapshot,
+  FirebaseUser,
+  Timestamp,
+  QuerySnapshot,
+  QueryDocumentSnapshot,
+  UserCredential,
+};
 
 interface LoginSuccess {
   type: "success";
@@ -34,37 +63,29 @@ export const firebaseConfig = {
   measurementId: "G-R55E0ZP42N",
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  //firebase.analytics();
-}
+const app = initializeApp(firebaseConfig);
 
-export const getFirestore = () => {
-  var firestore = firebase.firestore();
-  // if (false && location.hostname === 'localhost') {
-  //     firestore.settings({
-  //         host: 'localhost:8080',
-  //     })
-  // }
-  return firestore;
-};
+// export const getFirestore = () => {
+//   var firestore = firebase.firestore();
+//   // if (false && location.hostname === 'localhost') {
+//   //     firestore.settings({
+//   //         host: 'localhost:8080',
+//   //     })
+//   // }
+//   return firestore;
+// };
+// export const firebaseAuth = firebase.auth;
+// export const firebaseFunctions = firebase.functions;
+// export const firebaseFirestore = firebase.firestore;
+// export const firestoreMessenging = firebase.messaging;
 
-export const getAuth = () => firebase.auth();
-export const firebaseAuth = firebase.auth;
-export const firebaseFunctions = firebase.functions;
-export const firebaseFirestore = firebase.firestore;
-export const firestoreMessenging = firebase.messaging;
+export const getCurrentTimeStamp = () => serverTimestamp();
+export const getCurrentUser = () => getAuth().currentUser;
 
-export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-
-export const getCurrentTimeStamp = () =>
-  firebase.firestore.FieldValue.serverTimestamp();
-export const getCurrentUser = () => firebaseAuth().currentUser;
-
-export const useAuthState = () => FirebaseAuth.useAuthState(firebaseAuth());
+export const useAuthState = () => FirebaseAuth.useAuthState(getAuth());
 
 export const getCollection = (collectionPath: string) =>
-  getFirestore().collection(collectionPath);
+  collection(getFirestore(), collectionPath);
 export const useCollection = (
   collectionPath: string,
   includeMetadataChanges = false
@@ -104,31 +125,29 @@ export const useCollectionDataOnce = (collectionPath: string) => {
   }
 };
 
-export const getDocument = (documentPath: string) =>
-  getFirestore().doc(documentPath);
+export const getDocumentRef = (documentPath: string) =>
+  doc(getFirestore(), documentPath);
+
 export const useDocument = (
   documentPath: string,
   includeMetadataChanges = true
 ) => {
   try {
-    return FirebaseFirestore.useDocument(getDocument(documentPath), {
+    return FirebaseFirestore.useDocument(getDocumentRef(documentPath), {
       snapshotListenOptions: { includeMetadataChanges },
     });
   } catch (error) {
     return [undefined, false, error] as [
-      (
-        | firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
-        | undefined
-      ),
+      DocumentSnapshot<DocumentData> | undefined,
       boolean,
-      firebase.FirebaseError | undefined
+      FirebaseError | undefined
     ];
   }
 };
 
 export const useDocumentOnce = (documentPath: string) => {
   try {
-    return FirebaseFirestore.useDocumentOnce(getDocument(documentPath));
+    return FirebaseFirestore.useDocumentOnce(getDocumentRef(documentPath));
   } catch (error) {
     return [undefined, false, error];
   }
@@ -139,7 +158,7 @@ export const useDocumentData = (
   includeMetadataChanges = false
 ) => {
   try {
-    return FirebaseFirestore.useDocumentData(getDocument(documentPath), {
+    return FirebaseFirestore.useDocumentData(getDocumentRef(documentPath), {
       snapshotListenOptions: { includeMetadataChanges },
     });
   } catch (error) {
@@ -149,29 +168,46 @@ export const useDocumentData = (
 
 export const useDocumentDataOnce = (documentPath: string) => {
   try {
-    return FirebaseFirestore.useDocumentDataOnce(getDocument(documentPath));
+    return FirebaseFirestore.useDocumentDataOnce(getDocumentRef(documentPath));
   } catch (error) {
     return [undefined, false, error];
   }
 };
 
-export const getData = (
-  querySnapshot: QuerySnapshot<DocumentData>,
-  orderBy?: string,
-  length?: number,
-  firstItem?: any
-) => {
-  if (!orderBy) return querySnapshot.query.get();
-  else if (!length) return querySnapshot.query.orderBy(orderBy).get();
-  else if (!firstItem)
-    return querySnapshot.query.orderBy(orderBy).limitToLast(length).get();
-  else
-    return querySnapshot.query
-      .orderBy(orderBy)
-      .limitToLast(length)
-      .startAt(firstItem)
-      .get();
-};
+// export const getData = async (
+//   querySnapshot: QuerySnapshot<DocumentData>,
+//   orderBy?: string,
+//   length?: number,
+//   firstItem?: any
+// ) => {
+//   const db = querySnapshot.query.firestore;
+//   const collectionRef = collection(db, querySnapshot.query);
+
+//   if (!orderBy) return await getDocs(querySnapshot.query);
+//   else if (!length)
+//     return await getDocs(
+//       query(db, collection(getFirestore(), querySnapshot.query), orderBy)
+//     );
+//   else if (!firstItem)
+//     return await getDocs(
+//       query(
+//         db,
+//         collection(getFirestore(), querySnapshot.query),
+//         orderBy,
+//         limitToLast(length)
+//       )
+//     );
+//   else
+//     return await getDocs(
+//       query(
+//         db,
+//         collection(getFirestore(), querySnapshot.query),
+//         orderBy,
+//         limitToLast(length),
+//         startAfter(firstItem)
+//       )
+//     );
+// };
 
 export const getDocumentsDataWithId = (
   querySnapshot: QuerySnapshot<DocumentData>
@@ -186,30 +222,32 @@ export const getDocumentsDataWithId = (
   return docs;
 };
 
-export const collectionContains = async (collection: string, docId: string) => {
-  const firestore = firebaseFirestore();
-  return await firestore.collection(collection).doc(docId).get();
+export const collectionContains = async (
+  collectionName: string,
+  docId: string
+) => {
+  const collectionRef = collection(getFirestore(), collectionName);
+  const docRef = doc(collectionRef, docId);
+  return (await getDoc(docRef)).exists();
 };
 
 // Returns a promise
-export const callFirebaseFunction = (funcName: string, data: any) => {
-  return firebase.functions().httpsCallable(funcName)(data);
-};
+export const callFirebaseFunction = (funcName: string, data: any) =>
+  httpsCallable(getFunctions(), funcName)(data);
 
 export async function deleteCollection(
   doc: DocumentReference<DocumentData>,
-  collectionName: string,
-  batchSize: number
+  collectionName: string
 ) {
-  const collectionRef = doc.collection(collectionName);
-  const snapshot = await collectionRef.get();
-  snapshot.docs.forEach((docRef) => {
-    const doc = collectionRef.doc(docRef.id);
-    doc.delete();
+  const fullCollectionName = `${doc.path}/${collectionName}`;
+  const collectionRef = collection(getFirestore(), fullCollectionName);
+  const snapshot = await getDocs(collectionRef);
+  snapshot.forEach((doc) => {
+    deleteDoc(doc.ref);
   });
 }
 
-export default firebase;
+export default app;
 
 // export async function deleteCollection(doc: DocumentReference<DocumentData>, collectionName: string, batchSize: number) {
 //   const collectionRef = doc.collection(collectionName);

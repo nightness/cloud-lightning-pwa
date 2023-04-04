@@ -5,22 +5,25 @@ import {
   ActivityIndicator,
   ThemeContext,
   FormField,
-  ScrollView,
-  Container,
   Page,
 } from "../components";
 import {
-  firebaseAuth,
   FirebaseError,
   UserCredential,
   GoogleAuthProvider,
-  getDocument,
+  getAuth,
 } from "../database/Firebase";
 import { Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { CSSProperties } from "react";
 import { useHistory } from "react-router-dom";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 
 interface AuthenticationFields {
   displayName: string;
@@ -90,7 +93,7 @@ export const Authentication = () => {
   );
   const [scheme, setScheme] = useState<object>();
   const [stage, setStage] = useState<Stage>(Stage.Init);
-  const auth = firebaseAuth();
+  const auth = getAuth();
   const history = useHistory();
   const { activeTheme, setActiveTheme } = useContext(ThemeContext);
 
@@ -127,13 +130,13 @@ export const Authentication = () => {
 
   const onSuccessfulLogin = ({ user }: UserCredential) => {
     setStage(Stage.LoggedIn);
-    user
-      ?.updateProfile({
-        //  displayName: // some displayName,
-        //  photoURL: // some photo url
-      })
-      .catch(console.error)
-      .finally(() => history.push("/"));
+    // updateProfile(user, {
+    //     //  displayName: // some displayName,
+    //     //  photoURL: // some photo url
+    //   })
+    //   .catch(console.error)
+    //   .finally(() => history.push("/"));
+    history.push("/");
   };
 
   const onRegisterPress = async (
@@ -141,8 +144,7 @@ export const Authentication = () => {
     helpers: FormikHelpers<any>
   ) => {
     setStage(Stage.Authenticating);
-    auth
-      .createUserWithEmailAndPassword(values.eMail, values.password)
+    createUserWithEmailAndPassword(getAuth(), values.eMail, values.password)
       .then(onSuccessfulLogin)
       .catch((error: FirebaseError) => {
         setStage(Stage.Ready);
@@ -153,8 +155,7 @@ export const Authentication = () => {
   const signInWithGoogle = async (formikProps: FormikProps<any>) => {
     const provider = new GoogleAuthProvider();
     setStage(Stage.Authenticating);
-    auth
-      .signInWithPopup(provider)
+    signInWithPopup(getAuth(), provider)
       .then(onSuccessfulLogin)
       .catch((error) => {
         setStage(Stage.Ready);
@@ -168,8 +169,7 @@ export const Authentication = () => {
     helpers: FormikHelpers<any>
   ) => {
     setStage(Stage.Authenticating);
-    auth
-      .signInWithEmailAndPassword(values.eMail, values.password)
+    signInWithEmailAndPassword(getAuth(), values.eMail, values.password)
       .then((user) => {
         helpers.resetForm();
         onSuccessfulLogin(user);
@@ -184,8 +184,7 @@ export const Authentication = () => {
     values: AuthenticationFields,
     helpers: FormikHelpers<any>
   ) => {
-    auth
-      .sendPasswordResetEmail(values.eMail)
+    sendPasswordResetEmail(getAuth(), values.eMail)
       .then(() => setMode("login"))
       .catch((error) => {
         alert(error);
