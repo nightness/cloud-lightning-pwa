@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ConsoleContainer } from "../components";
 
 const TOTAL_ROWS = 6;
 const TOTAL_COLUMNS = 7;
@@ -213,6 +212,13 @@ export default function ConnectFourBoard() {
             ))}
           </div>
         ))}
+      </div>
+      <div>
+        {winner && (
+          <div>
+            <h1>Winner: {winner}</h1>
+          </div>
+        )}
       </div>
     </div>
   );
