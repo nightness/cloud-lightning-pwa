@@ -1,12 +1,6 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  MouseEvent,
-  useContext,
-} from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { Alert } from "@blueprintjs/core";
-import { CallStage, WebRtcContext } from "../webrtc/WebRtcContext";
+import { WebRtcContext } from "../webrtc/WebRtcContext";
 import "./WebRTC.css";
 import { Button, Container, Page, TextInput } from "../components";
 
@@ -49,8 +43,8 @@ export function WebRTC() {
     event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => {
     if (!callId) {
-      setAlertMessage(`WebRTC Error: No call ID entered`)
-      setIsAlertOpen(true)
+      setAlertMessage(`WebRTC Error: No call ID entered`);
+      setIsAlertOpen(true);
       return;
     }
     actions
@@ -77,7 +71,7 @@ export function WebRTC() {
         <div>
           <h3>Enable Webcam</h3>
           <Button
-            text='Start webcam'
+            text="Start webcam"
             onClick={() => {
               actions.init().catch((error: Error) => {
                 setAlertMessage(error.message);
@@ -96,7 +90,7 @@ export function WebRTC() {
             <span style={{ flex: 1 }}>
               <h2>Create a new Call</h2>
               <Button
-                text='Create Call (offer)'
+                text="Create Call (offer)"
                 onClick={callButtonClick}
                 disabled={!localStream}
               />
@@ -110,8 +104,12 @@ export function WebRTC() {
               }}
             >
               <h2>Answer a Call</h2>
-              <TextInput className='call-id-input' value={callId} onChangeValue={(value) => setCallId(value)} />
-              <Button text='Answer' onClick={answerButtonClick} />
+              <TextInput
+                className="call-id-input"
+                value={callId}
+                onChangeValue={(value) => setCallId(value)}
+              />
+              <Button text="Answer" onClick={answerButtonClick} />
             </span>
           </div>
         </div>
@@ -121,10 +119,7 @@ export function WebRTC() {
       options = (
         <div>
           <h2>Hangup</h2>
-          <Button
-            text='Hangup'
-            onClick={hangupButtonClick}
-          />
+          <Button text="Hangup" onClick={hangupButtonClick} />
         </div>
       );
   }
@@ -143,30 +138,30 @@ export function WebRTC() {
         <p>{alertMessage}</p>
       </Alert>
 
-    <Page>
-    <Container>
-      <div className="videos">
-        <span>
-          <h1>Local Stream</h1>
-          <video
-            ref={webcamVideo}
-            id="webcamVideo"
-            autoPlay
-            playsInline
-          ></video>
-        </span>
-        {callStage >= 1 ? (
-          <span>
-            <h1>Remote Stream</h1>
-            <video ref={remoteVideo} autoPlay playsInline />
-          </span>
-        ) : (
-          <></>
-        )}
-      </div>
-      {options}
-    </Container>
-    </Page>
+      <Page>
+        <Container>
+          <div className="videos">
+            <span>
+              <h1>Local Stream</h1>
+              <video
+                ref={webcamVideo}
+                id="webcamVideo"
+                autoPlay
+                playsInline
+              ></video>
+            </span>
+            {callStage >= 1 ? (
+              <span>
+                <h1>Remote Stream</h1>
+                <video ref={remoteVideo} autoPlay playsInline />
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
+          {options}
+        </Container>
+      </Page>
     </>
   );
 }
