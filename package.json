@@ -42,7 +42,6 @@
         "spotify-web-api-node": "^5.0.2",
         "typescript": "^4.0.3",
         "web-vitals": "^0.2.4",
-        "webtorrent": "^1.0.0",
         "workbox-background-sync": "^5.1.3",
         "workbox-broadcast-update": "^5.1.3",
         "workbox-cacheable-response": "^5.1.3",
