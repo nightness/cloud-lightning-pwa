@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert } from "@blueprintjs/core";
-import { WebRtcContext } from "../webrtc/WebRtcContext";
+import useWebRTC from "./useWebRTC";
 import "./WebRTC.css";
 import { Button, Container, Page, TextInput } from "../components";
 
@@ -17,13 +17,13 @@ export function WebRTC() {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [callId, setCallId] = useState("");
-  const { localStream, remoteStream, actions, callStage } =
-    useContext(WebRtcContext);
+  const { localStream, remoteStream, actions, callStage } = useWebRTC(servers);
   const webcamVideo = useRef<HTMLVideoElement>(null);
   const remoteVideo = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (webcamVideo.current) {
+      // FIXME: This should be optional
       webcamVideo.current.muted = true;
       if (localStream !== undefined)
         webcamVideo.current.srcObject = localStream;

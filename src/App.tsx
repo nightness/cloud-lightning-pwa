@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Home, WebRTC, Profile, Authentication, Matrix } from "./pages";
 import { FirebaseProvider } from "./database/FirebaseContext";
-import { WebRtcProvider } from "./webrtc/WebRtcContext";
 import {
   NavBar,
   NavigationContext,
@@ -44,11 +43,7 @@ const MainDocument = () => {
       <div className={`content`}>
         <Pages pages={pages} />
       </div>
-      {spotify.api.getAccessToken() ? (
-        <SpotifyPlayer />
-      ) : (
-        <></>
-      )}
+      {spotify.api.getAccessToken() ? <SpotifyPlayer /> : <></>}
     </div>
   );
 };
@@ -61,9 +56,7 @@ function ProviderNest({ children }: { children: JSX.Element }) {
           <FirebaseProvider>
             <MatrixProvider>
               <SpotifyProvider>
-                <NavigationProvider>
-                  <WebRtcProvider>{children}</WebRtcProvider>
-                </NavigationProvider>
+                <NavigationProvider>{children}</NavigationProvider>
               </SpotifyProvider>
             </MatrixProvider>
           </FirebaseProvider>
@@ -125,7 +118,6 @@ const usePages = () => {
         title: "Connect Four",
         component: ConnectFourBoard,
       },
-
     ],
     // requiresAuthentication: true,
   });
