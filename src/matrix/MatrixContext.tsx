@@ -44,11 +44,10 @@ export const MatrixProvider = ({ children }: Props) => {
     //   console.log(event.getType());
     //   console.log(event);
     // });
-
-    //Instead, let's just listen to events happening on the timeline of rooms for which our user is a member:
-    client.on("Room.timeline", function (event, room, toStartOfTimeline) {
-      console.log(event.event);
-    });
+    // Instead, let's just listen to events happening on the timeline of rooms for which our user is a member:
+    // client.on("Room.timeline", function (event, room, toStartOfTimeline) {
+    //   console.log(event.event);
+    // });
   };
 
   const loginWithAccessToken = async (
@@ -75,7 +74,9 @@ export const MatrixProvider = ({ children }: Props) => {
     userId: string,
     password: string
   ) => {
-    const client = sdk.createClient(baseUrl);
+    const client = sdk.createClient({
+      baseUrl,
+    });
     return [
       client,
       client.login("m.login.password", {
