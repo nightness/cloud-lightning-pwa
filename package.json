@@ -14,7 +14,8 @@
         "@types/react-router-dom": "^5.1.7",
         "@types/spotify-web-api-node": "^5.0.3",
         "prettier": "^2.3.2",
-        "prettier-plugin-firestore-rules": "^0.1.5"
+        "prettier-plugin-firestore-rules": "^0.1.5",
+        "typescript": "^5.0.3"
     },
     "dependencies": {
         "@blueprintjs/core": "^4.17.8",
@@ -40,7 +41,6 @@
         "react-scripts": "4.0.3",
         "react-spotify-web-playback": "^0.8.2",
         "spotify-web-api-node": "^5.0.2",
-        "typescript": "^4.0.3",
         "web-vitals": "^0.2.4",
         "workbox-background-sync": "^5.1.3",
         "workbox-broadcast-update": "^5.1.3",
