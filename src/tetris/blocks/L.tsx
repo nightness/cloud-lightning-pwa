@@ -1,6 +1,6 @@
 import { BlockProps } from "..";
 
-export default ({ style, orientation }: BlockProps) => {
+function L({ style, orientation }: BlockProps) {
   let outerClass = "flex-column";
   let innerClass = "flex-row";
   switch (orientation) {
@@ -26,10 +26,24 @@ export default ({ style, orientation }: BlockProps) => {
         <div className="box tetris-block-l" />
       </div>
       <div className={innerClass}>
-        <div className={`${orientation === 0 || orientation === 90 ? 'box tetris-block-l' : 'empty'}`} />
+        <div
+          className={`${
+            orientation === 0 || orientation === 90
+              ? "box tetris-block-l"
+              : "empty"
+          }`}
+        />
         <div className="empty" />
-        <div className={`${orientation === 180 || orientation === 270 ? 'box tetris-block-l' : 'empty'}`} />
+        <div
+          className={`${
+            orientation === 180 || orientation === 270
+              ? "box tetris-block-l"
+              : "empty"
+          }`}
+        />
       </div>
     </div>
   );
 }
+
+export default L;

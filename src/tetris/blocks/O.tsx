@@ -1,6 +1,6 @@
 import { BlockProps } from "..";
 
-export default ({ style, orientation }: BlockProps) => {
+function O({ style, orientation }: BlockProps) {
   return (
     <div style={style} className="flex-row">
       <div className="flex-column">
@@ -14,3 +14,5 @@ export default ({ style, orientation }: BlockProps) => {
     </div>
   );
 }
+
+export default O;

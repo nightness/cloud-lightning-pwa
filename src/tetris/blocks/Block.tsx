@@ -2,11 +2,10 @@ import { CSSProperties } from "react";
 
 import { I, J, L, O, S, T, Z, XO } from "..";
 import { Plane } from "..";
-export type BlockType = "I" | "J" | "L" | "O" | "S" | "T" | "Z" | 'X!';
+export type BlockType = "I" | "J" | "L" | "O" | "S" | "T" | "Z" | "X!";
 export type OrientationValue = 0 | 90 | 180 | 270;
 
 export interface BlockProps {
-  
   orientation: OrientationValue;
   style?: CSSProperties;
 }
@@ -14,17 +13,6 @@ export interface BlockProps {
 export interface Props extends BlockProps {
   blockType: BlockType;
 }
-
-export default ({ blockType, style, orientation }: Props) => {
-  if (blockType === "X!") return <XO style={style} orientation={orientation} />;
-  if (blockType === "I") return <I style={style} orientation={orientation} />;
-  if (blockType === "J") return <J style={style} orientation={orientation} />;
-  if (blockType === "L") return <L style={style} orientation={orientation} />;
-  if (blockType === "O") return <O style={style} orientation={orientation} />;
-  if (blockType === "S") return <S style={style} orientation={orientation} />;
-  if (blockType === "T") return <T style={style} orientation={orientation} />;
-  return <Z style={style} orientation={orientation} />;
-};
 
 export const getBlockWidth = (
   blockType: BlockType,
@@ -222,3 +210,15 @@ export const randomBlock = (disable8thBlock: boolean) => {
   const blocks: BlockType[] = ["I", "J", "L", "O", "S", "T", "Z", "X!"];
   return blocks[Math.floor(Math.random() * (disable8thBlock ? 7 : 7.1))];
 };
+
+function Block({ blockType, style, orientation }: Props) {
+  if (blockType === "X!") return <XO style={style} orientation={orientation} />;
+  if (blockType === "I") return <I style={style} orientation={orientation} />;
+  if (blockType === "J") return <J style={style} orientation={orientation} />;
+  if (blockType === "L") return <L style={style} orientation={orientation} />;
+  if (blockType === "O") return <O style={style} orientation={orientation} />;
+  if (blockType === "S") return <S style={style} orientation={orientation} />;
+  if (blockType === "T") return <T style={style} orientation={orientation} />;
+  return <Z style={style} orientation={orientation} />;
+}
+export default Block;

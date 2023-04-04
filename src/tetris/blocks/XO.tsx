@@ -1,8 +1,10 @@
 import { BlockProps } from "..";
 
-export default ({ style, orientation }: BlockProps) => {
-  const o1 = orientation === 0 || orientation === 180 ? "box tetris-block-xo" : "blank";
-  const o2 = orientation === 0 || orientation === 180 ? "blank" : "box tetris-block-xo";
+function XO({ style, orientation }: BlockProps) {
+  const o1 =
+    orientation === 0 || orientation === 180 ? "box tetris-block-xo" : "blank";
+  const o2 =
+    orientation === 0 || orientation === 180 ? "blank" : "box tetris-block-xo";
   return (
     <div style={style} className="flex-row">
       <div className="flex-column">
@@ -22,7 +24,9 @@ export default ({ style, orientation }: BlockProps) => {
       </div>
     </div>
   );
-};
+}
+
+export default XO;
 
 // export default ({ style, orientation }: BlockProps) => {
 //   return (

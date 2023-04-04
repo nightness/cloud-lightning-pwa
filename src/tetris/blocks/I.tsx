@@ -1,6 +1,6 @@
 import { BlockProps } from "..";
 
-export default ({ style, orientation }: BlockProps) => {
+function I({ style, orientation }: BlockProps) {
   let outerClass = "flex-column-reverse";
   let innerClass = "flex-row-reverse";
   switch (orientation) {
@@ -25,3 +25,5 @@ export default ({ style, orientation }: BlockProps) => {
     </div>
   );
 }
+
+export default I;

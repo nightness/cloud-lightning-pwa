@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import { BlockProps } from "..";
 
-export default ({ style, orientation }: BlockProps) => {
+function T({ style, orientation }: BlockProps) {
   let outerClass = "flex-column";
   let innerClass = "flex-row";
   switch (orientation) {
@@ -22,15 +22,41 @@ export default ({ style, orientation }: BlockProps) => {
   return (
     <div style={style} className={outerClass}>
       <div className={innerClass}>
-        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box tetris-block-t'}`} />
-        <div className='box tetris-block-t' />
-        <div className={`${orientation === 180 || orientation === 270 ? 'blank' : 'box tetris-block-t'}`} />
+        <div
+          className={`${
+            orientation === 180 || orientation === 270
+              ? "blank"
+              : "box tetris-block-t"
+          }`}
+        />
+        <div className="box tetris-block-t" />
+        <div
+          className={`${
+            orientation === 180 || orientation === 270
+              ? "blank"
+              : "box tetris-block-t"
+          }`}
+        />
       </div>
       <div className={innerClass}>
-        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box tetris-block-t'}`} />
-        <div className='box tetris-block-t' />
-        <div className={`${orientation === 0 || orientation === 90 ? 'blank' : 'box tetris-block-t'}`} />
+        <div
+          className={`${
+            orientation === 0 || orientation === 90
+              ? "blank"
+              : "box tetris-block-t"
+          }`}
+        />
+        <div className="box tetris-block-t" />
+        <div
+          className={`${
+            orientation === 0 || orientation === 90
+              ? "blank"
+              : "box tetris-block-t"
+          }`}
+        />
       </div>
     </div>
   );
 }
+
+export default T;

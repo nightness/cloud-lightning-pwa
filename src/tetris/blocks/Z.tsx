@@ -1,6 +1,6 @@
 import { BlockProps } from "..";
 
-export default ({ style, orientation }: BlockProps) => {
+function Z({ style, orientation }: BlockProps) {
   return (
     <div
       style={style}
@@ -10,7 +10,9 @@ export default ({ style, orientation }: BlockProps) => {
     >
       <div
         className={`${
-          orientation === 0 || orientation === 180 ? "flex-row" : "flex-column-reverse"
+          orientation === 0 || orientation === 180
+            ? "flex-row"
+            : "flex-column-reverse"
         }`}
       >
         <div className="box tetris-block-z" />
@@ -19,7 +21,9 @@ export default ({ style, orientation }: BlockProps) => {
       </div>
       <div
         className={`${
-          orientation === 0 || orientation === 180 ? "flex-row" : "flex-column-reverse"
+          orientation === 0 || orientation === 180
+            ? "flex-row"
+            : "flex-column-reverse"
         }`}
       >
         <div className="blank" />
@@ -29,3 +33,5 @@ export default ({ style, orientation }: BlockProps) => {
     </div>
   );
 }
+
+export default Z;
