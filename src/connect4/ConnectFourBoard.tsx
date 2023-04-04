@@ -5,12 +5,10 @@ const TOTAL_ROWS = 6;
 const TOTAL_COLUMNS = 7;
 
 type Player = 1 | 2;
-type BoardValue = 0 | 1 | 2;
+type BoardValue = 0 | Player;
 type Board = BoardValue[][];
 
-// Looks to see if either player won, if so it returns that's player's number id
-type FindWinner = (board: BoardValue[][]) => Player | void | undefined;
-const findWinner: FindWinner = (board) => {
+const findWinner = (board: Board) => {
   let winner = 0;
 
   const getColumn = (column: number) => {
@@ -29,25 +27,21 @@ const findWinner: FindWinner = (board) => {
       let rowUp: number[] = [];
       let rowDown: number[] = [];
       for (let j = 0, shearUp = i, shearDown = i; j < jLength; j++) {
-        if (shearDown >= 0)
-          rowDown.push(board[shearDown--][j]);
-        if (shearUp < iLength)
-          rowUp.push(board[shearUp++][j]);
+        if (shearDown >= 0) rowDown.push(board[shearDown--][j]);
+        if (shearUp < iLength) rowUp.push(board[shearUp++][j]);
       }
       if (rowUp.length >= 4) result.push(rowUp);
       if (rowDown.length >= 4) result.push(rowDown);
       rowUp = [];
       rowDown = [];
       for (let j = jLength - 1, shearUp = i, shearDown = i; j >= 0; j--) {
-        if (shearDown >= 0)
-          rowDown.push(board[shearDown--][j]);
-        if (shearUp < iLength)
-          rowUp.push(board[shearUp++][j]);
+        if (shearDown >= 0) rowDown.push(board[shearDown--][j]);
+        if (shearUp < iLength) rowUp.push(board[shearUp++][j]);
       }
       if (rowUp.length >= 4) result.push(rowUp);
       if (rowDown.length >= 4) result.push(rowDown);
     }
-    console.log(result)
+    console.log(result);
     return result;
   };
 
@@ -132,56 +126,94 @@ export const getBoardSubset = (
 
 export default function ConnectFourBoard() {
   const [board, setBoard] = useState<Board>(createNewBoard());
+  const [player, setPlayer] = useState<Player>(1);
+  const [winner, setWinner] = useState<Player | undefined>(undefined);
 
   const handleClick = (rIdx: number, cIdx: number) => {
     const newBoard = copyBoard(board);
-    newBoard[rIdx][cIdx] =
-      board[rIdx][cIdx] === 0 ? 1 : board[rIdx][cIdx] === 1 ? 2 : 0;
+
+    // Is the column full?
+    const isColumnFull = newBoard[0][cIdx] !== 0;
+    if (isColumnFull || winner) return;
+
+    // find the lowest empty cell in the column
+    for (let i = newBoard.length - 1; i >= 0; i--) {
+      if (newBoard[i][cIdx] === 0) {
+        newBoard[i][cIdx] = player;
+        break;
+      }
+    }
+
+    // Update the board
     setBoard(newBoard);
+
+    // Check for a winner
     const result = findWinner(newBoard);
-    console.log("findWinner: ", result);
+    if (result) {
+      console.log("findWinner: ", result);
+      setWinner(result);
+    } else {
+      // Switch players
+      setPlayer((p) => (p === 1 ? 2 : 1));
+    }
   };
 
   return (
     <div className="game-board">
-      <div className="game-board-inner">
+      <div
+        className="game-board-inner"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "240px",
+          height: "240px",
+        }}
+      >
         {board?.map((value, rIdx) => (
           <div
-            style={{ display: "flex", flexDirection: "row" }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "240px",
+              height: "240px",
+            }}
             key={`${Math.random()}`}
           >
             {value.map((v, cIdx) => (
               <div
                 className={`board-block`}
-                style={{ userSelect: "none", cursor: "pointer" }}
+                style={{
+                  userSelect: "none",
+                  cursor: "pointer",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                  width: "40px",
+                  height: "40px",
+                }}
                 onClick={() => handleClick(rIdx, cIdx)}
                 key={`${Math.random()}`}
               >
-                {v}
+                <div
+                  style={{
+                    userSelect: "none",
+                    cursor: "pointer",
+                    width: "85%",
+                    height: "75%",
+                    backgroundColor:
+                      v === 1 ? "red" : v === 2 ? "yellow" : "transparent",
+                    borderRadius: "50%",
+                    borderWidth: v > 0 ? "1px" : 0,
+                    borderStyle: "solid",
+                    borderColor: "black",
+                    alignSelf: "center",
+                  }}
+                />
               </div>
             ))}
           </div>
         ))}
       </div>
-      {/* <div style={{ margin: "5px" }} />
-      <div className="game-board-inner">
-        {board?.map((value, rIdx) => (
-          <div
-            style={{ display: "flex", flexDirection: "row" }}
-            key={`${Math.random()}`}
-          >
-            {value.map((v, cIdx) => (
-              <div
-                className={`board-block`}
-                style={{ userSelect: "none", cursor: "pointer" }}
-                key={`${Math.random()}`}
-              >
-                {v}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 }
