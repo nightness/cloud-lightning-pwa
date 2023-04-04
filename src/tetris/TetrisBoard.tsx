@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockType, OrientationValue, Plane, Size } from ".";
-import { setCssVar } from "../components/ThemeContext";
 import useInterval from "../hooks/useInterval";
 import {
   createBlockPattern,
@@ -47,7 +46,7 @@ export default function TetrisBoard({
   const [gameSpeed, setGameSpeed] = useState(STARTING_SPEED);
 
   const newBlock = () => {
-    const block = randomBlock(!enable8thPiece);    
+    const block = randomBlock(!enable8thPiece);
     setCurrentBlockType(block);
     setOrientation(0);
     setBlockLocation({ row: 0, column: 1 + Math.floor(Math.random() * 6) });
@@ -68,7 +67,7 @@ export default function TetrisBoard({
     const removeRows = [] as number[];
     newBoard.forEach((row, index) => {
       let isFull = true;
-      row.map((block) => {
+      row.forEach((block) => {
         if (block === 0) isFull = false;
       });
       if (isFull) {
@@ -81,7 +80,7 @@ export default function TetrisBoard({
           FASTEST_RATE,
           STARTING_SPEED
         );
-        if (speed != gameSpeed) {
+        if (speed !== gameSpeed) {
           setGameSpeed(speed);
           // onGameSpeedChange
         }
@@ -182,10 +181,10 @@ export default function TetrisBoard({
     setIsStarted(true);
     setIsPaused(false);
     setBoard(createNewBoard());
-    setGameSpeed(STARTING_SPEED)
-    setRowsRemoved(0)
+    setGameSpeed(STARTING_SPEED);
+    setRowsRemoved(0);
     newBlock();
-    onRestart?.()
+    onRestart?.();
   };
 
   const handlePause = () => {
@@ -321,7 +320,10 @@ export default function TetrisBoard({
   );
 }
 
-export const createNewBoard = (height: number = TOTAL_ROWS, width: number = TOTAL_COLUMNS) => {
+export const createNewBoard = (
+  height: number = TOTAL_ROWS,
+  width: number = TOTAL_COLUMNS
+) => {
   const board = Array(height)
     .fill(0)
     .map((x) => Array(width).fill(0));

@@ -1,4 +1,3 @@
-import React, { CSSProperties } from "react";
 import { BlockProps } from "..";
 
 function T({ style, orientation }: BlockProps) {

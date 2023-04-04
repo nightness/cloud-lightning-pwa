@@ -115,7 +115,14 @@ export const useDocument = (
       snapshotListenOptions: { includeMetadataChanges },
     });
   } catch (error) {
-    return [undefined, false, error] as [firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData> | undefined, boolean, firebase.FirebaseError | undefined];
+    return [undefined, false, error] as [
+      (
+        | firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
+        | undefined
+      ),
+      boolean,
+      firebase.FirebaseError | undefined
+    ];
   }
 };
 
@@ -202,7 +209,7 @@ export async function deleteCollection(
   });
 }
 
-export default firebase
+export default firebase;
 
 // export async function deleteCollection(doc: DocumentReference<DocumentData>, collectionName: string, batchSize: number) {
 //   const collectionRef = doc.collection(collectionName);

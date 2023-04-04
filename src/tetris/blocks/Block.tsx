@@ -155,7 +155,7 @@ export const createBlockPattern = (
 
   if (blockType === "S") {
     const map: Plane =
-      orientation === 0 || orientation == 180
+      orientation === 0 || orientation === 180
         ? [
             [0, 1, 1],
             [1, 1, 0],
@@ -171,7 +171,7 @@ export const createBlockPattern = (
 
   if (blockType === "Z") {
     const map: Plane =
-      orientation === 0 || orientation == 180
+      orientation === 0 || orientation === 180
         ? [
             [1, 1, 0],
             [0, 1, 1],
@@ -187,7 +187,7 @@ export const createBlockPattern = (
 
   if (blockType === "X!") {
     const map: Plane =
-      orientation === 0 || orientation == 180
+      orientation === 0 || orientation === 180
         ? [
             [1, 0, 1],
             [0, 1, 0],
@@ -203,7 +203,6 @@ export const createBlockPattern = (
   }
 
   throw new Error("missing blockType");
-  return [[]] as Plane;
 };
 
 export const randomBlock = (disable8thBlock: boolean) => {
