@@ -75,23 +75,23 @@ const findWinner = (board: Board) => {
   return winner ? (winner as Player) : undefined;
 };
 
-const biases = [
-  [0, 1, 2, 3, 2, 1, 0],
-  [1, 2, 3, 4, 3, 2, 1],
-  [2, 3, 4, 5, 4, 3, 2],
-  [3, 4, 5, 6, 5, 4, 3],
-  [4, 5, 6, 7, 6, 5, 4],
-  [5, 6, 7, 8, 7, 6, 5],
-];
+// const biases = [
+//   [0, 1, 2, 3, 2, 1, 0],
+//   [1, 2, 3, 4, 3, 2, 1],
+//   [2, 3, 4, 5, 4, 3, 2],
+//   [3, 4, 5, 6, 5, 4, 3],
+//   [4, 5, 6, 7, 6, 5, 4],
+//   [5, 6, 7, 8, 7, 6, 5],
+// ];
 
 // Returns the column, if drop column is negative, their is
 // no move available and the game is over.
-type ComputerMove = (board: Board, maximizeFor: Player) => number;
-const computerMove: ComputerMove = (board, maximizeFor) => {
-  let column = -1;
+// type ComputerMove = (board: Board, maximizeFor: Player) => number;
+// const computerMove: ComputerMove = (board, maximizeFor) => {
+//   let column = -1;
 
-  return column;
-};
+//   return column;
+// };
 
 export const createNewBoard = (
   height: number = TOTAL_ROWS,
@@ -158,7 +158,14 @@ export default function ConnectFourBoard() {
   };
 
   return (
-    <div className="game-board">
+    <div
+      className="game-board"
+      style={{
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <div
         className="game-board-inner"
         style={{
