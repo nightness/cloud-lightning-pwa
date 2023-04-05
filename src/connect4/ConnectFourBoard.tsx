@@ -1,3 +1,4 @@
+import { Button } from "@blueprintjs/core";
 import React, { useState } from "react";
 
 const TOTAL_ROWS = 6;
@@ -148,8 +149,7 @@ export default function ConnectFourBoard() {
 
     // Check for a winner
     const result = findWinner(newBoard);
-    if (result) {
-      console.log("findWinner: ", result);
+    if (result !== winner) {
       setWinner(result);
     } else {
       // Switch players
@@ -225,6 +225,15 @@ export default function ConnectFourBoard() {
           <div>
             <h1>Winner: {winner ? "red" : "yellow"}</h1>
           </div>
+        )}
+        {winner && (
+          <Button
+            onClick={() => {
+              setBoard(createNewBoard());
+              setWinner(undefined);
+            }}
+            text="Restart"
+          />
         )}
       </div>
     </div>
