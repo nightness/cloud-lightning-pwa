@@ -1,7 +1,7 @@
 import "./App.css";
 import { useContext } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
-import { Home, WebRTC, Profile, Authentication, Matrix } from "./pages";
+import { Home, WebRTC, Profile, Authentication } from "./pages";
 import { FirebaseProvider } from "./database/FirebaseContext";
 import {
   NavBar,
@@ -10,11 +10,10 @@ import {
   Pages,
 } from "./navigation";
 import { WallMessenger } from "./messenger";
-import { TestPage, Games } from "./pages";
+import { Games } from "./pages";
 import TicTacToe from "./pages/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
-import { MatrixProvider } from "./matrix/MatrixContext";
 import TetrisPage from "./tetris/TetrisPage";
 import Spotify from "./spotify/Spotify";
 import { SpotifyContext, SpotifyProvider } from "./spotify/SpotifyContext";
@@ -54,11 +53,9 @@ function ProviderNest({ children }: { children: JSX.Element }) {
       <ThemeProvider>
         <Router>
           <FirebaseProvider>
-            <MatrixProvider>
-              <SpotifyProvider>
-                <NavigationProvider>{children}</NavigationProvider>
-              </SpotifyProvider>
-            </MatrixProvider>
+            <SpotifyProvider>
+              <NavigationProvider>{children}</NavigationProvider>
+            </SpotifyProvider>
           </FirebaseProvider>
         </Router>
       </ThemeProvider>
@@ -125,12 +122,6 @@ const usePages = () => {
     path: "/WebRTC",
     title: "WebRTC Chat",
     component: WebRTC,
-    requiresAuthentication: true,
-  });
-  addPage({
-    path: "/matrix",
-    title: "Matrix Chat",
-    component: Matrix,
     requiresAuthentication: true,
   });
   addPage({

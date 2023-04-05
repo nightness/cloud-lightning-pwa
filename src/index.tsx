@@ -1,30 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import * as ReactDOMClient from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 //@ts-expect-error
-import MetaTags from 'react-meta-tags';
+import MetaTags from "react-meta-tags";
 
-import "normalize.css/normalize.css"
-import "@blueprintjs/icons/lib/css/blueprint-icons.css"
-import "@blueprintjs/core/lib/css/blueprint.css"
+import "normalize.css/normalize.css";
+import "@blueprintjs/icons/lib/css/blueprint-icons.css";
+import "@blueprintjs/core/lib/css/blueprint.css";
 
-const title = 'Cloud Lightning Messenger'
+const title = "Cloud Lightning Messenger";
 
-ReactDOM.render(
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("rootElement is null");
+const root = ReactDOMClient.createRoot(rootElement);
+
+root.render(
   <React.StrictMode>
     <MetaTags>
       <title>{title}</title>
       <meta name="color-scheme" content="light dark" />
       <meta name="supported-color-scheme" content="light dark" />
-      <meta name="description" content="Cloud Lightning is a social media platform" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <meta
+        name="description"
+        content="Cloud Lightning is a social media platform"
+      />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      />
     </MetaTags>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

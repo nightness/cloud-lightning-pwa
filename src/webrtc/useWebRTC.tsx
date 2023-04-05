@@ -31,11 +31,12 @@ interface Props {
 }
 
 const useWebRTC = (servers: RTCConfiguration) => {
-  const [callId, setCallId] = useState<string>("");
+  const callId = useRef<string>("");
   const peerConnection = useRef<RTCPeerConnection>(
     new RTCPeerConnection(servers)
   );
   const [stage, setStage] = useState<CallStage>(CallStage.New);
+
   const [localStream, setLocalStream] = useState<MediaStream>();
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
   const subscriptions = useRef<Subscriptions>({});
@@ -63,7 +64,7 @@ const useWebRTC = (servers: RTCConfiguration) => {
       pc = new RTCPeerConnection(servers);
       currentStream = localStream;
       rStream = new MediaStream();
-      setCallId("");
+      callId.current = "";
       peerConnection.current = pc;
       setRemoteStream(rStream);
     }
@@ -134,14 +135,14 @@ const useWebRTC = (servers: RTCConfiguration) => {
       }
     );
 
-    setCallId(docRef.id);
+    callId.current = docRef.id;
     setStage(CallStage.Offered);
     return docRef.id;
   }, [peerConnection]);
 
   const answer = useCallback(
-    async (callId: string) => {
-      const callDoc = doc(getFirestore(), "calls", callId);
+    async (cId: string) => {
+      const callDoc = doc(getFirestore(), "calls", cId);
       const answerCandidates = collection(callDoc, "answerCandidates");
       const offerCandidates = collection(callDoc, "offerCandidates");
 
@@ -156,7 +157,7 @@ const useWebRTC = (servers: RTCConfiguration) => {
                 peerConnection.current.addIceCandidate(
                   new RTCIceCandidate(data)
                 );
-                setCallId(callId);
+                callId.current = cId;
                 setStage(CallStage.Accepted);
               }
             });
@@ -215,7 +216,7 @@ const useWebRTC = (servers: RTCConfiguration) => {
     subscriptions.current?.callDoc();
     subscriptions.current = {};
 
-    const callDoc = doc(collection(getFirestore(), "calls"), callId);
+    const callDoc = doc(collection(getFirestore(), "calls"), callId.current);
 
     init();
 
@@ -224,7 +225,7 @@ const useWebRTC = (servers: RTCConfiguration) => {
     const result3 = await deleteDoc(callDoc);
 
     return [result1, result2, result3];
-  }, [init, callId, peerConnection, remoteStream]);
+  }, [init, peerConnection, remoteStream]);
 
   const actions = useMemo(
     () => ({
