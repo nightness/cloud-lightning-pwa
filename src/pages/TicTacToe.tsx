@@ -34,7 +34,7 @@ interface SegmentProps {
   board: Board;
 }
 
-export default () => {
+function TicTacToe() {
   const [isStarted, setIsStarted] = useState(false);
   const [gameOver, setGameOver] = useState(true);
   const [board, setBoard] = useState(createNewBoard());
@@ -78,8 +78,8 @@ export default () => {
     eval3(board[index][0], board[index][1], board[index][2]);
   const evalCol = (index: number) =>
     eval3(board[0][index], board[1][index], board[2][index]);
-  
-    const isFilled = () => {
+
+  const isFilled = () => {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (board[i][j] === "") return false;
@@ -87,19 +87,6 @@ export default () => {
     }
     return true;
   };
-
-  const delay = async () => {
-    const delay = Math.floor(Math.random() * 1500);
-    return new Promise((res) => setTimeout(res, delay));
-  };
-
-  // useEffect(() => {
-  //   if (turn === playerIs) return;
-  //   const timer = setTimeout(() => {
-  //     callback.current();
-  //   }, Math.floor(Math.random() * 1500));
-  //   return () => clearTimeout(timer);
-  // }, [turn]);
 
   const doComputersMove = () => {
     if (playerIs === turn) return;
@@ -370,7 +357,7 @@ export default () => {
         ? "Computer's Turn"
         : `Player's Turn (player is '${symbol}')`
     );
-  }
+  };
 
   const Segment = ({ index, results, board }: SegmentProps) => (
     <div style={{ flex: 1, flexDirection: "column" }}>
@@ -434,13 +421,14 @@ export default () => {
             //   newGame('X')
             // }}
             onClick={(event) => {
-              const symbol =
-                event.shiftKey || Math.random() > 0.5 ? "X" : "O";
-              newGame(symbol)
+              const symbol = event.shiftKey || Math.random() > 0.5 ? "X" : "O";
+              newGame(symbol);
             }}
           />
         )}
       </div>
     </Page>
   );
-};
+}
+
+export default TicTacToe;

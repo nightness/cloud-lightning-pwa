@@ -1,13 +1,9 @@
-import { Page, ScrollView, Text, FormField, Button } from "../components";
+import { Page, Text, FormField, Button } from "../components";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Dialog, Alert, Checkbox } from "@blueprintjs/core";
-import { useContext, useEffect, useState } from "react";
-import firebase, {
-  getCollection,
-  getDocumentRef,
-  useDocument,
-} from "../database/Firebase";
+import { Dialog, Alert } from "@blueprintjs/core";
+import { useContext, useState } from "react";
+import firebase from "../database/Firebase";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { NavigationContext } from "../navigation/NavigationContext";
 import {
@@ -65,7 +61,6 @@ interface Props {
 
 const ChangePassword = ({ isOpen, title, onClose }: Props) => {
   const [submitted, setSubmitted] = useState(false);
-  const [isSharePublic, setIsSharePublic] = useState();
 
   return (
     <Dialog isOpen={isOpen} title={title} onClose={onClose}>
@@ -187,7 +182,6 @@ export const Profile = () => {
             if (submitted || !currentUser) return;
             setSubmitted(true);
 
-            const usernameDoc = firebase;
             const collectionRef = collection(getFirestore(), "/usernames");
             const docRef = doc(collectionRef, values.displayName);
             getDoc(docRef)

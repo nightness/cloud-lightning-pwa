@@ -1,19 +1,13 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import {
-  Page,
-  TextInput,
-  Button,
-  ThemeContext,
-  Container,
-} from "../components";
+import React, { useState, useContext, useRef } from "react";
+import { TextInput, Button, Container } from "../components";
 import FirestoreCollectionView from "../database/FirestoreCollectionView";
-import firebase, {
-  DocumentData,
-  QuerySnapshot,
+import {
+  // DocumentData,
+  // QuerySnapshot,
   useCollection,
 } from "../database/Firebase";
 import Message from "./Message";
-import { EditableText } from "@blueprintjs/core";
+// import { EditableText } from "@blueprintjs/core";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
 
@@ -25,8 +19,8 @@ function WallMessenger() {
     true
   );
   const [messageText, setMessageText] = useState<string | null>(null);
-  const textInput = useRef<EditableText>();
-  const querySnapshot = snapshot as QuerySnapshot<DocumentData>;
+  // const textInput = useRef<EditableText>();
+  // const querySnapshot = snapshot as QuerySnapshot<DocumentData>;
 
   // useEffect(() => {
   //   textInput.current?.focus()

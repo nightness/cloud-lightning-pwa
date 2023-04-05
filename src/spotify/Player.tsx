@@ -1,6 +1,6 @@
 import { CSSProperties, useContext, useState } from "react";
-import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
-import SpotifyPlayer, { CallbackState } from "react-spotify-web-playback";
+import { SpotifyContext } from "./SpotifyContext";
+import SpotifyPlayer from "react-spotify-web-playback";
 
 export default function Player() {
   const spotify = useContext(SpotifyContext);
@@ -11,21 +11,21 @@ export default function Player() {
         maxHeight: "0px",
         overflow: "hidden",
         width: "90vw",
-        maxWidth: "70%"
+        maxWidth: "70%",
       }
     : {
         width: "90vw",
-        maxWidth: "70%"
+        maxWidth: "70%",
       };
 
   return (
     <div className="spotify-player">
       <div style={style}>
-        <SpotifyPlayer 
+        <SpotifyPlayer
           autoPlay
-          magnifySliderOnHover          
+          magnifySliderOnHover
           token={spotify.api.getAccessToken() ?? ""}
-          showSaveIcon={false}       
+          showSaveIcon={false}
           callback={spotify.callback ?? undefined}
           play={spotify.isPlaying}
           uris={spotify.trackUris}
@@ -38,7 +38,7 @@ export default function Player() {
           setIsHidden(!isHidden);
         }}
       >
-        <h3 className='spotify-player-button'>
+        <h3 className="spotify-player-button">
           {isHidden ? "Show Player" : "Hide Player"}
         </h3>
       </div>
