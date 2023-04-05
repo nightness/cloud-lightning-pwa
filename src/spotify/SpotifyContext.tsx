@@ -61,6 +61,8 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
+const spotifyApi = new SpotifyApi({ redirectUri, clientId });
+
 export const SpotifyProvider = ({ children }: Props) => {
   const url =
     `https://accounts.spotify.com/authorize?` +
@@ -68,9 +70,6 @@ export const SpotifyProvider = ({ children }: Props) => {
     `response_type=token&` +
     `redirect_uri=${redirectUri}&` +
     `scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state&`;
-  const [spotifyApi, setSpotifyApi] = useState(
-    new SpotifyApi({ redirectUri, clientId })
-  );
   const { currentUser } = useContext(FirebaseContext);
   const [accessToken, setAccessToken] = useState<string | null>();
   const [play, setPlay] = useState(false);

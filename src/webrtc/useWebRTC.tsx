@@ -26,10 +26,6 @@ interface Subscriptions {
   offerCandidates?: any;
 }
 
-interface Props {
-  children: JSX.Element | JSX.Element[];
-}
-
 const useWebRTC = (servers: RTCConfiguration) => {
   const callId = useRef<string>("");
   const peerConnection = useRef<RTCPeerConnection>(

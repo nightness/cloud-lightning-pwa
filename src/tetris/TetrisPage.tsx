@@ -1,5 +1,5 @@
 import { Page } from "../components";
-import { TetrisBoard, TestPanel } from ".";
+import { TetrisBoard } from ".";
 import { useState } from "react";
 
 export default function Tetris() {
@@ -8,7 +8,7 @@ export default function Tetris() {
 
   return (
     <Page>
-      <TetrisBoard      
+      <TetrisBoard
         devMode
         increaseSpeedBy={20}
         onStartedChanged={setIsStarted}

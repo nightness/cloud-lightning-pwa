@@ -23,7 +23,11 @@ export default function TrackResult({ track }: Props) {
       }}
       key={`${Math.random()}`}
     >
-      <img src={track.album.images[0].url} style={{ width: 64, height: 64 }} />
+      <img
+        alt="some text"
+        src={track.album.images[0].url}
+        style={{ width: 64, height: 64 }}
+      />
       <div
         className="flex-column-center"
         style={{ justifyContent: "center", alignContent: "center" }}
