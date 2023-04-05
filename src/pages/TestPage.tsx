@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Button, ConsoleContainer, Page } from "../components";
 
-export default () => {
+function TestPage() {
   const [messages, setMessages] = useState<string[]>([]);
 
   const push = (value: string | string[]) => {
@@ -21,4 +21,6 @@ export default () => {
       <ConsoleContainer messages={messages} />
     </Page>
   );
-};
+}
+
+export default TestPage;

@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Dialog, Alert } from "@blueprintjs/core";
 import { useContext, useState } from "react";
-import firebase from "../database/Firebase";
 import { FirebaseContext } from "../database/FirebaseContext";
 import { NavigationContext } from "../navigation/NavigationContext";
 import {
@@ -25,6 +24,7 @@ function equalTo(ref: any, msg: any) {
   return Yup.mixed().test({
     name: "equalTo",
     exclusive: false,
+    // eslint-disable-next-line no-template-curly-in-string
     message: msg || "${path} must be the same as ${reference}",
     params: {
       reference: ref.path,
@@ -60,7 +60,7 @@ interface Props {
 }
 
 const ChangePassword = ({ isOpen, title, onClose }: Props) => {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
 
   return (
     <Dialog isOpen={isOpen} title={title} onClose={onClose}>
