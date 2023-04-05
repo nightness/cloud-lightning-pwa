@@ -20,7 +20,7 @@ export const Text = ({
   className,
 }: Props) => {
   if (fontSize) {
-    return <div style={{ fontSize }}>{children}</div>
+    return <div style={{ fontSize }}>{children}</div>;
   }
   switch (size) {
     case 1:

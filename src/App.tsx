@@ -1,6 +1,6 @@
 import "./App.css";
 import { useContext } from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Home, WebRTC, Profile, Authentication } from "./pages";
 import { FirebaseProvider } from "./database/FirebaseContext";
 import {
@@ -28,9 +28,9 @@ function App() {
   );
 }
 
-const DisplayErrorText: React.FC = (props) => {
-  return <DisplayError permissionDenied />;
-};
+// const DisplayErrorText: React.FC = (props) => {
+//   return <DisplayError permissionDenied />;
+// };
 
 const MainDocument = () => {
   const { pages } = usePages();

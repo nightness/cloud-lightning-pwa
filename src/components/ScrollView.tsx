@@ -8,8 +8,8 @@ interface Props
 
 export const ScrollView = ({ children, ...restProps }: Props) => {
   return (
-    <div className='scrollView-outer'>
-      <div className='scrollView-inner' {...restProps}>
+    <div className="scrollView-outer">
+      <div className="scrollView-inner" {...restProps}>
         {children}
       </div>
     </div>

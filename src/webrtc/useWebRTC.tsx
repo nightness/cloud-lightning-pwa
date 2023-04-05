@@ -31,20 +31,22 @@ const useWebRTC = (servers: RTCConfiguration) => {
   const peerConnection = useRef<RTCPeerConnection>(
     new RTCPeerConnection(servers)
   );
-  const [stage, setStage] = useState<CallStage>(CallStage.New);
+  const subscriptions = useRef<Subscriptions>({});
 
+  const [stage, setStage] = useState<CallStage>(CallStage.New);
   const [localStream, setLocalStream] = useState<MediaStream>();
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
-  const subscriptions = useRef<Subscriptions>({});
 
   // Clean-up subscriptions and firebase docs
   useEffect(() => () => {
-    //alert('webRTC clean-up')
+    console.log("DEBUG: useWebRTC: unmounting");
+    // subscriptions.current.callDoc?.();
+    // subscriptions.current.answerCandidates?.();
+    // subscriptions.current.offerCandidates?.();
+    // if (callId.current) {
+    //   deleteDoc(doc(getFirestore(), "calls", callId.current));
+    // }
   });
-
-  useEffect(() => {
-    console.log("DEBUG: stage changed:", stage);
-  }, [stage]);
 
   const init = useCallback(async () => {
     let currentStream: MediaStream;
@@ -75,6 +77,7 @@ const useWebRTC = (servers: RTCConfiguration) => {
     // Pull tracks from remote stream, add to video stream
     pc.ontrack = (event) => {
       event.streams?.[0].getTracks().forEach((track) => {
+        // console.log("DEBUG: track:", track);
         rStream.addTrack(track);
       });
     };
@@ -94,19 +97,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
     peerConnection.current.onicecandidate = (event) => {
       event.candidate && addDoc(offerCandidatesRef, event.candidate.toJSON());
     };
-
-    // Create offer
-    const offerDescription = await peerConnection.current.createOffer();
-    await peerConnection.current.setLocalDescription(offerDescription);
-
-    const offer = {
-      sdp: offerDescription.sdp,
-      type: offerDescription.type,
-    };
-
-    const creator = getCurrentUser()?.uid;
-    console.log("DEBUG: ", { offer, creator, target: creator });
-    await setDoc(docRef, { offer, creator, target: creator });
 
     // Listen for remote answer
     subscriptions.current.callDoc = onSnapshot(docRef, (doc) => {
@@ -131,6 +121,19 @@ const useWebRTC = (servers: RTCConfiguration) => {
       }
     );
 
+    // Create offer
+    const offerDescription = await peerConnection.current.createOffer();
+    await peerConnection.current.setLocalDescription(offerDescription);
+
+    const offer = {
+      sdp: offerDescription.sdp,
+      type: offerDescription.type,
+    };
+
+    const creator = getCurrentUser()?.uid;
+    console.log("DEBUG: ", { offer, creator, target: creator });
+    await setDoc(docRef, { offer, creator, target: creator });
+
     callId.current = docRef.id;
     setStage(CallStage.Offered);
     return docRef.id;
@@ -142,26 +145,23 @@ const useWebRTC = (servers: RTCConfiguration) => {
       const answerCandidates = collection(callDoc, "answerCandidates");
       const offerCandidates = collection(callDoc, "offerCandidates");
 
-      try {
-        subscriptions.current.offerCandidates = onSnapshot(
-          offerCandidates,
-          (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-              console.log(change);
-              if (change.type === "added") {
-                let data = change.doc.data();
-                peerConnection.current.addIceCandidate(
-                  new RTCIceCandidate(data)
-                );
-                callId.current = cId;
-                setStage(CallStage.Accepted);
-              }
-            });
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      subscriptions.current.offerCandidates = onSnapshot(
+        offerCandidates,
+        (snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            console.log(change);
+            if (change.type === "added") {
+              let data = change.doc.data();
+              peerConnection.current.addIceCandidate(new RTCIceCandidate(data));
+
+              // TODO: Is this needed?
+              callId.current = cId;
+
+              setStage(CallStage.Accepted);
+            }
+          });
+        }
+      );
 
       peerConnection.current.onicecandidate = (event) => {
         event.candidate && addDoc(answerCandidates, event.candidate.toJSON());

@@ -7,7 +7,7 @@ interface Props
   > {
   style?: CSSProperties;
   secureTextEntry?: boolean;
-  onChangeValue?: (value: string) => any
+  onChangeValue?: (value: string) => any;
   ref?: React.LegacyRef<HTMLInputElement>;
 }
 
@@ -26,7 +26,7 @@ export const TextInput = ({
       onChange={(event) => {
         if (onChange) onChange(event);
         if (!onChangeValue) return;
-        onChangeValue(event.currentTarget.value)
+        onChangeValue(event.currentTarget.value);
       }}
       className={`${className} text-input`}
       style={style}

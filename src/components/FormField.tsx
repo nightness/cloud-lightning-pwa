@@ -23,26 +23,26 @@ export default ({
 }: Props) => {
   return (
     <div className="form-field-container">
-      <div style={{ display: 'flex', flex: 1, flexDirection: 'row'}}>
-      { label ? <Text style={{ minWidth: 200 }}>{label}</Text> : undefined }
-      <TextInput
-        type={secureTextEntry ? "password" : "text"}
-        placeholder={label as string}
-        // returnKeyType={returnKeyType}
-        onChange={formikProps.handleChange(fieldName)}
-        // onKeyPress={(event) => {
-        //     if (event.nativeEvent.key === 'Enter') {
-        //         if (returnKeyType === 'done')
-        //             formikProps.handleSubmit()
-        //         formikProps.preventDefault = true
-        //         formikProps.stopPropagation = true
-        //     }
-        // }}
-        // secureTextEntry={secureTextEntry}
-        value={formikProps.values[fieldName]}
-        //onBlur={formikProps.handleBlur(fieldName)}
-        {...restProps}
-      />
+      <div style={{ display: "flex", flex: 1, flexDirection: "row" }}>
+        {label ? <Text style={{ minWidth: 200 }}>{label}</Text> : undefined}
+        <TextInput
+          type={secureTextEntry ? "password" : "text"}
+          placeholder={label as string}
+          // returnKeyType={returnKeyType}
+          onChange={formikProps.handleChange(fieldName)}
+          // onKeyPress={(event) => {
+          //     if (event.nativeEvent.key === 'Enter') {
+          //         if (returnKeyType === 'done')
+          //             formikProps.handleSubmit()
+          //         formikProps.preventDefault = true
+          //         formikProps.stopPropagation = true
+          //     }
+          // }}
+          // secureTextEntry={secureTextEntry}
+          value={formikProps.values[fieldName]}
+          //onBlur={formikProps.handleBlur(fieldName)}
+          {...restProps}
+        />
       </div>
       {!disabled ? (
         <Text>

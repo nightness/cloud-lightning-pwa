@@ -2,7 +2,7 @@
 
 # Cloud Lightning PWA
 
-This project is an attempt to build a social media platform with only Firestore rules, so that it's Firebase free tier accessible. Explore Firebase without giving Google your credit card number. 
+This project is an attempt to build a social media platform with only Firestore rules, so that it's Firebase free tier accessible. Explore Firebase without giving Google your credit card number.
 
 You can visit the live site @ [Cloud Lightning PWA](https://cloud-lightning-lite.web.app/)
 

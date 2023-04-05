@@ -28,8 +28,14 @@ export function WebRTC() {
       if (localStream !== undefined)
         webcamVideo.current.srcObject = localStream;
     }
-    if (remoteVideo.current && remoteStream !== undefined)
+    if (remoteVideo.current && remoteStream !== undefined) {
       remoteVideo.current.srcObject = remoteStream;
+    }
+    console.log(
+      "DEBUG: localStream changed:",
+      localStream?.id,
+      remoteStream?.id
+    );
   }, [callStage, webcamVideo, localStream, remoteStream, remoteVideo]);
 
   const callButtonClick = (

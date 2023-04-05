@@ -126,7 +126,6 @@ div::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
 }
 
-
 h1,
 h2,
 h3,
@@ -169,7 +168,7 @@ h5 {
   right: 0;
   bottom: 0;
   cursor: pointer;
-  user-select: none,
+  user-select: none;
 }
 
 /* .spotify-player-button:hover {
