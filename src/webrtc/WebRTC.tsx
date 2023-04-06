@@ -115,6 +115,7 @@ export function WebRTC() {
               <Button text="Answer" onClick={answerButtonClick} />
             </span>
           </div>
+          <div>Calls must be answered in a different window</div>
         </div>
       );
       break;
