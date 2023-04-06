@@ -37,15 +37,8 @@ const useWebRTC = (servers: RTCConfiguration) => {
   const [localStream, setLocalStream] = useState<MediaStream>();
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
 
-  // Clean-up subscriptions and firebase docs
   useEffect(() => () => {
     console.log("DEBUG: useWebRTC: unmounting");
-    // subscriptions.current.callDoc?.();
-    // subscriptions.current.answerCandidates?.();
-    // subscriptions.current.offerCandidates?.();
-    // if (callId.current) {
-    //   deleteDoc(doc(getFirestore(), "calls", callId.current));
-    // }
   });
 
   const init = useCallback(async () => {
@@ -237,9 +230,9 @@ const useWebRTC = (servers: RTCConfiguration) => {
     try {
       const callDoc = doc(collection(getFirestore(), "calls"), callId.current);
 
-      deleteCollection(callDoc, "answerCandidates");
-      deleteCollection(callDoc, "offerCandidates");
-      deleteDoc(callDoc);
+      // await deleteCollection(callDoc, "answerCandidates");
+      // await deleteCollection(callDoc, "offerCandidates");
+      await deleteDoc(callDoc);
     } catch (e) {
       console.log("ERROR5: ", e);
     }
