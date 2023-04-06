@@ -1,5 +1,4 @@
-import React, { CSSProperties, forwardRef, useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
+import { CSSProperties, forwardRef } from "react";
 
 interface Props {
   style?: CSSProperties;

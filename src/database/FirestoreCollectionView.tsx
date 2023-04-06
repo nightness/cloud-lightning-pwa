@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useCollection, DocumentData, QuerySnapshot } from "./Firebase";
 import { ActivityIndicator, DisplayError, ThemeContext } from "../components";
 import { FirebaseError } from "./Firebase";
-import Message from "../messenger/Message";
+import Message from "../pages/messenger/Message";
 
 // String Hash function
 // https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript

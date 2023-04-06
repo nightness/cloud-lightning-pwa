@@ -1,7 +1,7 @@
 import { PureComponent } from "react";
-import { Text } from "../components";
+import { Text } from "../../components";
 import { Icon } from "@blueprintjs/core";
-import { Timestamp } from "../database/Firebase";
+import { Timestamp } from "../../database/Firebase";
 
 interface MessageProps {
   authorName: string;

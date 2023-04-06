@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Alert } from "@blueprintjs/core";
 import useWebRTC from "./useWebRTC";
 import "./WebRTC.css";
-import { Button, Container, Page, TextInput } from "../components";
+import { Button, Container, Page, TextInput } from "../../components";
 
 const servers = {
   iceServers: [

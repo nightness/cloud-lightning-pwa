@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, DisplayError, Page, TextInput } from "../components";
-import { FirebaseContext } from "../database/FirebaseContext";
-import { useDocument } from "../database/Firebase";
+import { Button, DisplayError, Page, TextInput } from "../../components";
+import { FirebaseContext } from "../../database/FirebaseContext";
+import { useDocument } from "../../database/Firebase";
 import { SpotifyContext, SpotifyFirebaseData } from "./SpotifyContext";
 import TrackResult from "./TrackResult";
 import { setDoc } from "firebase/firestore";

@@ -7,8 +7,8 @@ import React, {
   useCallback,
   useContext,
 } from "react";
-import { clientId } from "../private";
-import { FirebaseContext } from "../database/FirebaseContext";
+import { clientId } from "../../private";
+import { FirebaseContext } from "../../database/FirebaseContext";
 
 export const redirectUri =
   window.location.host === "localhost:3000"

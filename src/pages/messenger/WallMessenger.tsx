@@ -1,14 +1,14 @@
 import React, { useState, useContext, useRef } from "react";
-import { TextInput, Button, Container } from "../components";
-import FirestoreCollectionView from "../database/FirestoreCollectionView";
+import { TextInput, Button, Container } from "../../components";
+import FirestoreCollectionView from "../../database/FirestoreCollectionView";
 import {
   // DocumentData,
   // QuerySnapshot,
   useCollection,
-} from "../database/Firebase";
+} from "../../database/Firebase";
 import Message from "./Message";
 // import { EditableText } from "@blueprintjs/core";
-import { FirebaseContext } from "../database/FirebaseContext";
+import { FirebaseContext } from "../../database/FirebaseContext";
 import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
 
 function WallMessenger() {

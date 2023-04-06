@@ -9,16 +9,19 @@ import {
   NavigationProvider,
   Pages,
 } from "./navigation";
-import { WallMessenger } from "./messenger";
+import { WallMessenger } from "./pages/messenger";
 import { Games } from "./pages";
-import TicTacToe from "./pages/TicTacToe";
+import TicTacToe from "./pages/tictactoe/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
-import TetrisPage from "./tetris/TetrisPage";
-import Spotify from "./spotify/Spotify";
-import { SpotifyContext, SpotifyProvider } from "./spotify/SpotifyContext";
-import SpotifyPlayer from "./spotify/Player";
-import ConnectFourBoard from "./connect4/ConnectFourBoard";
+import TetrisPage from "./pages/tetris/TetrisPage";
+import Spotify from "./pages/spotify/Spotify";
+import {
+  SpotifyContext,
+  SpotifyProvider,
+} from "./pages/spotify/SpotifyContext";
+import SpotifyPlayer from "./pages/spotify/Player";
+import ConnectFourBoard from "./pages/connect4/ConnectFourBoard";
 
 function App() {
   return (
