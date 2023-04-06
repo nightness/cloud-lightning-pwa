@@ -192,36 +192,60 @@ const useWebRTC = (servers: RTCConfiguration) => {
   );
 
   const hangup = useCallback(async () => {
-    const tracks = remoteStream.getTracks();
-    tracks.forEach((track) => {
-      track.stop();
-    });
+    try {
+      if (remoteStream.active) {
+        const tracks = remoteStream.getTracks();
+        tracks.forEach((track) => {
+          track.stop();
+        });
+      }
+    } catch (e) {
+      console.log("ERROR1: ", e);
+    }
 
-    // This stops my stream to the senders, but doesn't not stop me from seeing them
-    const senders = peerConnection.current.getSenders();
-    senders.forEach((sender) => {
-      peerConnection.current.removeTrack(sender);
-    });
+    try {
+      if (localStream?.active) {
+        // This stops my stream to the senders, but doesn't not stop me from seeing them
+        const senders = peerConnection.current.getSenders();
+        senders.forEach((sender) => {
+          peerConnection.current.removeTrack(sender);
+        });
+      }
+    } catch (e) {
+      console.log("ERROR2: ", e);
+    }
 
-    // Close the entire connection
-    peerConnection.current.close();
+    try {
+      if (peerConnection.current.signalingState !== "closed") {
+        // Close the entire connection
+        peerConnection.current.close();
+      }
+    } catch (e) {
+      console.log("ERROR3: ", e);
+    }
 
-    // Unsubscribe to snapshot changes
-    subscriptions.current?.answerCandidates();
-    subscriptions.current?.offerCandidates();
-    subscriptions.current?.callDoc();
-    subscriptions.current = {};
+    try {
+      // Unsubscribe to snapshot changes
+      subscriptions.current?.answerCandidates?.();
+      subscriptions.current?.offerCandidates?.();
+      subscriptions.current?.callDoc?.();
+      subscriptions.current = {};
+    } catch (e) {
+      console.log("ERROR4: ", e);
+    }
 
-    const callDoc = doc(collection(getFirestore(), "calls"), callId.current);
+    try {
+      const callDoc = doc(collection(getFirestore(), "calls"), callId.current);
+
+      deleteCollection(callDoc, "answerCandidates");
+      deleteCollection(callDoc, "offerCandidates");
+      deleteDoc(callDoc);
+    } catch (e) {
+      console.log("ERROR5: ", e);
+    }
 
     init();
-
-    const result1 = await deleteCollection(callDoc, "answerCandidates");
-    const result2 = await deleteCollection(callDoc, "offerCandidates");
-    const result3 = await deleteDoc(callDoc);
-
-    return [result1, result2, result3];
-  }, [init, peerConnection, remoteStream]);
+  }, [init, peerConnection, localStream, remoteStream]);
 
   const actions = useMemo(
     () => ({

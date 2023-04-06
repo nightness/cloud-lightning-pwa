@@ -22,11 +22,8 @@ export function WebRTC() {
   const remoteVideo = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (webcamVideo.current) {
-      // FIXME: This should be optional
-      webcamVideo.current.muted = true;
-      if (localStream !== undefined)
-        webcamVideo.current.srcObject = localStream;
+    if (webcamVideo.current && localStream !== undefined) {
+      webcamVideo.current.srcObject = localStream;
     }
     if (remoteVideo.current && remoteStream !== undefined) {
       remoteVideo.current.srcObject = remoteStream;
@@ -66,7 +63,7 @@ export function WebRTC() {
   ) => {
     actions
       .hangup()
-      .then((result) => setCallId(""))
+      .then(() => setCallId(""))
       .catch(console.error);
   };
 
@@ -154,6 +151,7 @@ export function WebRTC() {
                 id="webcamVideo"
                 autoPlay
                 playsInline
+                muted
               ></video>
             </span>
             {callStage >= 1 ? (
