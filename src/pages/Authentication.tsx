@@ -221,6 +221,7 @@ export const Authentication = () => {
           <Text size={2}>{`Logged is as ${getCurrentUsername()}`}</Text>
           <div style={{ marginTop: "10px" }}>
             <Button
+              style={{ marginRight: "10px" }}
               text="Toggle Dark Mode"
               onClick={() => {
                 if (!setActiveTheme) return;
