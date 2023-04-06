@@ -60,8 +60,6 @@ function WallMessenger() {
           autoScrollToEnd={true}
           orderBy="sentAt"
           limitLength={25}
-          // @ts-ignore
-          renderItem={({ item }) => <Message item={item} />}
         />
       </div>
       <div className="messenger-input-container">
