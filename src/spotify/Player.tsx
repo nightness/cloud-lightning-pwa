@@ -29,7 +29,7 @@ export default function Player() {
           callback={spotify.callback ?? undefined}
           play={spotify.isPlaying}
           uris={spotify.trackUris}
-          styles={{ height: "2.25rem" }}
+          styles={{ height: 50 }}
         />
       </div>
       <div

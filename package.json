@@ -38,7 +38,7 @@
     "react-meta-tags": "^1.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.1",
-    "react-spotify-web-playback": "^0.8.2",
+    "react-spotify-web-playback": "^0.13.4",
     "spotify-web-api-node": "^5.0.2",
     "util": "^0.12.5",
     "web-vitals": "^0.2.4",

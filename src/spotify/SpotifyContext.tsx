@@ -1,5 +1,5 @@
 import SpotifyApi from "spotify-web-api-node";
-import { CallbackState } from "react-spotify-web-playback/lib";
+import { CallbackState } from "react-spotify-web-playback";
 import React, {
   useEffect,
   useState,
