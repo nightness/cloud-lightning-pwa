@@ -70,7 +70,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
       isOpen={isOpen}
       onClose={onClose}
       title="Cloud Lightning"
-      size={height > width ? "75%" : "35%"}
+      size={height > width * 1.25 ? "75%" : "24vw"}
       canOutsideClickClose
       canEscapeKeyClose
       usePortal={true}
