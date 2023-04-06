@@ -11,17 +11,17 @@ import {
 } from "./navigation";
 import { WallMessenger } from "./pages/messenger";
 import { Games } from "./pages";
-import TicTacToe from "./pages/tictactoe/TicTacToe";
+import TicTacToe from "./pages/games/tictactoe/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
 import { BreakpointProvider } from "@w11r/use-breakpoint";
-import TetrisPage from "./pages/tetris/TetrisPage";
+import TetrisPage from "./pages/games/tetris/TetrisPage";
 import Spotify from "./pages/spotify/Spotify";
 import {
   SpotifyContext,
   SpotifyProvider,
 } from "./pages/spotify/SpotifyContext";
 import SpotifyPlayer from "./pages/spotify/Player";
-import ConnectFourBoard from "./pages/connect4/ConnectFourBoard";
+import ConnectFourBoard from "./pages/games/connect4/ConnectFourBoard";
 
 function App() {
   return (

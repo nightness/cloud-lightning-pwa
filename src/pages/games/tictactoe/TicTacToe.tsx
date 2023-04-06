@@ -1,6 +1,6 @@
 import "./TicTacToe.css";
 import { useEffect, useState } from "react";
-import { Button, Page, Text } from "../../components";
+import { Button, Page, Text } from "../../../components";
 
 type TicTacToeSymbol = "X" | "O";
 

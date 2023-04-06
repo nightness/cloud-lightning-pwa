@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockType, OrientationValue, Plane, Size } from ".";
-import useInterval from "../../hooks/useInterval";
+import useInterval from "../../../hooks/useInterval";
 import {
   createBlockPattern,
   randomBlock,
