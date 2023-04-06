@@ -208,6 +208,7 @@ h5 {
   overflow-y: scroll;
   width: 100%;
   margin-bottom: 10px;
+  padding-bottom: 10px;
   /* padding-bottom: 10px; */
 }
 
