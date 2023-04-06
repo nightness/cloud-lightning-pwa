@@ -1,8 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useCollection, DocumentData, QuerySnapshot } from "./Firebase";
 import { ActivityIndicator, DisplayError, ThemeContext } from "../components";
 import { FirebaseError } from "./Firebase";
 import Message from "../messenger/Message";
+
+// String Hash function
+// https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+function hashCode(obj: any) {
+  const str = typeof obj === "string" ? obj : JSON.stringify(obj);
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
 
 interface Props<T> {
   collectionPath: string;
@@ -26,6 +37,7 @@ export default function _<T>({
   const [loadingData, setDataLoading] = useState(true);
   const [errorData, setDataError] = useState(false);
   const { activeTheme } = useContext(ThemeContext);
+  const divRef = useRef<HTMLDivElement>(null);
 
   const fetchData = () => {
     const newMessages: any[] = [];
@@ -40,6 +52,16 @@ export default function _<T>({
     setDataLoading(false);
     setMessages(newMessages);
   };
+
+  useEffect(() => {
+    if (autoScrollToEnd && divRef.current) {
+      // divRef.current.scrollTop = divRef.current.scrollHeight;
+      divRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [messages, autoScrollToEnd]);
 
   useEffect(() => {
     if (!loadingCollection && !errorCollection && snapshot) fetchData();
@@ -66,11 +88,12 @@ export default function _<T>({
       />
     );
   }
+
   return (
-    <>
+    <div ref={divRef}>
       {messages.map((message, ind) => (
-        <Message item={message} key={`${Math.random()}`} />
+        <Message item={message} key={`${hashCode(message)}`} />
       ))}
-    </>
+    </div>
   );
 }
