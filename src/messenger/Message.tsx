@@ -37,6 +37,8 @@ export default class Message extends PureComponent<Props> {
     const sentAt = new Date();
     sentAt.setTime(this.props.item.sentAt);
 
+    console.log("Message: ", this.props.item);
+
     return (
       <div className="flex-row" style={{ marginBottom: "5px" }}>
         {this.props.item.photoURL ? (

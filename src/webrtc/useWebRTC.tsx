@@ -70,7 +70,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
     // Pull tracks from remote stream, add to video stream
     pc.ontrack = (event) => {
       event.streams?.[0].getTracks().forEach((track) => {
-        // console.log("DEBUG: track:", track);
         rStream.addTrack(track);
       });
     };
@@ -124,7 +123,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
     };
 
     const creator = getCurrentUser()?.uid;
-    console.log("DEBUG: ", { offer, creator, target: creator });
     await setDoc(docRef, { offer, creator, target: creator });
 
     callId.current = docRef.id;
@@ -142,7 +140,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
         offerCandidates,
         (snapshot) => {
           snapshot.docChanges().forEach((change) => {
-            console.log(change);
             if (change.type === "added") {
               let data = change.doc.data();
               peerConnection.current.addIceCandidate(new RTCIceCandidate(data));
@@ -163,8 +160,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
       const docSnapshot = await getDoc(callDoc);
       const callData = docSnapshot.data() as any;
 
-      console.log("callData", callData);
-
       const offerDescription = callData.offer;
       await peerConnection.current.setRemoteDescription(
         new RTCSessionDescription(offerDescription)
@@ -178,7 +173,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
         sdp: answerDescription.sdp,
       };
 
-      console.log("answer", answer);
       await updateDoc(callDoc, { answer });
     },
     [peerConnection]
