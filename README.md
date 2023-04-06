@@ -21,6 +21,10 @@ yarn
 4. From the CLI, in the project folder, type `firebase init` to change to your project, or update .firebaserc with your project's name.
 5. Replace my firebaseConfig in `src/database/Firebase.ts` with yours.
 6. Build and deploy: `yarn build && firebase deploy`
+7. Create a `src/private.ts` file with the following contents:
+   ```
+   export const clientId = "xyzSomeRandomString"; // This is the clientId for your app from spotify
+   ```
 
 ## Start Locally
 
