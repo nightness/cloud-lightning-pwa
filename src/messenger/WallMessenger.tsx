@@ -64,23 +64,9 @@ function WallMessenger() {
           renderItem={({ item }) => <Message item={item} />}
         />
       </div>
-      <div
-        style={{
-          display: "relative",
-          justifyContent: "center",
-          alignContent: "center",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          paddingTop: "10px",
-          paddingLeft: "5px",
-          marginLeft: "5px",
-          paddingRight: "5px",
-          marginRight: "5px",
-        }}
-      >
+      <div className="messenger-input-container">
         <TextInput
-          style={{ width: "70vw" }}
+          style={{ marginRight: "20px", borderRadius: "10px" }}
           value={messageText ?? ""}
           onChangeValue={(value) => setMessageText(value)}
           onKeyDown={(event) => {
