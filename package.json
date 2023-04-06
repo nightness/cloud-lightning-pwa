@@ -1,6 +1,6 @@
 {
   "name": "cloud-lightning-pwa",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -37,7 +37,6 @@
     "react-keyboard-event-handler": "^1.5.4",
     "react-meta-tags": "^1.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "5.0.1",
     "react-spotify-web-playback": "^0.13.4",
     "spotify-web-api-node": "^5.0.2",
     "util": "^0.12.5",
@@ -57,11 +56,11 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npx react-scripts start",
+    "build": "npx react-scripts build",
     "deploy": "firebase deploy",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "npx react-scripts test",
+    "eject": "npx react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

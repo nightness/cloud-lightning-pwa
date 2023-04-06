@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { getCurrentUser, deleteCollection } from "../database/Firebase";
+import { getCurrentUser } from "../database/Firebase";
 import {
   addDoc,
   collection,
