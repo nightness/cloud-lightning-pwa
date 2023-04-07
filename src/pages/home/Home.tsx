@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { FirebaseContext } from "../../database/FirebaseContext";
 
-export function Home() {
+function _() {
   const { currentUser } = useContext(FirebaseContext);
 
   return (
@@ -54,4 +54,4 @@ export function Home() {
   );
 }
 
-export default Home;
+export default _;
