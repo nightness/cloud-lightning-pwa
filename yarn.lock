@@ -883,11 +883,6 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@w11r/use-breakpoint@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@w11r/use-breakpoint/-/use-breakpoint-2.0.0.tgz#0d70d64fd9e54093cdc861212e0989a55521759e"
-  integrity sha512-MsxxNWN7cFfFW7N4EslXI2gvO9jDCnjxKz1Ducw30qfnP1xsioeQLSmGcmy6a9QtaPZawhiwjxCw/mKbLVeLbA==
-
 ansi-regex@^5.0.0, ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"

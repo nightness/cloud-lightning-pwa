@@ -13,7 +13,6 @@ import { WallMessenger } from "./pages/messenger";
 import { Games } from "./pages";
 import TicTacToe from "./pages/games/tictactoe/TicTacToe";
 import { DisplayError, ThemeProvider } from "./components";
-import { BreakpointProvider } from "@w11r/use-breakpoint";
 import TetrisPage from "./pages/games/tetris/TetrisPage";
 import Spotify from "./pages/spotify/Spotify";
 import {
@@ -52,17 +51,15 @@ const MainDocument = () => {
 
 function ProviderNest({ children }: { children: JSX.Element }) {
   return (
-    <BreakpointProvider>
-      <ThemeProvider>
-        <Router>
-          <FirebaseProvider>
-            <SpotifyProvider>
-              <NavigationProvider>{children}</NavigationProvider>
-            </SpotifyProvider>
-          </FirebaseProvider>
-        </Router>
-      </ThemeProvider>
-    </BreakpointProvider>
+    <ThemeProvider>
+      <Router>
+        <FirebaseProvider>
+          <SpotifyProvider>
+            <NavigationProvider>{children}</NavigationProvider>
+          </SpotifyProvider>
+        </FirebaseProvider>
+      </Router>
+    </ThemeProvider>
   );
 }
 
