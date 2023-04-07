@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { useWindowDimensions } from "../hooks";
-import useBreakpoint from "@w11r/use-breakpoint";
 
 export const getCssVar = (name: string) => {
   return window
