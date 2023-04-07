@@ -10,7 +10,7 @@ export function _() {
       <NavLink to="/games/Tetris">
         <Text size={1}>Tetris</Text>
       </NavLink>
-      <NavLink to="/games/ConnectFour">
+      <NavLink to="/games/connect4">
         <Text size={1}>Connect Four</Text>
       </NavLink>
     </Page>
