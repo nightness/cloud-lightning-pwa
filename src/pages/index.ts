@@ -1,4 +1,4 @@
-import Home from "./Home";
+import Home from "./home/Home";
 import Profile from "./Profile";
 import WebRTC from "./webrtc/WebRTC";
 import Authentication from "./Authentication";

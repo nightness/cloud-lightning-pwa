@@ -1,7 +1,7 @@
-import { Page, Text } from "../components";
+import { Page, Text } from "../../components";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
-import { FirebaseContext } from "../database/FirebaseContext";
+import { FirebaseContext } from "../../database/FirebaseContext";
 
 export function Home() {
   const { currentUser } = useContext(FirebaseContext);
