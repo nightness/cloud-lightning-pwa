@@ -8,10 +8,7 @@ export default function Player() {
 
   const style: CSSProperties = isHidden
     ? {
-        maxHeight: "0px",
-        overflow: "hidden",
-        width: "90vw",
-        maxWidth: "70%",
+        display: "none",
       }
     : {
         width: "90vw",
