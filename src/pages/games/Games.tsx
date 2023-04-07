@@ -8,9 +8,11 @@ export function Home() {
         <NavLink to="/games/TicTacToe">
           <Text size={1}>TicTacToe</Text>
         </NavLink>
-        <br />
         <NavLink to="/games/Tetris">
           <Text size={1}>Tetris</Text>
+        </NavLink>
+        <NavLink to="/games/ConnectFour">
+          <Text size={1}>Connect Four</Text>
         </NavLink>
       </div>
     </Page>
