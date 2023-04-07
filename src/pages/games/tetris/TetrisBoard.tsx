@@ -291,15 +291,15 @@ export default function TetrisBoard({
         onKeyEvent={handleChangeBlockType}
       />
       <div className="game-board-inner">
-        {board?.map((value) => (
+        {board?.map((value, bidx) => (
           <div
             style={{ display: "flex", flexDirection: "row" }}
-            key={`${Math.random()}`}
+            key={`${bidx}}`}
           >
-            {value.map((v) => (
+            {value.map((v, vidx) => (
               <div
                 className={`board-block board-block-${v}`}
-                key={`${Math.random()}`}
+                key={`${bidx}-${vidx}}`}
               />
             ))}
           </div>

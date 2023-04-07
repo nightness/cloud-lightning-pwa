@@ -183,7 +183,7 @@ export default function ConnectFourBoard() {
               width: "240px",
               height: "240px",
             }}
-            key={`${Math.random()}`}
+            key={`${rIdx}`}
           >
             {value.map((v, cIdx) => (
               <div
@@ -198,7 +198,7 @@ export default function ConnectFourBoard() {
                   height: "40px",
                 }}
                 onClick={() => handleClick(rIdx, cIdx)}
-                key={`${Math.random()}`}
+                key={`${rIdx}-${cIdx}`}
               >
                 <div
                   style={{
@@ -223,7 +223,7 @@ export default function ConnectFourBoard() {
       <div>
         {winner && (
           <div>
-            <h1>Winner: {winner ? "red" : "yellow"}</h1>
+            <h1>Winner: {winner === 1 ? "Red" : "Yellow"}</h1>
           </div>
         )}
         {winner && (
