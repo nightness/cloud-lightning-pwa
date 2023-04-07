@@ -222,7 +222,7 @@ export const Authentication = () => {
           <div style={{ marginTop: "10px" }}>
             <Button
               style={{ marginRight: "10px" }}
-              text="Toggle Dark Mode"
+              text="Toggle Theme"
               onClick={() => {
                 if (!setActiveTheme) return;
                 setActiveTheme(activeTheme === "Dark" ? "Light" : "Dark");
