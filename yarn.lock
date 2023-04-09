@@ -802,13 +802,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-keyboard-event-handler@^1.5.1":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@types/react-keyboard-event-handler/-/react-keyboard-event-handler-1.5.2.tgz#3708d0bd78b786cab56068e0b1386e4dde11d6eb"
-  integrity sha512-lo3MNHTolj3XPmNUdYXU8ml3uqqcButJESQepafk47IWVlJMVaFmExS0GtgttBihuD010ej4eqpQpzHs8YJjlQ==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-router-dom@^5.1.7":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.3.3.tgz#e9d6b4a66fcdbd651a5f106c2656a30088cc1e83"
@@ -2393,11 +2386,6 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
-
-react-keyboard-event-handler@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/react-keyboard-event-handler/-/react-keyboard-event-handler-1.5.4.tgz#bd0ccafbf62a96f605ddac78828f22efc54181f0"
-  integrity sha512-MSOxU/sQ5q9XWNHhXAJxzh4xVLZjKORGNC2Pzvx3qUo24TQeztGB0tq8oSArwX6vfKSIVijiw8wBmkN5pJOB4w==
 
 react-popper@^1.3.11:
   version "1.3.11"

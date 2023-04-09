@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import KeyboardEventHandler from "react-keyboard-event-handler";
 import { Block, BlockType, OrientationValue, Plane, Size } from ".";
 import useInterval from "../../../hooks/useInterval";
 import {
@@ -8,6 +7,7 @@ import {
   getBlockHeight,
   getBlockWidth,
 } from "./blocks/Block";
+import { useKeyboard } from "../../../hooks";
 
 const TOTAL_ROWS = 20;
 const TOTAL_COLUMNS = 10;
@@ -263,60 +263,50 @@ export default function TetrisBoard({
     setCurrentBlockType(key === "X" ? "X!" : (key as BlockType));
   };
 
+  useKeyboard((activeKeySet: Set<any>) => {
+    // console.log("*", activeKeySet);
+    if (activeKeySet.has("ArrowLeft")) handleHorizontalMove("LEFT");
+    if (activeKeySet.has("ArrowRight")) handleHorizontalMove("RIGHT");
+    if (activeKeySet.has("ArrowDown")) handleVerticalMove("DOWN");
+    if (activeKeySet.has("ArrowUp")) handleRotate();
+    if (activeKeySet.has("Space")) handleRotate();
+    if (activeKeySet.has("KeyR")) handleReset();
+    if (activeKeySet.has("KeyP")) handlePause();
+    if (activeKeySet.has("KeyX")) handleChangeBlockType("X");
+    if (activeKeySet.has("KeyI")) handleChangeBlockType("I");
+    if (activeKeySet.has("KeyO")) handleChangeBlockType("O");
+    if (activeKeySet.has("KeyT")) handleChangeBlockType("T");
+    if (activeKeySet.has("KeyS")) handleChangeBlockType("S");
+    if (activeKeySet.has("KeyZ")) handleChangeBlockType("Z");
+    if (activeKeySet.has("KeyJ")) handleChangeBlockType("J");
+    if (activeKeySet.has("KeyL")) handleChangeBlockType("L");
+  });
+
   return (
-    <div className="game-board">
-      <KeyboardEventHandler
-        handleKeys={["LEFT", "RIGHT"]}
-        onKeyEvent={handleHorizontalMove}
-      />
-      <KeyboardEventHandler
-        handleKeys={["DOWN"]}
-        onKeyEvent={handleVerticalMove}
-      />
-      <KeyboardEventHandler
-        handleKeys={["SPACE", "UP"]}
-        onKeyEvent={handleRotate}
-      />
-      <KeyboardEventHandler
-        handleKeys={["PageUp", "HOME"]}
-        onKeyEvent={() => {
-          if (devMode)
-            setBlockLocation({ row: 0, column: blockLocation.column });
-        }}
-      />
-      <KeyboardEventHandler handleKeys={["R"]} onKeyEvent={handleReset} />
-      <KeyboardEventHandler handleKeys={["P"]} onKeyEvent={handlePause} />
-      <KeyboardEventHandler
-        handleKeys={["I", "J", "L", "O", "S", "T", "Z", "X"]}
-        onKeyEvent={handleChangeBlockType}
-      />
-      <div className="game-board-inner">
-        {board?.map((value, bidx) => (
-          <div
-            style={{ display: "flex", flexDirection: "row" }}
-            key={`${bidx}}`}
-          >
-            {value.map((v, vidx) => (
-              <div
-                className={`board-block board-block-${v}`}
-                key={`${bidx}-${vidx}}`}
-              />
-            ))}
-          </div>
-        ))}
-        {currentBlockType && isStarted ? (
-          <Block
-            blockType={currentBlockType}
-            orientation={orientation}
-            style={{
-              position: "absolute",
-              top: blockLocation.row * BLOCK_SIZE,
-              left: blockLocation.column * BLOCK_SIZE,
-            }}
-          />
-        ) : undefined}
-      </div>
+    <div className="game-board-inner">
+      {board?.map((value, bidx) => (
+        <div style={{ display: "flex", flexDirection: "row" }} key={`${bidx}}`}>
+          {value.map((v, vidx) => (
+            <div
+              className={`board-block board-block-${v}`}
+              key={`${bidx}-${vidx}}`}
+            />
+          ))}
+        </div>
+      ))}
+      {currentBlockType && isStarted ? (
+        <Block
+          blockType={currentBlockType}
+          orientation={orientation}
+          style={{
+            position: "absolute",
+            top: blockLocation.row * BLOCK_SIZE,
+            left: blockLocation.column * BLOCK_SIZE,
+          }}
+        />
+      ) : undefined}
     </div>
+    // </div>
   );
 }
 
