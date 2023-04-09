@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Block, BlockType, OrientationValue, Plane, Size } from ".";
+import {
+  Block,
+  BlockType,
+  OrientationValue,
+  Plane,
+  copyBoard,
+  createNewBoard,
+  getBoardSubset,
+  minmax,
+} from ".";
 import useInterval from "../../../hooks/useInterval";
 import {
   createBlockPattern,
@@ -309,36 +318,3 @@ export default function TetrisBoard({
     // </div>
   );
 }
-
-export const createNewBoard = (
-  height: number = TOTAL_ROWS,
-  width: number = TOTAL_COLUMNS
-) => {
-  const board = Array(height)
-    .fill(0)
-    .map((x) => Array(width).fill(0));
-  return board as Plane;
-};
-
-export const copyBoard = (board: Plane) => {
-  return board.map((arr) => arr.slice());
-};
-
-export const getBoardSubset = (
-  board: Plane,
-  row: number,
-  column: number,
-  size: Size
-) => {
-  const results = createNewBoard(size[0], size[1]);
-  for (let i = 0; i < size[0]; i++) {
-    for (let j = 0; j < size[1]; j++) {
-      //console.log("Test: ", board[column + c][row + r], column, row, c, r)
-      results[i][j] = board[row + i][column + j];
-    }
-  }
-  return results;
-};
-
-export const minmax = (value: number, min: number, max: number) =>
-  Math.min(Math.max(value, min), max);
