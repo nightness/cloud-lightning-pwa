@@ -5,7 +5,7 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 //@ts-expect-error
-import MetaTags from "react-meta-tags";
+import { Helmet } from "react-helmet";
 
 import "normalize.css/normalize.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
@@ -19,7 +19,7 @@ const root = ReactDOMClient.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <MetaTags>
+    <Helmet>
       <title>{title}</title>
       <meta name="color-scheme" content="light dark" />
       <meta name="supported-color-scheme" content="light dark" />
@@ -31,7 +31,7 @@ root.render(
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
       />
-    </MetaTags>
+    </Helmet>
     <App />
   </React.StrictMode>
 );
