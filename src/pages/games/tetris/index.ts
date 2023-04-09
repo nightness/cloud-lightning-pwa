@@ -23,3 +23,42 @@ export type Location = {
 };
 
 export type { BlockProps, BlockType, OrientationValue };
+
+export const TOTAL_ROWS = 20;
+export const TOTAL_COLUMNS = 10;
+export const BLOCK_SIZE = 25; // Pixels
+export const STARTING_SPEED = 1000; // ms
+export const FASTEST_RATE = 100; // down by one per 100ms
+
+export const createNewBoard = (
+  height: number = TOTAL_ROWS,
+  width: number = TOTAL_COLUMNS
+) => {
+  const board = Array(height)
+    .fill(0)
+    .map((x) => Array(width).fill(0));
+  return board as Plane;
+};
+
+export const copyBoard = (board: Plane) => {
+  return board.map((arr) => arr.slice());
+};
+
+export const getBoardSubset = (
+  board: Plane,
+  row: number,
+  column: number,
+  size: Size
+) => {
+  const results = createNewBoard(size[0], size[1]);
+  for (let i = 0; i < size[0]; i++) {
+    for (let j = 0; j < size[1]; j++) {
+      //console.log("Test: ", board[column + c][row + r], column, row, c, r)
+      results[i][j] = board[row + i][column + j];
+    }
+  }
+  return results;
+};
+
+export const minmax = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
