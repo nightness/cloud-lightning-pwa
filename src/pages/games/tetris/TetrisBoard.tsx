@@ -263,7 +263,7 @@ export default function TetrisBoard({
     setCurrentBlockType(key === "X" ? "X!" : (key as BlockType));
   };
 
-  useKeyboard((activeKeySet: Set<any>) => {
+  useKeyboard((activeKeySet: Set<string>) => {
     // console.log("*", activeKeySet);
     if (activeKeySet.has("ArrowLeft")) handleHorizontalMove("LEFT");
     if (activeKeySet.has("ArrowRight")) handleHorizontalMove("RIGHT");
