@@ -16,7 +16,7 @@ import {
   getBlockHeight,
   getBlockWidth,
 } from "./blocks/Block";
-import { useKeyboard } from "../../../hooks";
+import { useKeyboard, useWindowDimensions } from "../../../hooks";
 
 const TOTAL_ROWS = 20;
 const TOTAL_COLUMNS = 10;
@@ -53,6 +53,7 @@ export default function TetrisBoard({
   const [isPaused, setIsPaused] = useState(false);
   const [rowsRemoved, setRowsRemoved] = useState(0);
   const [gameSpeed, setGameSpeed] = useState(STARTING_SPEED);
+  const { width, height } = useWindowDimensions();
 
   const newBlock = () => {
     const block = randomBlock(!enable8thPiece);
@@ -310,7 +311,11 @@ export default function TetrisBoard({
           style={{
             position: "absolute",
             top: blockLocation.row * BLOCK_SIZE,
-            left: blockLocation.column * BLOCK_SIZE,
+            left:
+              width / 2 -
+              BLOCK_SIZE * 5 +
+              blockLocation.column * BLOCK_SIZE -
+              7,
           }}
         />
       ) : undefined}
