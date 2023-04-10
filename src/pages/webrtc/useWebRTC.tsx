@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { getCurrentUser } from "../../database/Firebase";
+import { deleteCollection, getCurrentUser } from "../../database/Firebase";
 import {
   addDoc,
   collection,
@@ -224,8 +224,8 @@ const useWebRTC = (servers: RTCConfiguration) => {
     try {
       const callDoc = doc(collection(getFirestore(), "calls"), callId.current);
 
-      // await deleteCollection(callDoc, "answerCandidates");
-      // await deleteCollection(callDoc, "offerCandidates");
+      await deleteCollection(callDoc, "answerCandidates");
+      await deleteCollection(callDoc, "offerCandidates");
       await deleteDoc(callDoc);
     } catch (e) {
       console.log("ERROR5: ", e);
