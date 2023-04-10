@@ -14,7 +14,7 @@ function XO({ style, orientation }: BlockProps) {
       </div>
       <div className="flex-column">
         <div className={o2} />
-        <div className={o1} />
+        <div className={"box tetris-block-xo"} />
         <div className={o2} />
       </div>
       <div className="flex-column">
