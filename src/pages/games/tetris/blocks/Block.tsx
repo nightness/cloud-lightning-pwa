@@ -196,7 +196,7 @@ export const createBlockPattern = (
         : [
             // Orientation of 90 or 270
             [0, 1, 0],
-            [1, 0, 1],
+            [1, 1, 1],
             [0, 1, 0],
           ];
     return map;
