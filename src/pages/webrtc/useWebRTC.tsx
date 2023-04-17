@@ -37,10 +37,6 @@ const useWebRTC = (servers: RTCConfiguration) => {
   const [localStream, setLocalStream] = useState<MediaStream>();
   const [remoteStream, setRemoteStream] = useState(new MediaStream());
 
-  useEffect(() => () => {
-    console.log("DEBUG: useWebRTC: unmounting");
-  });
-
   const init = useCallback(async () => {
     let currentStream: MediaStream;
     let pc = peerConnection.current;
@@ -90,6 +86,12 @@ const useWebRTC = (servers: RTCConfiguration) => {
       event.candidate && addDoc(offerCandidatesRef, event.candidate.toJSON());
     };
 
+    peerConnection.current.onconnectionstatechange = (event) => {
+      console.log("DEBUG: useWebRTC: onconnectionstatechange: ", event);
+      // hangup();
+      peerConnection.current.onconnectionstatechange = null;
+    };
+
     // Listen for remote answer
     subscriptions.current.callDoc = onSnapshot(docRef, (doc) => {
       const data = doc.data();
@@ -108,6 +110,9 @@ const useWebRTC = (servers: RTCConfiguration) => {
             const candidate = new RTCIceCandidate(change.doc.data());
             peerConnection.current.addIceCandidate(candidate);
             setStage(CallStage.Accepted);
+          } else if (change.type === "removed") {
+            console.log("DEBUG: useWebRTC: answerCandidates: removed");
+            hangup();
           }
         });
       }
@@ -226,7 +231,8 @@ const useWebRTC = (servers: RTCConfiguration) => {
 
       await deleteCollection(callDoc, "answerCandidates");
       await deleteCollection(callDoc, "offerCandidates");
-      await deleteDoc(callDoc);
+      // await deleteDoc(callDoc);
+      setDoc(callDoc, { ended: true });
     } catch (e) {
       console.log("ERROR5: ", e);
     }

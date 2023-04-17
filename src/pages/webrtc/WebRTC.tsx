@@ -30,6 +30,12 @@ export function WebRTC() {
     }
   }, [callStage, webcamVideo, localStream, remoteStream, remoteVideo]);
 
+  useEffect(() => {
+    if (callStage === 3) {
+      setCallId("");
+    }
+  }, [callStage]);
+
   const callButtonClick = (
     event: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) => {

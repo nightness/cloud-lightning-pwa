@@ -65,6 +65,7 @@ export const SideBar = ({ isOpen, onClose }: SideBarProps) => {
   return (
     <Drawer
       className={`drawer-header`}
+      style={{ userSelect: "none" }}
       position="left"
       icon="cloud"
       isOpen={isOpen}

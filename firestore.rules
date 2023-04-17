@@ -15,8 +15,12 @@ service cloud.firestore {
 			function callParticipant(resource) {
 				return resource.data.creator == request.auth.uid || resource.data.target == request.auth.uid
 			}
+			function callEnded(resource) {
+				return resource.data.ended == true
+			}
 			allow read, write: if isAuthorized() && callParticipant(resource)
-			allow create, list: if isAuthorized()
+			allow create: if isAuthorized()
+			allow list: if false
 
 			function inCall(callId, uid) {
 				let data = get(/databases/$(database)/documents/calls/$(callId)).data;
