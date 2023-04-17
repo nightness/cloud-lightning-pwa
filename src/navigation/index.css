@@ -79,6 +79,7 @@
   margin: 0 2rem 0 10px;
   font-size: calc(var(--device-font-size) * 1.25);
   line-height: 2rem;
+  width: 10px;
 }
 
 .drawer-header {
@@ -101,6 +102,7 @@
   align-items: center;
   justify-content: center;
   justify-items: center;
+  cursor: pointer;
 }
 
 .link-static :focus {

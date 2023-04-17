@@ -35,7 +35,7 @@ export const Link = ({
   }${typeof className === "string" ? className : ""}`;
 
   return (
-    <div className={`${navClasses}`} onClick={onClick} style={{ width: 10 }}>
+    <div className={`${navClasses}`} onClick={onClick}>
       <NavLink
         ref={link as React.Ref<HTMLAnchorElement>}
         draggable={false}

@@ -63,7 +63,14 @@ export const Navbar = () => {
         {currentPageTitle ? currentPageTitle : "Page Not Found"}
       </div>
       <div style={{ marginRight: "25px" }}>
-        <Link className="link-static" to="/auth" noActiveFormatting>
+        <Link
+          className="link-static"
+          to="/auth"
+          noActiveFormatting
+          style={{
+            background: "transparent",
+          }}
+        >
           {currentUser?.photoURL ? (
             <img className="img" src={currentUser?.photoURL} />
           ) : (
